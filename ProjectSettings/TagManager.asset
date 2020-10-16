@@ -13,10 +13,10 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
-  - 
+  - Background
+  - Obstacle
+  - Destructible
+  - Player
   - 
   - 
   - 
@@ -38,6 +38,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Minimap
+    uniqueID: 150565481
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
