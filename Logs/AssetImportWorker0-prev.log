@@ -1,0 +1,121 @@
+Using pre-set license
+Built from 'trunk' branch; Version is '2020.2.0a19 (8037ac78137e) revision 8402860'; Using compiler version '192528614'; Build Type 'Release'
+OS: 'Windows 10  (10.0.0) 64bit' Language: 'zh' Physical Memory: 8113 MB
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 0
+
+ COMMAND LINE ARGUMENTS:
+C:\Program Files\Unity\Hub\Editor\2020.2.0a19\Editor\Unity.exe
+-adb2
+-batchMode
+-noUpm
+-name
+AssetImportWorker0
+-projectPath
+C:/Users/dings/Desktop/TsinghuaRider/TsinghuaRider
+-logFile
+Logs/AssetImportWorker0.log
+-srvPort
+55614
+Successfully changed project path to: C:/Users/dings/Desktop/TsinghuaRider/TsinghuaRider
+C:/Users/dings/Desktop/TsinghuaRider/TsinghuaRider
+Using Asset Import Pipeline V2.
+Refreshing native plugins compatible for Editor in 99.14 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Initialize engine version: 2020.2.0a19 (8037ac78137e)
+[Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2020.2.0a19/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path C:/Users/dings/Desktop/TsinghuaRider/TsinghuaRider/Assets
+GfxDevice: creating device client; threaded=0
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: Intel(R) UHD Graphics 620 (ID=0x5917)
+    Vendor:   
+    VRAM:     4056 MB
+    Driver:   27.20.100.8587
+Initialize mono
+Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2020.2.0a19/Editor/Data/Managed'
+Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2020.2.0a19/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
+Mono config path = 'C:/Program Files/Unity/Hub/Editor/2020.2.0a19/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56604
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.2.0a19/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.005554 seconds.
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 64.98 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  5.725 seconds
+Registering precompiled user dll's ...
+Registered in 0.150229 seconds.
+Platform modules already initialized, skipping
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image C:\Users\dings\Desktop\TsinghuaRider\TsinghuaRider\Library\PackageCache\com.unity.ext.nunit@1.0.0\net35\unity-custom\nunit.framework.dll
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 52.24 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.558 seconds
+Platform modules already initialized, skipping
+========================================================================
+Worker process is ready to serve import requests
+RefreshInternalV2 is called before InitialScriptRefresh has been called and asset database isn't fully initialized.
+
+Refresh completed in 0.000137 seconds.
+RefreshInfo: RefreshV2(NoUpdateAssetOptions) scanfilter: 
+RefreshProfiler: Total: 0.000ms
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.06 seconds
+Refreshing native plugins compatible for Editor in 0.56 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1727 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 79.9 MB.
+System memory in use after: 80.0 MB.
+
+Unloading 7 unused Assets to reduce memory usage. Loaded Objects now: 2158.
+Total: 3.656200 ms (FindLiveObjects: 0.607000 ms CreateObjectMapping: 0.132400 ms MarkObjects: 2.831400 ms  DeleteObjects: 0.084700 ms)
+
+========================================================================
+Received Import Request.
+  path: Assets/Prefabs
+  artifactKey: Guid(32a8158ebd4dd004f98c7403929f423c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs using Guid(32a8158ebd4dd004f98c7403929f423c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '62e80c8bc5cc4c8ad31932dba1ef7cee') in 0.012788 seconds
+  Import took 0.017403 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000753 seconds.
+  path: Assets/Animations
+  artifactKey: Guid(563e7707c7642164cad5914ee1ad6994) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations using Guid(563e7707c7642164cad5914ee1ad6994) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'db93f990393eb3dfe77f97d7fa606547') in 0.007059 seconds
+  Import took 0.010611 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000402 seconds.
+  path: Assets/Scripts
+  artifactKey: Guid(e7ea40d71fd2ff74ca6737db8d78ef67) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts using Guid(e7ea40d71fd2ff74ca6737db8d78ef67) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5af9c71fcb601bbf8d8313ec881c586e') in 0.010294 seconds
+  Import took 0.020104 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000338 seconds.
+  path: Assets/Scenes
+  artifactKey: Guid(32652a2730ad31f4293854b3a958479d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scenes using Guid(32652a2730ad31f4293854b3a958479d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c408ae1f56488131fbacb87497e3a9a6') in 0.010668 seconds
+  Import took 0.017950 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000739 seconds.
+  path: Assets/Sprites
+  artifactKey: Guid(7f259286c62780b40a5e065951b4613a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites using Guid(7f259286c62780b40a5e065951b4613a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '72933af2f1974e6ce71a1f19b18179c7') in 0.015341 seconds
+  Import took 0.021791 seconds .
+
+AssetImportWorkerClient::OnTransportError - code=2 error=End of file
