@@ -5,8 +5,11 @@ using UnityEngine;
 public class RoomGenerator : MonoBehaviour
 {
     [Header("房间属性")]
-    public GameObject roomPrefab;
+    public GameObject startRoom;
+    public GameObject endRoom;
+    public GameObject[] roomPrefabs;
     
+    [Header("生成规则")]
     public int generateNumber;
     public float xOffset;
     public float yOffset;
@@ -14,25 +17,40 @@ public class RoomGenerator : MonoBehaviour
     Transform generatorPoint;
     enum Direction {up, down, left, right};
     Direction direction;
-    List<GameObject> roomList = new List<GameObject>();
+    List<Room> roomList = new List<Room>();
     List<Vector3> roomPositionList = new List<Vector3>();
 
-    // Start is called before the first frame update
+    
     void Start()
     {
+        GameObject roomPrefab;
+        Room newRoom;
         generatorPoint = GetComponent<Transform>();
 
         for (int i = 0; i < generateNumber; i++){
-            roomList.Add(Instantiate(roomPrefab, generatorPoint.position, Quaternion.identity));
+            if (i == 0){
+                roomPrefab = startRoom;
+            }
+            else if (i == generateNumber - 1){
+                roomPrefab = endRoom;
+            }
+            else{
+                roomPrefab = roomPrefabs[(int)Random.Range(-0.5f,roomPrefabs.Length-0.5f)];
+            }
+
+            newRoom = Instantiate(roomPrefab, generatorPoint.position, Quaternion.identity).GetComponent<Room>();
+
+            roomList.Add(newRoom);
             roomPositionList.Add(generatorPoint.position);
 
             ChangeGeneratePosition();
         }
 
-        
+        SetupDoor();
+
     }
 
-    // Update is called once per frame
+    
     void Update()
     {
         
@@ -63,6 +81,36 @@ public class RoomGenerator : MonoBehaviour
                 dist = Mathf.Min(dist, Vector3.Distance(roomPosition, generatorPoint.position));
             }
         } while(dist < 0.5f);
-
     }
+
+    void SetupDoor(){
+        float distUp, distDown, distLeft, distRight;
+        Vector3 roomPosition;
+        foreach (Room room in roomList){
+            roomPosition = room.gameObject.transform.position;
+            room.flagUp = false;
+            room.flagDown = false;
+            room.flagLeft = false;
+            room.flagRight = false;
+            foreach (Vector3 otherRoomPosition in roomPositionList) {
+                distUp = Vector3.Distance(otherRoomPosition, roomPosition + new Vector3(0, yOffset, 0));
+                distDown = Vector3.Distance(otherRoomPosition, roomPosition + new Vector3(0, -yOffset, 0));
+                distLeft = Vector3.Distance(otherRoomPosition, roomPosition + new Vector3(-xOffset, 0, 0));
+                distRight = Vector3.Distance(otherRoomPosition, roomPosition + new Vector3(xOffset, 0, 0));
+                if (distUp < 0.5f) {
+                    room.flagUp = true;
+                }
+                if (distDown < 0.5f) {
+                    room.flagDown = true;                
+                }
+                if (distLeft < 0.5f) {
+                    room.flagLeft = true;
+                }
+                if (distRight < 0.5f) {
+                    room.flagRight = true;
+                }
+            }
+        }
+    }
+
 }
