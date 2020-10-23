@@ -152,7 +152,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66d50928dac489d45a617aff898ee969, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roomPrefab: {fileID: 3103826511237701292, guid: fa7c88058e40dd74eb8cfa6e73be8f9f, type: 3}
+  startRoom: {fileID: 3351413859892462375, guid: 345669405a9998f4db778f1b6154be41, type: 3}
+  endRoom: {fileID: 31831923882488372, guid: 953f7d181bb483a40bd71500f5e82754, type: 3}
+  roomPrefabs:
+  - {fileID: 3361396231715526044, guid: d1cc3b07b9cd3b548ab3086582f4e7e4, type: 3}
+  - {fileID: 2716066448135329950, guid: 63f419a856b4470419222bbd36a76d36, type: 3}
+  - {fileID: 7495528921166138254, guid: a03f25a569552514593645400b962e29, type: 3}
   generateNumber: 10
   xOffset: 12
   yOffset: 12
