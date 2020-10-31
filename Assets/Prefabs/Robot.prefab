@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 7506899804020935969}
   - component: {fileID: 1383921434516508205}
   - component: {fileID: 6566267004717660237}
+  - component: {fileID: 4739975935044504796}
+  - component: {fileID: 8531629119551263029}
   m_Layer: 0
   m_Name: Robot
   m_TagString: Untagged
@@ -83,7 +85,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!50 &1383921434516508205
 Rigidbody2D:
   serializedVersion: 4
@@ -102,7 +104,7 @@ Rigidbody2D:
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
-  m_SleepingMode: 1
+  m_SleepingMode: 0
   m_CollisionDetection: 0
   m_Constraints: 4
 --- !u!61 &6566267004717660237
@@ -131,3 +133,34 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.4155836, y: 1.8389592}
   m_EdgeRadius: 0
+--- !u!114 &4739975935044504796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3827804939525079452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c6925d419c4a2e4db452df74afa8f67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!95 &8531629119551263029
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3827804939525079452}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 88fe9a4553d2d7a4b96a7776ce5a1eb1, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

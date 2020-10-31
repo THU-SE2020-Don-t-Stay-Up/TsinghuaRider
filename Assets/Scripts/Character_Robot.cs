@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Character_Robot : MonoBehaviour
 {
+
     public float speed = 3.0f;
 
     public int maxHealth = 5;
@@ -38,6 +39,18 @@ public class Character_Robot : MonoBehaviour
     {
         horizontal = Input.GetAxis("Horizontal");
         vertical = Input.GetAxis("Vertical");
+
+        Vector2 move = new Vector2(horizontal, vertical);
+
+        if (!Mathf.Approximately(move.x, 0.0f) || !Mathf.Approximately(move.y, 0.0f))
+        {
+            lookDirection.Set(move.x, move.y);
+            lookDirection.Normalize();
+        }
+
+        animator.SetFloat("LookX", lookDirection.x);
+        animator.SetFloat("LookY", lookDirection.y);
+        animator.SetFloat("Speed", move.magnitude);
     }
 
     void FixedUpdate()
@@ -64,4 +77,5 @@ public class Character_Robot : MonoBehaviour
         currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
         Debug.Log(currentHealth + "/" + maxHealth);
     }
+
 }
