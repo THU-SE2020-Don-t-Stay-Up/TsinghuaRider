@@ -5,6 +5,13 @@ using UnityEngine;
 public class Character_MahouShoujo : MonoBehaviour
 {
 
+    enum State
+    {
+        Normal,
+    }
+
+    private State state;
+
     // set character's speed
     public float speed = 3.0f;
 
@@ -35,6 +42,7 @@ public class Character_MahouShoujo : MonoBehaviour
     Vector2 lookDirection = new Vector2(1, 0);
 
     // actions
+    public GameObject bulletPrefab;
 
     // audio
     AudioSource audioSource;
@@ -45,13 +53,14 @@ public class Character_MahouShoujo : MonoBehaviour
     private void Awake(){
         rigidbody2d = GetComponent<Rigidbody2D>();
         currentHealth = maxHealth;
+        state = State.Normal;
         animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();        
     }
 
     private void Update(){
         // get look direction
-        horizontal = Input.GetAxis("Horizonal");
+        horizontal = Input.GetAxis("Horizontal");
         vertical = Input.GetAxis("Vertical");
         Vector2 move = new Vector2(horizontal,vertical);
         if (!Mathf.Approximately(move.x, 0.0f) || (!Mathf.Approximately(move.y, 0.0f)))
@@ -123,8 +132,6 @@ public class Character_MahouShoujo : MonoBehaviour
         }
     }
 
-
-
     public void ChangeHealth(int amount)
     {
         if (amount < 0)
@@ -144,5 +151,23 @@ public class Character_MahouShoujo : MonoBehaviour
         currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
         //Debug.Log(currentHealth + "/" + maxHealth);
         // UI change
+    }
+
+    public void MeleeAttack(Vector3 mouseDir) {
+        Debug.Log("MeleeAttack!");
+        Debug.Log(mouseDir);
+
+    }
+
+    public  void MissleAttack(Vector3 mouseDir) {
+        Debug.Log("MissleAttack!");
+        Debug.Log(mouseDir);
+        
+        GameObject bulletObject = Instantiate(bulletPrefab, rigidbody2d.position + Vector2.up*1.0f, Quaternion.identity);
+        Bullets bullet = bulletObject.GetComponent<Bullets>();
+        bullet.Fire(mouseDir,500);
+
+        animator.SetTrigger("Launch");
+
     }
 }
