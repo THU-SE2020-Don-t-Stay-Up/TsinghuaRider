@@ -4,16 +4,19 @@ using UnityEngine;
 
 public class MonsterGenerator : MonoBehaviour
 {
-    public GameObject monsterObject;
-    public int monsterNum;
+    public GameObject[] monsterObject;
+    public int[] monsterNum;
     // Start is called before the first frame update
     void Start()
     {
         Global.monsters = Monster.LoadMonster();
-        for(int i = 0; i < monsterNum; i++)
+        for (int index = 0; index < monsterNum.Length; index++)
         {
-            Vector3 position = new Vector3(Random.Range(-5, 5), Random.Range(-5, 5));
-            GameObject.Instantiate(monsterObject, position, Quaternion.identity);
+            for (int i = 0; i < monsterNum[index]; i++)
+            {
+                Vector3 position = new Vector3(Random.Range(-5, 5), Random.Range(-5, 5));
+                GameObject.Instantiate(monsterObject[index], position, Quaternion.identity);
+            }
         }
     }
 
