@@ -1,19 +1,34 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Debug = UnityEngine.Debug;
 
 public class Character_MahouShoujo : MonoBehaviour
 {
-
     enum State
     {
         Normal,
+        Attacking,
+    }
+    private State state;
+    public void SetState(int a){
+        switch(a){
+            case 0:
+                state = State.Normal;
+                break;
+            case 1:
+                state = State.Attacking;
+                break;
+            default:
+                state = State.Normal;
+                break;
+        }
     }
 
-    private State state;
+    private GameObject aiming;
 
     // set character's speed
-    public float speed = 3.0f;
+    public float speed = 10.0f;
 
     // health & invincible time
     public int maxHealth = 5;
@@ -55,39 +70,50 @@ public class Character_MahouShoujo : MonoBehaviour
         currentHealth = maxHealth;
         state = State.Normal;
         animator = GetComponent<Animator>();
-        audioSource = GetComponent<AudioSource>();        
+        audioSource = GetComponent<AudioSource>();       
+        aiming = GameObject.Find("MahouShoujo"); 
     }
 
     private void Update(){
-        // get look direction
-        horizontal = Input.GetAxis("Horizontal");
-        vertical = Input.GetAxis("Vertical");
-        Vector2 move = new Vector2(horizontal,vertical);
-        if (!Mathf.Approximately(move.x, 0.0f) || (!Mathf.Approximately(move.y, 0.0f)))
-        {
-            lookDirection.Set(move.x ,move.y);
-            lookDirection.Normalize();
-        }    
+        switch(state){
+            case State.Normal:
+                // get look direction
+                horizontal = Input.GetAxis("Horizontal");
+                vertical = Input.GetAxis("Vertical");
+                Vector2 move = new Vector2(horizontal,vertical);
+                if (!Mathf.Approximately(move.x, 0.0f) || (!Mathf.Approximately(move.y, 0.0f)))
+                {
+                    lookDirection.Set(move.x ,move.y);
+                    lookDirection.Normalize();
+                }    
 
-        // dash management
-        if (Input.GetKeyDown(KeyCode.Space)){
-            isDashBottonDown = true;
+                // dash management
+                if (Input.GetKeyDown(KeyCode.Space)){
+                    isDashBottonDown = true;
+                }
+
+                // set moving animaion paraments
+                animator.SetFloat("Look X", lookDirection.x);
+                animator.SetFloat("Look Y", lookDirection.y);
+                animator.SetFloat("Speed", move.magnitude);
+
+                // hurt judgement
+                HurtJudgement();
+
+                // interaction
+                HandleInteraction();
+
+                HandelAttacking();
+                break;
+
+            case State.Attacking:
+                HandelAttacking();
+                break;
         }
 
-        // set moving animaion paraments
-        animator.SetFloat("Look X", lookDirection.x);
-        animator.SetFloat("Look Y", lookDirection.y);
-        animator.SetFloat("Speed", move.magnitude);
-
-        // hurt judgement
-        HurtJudgement();
-
-        // interaction
-        HandleInteraction();
     }
 
-    private void FixedUpdate()
-    {
+    private void FixedUpdate() {
         Vector2 position = rigidbody2d.position;
         position.x = position.x + speed * horizontal * Time.deltaTime;
         position.y = position.y + speed * vertical * Time.deltaTime;
@@ -95,7 +121,7 @@ public class Character_MahouShoujo : MonoBehaviour
         rigidbody2d.MovePosition(position);
 
         if (isDashBottonDown){
-            float dashAmount = 15f;
+            float dashAmount = 5f;
             Vector2 dashPosition = rigidbody2d.position + lookDirection * dashAmount;
             RaycastHit2D dashHit = Physics2D.Raycast(rigidbody2d.position, lookDirection, dashAmount, dashLayerMask);
             if (dashHit.collider != null){
@@ -132,8 +158,7 @@ public class Character_MahouShoujo : MonoBehaviour
         }
     }
 
-    public void ChangeHealth(int amount)
-    {
+    public void ChangeHealth(int amount) {
         if (amount < 0)
         {
             if (isInvincible)
@@ -153,21 +178,19 @@ public class Character_MahouShoujo : MonoBehaviour
         // UI change
     }
 
-    public void MeleeAttack(Vector3 mouseDir) {
-        Debug.Log("MeleeAttack!");
-        Debug.Log(mouseDir);
 
+    private void HandelAttacking() {
+        SetState(1);
+        if (Input.GetMouseButtonDown(0)) {
+            Vector3 mousePosition = aiming.GetComponent<PlayerAim>().GetMouseWorldPosition();
+            Debug.Log("MissleAttack!");
+        }
+        if (Input.GetMouseButtonDown(1))
+        {
+            Vector3 mousePosition = aiming.GetComponent<PlayerAim>().GetMouseWorldPosition();
+            Debug.Log("MeleeAttack!");
+        }
+        SetState(0);
     }
 
-    public  void MissleAttack(Vector3 mouseDir) {
-        Debug.Log("MissleAttack!");
-        Debug.Log(mouseDir);
-        
-        GameObject bulletObject = Instantiate(bulletPrefab, rigidbody2d.position + Vector2.up*1.0f, Quaternion.identity);
-        Bullets bullet = bulletObject.GetComponent<Bullets>();
-        bullet.Fire(mouseDir,500);
-
-        animator.SetTrigger("Launch");
-
-    }
 }

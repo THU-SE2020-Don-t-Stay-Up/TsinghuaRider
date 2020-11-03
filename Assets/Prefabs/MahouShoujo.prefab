@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 229545297153536413}
   - component: {fileID: 5160243319423273851}
   - component: {fileID: 5805791863398906478}
+  - component: {fileID: 7992965922502918399}
+  - component: {fileID: 9216279438059771014}
   m_Layer: 0
   m_Name: MahouShoujo
   m_TagString: Untagged
@@ -155,3 +157,34 @@ MonoBehaviour:
   getHitClip: {fileID: 0}
   attackClip: {fileID: 0}
   getHealingClip: {fileID: 0}
+--- !u!114 &7992965922502918399
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 588788056520936454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7f366f9899bd10459279be29038d4af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!95 &9216279438059771014
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 588788056520936454}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 98e58f664f135ea41a8448c5b0e043ec, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
