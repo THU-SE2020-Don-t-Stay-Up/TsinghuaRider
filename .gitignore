@@ -35,3 +35,7 @@ sysinfo.txt
 *.apk
 *.unitypackage
 UserSettings/EditorUserSettings.asset
+ProjectSettings/EditorBuildSettings.asset
+
+# Scenes
+Assets/Scenes/
