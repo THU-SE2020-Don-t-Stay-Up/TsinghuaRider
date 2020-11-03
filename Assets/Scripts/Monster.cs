@@ -23,6 +23,8 @@ public class Monster
     /// </summary>
     public float Tenacity { get; }
     public float AttackSpeed { get; set; }
+
+    public int AttackAmount { get; set; }
     public float ViewAngle { get; set; }
     public float ViewRadius { get; set; }
     public float AttackRadius { get; set; }
@@ -52,7 +54,6 @@ public class Monster
             JsonSerializer.CreateDefault().Serialize(new JsonTextWriter(sw), monsters);
         }
     }
-
 }
 
 class SkillsJsonConverter : JsonConverter<List<Skill>>
