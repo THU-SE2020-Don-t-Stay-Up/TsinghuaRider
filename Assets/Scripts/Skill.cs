@@ -1,35 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
-using UnityEngine.Analytics;
-
+﻿/// <summary>
+/// 技能抽象类，增加新技能时继承此抽象类，实现Perform方法
+/// </summary>
 abstract public class Skill
 {
-    public abstract void Perform(int Amount, GameObject target);
+    public abstract void Perform(LivingBaseAgent subject, LivingBaseAgent target);
 }
 
-
+/// <summary>
+/// 普攻技能
+/// </summary>
 public class AttackSkill : Skill
 {
-    public override void Perform(int Amount, GameObject targetObjet)
+    public override void Perform(LivingBaseAgent subject, LivingBaseAgent target)
     {
-        Character_Robot target = targetObjet.GetComponent<Character_Robot>();
-        if (target == null)
-        {
-            // 异常处理
-        }
-        target.ChangeHealth(-Amount);
-        //Vector2 position = new Vector2(o.transform.position.x, o.transform.position.y);
+        target.ChangeHealth(subject.living.AttackAmount);
     }
 }
 
+/// <summary>
+/// 分裂技能
+/// </summary>
 public class SplitSkill : Skill
 {
-    public override void Perform(int Anount, GameObject o)
+    public override void Perform(LivingBaseAgent subject, LivingBaseAgent target)
     {
-        Transform position = o.transform;
     }
 }

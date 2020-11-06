@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Character_Robot : MonoBehaviour
+public class CharacterRobot : MonoBehaviour
 {
 
     public float speed = 3.0f;

@@ -1,68 +1,154 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using Newtonsoft.Json;
-using System.IO;
-//using System;
+﻿using UnityEngine;
 
-public class MonsterAgent : MonoBehaviour
+public class MonsterAgent : LivingBaseAgent
 {
-    Monster monster;
+    /// <summary>
+    /// 怪物基本属性信息
+    /// </summary>
+    private Monster Monster => living as Monster;
+    /// <summary>
+    /// 怪物编号，用于加载对应怪物的属性信息
+    /// </summary>
     public int monsterIndex;
-    GameObject targetObject;
+    /// <summary>
+    /// 状态机
+    /// </summary>
+    enum ActionState
+    {
+        Roaming,
+        Chasing,
+        Restarting
+    };
+    private ActionState actionState;
+
+    /// <summary>
+    /// 攻击目标，默认为玩家
+    /// </summary>
+    GameObject target;
+
     float deltaTime = 0;
+    Vector3 startPosition;
+    Vector3 roamingPosition;
+
     //public GameObject Prefab;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        monster = Global.monsters[monsterIndex];
-        print(monster.Name);
-        targetObject = GameObject.Find("targetObject");
+        living = Global.monsters[monsterIndex];
+        print(Monster.Name);
+
+        rigidbody2d = GetComponent<Rigidbody2D>();
+
+        target = GameObject.FindWithTag("Player");
+
+        startPosition = transform.position;
+        roamingPosition = GetRoamPosition();
+
+        MoveSpeed = living.MoveSpeed;
+        actionState = ActionState.Roaming;
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        Vector3 targetPosition = targetObject.transform.position;
-        if (MoveToTarget(targetPosition))
+        switch (actionState)
         {
-            Attack();
+            case ActionState.Roaming:
+                MoveToPosition(roamingPosition);
+                if (HasArrived(roamingPosition))
+                    roamingPosition = GetRoamPosition();
+                FindTarget();
+                break;
+            case ActionState.Chasing:
+                MoveToPosition(target.transform.position);
+                float distance = Vector3.Distance(transform.position, target.transform.position);
+                if (distance < living.AttackRadius)
+                {
+                    AttackTarget();
+                }
+                else if (distance > Monster.ViewRadius)
+                {
+                    actionState = ActionState.Restarting;
+                }
+
+                break;
+            case ActionState.Restarting:
+                MoveToPosition(startPosition);
+                if (HasArrived(startPosition))
+                    actionState = ActionState.Roaming;
+                break;
+            default:
+                break;
         }
+        deltaTime += Time.deltaTime;
     }
 
     void FixedUpdate()
     {
-        Vector3 targetPosition = targetObject.transform.position;
-        if (MoveToTarget(targetPosition))
-        {
-            Attack();
-        }
+
     }
 
-    bool MoveToTarget(Vector3 targetPosition)
+    void MoveToPosition(Vector3 targetPosition)
     {
-        Vector3 nowPosition = transform.position;
-        Vector3 distance = targetPosition - nowPosition;
-        Vector3 direction = Vector3.Normalize(distance);
-        if (Vector3.Magnitude(distance) > monster.AttackRadius)
-        {
-            transform.Translate(monster.MoveSpeed * direction * Time.deltaTime);
-            return false;
-        }
-        else 
-        {
-            return true;
-        }
+        rigidbody2d.velocity = Vector3.zero;
+        Vector3 direction = Vector3.Normalize(targetPosition - transform.position);
+        //if (Vector3.Distance(transform.position, targetPosition) > living.AttackRadius)
+            transform.Translate(MoveSpeed * direction * Time.deltaTime);
     }
 
-    void Attack()
+    void AttackTarget()
     {
-        deltaTime += Time.deltaTime;
-        if (monster.AttackSpeed - deltaTime < 0.01)
+        if (living.AttackSpeed - deltaTime < 0.01)
         {
-            monster.Skills[0].Perform(monster.AttackAmount, targetObject);
+            living.Skills[0].Perform(this, target.GetComponent<LivingBaseAgent>());
             print("attack target");
             deltaTime = 0;
         }
     }
+
+    Vector3 GetRoamPosition()
+    {
+        Vector3 RandomDirection = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized;
+        print("Roming to " + RandomDirection);
+        return startPosition + RandomDirection * Random.Range(10f, 50f);
+
+    }
+
+    void FindTarget()
+    {
+        if (Vector3.Distance(transform.position, target.transform.position) < Monster.ViewRadius)
+        {
+            actionState = ActionState.Chasing;
+        }
+    }
+
+    bool HasArrived(Vector3 position)
+    {
+        if (Vector3.Distance(transform.position, position) < 0.1f)
+            return true;
+        else
+            return false;
+    }
+
+    //void ApplyStatus()
+    //{
+    //    if (living.State.HasStatus(Status.Slow))
+    //    {
+    //        MoveSpeed = living.MoveSpeed * 0.5f;
+    //    }
+    //    else
+    //    {
+    //        MoveSpeed = living.MoveSpeed;
+    //    }
+
+    //    if (living.State.HasStatus(Status.Cold))
+    //    {
+    //        MoveSpeed = 0;
+    //    }
+    //    else
+    //    {
+    //        MoveSpeed = living.MoveSpeed;
+    //    }
+    //}
 }
