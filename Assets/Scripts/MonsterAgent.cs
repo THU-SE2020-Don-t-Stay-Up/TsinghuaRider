@@ -82,6 +82,7 @@ public class MonsterAgent : LivingBaseAgent
                 break;
         }
         deltaTime += Time.deltaTime;
+        Destroy();
     }
 
     void FixedUpdate()
@@ -93,7 +94,7 @@ public class MonsterAgent : LivingBaseAgent
     {
         rigidbody2d.velocity = Vector3.zero;
         Vector3 direction = Vector3.Normalize(targetPosition - transform.position);
-        //if (Vector3.Distance(transform.position, targetPosition) > living.AttackRadius)
+        if (Vector3.Distance(transform.position, targetPosition) > living.AttackRadius)
             transform.Translate(MoveSpeed * direction * Time.deltaTime);
     }
 
@@ -125,11 +126,12 @@ public class MonsterAgent : LivingBaseAgent
 
     bool HasArrived(Vector3 position)
     {
-        if (Vector3.Distance(transform.position, position) < 0.1f)
+        if (Vector3.Distance(transform.position, position) < living.AttackRadius)
             return true;
         else
             return false;
     }
+
 
     //void ApplyStatus()
     //{
