@@ -19,28 +19,18 @@ public class Room : MonoBehaviour
     public bool flagLeft { set; private get; } /**< 记录上下左右是否有房间，以此判断是否需要生成门*/
     public bool flagRight { set; private get; }
     
+    public bool stageClear { set; get; }
+
+    void Awake() {
+        stageClear = false;      
+    }
+
     void Start()
     {
         doorLeft.SetActive(flagLeft);
         doorRight.SetActive(flagRight);
         doorUp.SetActive(flagUp);
         doorDown.SetActive(flagDown);
-    }
-
-    public void PlayerEnter() {
-        CompositeCollider2D collider = GetComponentInChildren(typeof(CompositeCollider2D)) as CompositeCollider2D;
-        if (collider != null) {
-            collider.enabled = false;
-            Debug.Log("Disable collider: " + collider);
-        }
-    }
-
-    public void PlayerExit() {
-        CompositeCollider2D collider = GetComponentInChildren(typeof(CompositeCollider2D)) as CompositeCollider2D;
-        if (collider != null) {
-            collider.enabled = true;
-            Debug.Log("Enable collider: " + collider);
-        }
     }
 
 }
