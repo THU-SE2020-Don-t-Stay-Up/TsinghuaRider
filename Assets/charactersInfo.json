@@ -1,0 +1,19 @@
+[
+  {
+    "Name": "MahouShoujo",
+    "MoveSpeed": 10.0,
+    "MaxHealth": 100,
+    "CurrentHealth": 100,
+    "MaxMagic": 100,
+    "CurrentMagic": 100,
+    "TimeInvincible": 2.0, 
+    "Defense": 0,
+    "Tenacity": 0.0,
+    "AttackSpeed": 1.0,
+    "AttackRadius": 1,
+    "AttackAmount": 10,
+    "Skills": [
+      "Attack"
+    ]
+  }
+]

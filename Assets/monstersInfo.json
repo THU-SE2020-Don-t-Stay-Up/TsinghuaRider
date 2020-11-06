@@ -9,35 +9,32 @@
     "AttackSpeed": 1.0,
     "AttackRadius": 1,
     "AttackAmount": 10,
+    "TimeInvincible": 0, 
     "ViewAngle": 180,
-    "ViewRadius": 20,
-    "TexturePath": null,
+    "ViewRadius": 5,
     "Reward": 1,
     "Difficulty": 1,
     "Skills": [
       "Attack",
       "Split"
-    ],
-    "Status": 0
+    ]
   },
   {
     "Name": "鸡分",
-    "MoveSpeed": 20.0,
+    "MoveSpeed":5.0,
     "MaxHealth": 50,
     "CurrentHealth": 50,
     "Defense": 0,
     "Tenacity": 0.0,
     "AttackSpeed": 1.0,
-    "AttackRadius": 50,
+    "AttackRadius": 5,
     "AttackAmount": 10,
     "ViewAngle": 360,
-    "ViewRadius": 50,
-    "TexturePath": null,
+    "ViewRadius": 10,
     "Reward": 1,
     "Difficulty": 1,
     "Skills": [
       "Split"
-    ],
-    "Status": 4
+    ]
   }
 ]
