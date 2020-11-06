@@ -128,6 +128,25 @@ public class LivingBaseAgent : MonoBehaviour
         }
     }
 
+    public bool IsDead()
+    {
+        if (living.CurrentHealth == 0)
+            return true;
+        else
+            return false;
+    }
+
+    /// <summary>
+    /// 血量为零时销毁gameObject
+    /// </summary>
+    public void Destroy()
+    {
+        if (IsDead())
+        {
+            GameObject.Destroy(gameObject);
+        }
+    }
+
     public List<GameObject> GetAttackRangeObjects(Vector3 attackPosition, string mask)
     {
         List<GameObject> gameObjects = new List<GameObject>();
