@@ -13,7 +13,7 @@ public class AttackSkill : Skill
 {
     public override void Perform(LivingBaseAgent subject, LivingBaseAgent target)
     {
-        target.ChangeHealth(subject.living.AttackAmount);
+        target.ChangeHealth(-subject.living.AttackAmount);
     }
 }
 
