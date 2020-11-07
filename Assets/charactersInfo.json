@@ -12,6 +12,7 @@
     "AttackSpeed": 1.0,
     "AttackRadius": 1,
     "AttackAmount": 10,
+    "AttackAngle": 30,
     "Skills": [
       "Attack"
     ]
