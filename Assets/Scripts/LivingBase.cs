@@ -152,15 +152,20 @@ public class LivingBaseAgent : MonoBehaviour
         GameObject.Destroy(gameObject);
     }
 
-    public List<GameObject> GetAttackRangeObjects(Vector3 attackPosition, string mask)
+    /// <summary>
+    /// 获取攻击方向内可攻击实体列表
+    /// </summary>
+    /// <param name="attackDirection">攻击方向</param>
+    /// <param name="mask">layerMask名称</param>
+    /// <returns>GameObject列表</returns>
+    public List<GameObject> GetAttackRangeObjects(Vector3 attackDirection, string mask)
     {
         List<GameObject> gameObjects = new List<GameObject>();
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, living.AttackRadius, LayerMask.GetMask(mask));
         foreach (var collider in colliders)
         {
-            Vector3 Direction = (attackPosition - transform.position).normalized;
-            Vector3 v = collider.gameObject.transform.position - transform.position;
-            float angle = Vector3.Angle(v, Direction);
+            Vector3 targetDirection = collider.gameObject.transform.position - transform.position;
+            float angle = Vector3.Angle(targetDirection, attackDirection);
             if (angle < living.AttackAngle)
             {
                 gameObjects.Add(collider.gameObject);
