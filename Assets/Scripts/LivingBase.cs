@@ -93,13 +93,22 @@ public class LivingBaseAgent : MonoBehaviour
         if (amount < 0)
         {
             if (living.State.HasStatus(Status.Invincible))
+            {
+                Debug.Log($"{living.Name} Invincible");
                 return;
+            }
+
             else
             {
+                living.CurrentHealth = Mathf.Clamp(living.CurrentHealth + amount, 0, living.MaxHealth);
                 //animator.SetTrigger("Hit");
                 //audioSource.PlayOneShot(getHitClip);
-
-                living.State.AddStatus(Status.Invincible, living.TimeInvincible);
+                //living.State.AddStatus(Status.Invincible, living.TimeInvincible);
+                if (IsDead())
+                {
+                    //死亡动画
+                    Destroy();
+                }
             }
         }
         else
@@ -109,7 +118,6 @@ public class LivingBaseAgent : MonoBehaviour
 
             living.CurrentHealth = Mathf.Clamp(living.CurrentHealth + amount, 0, living.MaxHealth);
         }
-        //Debug.Log(currentHealth + "/" + maxHealth);
         // UI change
     }
 
@@ -130,7 +138,7 @@ public class LivingBaseAgent : MonoBehaviour
 
     public bool IsDead()
     {
-        if (living.CurrentHealth == 0)
+        if (living.CurrentHealth <= 0)
             return true;
         else
             return false;
@@ -141,10 +149,7 @@ public class LivingBaseAgent : MonoBehaviour
     /// </summary>
     public void Destroy()
     {
-        if (IsDead())
-        {
-            GameObject.Destroy(gameObject);
-        }
+        GameObject.Destroy(gameObject);
     }
 
     public List<GameObject> GetAttackRangeObjects(Vector3 attackPosition, string mask)
