@@ -93,13 +93,22 @@ public class LivingBaseAgent : MonoBehaviour
         if (amount < 0)
         {
             if (living.State.HasStatus(Status.Invincible))
+            {
+                Debug.Log($"{living.Name} Invincible");
                 return;
+            }
+
             else
             {
+                living.CurrentHealth = Mathf.Clamp(living.CurrentHealth + amount, 0, living.MaxHealth);
                 //animator.SetTrigger("Hit");
                 //audioSource.PlayOneShot(getHitClip);
-
-                living.State.AddStatus(Status.Invincible, living.TimeInvincible);
+                //living.State.AddStatus(Status.Invincible, living.TimeInvincible);
+                if (IsDead())
+                {
+                    //死亡动画
+                    Destroy();
+                }
             }
         }
         else
@@ -109,7 +118,6 @@ public class LivingBaseAgent : MonoBehaviour
 
             living.CurrentHealth = Mathf.Clamp(living.CurrentHealth + amount, 0, living.MaxHealth);
         }
-        //Debug.Log(currentHealth + "/" + maxHealth);
         // UI change
     }
 
@@ -128,15 +136,36 @@ public class LivingBaseAgent : MonoBehaviour
         }
     }
 
-    public List<GameObject> GetAttackRangeObjects(Vector3 attackPosition, string mask)
+    public bool IsDead()
+    {
+        if (living.CurrentHealth <= 0)
+            return true;
+        else
+            return false;
+    }
+
+    /// <summary>
+    /// 血量为零时销毁gameObject
+    /// </summary>
+    public void Destroy()
+    {
+        GameObject.Destroy(gameObject);
+    }
+
+    /// <summary>
+    /// 获取攻击方向内可攻击实体列表
+    /// </summary>
+    /// <param name="attackDirection">攻击方向</param>
+    /// <param name="mask">layerMask名称</param>
+    /// <returns>GameObject列表</returns>
+    public List<GameObject> GetAttackRangeObjects(Vector3 attackDirection, string mask)
     {
         List<GameObject> gameObjects = new List<GameObject>();
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, living.AttackRadius, LayerMask.GetMask(mask));
         foreach (var collider in colliders)
         {
-            Vector3 Direction = (attackPosition - transform.position).normalized;
-            Vector3 v = collider.gameObject.transform.position - transform.position;
-            float angle = Vector3.Angle(v, Direction);
+            Vector3 targetDirection = collider.gameObject.transform.position - transform.position;
+            float angle = Vector3.Angle(targetDirection, attackDirection);
             if (angle < living.AttackAngle)
             {
                 gameObjects.Add(collider.gameObject);

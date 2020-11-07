@@ -93,7 +93,7 @@ public class MonsterAgent : LivingBaseAgent
     {
         rigidbody2d.velocity = Vector3.zero;
         Vector3 direction = Vector3.Normalize(targetPosition - transform.position);
-        //if (Vector3.Distance(transform.position, targetPosition) > living.AttackRadius)
+        if (Vector3.Distance(transform.position, targetPosition) > living.AttackRadius)
             transform.Translate(MoveSpeed * direction * Time.deltaTime);
     }
 
@@ -102,7 +102,7 @@ public class MonsterAgent : LivingBaseAgent
         if (living.AttackSpeed - deltaTime < 0.01)
         {
             living.Skills[0].Perform(this, target.GetComponent<LivingBaseAgent>());
-            print("attack target");
+            //print("attack target");
             deltaTime = 0;
         }
     }
@@ -110,7 +110,7 @@ public class MonsterAgent : LivingBaseAgent
     Vector3 GetRoamPosition()
     {
         Vector3 RandomDirection = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized;
-        print("Roming to " + RandomDirection);
+        //print("Roming to " + RandomDirection);
         return startPosition + RandomDirection * Random.Range(10f, 50f);
 
     }
@@ -125,11 +125,12 @@ public class MonsterAgent : LivingBaseAgent
 
     bool HasArrived(Vector3 position)
     {
-        if (Vector3.Distance(transform.position, position) < 0.1f)
+        if (Vector3.Distance(transform.position, position) < living.AttackRadius)
             return true;
         else
             return false;
     }
+
 
     //void ApplyStatus()
     //{

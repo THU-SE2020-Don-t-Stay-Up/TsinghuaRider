@@ -21,7 +21,7 @@
   },
   {
     "Name": "鸡分",
-    "MoveSpeed":5.0,
+    "MoveSpeed": 5.0,
     "MaxHealth": 50,
     "CurrentHealth": 50,
     "Defense": 0,
@@ -32,6 +32,7 @@
     "ViewAngle": 360,
     "ViewRadius": 10,
     "Reward": 1,
+    "TimeInvincible": 0,
     "Difficulty": 1,
     "Skills": [
       "Split"
