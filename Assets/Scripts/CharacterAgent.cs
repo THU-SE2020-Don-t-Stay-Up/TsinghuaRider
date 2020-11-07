@@ -245,7 +245,7 @@ public class CharacterAgent : LivingBaseAgent
             Stop();
             Vector3 mousePosition = gameObject.GetComponent<PlayerAim>().GetMouseWorldPosition();
             Vector3 attackDirection = (mousePosition - transform.position).normalized;
-            List<GameObject> monsterObjects = GetAttackRangeObjects(attackDirection, "monster");
+            List<GameObject> monsterObjects = GetAttackRangeObjects(attackDirection, "Monster");
             foreach (var monsterObject in monsterObjects)
             {
                 Character.Skills[0].Perform(this, monsterObject.GetComponent<LivingBaseAgent>());
