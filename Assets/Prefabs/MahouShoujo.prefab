@@ -29,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 588788056520936454}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.7494733, y: -0.7465835, z: -0.96241915}
+  m_LocalPosition: {x: -1.7494733, y: -0.7465835, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -132,7 +132,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &5805791863398906478
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -145,17 +145,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d6c396fffec8144c8e4b113049b4a1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3
-  maxHealth: 5
-  timeInvincible: 2
-  maxMagic: 5
+  MoveSpeed: 0
+  animator: {fileID: 0}
+  audioSource: {fileID: 0}
+  getHitClip: {fileID: 0}
+  attackClip: {fileID: 0}
+  getHealingClip: {fileID: 0}
+  rigidbody2d: {fileID: 0}
+  characterIndex: 0
   dashLayerMask:
     serializedVersion: 2
     m_Bits: 0
   bulletPrefab: {fileID: 0}
-  getHitClip: {fileID: 0}
-  attackClip: {fileID: 0}
-  getHealingClip: {fileID: 0}
 --- !u!114 &7992965922502918399
 MonoBehaviour:
   m_ObjectHideFlags: 0

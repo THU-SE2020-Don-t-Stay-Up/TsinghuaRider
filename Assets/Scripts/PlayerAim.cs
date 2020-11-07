@@ -5,11 +5,9 @@ using UnityEngine;
 public class PlayerAim : MonoBehaviour
 {
     private Transform aimTransform;
-    private GameObject mahouShoujo;
-
+    
     private void Awake() {
         aimTransform = transform.Find("Aim");
-        mahouShoujo = GameObject.Find("MahouShoujo");
     }
 
     private void Update() {

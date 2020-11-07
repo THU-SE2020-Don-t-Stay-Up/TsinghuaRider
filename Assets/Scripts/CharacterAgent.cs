@@ -24,8 +24,6 @@ public class CharacterAgent : LivingBaseAgent
     }
     private ActionState actionState;
 
-    private GameObject aiming;
-
     // movement
 
     float horizontal;
@@ -52,8 +50,6 @@ public class CharacterAgent : LivingBaseAgent
         rigidbody2d = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
-
-        aiming = GameObject.Find("MahouShoujo");
 
         MoveSpeed = Character.MoveSpeed;
         actionState = ActionState.Normal;
@@ -242,22 +238,18 @@ public class CharacterAgent : LivingBaseAgent
         {
             Stop();
             Vector3 mousePosition = aiming.GetComponent<PlayerAim>().GetMouseWorldPosition();
-            List<GameObject> monsterObjects = GetAttackRangeObjects(mousePosition, "Monster");
-            foreach (var monsterObject in monsterObjects)
-            {
-                //print(monsterObject.GetComponent<LivingBaseAgent>().living.Name);
-                Character.Skills[0].Perform(this, monsterObject.GetComponent<LivingBaseAgent>());
-            }
             Debug.Log("MissleAttack!");
         }
         if (Input.GetMouseButtonDown(1))
         {
             Stop();
-            Vector3 mousePosition = aiming.GetComponent<PlayerAim>().GetMouseWorldPosition();
-            Vector3 mouseDir = (mousePosition - transform.position).normalized;
-            float attackRange = 3f;
-            Vector3 attackPosition = transform.position + mouseDir * attackRange;
-            Debug.Log(attackPosition);
+            Vector3 mousePosition = gameObject.GetComponent<PlayerAim>().GetMouseWorldPosition();
+
+            List<GameObject> monsterObjects = GetAttackRangeObjects(mousePosition, "monster");
+            foreach (var monsterObject in monsterObjects)
+            {
+                Character.Skills[0].Perform(this, monsterObject.GetComponent<LivingBaseAgent>());
+            }
             Debug.Log("MeleeAttack!");
         }
         SetState(0);
