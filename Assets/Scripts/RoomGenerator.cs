@@ -1,10 +1,10 @@
-using System.Collections;
+ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class RoomGenerator : MonoBehaviour
 {
-    [Header("房间属性")]
+    [Header("房间预制体")]
     public GameObject startRoom;
     public GameObject endRoom;
     public GameObject[] roomPrefabs;
@@ -15,7 +15,7 @@ public class RoomGenerator : MonoBehaviour
     public float yOffset;
 
     Transform generatorPoint;
-    enum Direction {up, down, left, right};
+    enum Direction { up, down, left, right };
     Direction direction;
     List<Room> roomList = new List<Room>();
     List<Vector3> roomPositionList = new List<Vector3>();
@@ -50,11 +50,6 @@ public class RoomGenerator : MonoBehaviour
 
     }
 
-    
-    void Update()
-    {
-        
-    }
 
     void ChangeGeneratePosition(){
         float dist;
@@ -82,6 +77,7 @@ public class RoomGenerator : MonoBehaviour
             }
         } while(dist < 0.5f);
     }
+
 
     void SetupDoor(){
         float distUp, distDown, distLeft, distRight;
