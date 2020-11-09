@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class UI_Inventory : MonoBehaviour
 {
     private Inventory inventory;
-    private Transform itemSlotContainer;
-    private Transform itemSlotTemplate;
+    public Transform itemSlotContainer;
+    public Transform itemSlotTemplate;
 
     private void Awake()
     {
@@ -24,6 +25,11 @@ public class UI_Inventory : MonoBehaviour
         RefreshInventoryItems();
     }
 
+    /// <summary>
+    /// 每当背包内物品有变动事件时，就调用刷新背包UI的函数。（顺便一提，系统内置的Event处理机制真好用，都不要手动传参！）
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void Inventory_OnItemListChanged(object sender, System.EventArgs e)
     {
         RefreshInventoryItems();
@@ -31,6 +37,7 @@ public class UI_Inventory : MonoBehaviour
 
     private void RefreshInventoryItems()
     {
+        //首先删除UI所有的非item模板项目，防止某物品消耗了还显示在UI上
         foreach (Transform child in itemSlotContainer)
         {
             if (child == itemSlotTemplate) continue;
@@ -40,6 +47,8 @@ public class UI_Inventory : MonoBehaviour
         int x = 0;
         int y = 0;
         float itemSlotCellSize = 50.0f;
+
+        // 在UI上摆放物品，并显示其图片
         foreach (Item item in inventory.GetItemList())
         {
             RectTransform itemSlotRectTransform = Instantiate(itemSlotTemplate, itemSlotContainer).GetComponent<RectTransform>();
@@ -48,6 +57,16 @@ public class UI_Inventory : MonoBehaviour
             Image image = itemSlotRectTransform.Find("image").GetComponent<Image>();
             image.sprite = item.GetSprite();
 
+            TextMeshProUGUI uiText = itemSlotRectTransform.Find("amountText").GetComponent<TextMeshProUGUI>();
+            if (item.amount > 1)
+            {
+                uiText.SetText(item.amount.ToString());
+            }
+            else
+            {
+                uiText.SetText("");
+            }
+            // 一行5个
             x++;
             if (x > 4)
             {
