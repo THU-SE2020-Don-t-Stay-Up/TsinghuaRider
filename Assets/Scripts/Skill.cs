@@ -25,7 +25,7 @@ public class MeleeAttackSkill : Skill
 {
     public override void Perform(LivingBaseAgent subject, LivingBaseAgent target)
     {
-        subject.living.MeleeWeapon.Attack(subject.gameObject, subject.living.AttackDirection);
+        //subject.living.MeleeWeapon.Attack(subject.gameObject, subject.living.AttackDirection);
     }
 }
 /// <summary>
