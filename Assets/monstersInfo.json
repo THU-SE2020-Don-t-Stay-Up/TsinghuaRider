@@ -15,7 +15,7 @@
     "Reward": 1,
     "Difficulty": 1,
     "Skills": [
-      "Attack",
+      "MissleAttack",
       "Split"
     ]
   },
@@ -35,6 +35,7 @@
     "TimeInvincible": 0,
     "Difficulty": 1,
     "Skills": [
+      "MeleeAttack",
       "Split"
     ]
   }
