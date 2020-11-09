@@ -1,5 +1,7 @@
+
+﻿using System.Collections.Generic;
 ﻿using UnityEngine;
-using Debug = UnityEngine.Debug;
+
 
 public class CharacterAgent : LivingBaseAgent
 {
@@ -29,6 +31,7 @@ public class CharacterAgent : LivingBaseAgent
     /// </summary>
     private Inventory inventory;
     [SerializeField] private UI_Inventory uiInventory;
+
     // movement
     float horizontal;
     float vertical;
@@ -62,23 +65,12 @@ public class CharacterAgent : LivingBaseAgent
         MoveSpeed = Character.MoveSpeed;
         actionState = ActionState.Normal;
 
-        inventory = new Inventory();
-        uiInventory.SetInventory(inventory);
-        ItemWorld.SpawnItemWorld(new Vector3(0, 0), new Item { itemType = Item.ItemType.Sword, amount = 1 });
-        ItemWorld.SpawnItemWorld(new Vector3(-5, 5), new Item { itemType = Item.ItemType.HealthPotion, amount = 1 });
-        ItemWorld.SpawnItemWorld(new Vector3(5, 5), new Item { itemType = Item.ItemType.Coin, amount = 1 });
-
+        // 初始化背包及UI，由于unity奇怪的机制，每次重启项目就要重新设置脚本。先注释掉调用UI代码
+        inventory = new Inventory(UseItem);
+        //uiInventory.SetInventory(inventory);
     }
 
-    private void OnTriggerEnter2D(Collider2D collider)
-    {
-        ItemWorld itemWorld = collider.GetComponent<ItemWorld>();
-        if (itemWorld != null)
-        {
-            inventory.AddItem(itemWorld.GetItem());
-            itemWorld.DestorySelf();
-        }
-    }
+
     private void Update()
     {
         switch (actionState)
@@ -128,6 +120,44 @@ public class CharacterAgent : LivingBaseAgent
         Dash();
     }
 
+    /// <summary>
+    /// 捡起地图上的道具
+    /// </summary>
+    /// <param name="collider"></param>
+    private void OnTriggerEnter2D(Collider2D collider)
+    {
+        ItemWorld itemWorld = collider.GetComponent<ItemWorld>();
+        if (itemWorld != null)
+        {
+            inventory.AddItem(itemWorld.GetItem());
+            itemWorld.DestorySelf();
+        }
+    }
+
+    /// <summary>
+    /// 道具的使用效果在初始化背包时就被传入
+    /// </summary>
+    /// <param name="item"></param>
+    public void UseItem(Item item)
+    {
+        switch (item.itemType)
+        {
+            case Item.ItemType.HealthPotion: 
+                Debug.Log("我回血啦，我nb了！");
+                inventory.RemoveItem(new Item { itemType = Item.ItemType.HealthPotion, amount = 1 });
+                break;
+            case Item.ItemType.ManaPotion: 
+                Debug.Log("我回蓝啦，我很有精神！");
+                inventory.RemoveItem(new Item { itemType = Item.ItemType.ManaPotion, amount = 1 });
+                break;
+
+        }
+    }
+
+    /// <summary>
+    /// 改变角色状态机的状态
+    /// </summary>
+    /// <param name="a"></param>
     public void SetState(int a)
     {
         switch (a)
