@@ -20,9 +20,25 @@ public class LivingBase
     /// </summary>
     public float Tenacity { get; }
     public float AttackSpeed { get; set; }
+    /// <summary>
+    /// 攻击力
+    /// </summary>
     public int AttackAmount { get; set; }
     public float AttackRadius { get; set; }
     public int AttackAngle { get; set; }
+
+    /// <summary>
+    /// 攻击方向
+    /// </summary>
+    public Vector3 AttackDirection { get; set; } = Vector3.zero;
+    /// <summary>
+    /// 近战武器
+    /// </summary>
+    public MissleWeapon MissleWeapon { get; set; } = new MissleWeapon();
+    /// <summary>
+    /// 远程武器
+    /// </summary>
+    public MeleeWeapon MeleeWeapon { get; set; } = new MeleeWeapon();
     /// <summary>
     /// 实体各种状态
     /// </summary>
@@ -158,19 +174,12 @@ public class LivingBaseAgent : MonoBehaviour
     /// <param name="attackDirection">攻击方向</param>
     /// <param name="mask">layerMask名称</param>
     /// <returns>GameObject列表</returns>
-    public List<GameObject> GetAttackRangeObjects(Vector3 attackDirection, string mask)
+    public IEnumerable<GameObject> GetAttackRangeObjects(Vector3 position, Vector3 attackDirection, string mask)
     {
-        List<GameObject> gameObjects = new List<GameObject>();
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, living.AttackRadius, LayerMask.GetMask(mask));
-        foreach (var collider in colliders)
-        {
-            Vector3 targetDirection = collider.gameObject.transform.position - transform.position;
-            float angle = Vector3.Angle(targetDirection, attackDirection);
-            if (angle < living.AttackAngle)
-            {
-                gameObjects.Add(collider.gameObject);
-            }
-        }
-        return gameObjects;
+        return from collider in Physics2D.OverlapCircleAll(position, living.AttackRadius, LayerMask.GetMask(mask))
+               let targetDirection = collider.gameObject.transform.position - transform.position
+               let angle = Vector3.Angle(targetDirection, attackDirection)
+               where angle < living.AttackAngle
+               select collider.gameObject;
     }
 }
