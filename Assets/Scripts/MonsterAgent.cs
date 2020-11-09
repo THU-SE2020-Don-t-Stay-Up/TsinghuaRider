@@ -30,9 +30,10 @@ public class MonsterAgent : LivingBaseAgent
     Vector3 startPosition;
     Vector3 roamingPosition;
 
+    public Skill AttackSkill => living.Skills[0];
     //public GameObject Prefab;
     // Start is called before the first frame update
-    void Awake()
+    void Start()
     {
         living = Global.monsters[monsterIndex];
         print(Monster.Name);
@@ -101,7 +102,7 @@ public class MonsterAgent : LivingBaseAgent
     {
         if (living.AttackSpeed - deltaTime < 0.01)
         {
-            living.Skills[0].Perform(this, target.GetComponent<LivingBaseAgent>());
+            AttackSkill.Perform(this, target.GetComponent<LivingBaseAgent>());
             //print("attack target");
             deltaTime = 0;
         }

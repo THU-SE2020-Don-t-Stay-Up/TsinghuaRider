@@ -38,7 +38,10 @@ public class CharacterAgent : LivingBaseAgent
     Vector2 lookDirection = new Vector2(1, 0);
 
     // actions
-    public GameObject bulletPrefab;
+    public GameObject WeaponPrefab;  
+
+    public Skill MissleAttack => living.Skills[0];
+    public Skill MeleeAttack => living.Skills[1];
 
     private void Awake()
     {
@@ -234,22 +237,18 @@ public class CharacterAgent : LivingBaseAgent
     private void HandleAttacking()
     {
         SetState(1);
+        Vector3 mousePosition = gameObject.GetComponent<PlayerAim>().GetMouseWorldPosition();
+        living.AttackDirection= (mousePosition - transform.position).normalized;
         if (Input.GetMouseButtonDown(0))
         {
             Stop();
-            Vector3 mousePosition = gameObject.GetComponent<PlayerAim>().GetMouseWorldPosition();
+            MissleAttack.Perform(this, null);
             Debug.Log("MissleAttack!");
         }
         if (Input.GetMouseButtonDown(1))
         {
             Stop();
-            Vector3 mousePosition = gameObject.GetComponent<PlayerAim>().GetMouseWorldPosition();
-            Vector3 attackDirection = (mousePosition - transform.position).normalized;
-            List<GameObject> monsterObjects = GetAttackRangeObjects(attackDirection, "monster");
-            foreach (var monsterObject in monsterObjects)
-            {
-                Character.Skills[0].Perform(this, monsterObject.GetComponent<LivingBaseAgent>());
-            }
+            MeleeAttack.Perform(this, null);
             Debug.Log("MeleeAttack!");
         }
         SetState(0);
