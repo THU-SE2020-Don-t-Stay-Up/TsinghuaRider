@@ -40,14 +40,14 @@ public class MonsterAgent : LivingBaseAgent
 
         rigidbody2d = GetComponent<Rigidbody2D>();
 
-        target = GameObject.FindWithTag("Player");
+        
 
         startPosition = transform.position;
         roamingPosition = GetRoamPosition();
 
         MoveSpeed = living.MoveSpeed;
         actionState = ActionState.Roaming;
-
+        living.MeleeWeapon.bulletPrefab = bulletPrefab;
     }
 
     // Update is called once per frame
@@ -62,17 +62,23 @@ public class MonsterAgent : LivingBaseAgent
                 FindTarget();
                 break;
             case ActionState.Chasing:
-                MoveToPosition(target.transform.position);
-                float distance = Vector3.Distance(transform.position, target.transform.position);
-                if (distance < living.AttackRadius)
+                if (target != null)
                 {
-                    AttackTarget();
+                    MoveToPosition(target.transform.position);
+                    float distance = Vector3.Distance(transform.position, target.transform.position);
+                    if (distance <= living.AttackRadius)
+                    {
+                        AttackTarget();
+                    }
+                    else if (distance > Monster.ViewRadius)
+                    {
+                        actionState = ActionState.Restarting;
+                    }
                 }
-                else if (distance > Monster.ViewRadius)
+                else
                 {
                     actionState = ActionState.Restarting;
                 }
-
                 break;
             case ActionState.Restarting:
                 MoveToPosition(startPosition);
@@ -94,7 +100,7 @@ public class MonsterAgent : LivingBaseAgent
     {
         rigidbody2d.velocity = Vector3.zero;
         Vector3 direction = Vector3.Normalize(targetPosition - transform.position);
-        if (Vector3.Distance(transform.position, targetPosition) > living.AttackRadius)
+        if (Vector3.Distance(transform.position, targetPosition) >= living.AttackRadius)
             transform.Translate(MoveSpeed * direction * Time.deltaTime);
     }
 
@@ -102,6 +108,7 @@ public class MonsterAgent : LivingBaseAgent
     {
         if (living.AttackSpeed - deltaTime < 0.01)
         {
+            living.AttackDirection = target.transform.position - transform.position;
             AttackSkill.Perform(this, target.GetComponent<LivingBaseAgent>());
             //print("attack target");
             deltaTime = 0;
@@ -118,7 +125,8 @@ public class MonsterAgent : LivingBaseAgent
 
     void FindTarget()
     {
-        if(target != null)
+        target = GameObject.FindWithTag("Player");
+        if (target != null)
         {
             if (Vector3.Distance(transform.position, target.transform.position) < Monster.ViewRadius)
             {
