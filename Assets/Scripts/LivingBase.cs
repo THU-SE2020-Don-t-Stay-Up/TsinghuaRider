@@ -38,6 +38,7 @@ public class LivingBase
     /// <summary>
     /// 远程武器
     /// </summary>
+    
     public MeleeWeapon MeleeWeapon { get; set; } = new MeleeWeapon();
     /// <summary>
     /// 实体各种状态
@@ -104,6 +105,8 @@ public class LivingBaseAgent : MonoBehaviour
     public AudioClip getHealingClip;
 
     public Rigidbody2D rigidbody2d;
+
+    public GameObject bulletPrefab;
     public void ChangeHealth(int amount)
     {
         if (amount < 0)
