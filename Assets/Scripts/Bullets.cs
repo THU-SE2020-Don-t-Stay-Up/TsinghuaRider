@@ -7,7 +7,7 @@ public class Bullets : MonoBehaviour
     Rigidbody2D rigidbody2d;
 
     public float MaxRange = 100.0f;
-    public float Velocity { get; set; }
+    public float Velocity;
     public float AttackAmount { get; set; }
     public Vector3 Direction { get; set; }
 
@@ -33,6 +33,6 @@ public class Bullets : MonoBehaviour
 
     public void Move()
     {
-        transform.Translate(Direction * Velocity);
+        transform.Translate(Direction * Velocity * Time.deltaTime);
     }
 }
