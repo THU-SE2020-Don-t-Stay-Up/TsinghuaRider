@@ -8,17 +8,26 @@ abstract public class Skill
 }
 
 /// <summary>
-/// 普攻技能
+/// 近战普攻技能
 /// </summary>
-public class AttackSkill : Skill
+public class MissleAttackSkill : Skill
 {
     public override void Perform(LivingBaseAgent subject, LivingBaseAgent target)
     {
-        target.ChangeHealth(-subject.living.AttackAmount);
-        Debug.Log($"{subject.living.Name} attack {target.living.Name}, {target.living.Name} currentHealth is {target.living.CurrentHealth}");
+        subject.living.MissleWeapon.Attack(subject.gameObject, subject.living.AttackDirection);
     }
 }
 
+/// <summary>
+/// 远程武器攻击
+/// </summary>
+public class MeleeAttackSkill : Skill
+{
+    public override void Perform(LivingBaseAgent subject, LivingBaseAgent target)
+    {
+        //subject.living.MeleeWeapon.Attack(subject.gameObject, subject.living.AttackDirection);
+    }
+}
 /// <summary>
 /// 分裂技能
 /// </summary>

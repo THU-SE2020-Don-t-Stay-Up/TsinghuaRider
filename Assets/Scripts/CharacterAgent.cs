@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Debug = UnityEngine.Debug;
 
 public class CharacterAgent : LivingBaseAgent
@@ -43,8 +42,12 @@ public class CharacterAgent : LivingBaseAgent
     Vector2 lookDirection = new Vector2(0, 0);
 
     // actions
-    public GameObject bulletPrefab;
+    public GameObject WeaponPrefab;
 
+    public Skill MissleAttack => living.Skills[0];
+    public Skill MeleeAttack => living.Skills[1];
+
+    float deltaTime = 0;
     private void Awake()
     {
         Global.characters = Character.LoadCharacter();
@@ -112,6 +115,7 @@ public class CharacterAgent : LivingBaseAgent
                 break;
         }
         CheckState();
+        deltaTime += Time.deltaTime;
     }
 
     private void FixedUpdate()
@@ -255,27 +259,34 @@ public class CharacterAgent : LivingBaseAgent
 
     private void HandleAttacking()
     {
+        Vector3 mousePosition = gameObject.GetComponent<PlayerAim>().GetMouseWorldPosition();
+        living.AttackDirection = (mousePosition - transform.position).normalized;
         if (Input.GetMouseButtonDown(0))
         {
-            SetState(1);
-            Vector3 mousePosition = gameObject.GetComponent<PlayerAim>().GetMouseWorldPosition();
-
-            Debug.Log("MissleAttack!");
-            SetState(0);
+            if (living.AttackSpeed - deltaTime < 0.01)
+            {
+                SetState(1);
+                deltaTime = 0;
+                Stop();
+                MissleAttack.Perform(this, null);
+                Debug.Log("MissleAttack!");
+                SetState(0);
+            }
         }
 
         if (Input.GetMouseButtonDown(1))
         {
-            SetState(1);
-            Vector3 mousePosition = gameObject.GetComponent<PlayerAim>().GetMouseWorldPosition();
-
-            List<GameObject> monsterObjects = GetAttackRangeObjects(mousePosition, "monster");
-            foreach (var monsterObject in monsterObjects)
+            if (living.AttackSpeed - deltaTime < 0.01)
             {
-                Character.Skills[0].Perform(this, monsterObject.GetComponent<LivingBaseAgent>());
+                SetState(1);
+                Stop();
+                MeleeAttack.Perform(this, null);
+                Debug.Log("MeleeAttack!");
+                deltaTime = 0;
+                animator.SetTrigger("Melee");
+                SetState(0);
             }
-            animator.SetTrigger("Melee");
-            Debug.Log("MeleeAttack!");
         }
     }
 }
+
