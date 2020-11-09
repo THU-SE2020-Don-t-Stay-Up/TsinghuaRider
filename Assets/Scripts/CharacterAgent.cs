@@ -67,7 +67,7 @@ public class CharacterAgent : LivingBaseAgent
 
         // 初始化背包及UI，由于unity奇怪的机制，每次重启项目就要重新设置脚本。先注释掉调用UI代码
         inventory = new Inventory(UseItem);
-        //uiInventory.SetInventory(inventory);
+        uiInventory.SetInventory(inventory);
     }
 
 
