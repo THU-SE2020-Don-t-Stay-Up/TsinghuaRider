@@ -112,15 +112,18 @@ public class MonsterAgent : LivingBaseAgent
     {
         Vector3 RandomDirection = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized;
         //print("Roming to " + RandomDirection);
-        return startPosition + RandomDirection * Random.Range(10f, 50f);
+        return startPosition + RandomDirection * Random.Range(10f, 20f);
 
     }
 
     void FindTarget()
     {
-        if (Vector3.Distance(transform.position, target.transform.position) < Monster.ViewRadius)
+        if(target != null)
         {
-            actionState = ActionState.Chasing;
+            if (Vector3.Distance(transform.position, target.transform.position) < Monster.ViewRadius)
+            {
+                actionState = ActionState.Chasing;
+            }
         }
     }
 
