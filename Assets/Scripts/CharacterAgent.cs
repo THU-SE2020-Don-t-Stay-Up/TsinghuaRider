@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Debug = UnityEngine.Debug;
 
 public class CharacterAgent : LivingBaseAgent
@@ -38,11 +37,12 @@ public class CharacterAgent : LivingBaseAgent
     Vector2 lookDirection = new Vector2(1, 0);
 
     // actions
-    public GameObject WeaponPrefab;  
+    public GameObject WeaponPrefab;
 
     public Skill MissleAttack => living.Skills[0];
     public Skill MeleeAttack => living.Skills[1];
 
+    float deltaTime = 0;
     private void Awake()
     {
         Global.characters = Character.LoadCharacter();
@@ -89,6 +89,7 @@ public class CharacterAgent : LivingBaseAgent
                 break;
         }
         CheckState();
+        deltaTime += Time.deltaTime;
     }
 
     private void FixedUpdate()
@@ -238,19 +239,28 @@ public class CharacterAgent : LivingBaseAgent
     {
         SetState(1);
         Vector3 mousePosition = gameObject.GetComponent<PlayerAim>().GetMouseWorldPosition();
-        living.AttackDirection= (mousePosition - transform.position).normalized;
+        living.AttackDirection = (mousePosition - transform.position).normalized;
         if (Input.GetMouseButtonDown(0))
         {
-            Stop();
-            MissleAttack.Perform(this, null);
-            Debug.Log("MissleAttack!");
+            if (living.AttackSpeed - deltaTime < 0.01)
+            {
+                deltaTime = 0;
+                Stop();
+                MissleAttack.Perform(this, null);
+                Debug.Log("MissleAttack!");
+            }
         }
         if (Input.GetMouseButtonDown(1))
         {
-            Stop();
-            MeleeAttack.Perform(this, null);
-            Debug.Log("MeleeAttack!");
+            if (living.AttackSpeed - deltaTime < 0.01)
+            {
+                Stop();
+                MeleeAttack.Perform(this, null);
+                Debug.Log("MeleeAttack!");
+                deltaTime = 0;
+            }
         }
         SetState(0);
     }
 }
+
