@@ -24,18 +24,23 @@ public class CharacterAgent : LivingBaseAgent
     }
     private ActionState actionState;
 
-    // movement
 
+    /// <summary>
+    /// 物品栏
+    /// </summary>
+    private Inventory inventory;
+    [SerializeField] private UI_Inventory uiInventory;
+    // movement
     float horizontal;
     float vertical;
+
     // dash realting
     private bool isDashBottonDown;
-
     [SerializeField] private LayerMask dashLayerMask;
 
     // animation
 
-    Vector2 lookDirection = new Vector2(1, 0);
+    Vector2 lookDirection = new Vector2(0, 0);
 
     // actions
     public GameObject bulletPrefab;
@@ -53,8 +58,24 @@ public class CharacterAgent : LivingBaseAgent
 
         MoveSpeed = Character.MoveSpeed;
         actionState = ActionState.Normal;
+
+        inventory = new Inventory();
+        uiInventory.SetInventory(inventory);
+        ItemWorld.SpawnItemWorld(new Vector3(0, 0), new Item { itemType = Item.ItemType.Sword, amount = 1 });
+        ItemWorld.SpawnItemWorld(new Vector3(-5, 5), new Item { itemType = Item.ItemType.HealthPotion, amount = 1 });
+        ItemWorld.SpawnItemWorld(new Vector3(5, 5), new Item { itemType = Item.ItemType.Coin, amount = 1 });
+
     }
 
+    private void OnTriggerEnter2D(Collider2D collider)
+    {
+        ItemWorld itemWorld = collider.GetComponent<ItemWorld>();
+        if (itemWorld != null)
+        {
+            inventory.AddItem(itemWorld.GetItem());
+            itemWorld.DestorySelf();
+        }
+    }
     private void Update()
     {
         switch (actionState)
@@ -62,7 +83,6 @@ public class CharacterAgent : LivingBaseAgent
             // when in Normal state, player can move, perform skills, get hurt ,attack and interact
             case ActionState.Normal:
                 // move
-                MoveSpeed = 10.0f;
                 HandleMovement();
 
                 // do special action such as dash and skills
@@ -77,8 +97,14 @@ public class CharacterAgent : LivingBaseAgent
 
             // when in Attacking state, player should be unable to move or interact, but can perform skills, be hurt or do another attack
             case ActionState.Attacking:
-                HandleAttacking();
                 Perform();
+
+                if (animator.GetCurrentAnimatorStateInfo(0).IsName("MeleeAttack"))
+                {
+                    SetState(0);
+                    Debug.Log("melee attack finish!");
+                }
+
                 break;
 
             // when in Skilling state, player could only wait until skill is over
@@ -104,14 +130,17 @@ public class CharacterAgent : LivingBaseAgent
         {
             case 0:
                 actionState = ActionState.Normal;
+                MoveSpeed = 10.0f;
                 break;
             case 1:
                 actionState = ActionState.Attacking;
+                Stop();
                 break;
             case 2:
                 actionState = ActionState.Dashing;
                 break;
             case 3:
+                Stop();
                 actionState = ActionState.Skilling;
                 break;
 
@@ -177,28 +206,24 @@ public class CharacterAgent : LivingBaseAgent
         if (Input.GetKeyDown(KeyCode.R))
         {
             SetState(3);
-            Stop();
             Debug.Log("Should perform skill1!");
             SetState(0);
         }
         if (Input.GetKeyDown(KeyCode.F))
         {
             SetState(3);
-            Stop();
             Debug.Log("Should perform skill2!");
             SetState(0);
         }
         if (Input.GetKeyDown(KeyCode.C))
         {
             SetState(3);
-            Stop();
             Debug.Log("Should perform skill3!");
             SetState(0);
         }
         if (Input.GetKeyDown(KeyCode.G))
         {
             SetState(3);
-            Stop();
             Debug.Log("Should perform skill4!");
             SetState(0);
         }
@@ -228,30 +253,29 @@ public class CharacterAgent : LivingBaseAgent
         }
     }
 
-
-
-
     private void HandleAttacking()
     {
-        SetState(1);
         if (Input.GetMouseButtonDown(0))
         {
-            Stop();
+            SetState(1);
             Vector3 mousePosition = gameObject.GetComponent<PlayerAim>().GetMouseWorldPosition();
+
             Debug.Log("MissleAttack!");
+            SetState(0);
         }
+
         if (Input.GetMouseButtonDown(1))
         {
-            Stop();
+            SetState(1);
             Vector3 mousePosition = gameObject.GetComponent<PlayerAim>().GetMouseWorldPosition();
-            Vector3 attackDirection = (mousePosition - transform.position).normalized;
-            List<GameObject> monsterObjects = GetAttackRangeObjects(attackDirection, "Monster");
+
+            List<GameObject> monsterObjects = GetAttackRangeObjects(mousePosition, "monster");
             foreach (var monsterObject in monsterObjects)
             {
                 Character.Skills[0].Perform(this, monsterObject.GetComponent<LivingBaseAgent>());
             }
+            animator.SetTrigger("Melee");
             Debug.Log("MeleeAttack!");
         }
-        SetState(0);
     }
 }
