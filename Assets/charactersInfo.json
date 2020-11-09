@@ -10,11 +10,12 @@
     "Defense": 0,
     "Tenacity": 0.0,
     "AttackSpeed": 1.0,
-    "AttackRadius": 1,
+    "AttackRadius": 3,
     "AttackAmount": 10,
-    "AttackAngle": 30,
+    "AttackAngle": 45,
     "Skills": [
-      "Attack"
+      "MissleAttack",
+      "MeleeAttack"
     ]
   }
 ]
