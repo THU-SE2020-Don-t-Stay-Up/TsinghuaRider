@@ -14,15 +14,15 @@ public class Inventory
     public event EventHandler OnItemListChanged;
 
     private List<Item> itemList;
-    private Action<Item> useItemAction;
+    //private Action<Item> useItemAction;
 
     /// <summary>
     /// 初始化背包，传入使用方法。带有一些物品
     /// </summary>
     /// <param name="useItemAction"></param>
-    public Inventory(Action<Item> useItemAction) 
+    public Inventory() 
     {
-        this.useItemAction = useItemAction;
+       // this.useItemAction = useItemAction;
         itemList = new List<Item>();
 
         AddItem(new Item { itemType = Item.ItemType.Sword, amount = 1});
@@ -63,8 +63,9 @@ public class Inventory
         OnItemListChanged?.Invoke(this, EventArgs.Empty);
     }
 
-    public void RemoveItem(Item item)
+    public bool RemoveItem(Item item)
     {
+        bool itemFlag = true;
         if (item.IsStackable())
         {
             Item itemInInventory = null;
@@ -76,16 +77,25 @@ public class Inventory
                     itemInInventory = inventoryItem;
                 }
             }
-            if (itemInInventory != null && itemInInventory.amount <= 0)
+
+            if (itemInInventory != null )
             {
-                itemList.Remove(itemInInventory);
+                if (itemInInventory.amount <= 0) 
+                {
+                    itemFlag = itemList.Remove(itemInInventory);
+                }
+            }
+            else
+            {
+                itemFlag = false;
             }
         }
         else
         {
-            itemList.Remove(item);
+            itemFlag = itemList.Remove(item);
         }
         OnItemListChanged?.Invoke(this, EventArgs.Empty);
+        return itemFlag;
     }
 
     public List<Item> GetItemList()
@@ -93,9 +103,16 @@ public class Inventory
         return itemList;
     }
 
-    public void UseItem(Item item)
+    public void UseItem(Item item, Character character)
     {
-        useItemAction(item);
+        if (RemoveItem(item))
+        {
+            item.UseItem(item, character);
+        }
+        else
+        {
+            Debug.Log("无了啊！");
+        }
     }
 
 }

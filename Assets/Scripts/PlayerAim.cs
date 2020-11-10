@@ -7,14 +7,14 @@ public class PlayerAim : MonoBehaviour
     private Transform aimTransform;
     
     private void Awake() {
-        aimTransform = transform.Find("Aim");
+        aimTransform = transform;
     }
 
     private void Update() {
         HandleAiming();
     }
 
-    public Vector3 GetMouseWorldPosition()
+    public static Vector3 GetMouseWorldPosition()
     {
         Vector3 vec = GetMouseWorldPositionWithZ(Input.mousePosition, Camera.main);
         vec.z = 0f;

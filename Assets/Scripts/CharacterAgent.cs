@@ -65,11 +65,10 @@ public class CharacterAgent : LivingBaseAgent
         MoveSpeed = Character.MoveSpeed;
         actionState = ActionState.Normal;
 
-        // 初始化背包及UI，由于unity奇怪的机制，每次重启项目就要重新设置脚本。先注释掉调用UI代码
-        inventory = new Inventory(UseItem);
+        // 初始化背包及UI
+        inventory = new Inventory();
         uiInventory.SetInventory(inventory);
     }
-
 
     private void Update()
     {
@@ -134,25 +133,7 @@ public class CharacterAgent : LivingBaseAgent
         }
     }
 
-    /// <summary>
-    /// 道具的使用效果在初始化背包时就被传入
-    /// </summary>
-    /// <param name="item"></param>
-    public void UseItem(Item item)
-    {
-        switch (item.itemType)
-        {
-            case Item.ItemType.HealthPotion: 
-                Debug.Log("我回血啦，我nb了！");
-                inventory.RemoveItem(new Item { itemType = Item.ItemType.HealthPotion, amount = 1 });
-                break;
-            case Item.ItemType.ManaPotion: 
-                Debug.Log("我回蓝啦，我很有精神！");
-                inventory.RemoveItem(new Item { itemType = Item.ItemType.ManaPotion, amount = 1 });
-                break;
 
-        }
-    }
 
     /// <summary>
     /// 改变角色状态机的状态
@@ -240,13 +221,13 @@ public class CharacterAgent : LivingBaseAgent
         if (Input.GetKeyDown(KeyCode.R))
         {
             SetState(3);
-            Debug.Log("Should perform skill1!");
+            inventory.UseItem(new Item { amount = 1, itemType = Item.ItemType.HealthPotion }, Character);
             SetState(0);
         }
         if (Input.GetKeyDown(KeyCode.F))
         {
             SetState(3);
-            Debug.Log("Should perform skill2!");
+            inventory.UseItem(new Item { amount = 1, itemType = Item.ItemType.ManaPotion }, Character);
             SetState(0);
         }
         if (Input.GetKeyDown(KeyCode.C))
@@ -289,7 +270,7 @@ public class CharacterAgent : LivingBaseAgent
 
     private void HandleAttacking()
     {
-        Vector3 mousePosition = gameObject.GetComponent<PlayerAim>().GetMouseWorldPosition();
+        Vector3 mousePosition = PlayerAim.GetMouseWorldPosition();
         living.AttackDirection = (mousePosition - transform.position).normalized;
         if (Input.GetMouseButtonDown(0))
         {
