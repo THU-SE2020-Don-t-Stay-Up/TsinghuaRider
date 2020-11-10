@@ -1,0 +1,44 @@
+[
+  {
+    "Name": "导鼠",
+    "MoveSpeed": 2.0,
+    "MaxHealth": 100,
+    "CurrentHealth": 100,
+    "Defense": 0,
+    "Tenacity": 0.0,
+    "AttackSpeed": 1.0,
+    "AttackRadius": 2,
+    "AttackAmount": 10,
+    "AttackAngle": 30,
+    "TimeInvincible": 0, 
+    "ViewAngle": 180,
+    "ViewRadius": 10,
+    "Reward": 1,
+    "Difficulty": 1,
+    "Skills": [
+      "MissleAttack",
+      "Split"
+    ]
+  },
+  {
+    "Name": "鸡分",
+    "MoveSpeed": 5.0,
+    "MaxHealth": 50,
+    "CurrentHealth": 50,
+    "Defense": 0,
+    "Tenacity": 0.0,
+    "AttackSpeed": 1.0,
+    "AttackRadius": 8,
+    "AttackAmount": 10,
+    "AttackAngle": 0,
+    "ViewAngle": 360,
+    "ViewRadius": 10,
+    "Reward": 1,
+    "TimeInvincible": 0,
+    "Difficulty": 1,
+    "Skills": [
+      "MeleeAttack",
+      "Split"
+    ]
+  }
+]
