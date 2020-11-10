@@ -66,9 +66,9 @@ public class UI_Inventory : MonoBehaviour
             {
                 uiText.SetText("");
             }
-            // 一行5个
+            // 一行4个
             x++;
-            if (x > 4)
+            if (x > 3)
             {
                 x = 0;
                 y --;

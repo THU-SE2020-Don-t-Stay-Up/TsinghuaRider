@@ -55,4 +55,17 @@ public class Item {
         }
     }
 
+    public void UseItem(Item item, Character character)
+    {
+        switch (item.itemType)
+        {
+            case Item.ItemType.HealthPotion:  
+                Debug.Log("我回血啦，我nb了！");
+                break;
+
+            case Item.ItemType.ManaPotion:
+                Debug.Log("我很有精神！");
+                break;
+        }
+    }
 }
