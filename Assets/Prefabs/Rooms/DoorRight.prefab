@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6670642313763628898}
   - component: {fileID: 3639985413633389568}
+  - component: {fileID: -6561078201123618918}
   m_Layer: 11
   m_Name: DoorRight
   m_TagString: Untagged
@@ -82,3 +83,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &-6561078201123618918
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6746972531657928677}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac83adbba9433114ab52137c6da70598, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  teleportTag: 
+  teleportDestination: {fileID: 0}
+  inScene: 1

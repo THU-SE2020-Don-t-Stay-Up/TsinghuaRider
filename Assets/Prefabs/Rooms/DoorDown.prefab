@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7073644033061718145}
   - component: {fileID: 6929976430578235403}
+  - component: {fileID: -2535644761419221258}
   m_Layer: 11
   m_Name: DoorDown
   m_TagString: Untagged
@@ -82,3 +83,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &-2535644761419221258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1867133899898928993}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac83adbba9433114ab52137c6da70598, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  teleportTag: 
+  teleportDestination: {fileID: 0}
+  inScene: 1
