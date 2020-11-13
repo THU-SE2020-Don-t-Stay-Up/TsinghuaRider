@@ -27,10 +27,15 @@ public class Room : MonoBehaviour
 
     void Start()
     {
+        Clear();
+    }
+
+    public void Clear()
+    {
+        stageClear = true;
         doorLeft.SetActive(flagLeft);
         doorRight.SetActive(flagRight);
         doorUp.SetActive(flagUp);
         doorDown.SetActive(flagDown);
     }
-
 }
