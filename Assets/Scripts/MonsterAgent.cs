@@ -47,7 +47,7 @@ public class MonsterAgent : LivingBaseAgent
 
         MoveSpeed = living.MoveSpeed;
         actionState = ActionState.Roaming;
-        living.MeleeWeapon.bulletPrefab = bulletPrefab;
+        living.MissleWeapon.bulletPrefab = bulletPrefab;
     }
 
     // Update is called once per frame

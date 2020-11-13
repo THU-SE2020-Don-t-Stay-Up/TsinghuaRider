@@ -10,7 +10,7 @@ interface IWeapon
 /// <summary>
 /// 远程武器类
 /// </summary> 
-public class MeleeWeapon : Item, IWeapon
+public class MissleWeapon : Item, IWeapon
 {
     /// <summary>
     /// 子弹prefab
@@ -26,7 +26,7 @@ public class MeleeWeapon : Item, IWeapon
     }
 }
 
-public class MissleWeapon : Item, IWeapon
+public class MeleeWeapon : Item, IWeapon
 {
     public void Attack(GameObject user, Vector3 Direction)
     {
