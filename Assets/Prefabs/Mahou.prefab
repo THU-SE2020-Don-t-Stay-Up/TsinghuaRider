@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1550602760931735205}
   - component: {fileID: 1550602760931735206}
+  - component: {fileID: 5016464693617914651}
   - component: {fileID: 2197916440421305148}
   - component: {fileID: 6499765829611139546}
   - component: {fileID: 5565679003278344399}
@@ -86,7 +87,26 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
+--- !u!95 &5016464693617914651
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1550602760931735207}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 98e58f664f135ea41a8448c5b0e043ec, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!61 &2197916440421305148
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -153,11 +173,13 @@ MonoBehaviour:
   attackClip: {fileID: 0}
   getHealingClip: {fileID: 0}
   rigidbody2d: {fileID: 0}
+  bulletPrefab: {fileID: 0}
   characterIndex: 0
+  uiInventory: {fileID: 0}
   dashLayerMask:
     serializedVersion: 2
     m_Bits: 0
-  bulletPrefab: {fileID: 0}
+  WeaponPrefab: {fileID: 0}
 --- !u!114 &8305670466705160798
 MonoBehaviour:
   m_ObjectHideFlags: 0
