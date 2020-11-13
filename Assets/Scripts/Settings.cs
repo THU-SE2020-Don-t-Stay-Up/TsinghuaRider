@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-
-
+using Debug = UnityEngine.Debug;
+using System.Linq;
 class Settings
 {
     /// <summary>
@@ -30,24 +30,44 @@ class Global
 }
 
 /// <summary>
-/// 状态变量，按bit存储状态信息
+/// 状态类，存储状态Effect方法
 /// </summary>
-[Flags]
-public enum Status
+//[Flags]
+//public enum Status
+//{
+//    Normal = 0x0,
+//    Slow = 0x1,
+//    Poison = 0x2,
+//    Cold = 0x4,
+//    Fierce = 0x8,
+//    Invincible = 0x10
+//}
+
+abstract public class Status
 {
-    Normal = 0x0,
-    Slow = 0x1,
-    Poison = 0x2,
-    Cold = 0x4,
-    Fierce = 0x8,
-    Invincible = 0x10
+    public abstract void Effect(LivingBaseAgent agent);
+}
+
+public class NormalState : Status
+{
+    public override void Effect(LivingBaseAgent agent)
+    {
+        Debug.Log("我很正常");
+    }
+}
+
+public class SlowState : Status
+{
+    public override void Effect(LivingBaseAgent agent)
+    {
+        Debug.Log("我减速了");
+    }
 }
 /// <summary>
 /// 状态类，存储并操作object的状态
 /// </summary>
 public class State
 {
-    Status status = 0x00;
     /// <summary>
     /// 记录各种状态的持续时间
     /// </summary>
@@ -59,13 +79,12 @@ public class State
     /// <param name="status">待添加状态</param>
     public void AddStatus(Status status, float duration)
     {
-        if(HasStatus(status))
+        if (HasStatus(status))
         {
             StateDuration[status] += duration;
         }
         else
         {
-            this.status |= status;
             StateDuration.Add(status, duration);
         }
     }
@@ -77,7 +96,6 @@ public class State
     {
         if (HasStatus(status))
         {
-            this.status &= ~status;
             StateDuration.Remove(status);
         }
     }
@@ -88,19 +106,20 @@ public class State
     /// <returns>处于该状态返回true，不处于则返回false</returns>
     public bool HasStatus(Status status)
     {
-        if ((this.status & status) != 0)
-            return true;
-        else
+        foreach (var _status in StateDuration.Keys.ToArray())
         {
-            return false;
+            if ( _status == status )
+            {
+                return true;
+            }
         }
+        return false;
     }
     /// <summary>
     /// 清空所有状态
     /// </summary>
     public void ClearStatus()
     {
-        status = 0x00;
         StateDuration.Clear();
     }
 
