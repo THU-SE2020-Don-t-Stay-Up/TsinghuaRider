@@ -1,11 +1,12 @@
 ﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
 /// <summary>
 /// 怪物属性类，继承自LivingBase，存储角色所有基本属性
 /// </summary>
-public class Monster : LivingBase
+public class Monster : LivingBase, ICloneable
 {
     /// <summary>
     /// 视野角度
@@ -24,6 +25,10 @@ public class Monster : LivingBase
     /// </summary>
     public int Difficulty { get; set; }
 
+    public object Clone()
+    {
+        return MemberwiseClone();
+    }
 
     /// <summary>
     /// 加载怪物配置文件，游戏初始化时调用
