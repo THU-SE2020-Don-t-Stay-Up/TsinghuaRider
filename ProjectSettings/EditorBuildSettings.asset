@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Scenes/GameSetting.unity
     guid: d69519c8bb9f3f54fbcee8a40070f304
   - enabled: 0
-    path: Assets/Prefabs/MonsterTest.unity
+    path: Assets/Scenes/MonsterTest.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
     path: Assets/Scenes/Game.unity
