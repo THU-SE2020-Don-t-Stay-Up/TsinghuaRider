@@ -288,13 +288,14 @@ public class CharacterAgent : LivingBaseAgent
     /// 人物与环境交互，如果碰撞物体实现了IInteract接口，调用对应的InteractWith函数实现人物与环境的交互
     /// </summary>
     /// <param name="collision">碰撞实体</param>
-    public void OnTriggerEnter2D(Collision2D collision)
+    public void OnTriggerEnter2D(Collider2D collision)
     {
         IInteract interact = Utility.GetInterface<IInteract>(collision.gameObject);
         if (interact != null)
         {
             interact.InteractWith(gameObject);
         }
+        
     }
 }
 
