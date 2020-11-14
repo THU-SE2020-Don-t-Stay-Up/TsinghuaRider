@@ -64,7 +64,7 @@ public class CharacterAgent : LivingBaseAgent
 
         MoveSpeed = Character.MoveSpeed;
         actionState = ActionState.Normal;
-
+        living.State.AddStatus(new InvincibleState(), living.TimeInvincible);
         // 初始化背包及UI
         inventory = new Inventory();
         uiInventory.SetInventory(inventory);
@@ -118,22 +118,6 @@ public class CharacterAgent : LivingBaseAgent
 
         Dash();
     }
-
-    /// <summary>
-    /// 捡起地图上的道具
-    /// </summary>
-    /// <param name="collider"></param>
-    private void OnTriggerEnter2D(Collider2D collider)
-    {
-        ItemWorld itemWorld = collider.GetComponent<ItemWorld>();
-        if (itemWorld != null)
-        {
-            inventory.AddItem(itemWorld.GetItem());
-            itemWorld.DestorySelf();
-        }
-    }
-
-
 
     /// <summary>
     /// 改变角色状态机的状态
@@ -297,6 +281,19 @@ public class CharacterAgent : LivingBaseAgent
                 animator.SetTrigger("Melee");
                 SetState(0);
             }
+        }
+    }
+
+    /// <summary>
+    /// 人物与环境交互，如果碰撞物体实现了IInteract接口，调用对应的InteractWith函数实现人物与环境的交互
+    /// </summary>
+    /// <param name="collision">碰撞实体</param>
+    public void OnTriggerEnter2D(Collision2D collision)
+    {
+        IInteract interact = Utility.GetInterface<IInteract>(collision.gameObject);
+        if (interact != null)
+        {
+            interact.InteractWith(gameObject);
         }
     }
 }
