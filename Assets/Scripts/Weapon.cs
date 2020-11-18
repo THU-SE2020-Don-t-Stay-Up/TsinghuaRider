@@ -24,6 +24,17 @@ public class MissleWeapon : Item, IWeapon
 
         GameObject.Instantiate(bulletPrefab, user.transform.position, Quaternion.identity);
     }
+
+    public override void Use(CharacterAgent character)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override Sprite GetSprite()
+    {
+        throw new System.NotImplementedException();
+    }
+
 }
 
 public class MeleeWeapon : Item, IWeapon
@@ -49,4 +60,15 @@ public class MeleeWeapon : Item, IWeapon
             Debug.Log($"{agent.living.Name} attack {targetAgent.living.Name}, {targetAgent.living.Name} currentHealth is {targetAgent.living.CurrentHealth}");
         }
     }
+
+    public override void Use(CharacterAgent character)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override Sprite GetSprite()
+    {
+        throw new System.NotImplementedException();
+    }
+
 }
