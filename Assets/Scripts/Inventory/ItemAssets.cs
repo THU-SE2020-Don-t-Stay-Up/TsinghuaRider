@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 实例化游戏中所有item，配合Item类能返回item的图像，配合ItemWorld能够生成ItemWorld实例。
+/// 单例化游戏中所有item，主要是给itemPrefab提供不同的图标以供选择
 /// 脚本使用方法：在scene中创建一个gameobject，把这个脚本拖上去，在inspector中把物品的图片填进去。这样把物品和它的图片绑定。
 /// </summary>
 public class ItemAssets : MonoBehaviour
@@ -14,13 +14,12 @@ public class ItemAssets : MonoBehaviour
     {
         Instance = this;
     }
-    public Transform ItemWorldPrefab;
 
+    public Transform ItemPrefab;
     public Sprite swordSprite;
     public Sprite healthPotionSprite;
-    public Sprite manaPotionSprite;
+    public Sprite strengthPotionSprite;
     public Sprite coinSprite;
     public Sprite medkitSprite;
-
-
+ 
 }

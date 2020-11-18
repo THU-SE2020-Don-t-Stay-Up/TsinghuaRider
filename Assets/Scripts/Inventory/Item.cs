@@ -4,68 +4,63 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 物品类(Item)的实现
+/// 提供item基类以及具体物品类
 /// </summary>
-[Serializable]
-public class Item {
-    public enum ItemType{
-        Sword,
-        HealthPotion,
-        ManaPotion,
-        Coin,
-        Medkit,
-    }
+abstract public class Item
+{
+    public string itemType { get; set; }//Item可细分为MileeWeapon,MissleWeapon,HealthPotion,StrengthPotion,Coin
+    public int amount { get; set; }
+    public bool isStackable { get; set; }
 
-    public ItemType itemType;
-    public int amount;
+    public abstract void Use(CharacterAgent character);
 
-    /// <summary>
-    /// 获取物品的图片，通过已经实例化的ItemAssets
-    /// </summary>
-    /// <returns></returns>
-    public Sprite GetSprite()
-    {
-        switch (itemType)
-        {
-            default:
-            case ItemType.Sword: return ItemAssets.Instance.swordSprite;  
-            case ItemType.HealthPotion: return ItemAssets.Instance.healthPotionSprite;  
-            case ItemType.ManaPotion: return ItemAssets.Instance.manaPotionSprite;  
-            case ItemType.Coin: return ItemAssets.Instance.coinSprite;  
-            case ItemType.Medkit: return ItemAssets.Instance.medkitSprite;  
-        }
-    }
+    public abstract Sprite GetSprite();
+    public bool IsStackable() { return isStackable; }
 
-    /// <summary>
-    /// 该种物品是否可以在背包中折叠显示
-    /// </summary>
-    /// <returns></returns>
-    public bool IsStackable()
-    {
-        switch (itemType)
-        {
-            default:
-            case ItemType.HealthPotion:
-            case ItemType.ManaPotion:
-            case ItemType.Coin:
-                return true;
-            case ItemType.Sword:
-            case ItemType.Medkit:
-                return false;
-        }
-    }
-
-    public void UseItem(Item item, Character character)
-    {
-        switch (item.itemType)
-        {
-            case Item.ItemType.HealthPotion:  
-                Debug.Log("我回血啦，我nb了！");
-                break;
-
-            case Item.ItemType.ManaPotion:
-                Debug.Log("我很有精神！");
-                break;
-        }
-    }
 }
+
+
+public class HealthPotion : Item
+{
+    public int recovery = 2;
+
+    public override Sprite GetSprite()
+    {
+        return ItemAssets.Instance.healthPotionSprite;
+    }
+    public override void Use(CharacterAgent character) { character.ChangeHealth(recovery); }
+}
+
+public class StrengthPotion : Item
+{
+    public int additional_strength = 2;
+
+    public override Sprite GetSprite()
+    {
+        return ItemAssets.Instance.strengthPotionSprite;
+    }
+
+    public override void Use(CharacterAgent character) { character.living.AttackAmount += additional_strength; }
+}
+
+public class Coin : Item { 
+    public override void Use(CharacterAgent character) { }
+    public override Sprite GetSprite()
+    {
+        return ItemAssets.Instance.coinSprite;
+    }
+
+}
+
+public class Medkit: Item
+{
+    public int recovery = 10;
+
+    public override Sprite GetSprite()
+    {
+        return ItemAssets.Instance.medkitSprite;
+    }
+    public override void Use(CharacterAgent character) { character.ChangeHealth(recovery); }
+}
+//修改了Weapon中的部分内容；试图整合了原来Item与ItemAsset中的内容
+

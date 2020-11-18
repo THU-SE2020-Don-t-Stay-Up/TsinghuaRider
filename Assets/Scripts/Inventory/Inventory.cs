@@ -22,16 +22,15 @@ public class Inventory
     /// <param name="useItemAction"></param>
     public Inventory() 
     {
-       // this.useItemAction = useItemAction;
-        itemList = new List<Item>();
 
-        AddItem(new Item { itemType = Item.ItemType.Sword, amount = 1});
-        AddItem(new Item { itemType = Item.ItemType.HealthPotion, amount = 1});
-        AddItem(new Item { itemType = Item.ItemType.ManaPotion, amount = 1});
-        AddItem(new Item { itemType = Item.ItemType.Coin, amount = 180});
+        itemList = new List<Item>();
+        AddItem(new HealthPotion {  amount = 3, isStackable = true, itemType = "HealthPotion" });
+        AddItem(new StrengthPotion {  amount = 4, isStackable = true, itemType = "StrengthPotion" });
+        AddItem(new Medkit {  amount = 1, isStackable = false, itemType = "Medkit" });
+
         //Debug.Log("I have an INVENTORY!!");
         //Debug.Log(itemList.Count);
-        
+
     }
 
     /// <summary>
@@ -66,34 +65,26 @@ public class Inventory
     public bool RemoveItem(Item item)
     {
         bool itemFlag = true;
-        if (item.IsStackable())
+        Item itemInInventory = null;
+        foreach (Item inventoryItem in itemList)
         {
-            Item itemInInventory = null;
-            foreach (Item inventoryItem in itemList)
+            if (inventoryItem.itemType == item.itemType)
             {
-                if (inventoryItem.itemType == item.itemType)
-                {
-                    inventoryItem.amount -= item.amount;
-                    itemInInventory = inventoryItem;
-                }
+                inventoryItem.amount -= item.amount;
+                itemInInventory = inventoryItem;
             }
+        }
 
-            if (itemInInventory != null )
-            {
-                if (itemInInventory.amount <= 0) 
-                {
-                    itemFlag = itemList.Remove(itemInInventory);
-                }
-            }
-            else
-            {
-                itemFlag = false;
-            }
-        }
-        else
+        if (itemInInventory != null && itemInInventory.amount <= 0)
         {
-            itemFlag = itemList.Remove(item);
+            itemList.Remove(itemInInventory);
         }
+
+        else if (itemInInventory == null)
+        {
+            itemFlag = false;
+        }
+
         OnItemListChanged?.Invoke(this, EventArgs.Empty);
         return itemFlag;
     }
@@ -103,11 +94,11 @@ public class Inventory
         return itemList;
     }
 
-    public void UseItem(Item item, Character character)
+    public void UseItem(Item item, CharacterAgent character)
     {
         if (RemoveItem(item))
         {
-            item.UseItem(item, character);
+            item.Use(character);
         }
         else
         {
