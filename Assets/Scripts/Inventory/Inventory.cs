@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 /// <summary>
@@ -24,9 +25,9 @@ public class Inventory
     {
 
         itemList = new List<Item>();
-        AddItem(new HealthPotion {  amount = 3, isStackable = true, itemType = "HealthPotion" });
-        AddItem(new StrengthPotion {  amount = 4, isStackable = true, itemType = "StrengthPotion" });
-        AddItem(new Medkit {  amount = 1, isStackable = false, itemType = "Medkit" });
+        AddItem(new HealthPotion {  amount = 3, isStackable = true });
+        AddItem(new StrengthPotion {  amount = 4, isStackable = true });
+        AddItem(new Medkit {  amount = 1, isStackable = false });
 
         //Debug.Log("I have an INVENTORY!!");
         //Debug.Log(itemList.Count);
@@ -41,18 +42,14 @@ public class Inventory
     {
         if (item.IsStackable())
         {
-            bool itemAlreadyInInventory = false;
-            foreach (Item inventoryItem in itemList)
-            {
-                if (inventoryItem.itemType == item.itemType)
-                {
-                    inventoryItem.amount += item.amount;
-                    itemAlreadyInInventory = true;
-                }
-            }
-           if (!itemAlreadyInInventory)
+            var inventoryItem = itemList.Find(e => e.Equals(item));
+            if (inventoryItem == null)
             {
                 itemList.Add(item);
+            }
+            else
+            {
+                inventoryItem.amount += item.amount;
             }
         }
         else
@@ -65,22 +62,17 @@ public class Inventory
     public bool RemoveItem(Item item)
     {
         bool itemFlag = true;
-        Item itemInInventory = null;
-        foreach (Item inventoryItem in itemList)
+
+        var inventoryItem = itemList.Find(e => e.Equals(item));
+        if (inventoryItem != null)
         {
-            if (inventoryItem.itemType == item.itemType)
+            inventoryItem.amount -= item.amount;
+            if (inventoryItem.amount <= 0)
             {
-                inventoryItem.amount -= item.amount;
-                itemInInventory = inventoryItem;
+                itemList.Remove(inventoryItem);
             }
         }
-
-        if (itemInInventory != null && itemInInventory.amount <= 0)
-        {
-            itemList.Remove(itemInInventory);
-        }
-
-        else if (itemInInventory == null)
+        else
         {
             itemFlag = false;
         }

@@ -29,6 +29,8 @@ class Global
     /// 所有角色属性信息
     /// </summary>
     public static List<Character> characters;
+    public static string[] itemNames = { "HealthPotion", "StrengthPotion", "Coin", "Medkit", "Sword" };
+
 }
 
 /// <summary>

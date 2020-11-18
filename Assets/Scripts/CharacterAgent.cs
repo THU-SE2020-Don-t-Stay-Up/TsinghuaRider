@@ -205,19 +205,19 @@ public class CharacterAgent : LivingBaseAgent
         if (Input.GetKeyDown(KeyCode.R))
         {
             SetState(3);
-            inventory.UseItem(new HealthPotion { amount = 1, isStackable = true, itemType = "HealthPotion" }, this);
+            inventory.UseItem(new HealthPotion { amount = 1, isStackable = true}, this);
             SetState(0);
         }
         if (Input.GetKeyDown(KeyCode.F))
         {
             SetState(3);
-            inventory.UseItem(new StrengthPotion { amount = 1, isStackable = true, itemType = "StrengthPotion" }, this);
+            inventory.UseItem(new StrengthPotion { amount = 1, isStackable = true}, this);
             SetState(0);
         }
         if (Input.GetKeyDown(KeyCode.C))
         {
             SetState(3);
-            inventory.UseItem(new Medkit { amount = 1, isStackable = false, itemType = "Medkit" }, this);
+            inventory.UseItem(new Medkit { amount = 1, isStackable = false }, this);
             SetState(0);
         }
         if (Input.GetKeyDown(KeyCode.G))

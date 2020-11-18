@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System;
 
 /// <summary>
 /// 继承monobehaviour和IInteract，提供生成item、被角色捡起两个大功能。
@@ -15,35 +16,40 @@ public class ItemAgent : MonoBehaviour,  IInteract
     /// <param name="position"></param>
     /// <param name="item"></param>
     /// <returns></returns>
-    public static ItemAgent GenerateItem(Vector3 position, Item item)
-    {
-        // 在position处生成一个Item
-        Transform transform = Instantiate(ItemAssets.Instance.ItemPrefab, position, Quaternion.identity);
-        ItemAgent itemAgent = transform.GetComponent<ItemAgent>();
-        itemAgent.SetItem(item);
+    public int ItemIndex;
 
-        return itemAgent;
+
+    /// <summary>
+    /// 在position处生成一个Item
+    /// </summary>
+    /// <param name="position">生成位置</param>
+    /// <param name="item">要生成的物品</param>
+    public static void GenerateItem(Vector3 position, Item item)
+    {
+        GameObject itemPrefab = ItemAssets.GetItemPrefab(item);
+        GameObject realItem = Instantiate(itemPrefab, position, Quaternion.identity);
+        ItemAgent itemAgent = realItem.GetComponent<ItemAgent>();
+        itemAgent.SetItem(item);
     }
 
-    private Item item;
-    private SpriteRenderer spriteRenderer;
+
+    public Item Item { get; set; }
     private TextMeshPro textMeshPro;
 
     private void Awake()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        Item = ItemAssets.Instance.items[ItemIndex];
         textMeshPro = transform.Find("Text").GetComponent<TextMeshPro>();
     }
 
     /// <summary>
-    /// 设置这个item以及它的图像
+    /// 设置这个item的属性值以及显示它的数量
     /// </summary>
     /// <param name="item"></param>
     public void SetItem(Item item)
     {
-        this.item = item;
-        spriteRenderer.sprite = item.GetSprite();
-
+        this.Item = item;
+ 
         if (item.amount > 1)
         {
             textMeshPro.SetText(item.amount.ToString());
@@ -54,17 +60,11 @@ public class ItemAgent : MonoBehaviour,  IInteract
         }
     }
 
-
-    public void DestorySelf()
-    {
-        Destroy(gameObject);
-    }
-
     public void InteractWith(GameObject gameObject)
     {
         CharacterAgent character = gameObject.GetComponent<CharacterAgent>();
-        character.InventoryAddItem(item);
-        DestorySelf();
+        character.InventoryAddItem(Item);
+        Destroy(this.gameObject);
     }
 
 }

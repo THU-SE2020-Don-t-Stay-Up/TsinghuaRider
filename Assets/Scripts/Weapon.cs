@@ -30,10 +30,6 @@ public class MissleWeapon : Item, IWeapon
         throw new System.NotImplementedException();
     }
 
-    public override Sprite GetSprite()
-    {
-        throw new System.NotImplementedException();
-    }
 
 }
 
@@ -66,9 +62,5 @@ public class MeleeWeapon : Item, IWeapon
         throw new System.NotImplementedException();
     }
 
-    public override Sprite GetSprite()
-    {
-        throw new System.NotImplementedException();
-    }
 
 }
