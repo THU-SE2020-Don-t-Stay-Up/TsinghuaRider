@@ -205,19 +205,19 @@ public class CharacterAgent : LivingBaseAgent
         if (Input.GetKeyDown(KeyCode.R))
         {
             SetState(3);
-            inventory.UseItem(new Item { amount = 1, itemType = Item.ItemType.HealthPotion }, Character);
+            inventory.UseItem(new HealthPotion { amount = 1, isStackable = true, itemType = "HealthPotion" }, this);
             SetState(0);
         }
         if (Input.GetKeyDown(KeyCode.F))
         {
             SetState(3);
-            inventory.UseItem(new Item { amount = 1, itemType = Item.ItemType.ManaPotion }, Character);
+            inventory.UseItem(new StrengthPotion { amount = 1, isStackable = true, itemType = "StrengthPotion" }, this);
             SetState(0);
         }
         if (Input.GetKeyDown(KeyCode.C))
         {
             SetState(3);
-            Debug.Log("Should perform skill3!");
+            inventory.UseItem(new Medkit { amount = 1, isStackable = false, itemType = "Medkit" }, this);
             SetState(0);
         }
         if (Input.GetKeyDown(KeyCode.G))
@@ -296,6 +296,11 @@ public class CharacterAgent : LivingBaseAgent
             interact.InteractWith(gameObject);
         }
         
+    }
+
+    public void InventoryAddItem(Item item)
+    {
+        inventory.AddItem(item);
     }
 }
 
