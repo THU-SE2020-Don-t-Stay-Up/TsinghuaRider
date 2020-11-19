@@ -91,6 +91,7 @@ public class MonsterAgent : LivingBaseAgent
             default:
                 break;
         }
+        CheckState();
         SetRandomDirection();
         attackDeltaTime += Time.deltaTime;
         roamingDeltaTime += Time.deltaTime;

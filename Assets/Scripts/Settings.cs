@@ -55,7 +55,7 @@ abstract public class StateBase
 
     public override int GetHashCode()
     {
-        return base.GetHashCode();
+        return GetType().GetHashCode();
     }
 
     public override string ToString()
@@ -68,7 +68,7 @@ public class NormalState : StateBase
 {
     public override void Effect(LivingBaseAgent agent)
     {
-        Debug.Log("我很正常");
+        //Debug.Log("我很正常");
     }
 }
 
@@ -76,7 +76,7 @@ public class SlowState : StateBase
 {
     public override void Effect(LivingBaseAgent agent)
     {
-        Debug.Log("我减速了");
+        //Debug.Log("我减速了");
     }
 }
 
@@ -84,7 +84,7 @@ public class InvincibleState : StateBase
 {
     public override void Effect(LivingBaseAgent agent)
     {
-        Debug.Log("我无敌了");
+        //Debug.Log("我无敌了");
     }
 }
 

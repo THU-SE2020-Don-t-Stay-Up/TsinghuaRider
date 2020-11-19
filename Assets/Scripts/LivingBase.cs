@@ -123,6 +123,7 @@ public class LivingBaseAgent : MonoBehaviour
                 //animator.SetTrigger("Hit");
                 //audioSource.PlayOneShot(getHitClip);
                 living.State.AddStatus(new InvincibleState(), living.TimeInvincible);
+                print($"{living.Name}获得无敌{living.TimeInvincible}");
                 if (IsDead())
                 {
                     //死亡动画
@@ -151,6 +152,7 @@ public class LivingBaseAgent : MonoBehaviour
             if (living.State.StateDuration[status] <= 0)
             {
                 living.State.RemoveStatus(status);
+                print($"移除{living.Name}的{status}");
             }
             else
             {
