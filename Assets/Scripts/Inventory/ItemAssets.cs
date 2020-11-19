@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 /// <summary>
@@ -10,7 +8,7 @@ using UnityEngine;
 /// </summary>
 public class ItemAssets : MonoBehaviour
 {
-    public static ItemAssets Instance { get; private set;}
+    public static ItemAssets Instance { get; private set; }
 
     private void Awake()
     {

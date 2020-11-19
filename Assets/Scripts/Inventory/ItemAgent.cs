@@ -1,21 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using TMPro;
 using UnityEngine;
-using TMPro;
-using System;
 
 /// <summary>
 /// 继承monobehaviour和IInteract，提供生成item、被角色捡起两个大功能。
 /// 使用方法：搞一个itemPrefab上，挂上BoxCollider2D，RigidBody2D，Sprite Renderer和这个ItemAgent脚本。
 /// </summary>
-public class ItemAgent : MonoBehaviour,  IInteract
+public class ItemAgent : MonoBehaviour, IInteract
 {
-    /// <summary>
-    /// 在指定位置放置指定物品
-    /// </summary>
-    /// <param name="position"></param>
-    /// <param name="item"></param>
-    /// <returns></returns>
     public int ItemIndex;
 
 
@@ -49,7 +40,7 @@ public class ItemAgent : MonoBehaviour,  IInteract
     public void SetItem(Item item)
     {
         this.Item = item;
- 
+
         if (item.amount > 1)
         {
             textMeshPro.SetText(item.amount.ToString());

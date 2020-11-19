@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
 /// 提供item基类以及具体物品类
@@ -36,7 +33,7 @@ abstract public class Item
 
     public abstract void Use(CharacterAgent character);
 
-    public  Sprite GetSprite()
+    public Sprite GetSprite()
     {
         return ItemAssets.GetSprite(this);
     }
@@ -62,18 +59,19 @@ public class StrengthPotion : Item
     public override void Use(CharacterAgent character) { character.living.AttackAmount += additional_strength; }
 }
 
-public class Coin : Item { 
+public class Coin : Item
+{
     public override void Use(CharacterAgent character) { }
 
 }
 
 public class Sword : Item
 {
-        public override void Use(CharacterAgent character) { }
+    public override void Use(CharacterAgent character) { }
 
 }
 
-public class Medkit: Item
+public class Medkit : Item
 {
     public int recovery = 10;
 
