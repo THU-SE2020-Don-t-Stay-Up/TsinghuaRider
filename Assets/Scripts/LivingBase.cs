@@ -133,8 +133,8 @@ public class LivingBaseAgent : MonoBehaviour
         }
         else
         {
-            animator.SetTrigger("Heal");
-            audioSource.PlayOneShot(getHealingClip);
+            //animator.SetTrigger("Heal");
+            //audioSource.PlayOneShot(getHealingClip);
 
             living.CurrentHealth = Mathf.Clamp(living.CurrentHealth + amount, 0, living.MaxHealth);
         }

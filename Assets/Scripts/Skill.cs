@@ -14,7 +14,7 @@ public class MissleAttackSkill : Skill
 {
     public override void Perform(LivingBaseAgent subject, LivingBaseAgent target)
     {
-        //subject.living.MissleWeapon.Attack(subject.gameObject, subject.living.AttackDirection);
+        subject.living.MissleWeapon.Attack(subject.gameObject, subject.living.AttackDirection);
     }
 }
 

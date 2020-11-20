@@ -54,8 +54,11 @@ public class ItemAgent : MonoBehaviour, IInteract
     public void InteractWith(GameObject gameObject)
     {
         CharacterAgent character = gameObject.GetComponent<CharacterAgent>();
-        character.InventoryAddItem(Item);
-        Destroy(this.gameObject);
+        if (character != null)
+        {
+            character.InventoryAddItem(Item);
+            Destroy(this.gameObject);
+        }
     }
 
 }

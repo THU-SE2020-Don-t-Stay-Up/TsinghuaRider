@@ -47,6 +47,7 @@ public class CharacterAgent : LivingBaseAgent
     // actions
     public GameObject WeaponPrefab;
 
+    private bool godMode = false;
     public Skill MissleAttack => living.Skills[0];
     public Skill MeleeAttack => living.Skills[1];
 
@@ -65,9 +66,12 @@ public class CharacterAgent : LivingBaseAgent
         MoveSpeed = Character.MoveSpeed;
         actionState = ActionState.Normal;
         living.State.AddStatus(new InvincibleState(), living.TimeInvincible);
+
         // 初始化背包及UI
         inventory = new Inventory();
         uiInventory.SetInventory(inventory);
+
+        living.MissleWeapon.bulletPrefab = bulletPrefab;
     }
 
     private void Update()
@@ -223,6 +227,7 @@ public class CharacterAgent : LivingBaseAgent
         if (Input.GetKeyDown(KeyCode.G))
         {
             SetState(3);
+            godMode = !godMode;
             Debug.Log("Should perform skill4!");
             SetState(0);
         }
@@ -256,14 +261,20 @@ public class CharacterAgent : LivingBaseAgent
     {
         Vector3 mousePosition = PlayerAim.GetMouseWorldPosition();
         living.AttackDirection = (mousePosition - transform.position).normalized;
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (living.AttackSpeed - deltaTime < 0.01)
+
+       // if (Input.GetMouseButtonDown(0))
+        if (godMode)
             {
+           // if (living.AttackSpeed - deltaTime < 0.01)
+            if (true)
+                {
                 SetState(1);
                 deltaTime = 0;
-                Stop();
                 MissleAttack.Perform(this, null);
+                //GameObject projectileObject = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+                //Bullet bullet = projectileObject.GetComponent<Bullet>();
+                //bullet.Shoot(living.AttackDirection, 10);
+
                 Debug.Log("MissleAttack!");
                 SetState(0);
             }
@@ -274,7 +285,6 @@ public class CharacterAgent : LivingBaseAgent
             if (living.AttackSpeed - deltaTime < 0.01)
             {
                 SetState(1);
-                Stop();
                 MeleeAttack.Perform(this, null);
                 Debug.Log("MeleeAttack!");
                 deltaTime = 0;
@@ -295,12 +305,13 @@ public class CharacterAgent : LivingBaseAgent
         {
             interact.InteractWith(gameObject);
         }
-        
     }
 
     public void InventoryAddItem(Item item)
     {
         inventory.AddItem(item);
     }
+
+
 }
 

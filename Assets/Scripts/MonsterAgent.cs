@@ -155,5 +155,14 @@ public class MonsterAgent : LivingBaseAgent
             return false;
     }
 
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        IInteract interact = Utility.GetInterface<IInteract>(collision.gameObject);
+        if (interact != null)
+        {
+            interact.InteractWith(gameObject);
+        }
+
+    }
 
 }
