@@ -47,6 +47,7 @@ public class CharacterAgent : LivingBaseAgent
     // actions
     public GameObject WeaponPrefab;
 
+    private bool godMode = false;
     public Skill MissleAttack => living.Skills[0];
     public Skill MeleeAttack => living.Skills[1];
 
@@ -64,12 +65,14 @@ public class CharacterAgent : LivingBaseAgent
 
         MoveSpeed = Character.MoveSpeed;
         actionState = ActionState.Normal;
+        living.State.AddStatus(new InvincibleState(), living.TimeInvincible);
 
-        // 初始化背包及UI，由于unity奇怪的机制，每次重启项目就要重新设置脚本。先注释掉调用UI代码
-        inventory = new Inventory(UseItem);
-        //uiInventory.SetInventory(inventory);
+        // 初始化背包及UI
+        inventory = new Inventory();
+        uiInventory.SetInventory(inventory);
+
+        living.MissleWeapon.bulletPrefab = bulletPrefab;
     }
-
 
     private void Update()
     {
@@ -118,40 +121,6 @@ public class CharacterAgent : LivingBaseAgent
         rigidbody2d.MovePosition(position);
 
         Dash();
-    }
-
-    /// <summary>
-    /// 捡起地图上的道具
-    /// </summary>
-    /// <param name="collider"></param>
-    private void OnTriggerEnter2D(Collider2D collider)
-    {
-        ItemWorld itemWorld = collider.GetComponent<ItemWorld>();
-        if (itemWorld != null)
-        {
-            inventory.AddItem(itemWorld.GetItem());
-            itemWorld.DestorySelf();
-        }
-    }
-
-    /// <summary>
-    /// 道具的使用效果在初始化背包时就被传入
-    /// </summary>
-    /// <param name="item"></param>
-    public void UseItem(Item item)
-    {
-        switch (item.itemType)
-        {
-            case Item.ItemType.HealthPotion: 
-                Debug.Log("我回血啦，我nb了！");
-                inventory.RemoveItem(new Item { itemType = Item.ItemType.HealthPotion, amount = 1 });
-                break;
-            case Item.ItemType.ManaPotion: 
-                Debug.Log("我回蓝啦，我很有精神！");
-                inventory.RemoveItem(new Item { itemType = Item.ItemType.ManaPotion, amount = 1 });
-                break;
-
-        }
     }
 
     /// <summary>
@@ -240,24 +209,25 @@ public class CharacterAgent : LivingBaseAgent
         if (Input.GetKeyDown(KeyCode.R))
         {
             SetState(3);
-            Debug.Log("Should perform skill1!");
+            inventory.UseItem(new HealthPotion { amount = 1, isStackable = true}, this);
             SetState(0);
         }
         if (Input.GetKeyDown(KeyCode.F))
         {
             SetState(3);
-            Debug.Log("Should perform skill2!");
+            inventory.UseItem(new StrengthPotion { amount = 1, isStackable = true}, this);
             SetState(0);
         }
         if (Input.GetKeyDown(KeyCode.C))
         {
             SetState(3);
-            Debug.Log("Should perform skill3!");
+            inventory.UseItem(new Medkit { amount = 1, isStackable = false }, this);
             SetState(0);
         }
         if (Input.GetKeyDown(KeyCode.G))
         {
             SetState(3);
+            godMode = !godMode;
             Debug.Log("Should perform skill4!");
             SetState(0);
         }
@@ -289,16 +259,22 @@ public class CharacterAgent : LivingBaseAgent
 
     private void HandleAttacking()
     {
-        Vector3 mousePosition = gameObject.GetComponent<PlayerAim>().GetMouseWorldPosition();
+        Vector3 mousePosition = PlayerAim.GetMouseWorldPosition();
         living.AttackDirection = (mousePosition - transform.position).normalized;
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (living.AttackSpeed - deltaTime < 0.01)
+
+       // if (Input.GetMouseButtonDown(0))
+        if (godMode)
             {
+           // if (living.AttackSpeed - deltaTime < 0.01)
+            if (true)
+                {
                 SetState(1);
                 deltaTime = 0;
-                Stop();
                 MissleAttack.Perform(this, null);
+                //GameObject projectileObject = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+                //Bullet bullet = projectileObject.GetComponent<Bullet>();
+                //bullet.Shoot(living.AttackDirection, 10);
+
                 Debug.Log("MissleAttack!");
                 SetState(0);
             }
@@ -309,7 +285,6 @@ public class CharacterAgent : LivingBaseAgent
             if (living.AttackSpeed - deltaTime < 0.01)
             {
                 SetState(1);
-                Stop();
                 MeleeAttack.Perform(this, null);
                 Debug.Log("MeleeAttack!");
                 deltaTime = 0;
@@ -318,5 +293,25 @@ public class CharacterAgent : LivingBaseAgent
             }
         }
     }
+
+    /// <summary>
+    /// 人物与环境交互，如果碰撞物体实现了IInteract接口，调用对应的InteractWith函数实现人物与环境的交互
+    /// </summary>
+    /// <param name="collision">碰撞实体</param>
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        IInteract interact = Utility.GetInterface<IInteract>(collision.gameObject);
+        if (interact != null)
+        {
+            interact.InteractWith(gameObject);
+        }
+    }
+
+    public void InventoryAddItem(Item item)
+    {
+        inventory.AddItem(item);
+    }
+
+
 }
 

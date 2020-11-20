@@ -10,7 +10,7 @@ interface IWeapon
 /// <summary>
 /// 远程武器类
 /// </summary> 
-public class MeleeWeapon : Item, IWeapon
+public class MissleWeapon : Item, IWeapon
 {
     /// <summary>
     /// 子弹prefab
@@ -19,14 +19,24 @@ public class MeleeWeapon : Item, IWeapon
 
     public void Attack(GameObject user, Vector3 direction)
     {
-        bulletPrefab.GetComponent<Bullets>().Direction = direction;
-        bulletPrefab.GetComponent<Bullets>().AttackAmount = user.GetComponent<LivingBaseAgent>().living.AttackAmount;
+        //bulletPrefab.GetComponent<Bullets>().Direction = direction;
+        //bulletPrefab.GetComponent<Bullets>().AttackAmount = user.GetComponent<LivingBaseAgent>().living.AttackAmount;
 
-        GameObject.Instantiate(bulletPrefab, user.transform.position, Quaternion.identity);
+        Debug.Log(user.GetComponent<LivingBaseAgent>().living.Name+user.transform.position);
+        GameObject projectileObject =  GameObject.Instantiate(bulletPrefab, user.transform.position+direction * 0.5f, Quaternion.identity);
+        Bullet bullet = projectileObject.GetComponent<Bullet>();
+        bullet.Shoot(direction, 50);
     }
+
+    public override void Use(CharacterAgent character)
+    {
+        throw new System.NotImplementedException();
+    }
+
+
 }
 
-public class MissleWeapon : Item, IWeapon
+public class MeleeWeapon : Item, IWeapon
 {
     public void Attack(GameObject user, Vector3 Direction)
     {
@@ -49,4 +59,11 @@ public class MissleWeapon : Item, IWeapon
             Debug.Log($"{agent.living.Name} attack {targetAgent.living.Name}, {targetAgent.living.Name} currentHealth is {targetAgent.living.CurrentHealth}");
         }
     }
+
+    public override void Use(CharacterAgent character)
+    {
+        throw new System.NotImplementedException();
+    }
+
+
 }

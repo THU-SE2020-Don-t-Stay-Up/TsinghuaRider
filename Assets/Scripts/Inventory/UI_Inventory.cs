@@ -1,9 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 public class UI_Inventory : MonoBehaviour
 {
@@ -17,7 +14,7 @@ public class UI_Inventory : MonoBehaviour
         itemSlotTemplate = itemSlotContainer.Find("itemSlotTemplate");
     }
 
-    public  void SetInventory(Inventory inventory)
+    public void SetInventory(Inventory inventory)
     {
         this.inventory = inventory;
 
@@ -66,12 +63,12 @@ public class UI_Inventory : MonoBehaviour
             {
                 uiText.SetText("");
             }
-            // 一行5个
+            // 一行4个
             x++;
-            if (x > 4)
+            if (x > 3)
             {
                 x = 0;
-                y --;
+                y--;
             }
         }
     }
