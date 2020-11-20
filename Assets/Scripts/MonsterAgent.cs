@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class MonsterAgent : LivingBaseAgent
 {
@@ -26,28 +27,30 @@ public class MonsterAgent : LivingBaseAgent
     /// </summary>
     GameObject target;
 
-    float deltaTime = 0;
+    float attackDeltaTime = 0;
+    float roamingTime;
+    float roamingDeltaTime;
     Vector3 startPosition;
-    Vector3 roamingPosition;
-
+    Vector3 roamingDirection;
+    Vector3 movingDirection;
     public Skill AttackSkill => living.Skills[0];
     //public GameObject Prefab;
     // Start is called before the first frame update
     void Start()
     {
-        living = Global.monsters[monsterIndex];
+        living = Global.monsters[monsterIndex].Clone() as Monster;
         print(Monster.Name);
 
         rigidbody2d = GetComponent<Rigidbody2D>();
-
-        
+        roamingTime = Random.Range(0.5f, 0.8f);
+        roamingDeltaTime = roamingTime;
 
         startPosition = transform.position;
-        roamingPosition = GetRoamPosition();
+        SetRandomDirection();
 
         MoveSpeed = living.MoveSpeed;
         actionState = ActionState.Roaming;
-        living.MeleeWeapon.bulletPrefab = bulletPrefab;
+        living.MissleWeapon.bulletPrefab = bulletPrefab;
     }
 
     // Update is called once per frame
@@ -56,15 +59,14 @@ public class MonsterAgent : LivingBaseAgent
         switch (actionState)
         {
             case ActionState.Roaming:
-                MoveToPosition(roamingPosition);
-                if (HasArrived(roamingPosition))
-                    roamingPosition = GetRoamPosition();
+                rigidbody2d.velocity = roamingDirection * MoveSpeed;
                 FindTarget();
                 break;
             case ActionState.Chasing:
                 if (target != null)
                 {
-                    MoveToPosition(target.transform.position);
+                    SetMovingDirection(target.transform.position);
+                    rigidbody2d.velocity = movingDirection * MoveSpeed;
                     float distance = Vector3.Distance(transform.position, target.transform.position);
                     if (distance <= living.AttackRadius)
                     {
@@ -81,14 +83,18 @@ public class MonsterAgent : LivingBaseAgent
                 }
                 break;
             case ActionState.Restarting:
-                MoveToPosition(startPosition);
+                SetMovingDirection(startPosition);
+                rigidbody2d.velocity = movingDirection * MoveSpeed;
                 if (HasArrived(startPosition))
                     actionState = ActionState.Roaming;
                 break;
             default:
                 break;
         }
-        deltaTime += Time.deltaTime;
+        CheckState();
+        SetRandomDirection();
+        attackDeltaTime += Time.deltaTime;
+        roamingDeltaTime += Time.deltaTime;
     }
 
     void FixedUpdate()
@@ -96,31 +102,37 @@ public class MonsterAgent : LivingBaseAgent
 
     }
 
-    void MoveToPosition(Vector3 targetPosition)
-    {
-        rigidbody2d.velocity = Vector3.zero;
-        Vector3 direction = Vector3.Normalize(targetPosition - transform.position);
-        if (Vector3.Distance(transform.position, targetPosition) >= living.AttackRadius)
-            transform.Translate(MoveSpeed * direction * Time.deltaTime);
-    }
-
     void AttackTarget()
     {
-        if (living.AttackSpeed - deltaTime < 0.01)
+        if (living.AttackSpeed - attackDeltaTime < 0.01)
         {
             living.AttackDirection = target.transform.position - transform.position;
             AttackSkill.Perform(this, target.GetComponent<LivingBaseAgent>());
             //print("attack target");
-            deltaTime = 0;
+            attackDeltaTime = 0;
         }
     }
 
-    Vector3 GetRoamPosition()
-    {
-        Vector3 RandomDirection = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized;
-        //print("Roming to " + RandomDirection);
-        return startPosition + RandomDirection * Random.Range(10f, 20f);
 
+
+    void SetRandomDirection()
+    {
+        if (roamingTime - roamingDeltaTime <= 0.01)
+        {
+            Vector3 RandomDirection = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized;
+            roamingDirection = RandomDirection;
+            roamingDeltaTime = 0;
+        }
+    }
+
+    void SetMovingDirection(Vector3 position)
+    {
+        if (roamingTime - roamingDeltaTime <= 0.01)
+        {
+            Vector3 direction = (position - transform.position).normalized;
+            Vector3 moveDirection = (position - transform.position - direction * living.AttackRadius).normalized;
+            movingDirection = (moveDirection + roamingDirection).normalized;
+        }
     }
 
     void FindTarget()
@@ -143,25 +155,14 @@ public class MonsterAgent : LivingBaseAgent
             return false;
     }
 
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        IInteract interact = Utility.GetInterface<IInteract>(collision.gameObject);
+        if (interact != null)
+        {
+            interact.InteractWith(gameObject);
+        }
 
-    //void ApplyStatus()
-    //{
-    //    if (living.State.HasStatus(Status.Slow))
-    //    {
-    //        MoveSpeed = living.MoveSpeed * 0.5f;
-    //    }
-    //    else
-    //    {
-    //        MoveSpeed = living.MoveSpeed;
-    //    }
+    }
 
-    //    if (living.State.HasStatus(Status.Cold))
-    //    {
-    //        MoveSpeed = 0;
-    //    }
-    //    else
-    //    {
-    //        MoveSpeed = living.MoveSpeed;
-    //    }
-    //}
 }

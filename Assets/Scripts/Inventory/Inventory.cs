@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 /// <summary>
@@ -14,24 +15,23 @@ public class Inventory
     public event EventHandler OnItemListChanged;
 
     private List<Item> itemList;
-    private Action<Item> useItemAction;
+    //private Action<Item> useItemAction;
 
     /// <summary>
     /// 初始化背包，传入使用方法。带有一些物品
     /// </summary>
     /// <param name="useItemAction"></param>
-    public Inventory(Action<Item> useItemAction) 
+    public Inventory() 
     {
-        this.useItemAction = useItemAction;
-        itemList = new List<Item>();
 
-        AddItem(new Item { itemType = Item.ItemType.Sword, amount = 1});
-        AddItem(new Item { itemType = Item.ItemType.HealthPotion, amount = 1});
-        AddItem(new Item { itemType = Item.ItemType.ManaPotion, amount = 1});
-        AddItem(new Item { itemType = Item.ItemType.Coin, amount = 180});
+        itemList = new List<Item>();
+        AddItem(new HealthPotion {  amount = 3, isStackable = true });
+        AddItem(new StrengthPotion {  amount = 4, isStackable = true });
+        AddItem(new Medkit {  amount = 1, isStackable = false });
+
         //Debug.Log("I have an INVENTORY!!");
         //Debug.Log(itemList.Count);
-        
+
     }
 
     /// <summary>
@@ -42,18 +42,14 @@ public class Inventory
     {
         if (item.IsStackable())
         {
-            bool itemAlreadyInInventory = false;
-            foreach (Item inventoryItem in itemList)
-            {
-                if (inventoryItem.itemType == item.itemType)
-                {
-                    inventoryItem.amount += item.amount;
-                    itemAlreadyInInventory = true;
-                }
-            }
-           if (!itemAlreadyInInventory)
+            var inventoryItem = itemList.Find(e => e.Equals(item));
+            if (inventoryItem == null)
             {
                 itemList.Add(item);
+            }
+            else
+            {
+                inventoryItem.amount += item.amount;
             }
         }
         else
@@ -63,29 +59,26 @@ public class Inventory
         OnItemListChanged?.Invoke(this, EventArgs.Empty);
     }
 
-    public void RemoveItem(Item item)
+    public bool RemoveItem(Item item)
     {
-        if (item.IsStackable())
+        bool itemFlag = true;
+
+        var inventoryItem = itemList.Find(e => e.Equals(item));
+        if (inventoryItem != null)
         {
-            Item itemInInventory = null;
-            foreach (Item inventoryItem in itemList)
+            inventoryItem.amount -= item.amount;
+            if (inventoryItem.amount <= 0)
             {
-                if (inventoryItem.itemType == item.itemType)
-                {
-                    inventoryItem.amount -= item.amount;
-                    itemInInventory = inventoryItem;
-                }
-            }
-            if (itemInInventory != null && itemInInventory.amount <= 0)
-            {
-                itemList.Remove(itemInInventory);
+                itemList.Remove(inventoryItem);
             }
         }
         else
         {
-            itemList.Remove(item);
+            itemFlag = false;
         }
+
         OnItemListChanged?.Invoke(this, EventArgs.Empty);
+        return itemFlag;
     }
 
     public List<Item> GetItemList()
@@ -93,9 +86,16 @@ public class Inventory
         return itemList;
     }
 
-    public void UseItem(Item item)
+    public void UseItem(Item item, CharacterAgent character)
     {
-        useItemAction(item);
+        if (RemoveItem(item))
+        {
+            item.Use(character);
+        }
+        else
+        {
+            Debug.Log("无了啊！");
+        }
     }
 
 }
