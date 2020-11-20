@@ -9,7 +9,7 @@ public class MonsterGenerator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Global.monsters = Monster.LoadMonster();
+        
         for (int index = 0; index < monsterNum.Length; index++)
         {
             for (int i = 0; i < monsterNum[index]; i++)

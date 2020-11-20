@@ -53,7 +53,6 @@ public class CharacterAgent : LivingBaseAgent
     float deltaTime = 0;
     private void Awake()
     {
-        Global.characters = Character.LoadCharacter();
 
         living = Global.characters[characterIndex];
         print(Character.Name);
