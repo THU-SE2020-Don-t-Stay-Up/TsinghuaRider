@@ -5,7 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class SceneTeleporter : MonoBehaviour
 {
-    public float teleportTime = 1.0f;
+    [Header("传送动画")]
+    public float teleportTime = 2.0f;
+    public float amplifyScale = 1.5f;
+    public float rotationSpeed = 30.0f;
+    public Sprite clearSprite;
+
+    [Header("传送逻辑")]
     public string teleportTag;
     public string targetScene;
     public GameObject mainCamera;
@@ -14,6 +20,7 @@ public class SceneTeleporter : MonoBehaviour
     float timer;
     bool isTeleporting = false;
     bool hasTeleported = false;
+    bool cleared = false;
     GameObject player;
 
     void Start()
@@ -29,7 +36,11 @@ public class SceneTeleporter : MonoBehaviour
     {
         if (isTeleporting)
         {
-            // 可显示UI
+            // 显示动画
+            transform.Rotate(0.0f, 0.0f, rotationSpeed * Time.deltaTime);
+            transform.localScale = Vector3.one * amplifyScale;
+
+            // 计算时间
             timer -= Time.deltaTime;
             if (timer < 0 && !hasTeleported)
             {
@@ -53,7 +64,10 @@ public class SceneTeleporter : MonoBehaviour
         if (other.gameObject == player)
         {
             isTeleporting = false;
+            // 退出传送后重置计时和动画
             timer = teleportTime;
+            transform.localScale = Vector3.one;
+            transform.rotation = Quaternion.identity;
         }
     }
 
@@ -77,4 +91,11 @@ public class SceneTeleporter : MonoBehaviour
         SceneManager.UnloadSceneAsync(currentScene);
     }
 
+
+    public void clear()
+    {
+        cleared = true;
+        SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer.sprite = clearSprite;
+    }
 }
