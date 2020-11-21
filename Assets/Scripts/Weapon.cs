@@ -19,13 +19,10 @@ public class MissleWeapon : Item, IWeapon
 
     public void Attack(GameObject user, Vector3 direction)
     {
-        //bulletPrefab.GetComponent<Bullets>().Direction = direction;
-        //bulletPrefab.GetComponent<Bullets>().AttackAmount = user.GetComponent<LivingBaseAgent>().living.AttackAmount;
-
-        Debug.Log(user.GetComponent<LivingBaseAgent>().living.Name+user.transform.position);
-        GameObject projectileObject =  GameObject.Instantiate(bulletPrefab, user.transform.position+direction * 0.5f, Quaternion.identity);
+        GameObject projectileObject = GameObject.Instantiate(bulletPrefab, user.transform.position + direction * 0.5f, Quaternion.identity);
         Bullet bullet = projectileObject.GetComponent<Bullet>();
-        bullet.Shoot(direction, 50);
+        bullet.userTag = user.tag;
+        bullet.Shoot(direction, 10);
     }
 
     public override void Use(CharacterAgent character)
@@ -56,7 +53,6 @@ public class MeleeWeapon : Item, IWeapon
         {
             LivingBaseAgent targetAgent = targetObject.GetComponent<LivingBaseAgent>();
             targetAgent.ChangeHealth(-agent.living.AttackAmount);
-            Debug.Log($"{agent.living.Name} attack {targetAgent.living.Name}, {targetAgent.living.Name} currentHealth is {targetAgent.living.CurrentHealth}");
         }
     }
 
