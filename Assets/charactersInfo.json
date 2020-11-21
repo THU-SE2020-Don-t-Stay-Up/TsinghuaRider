@@ -9,7 +9,7 @@
     "TimeInvincible": 2.0, 
     "Defense": 0,
     "Tenacity": 0.0,
-    "AttackSpeed": 1.0,
+    "AttackSpeed": 0.3,
     "AttackRadius": 3,
     "AttackAmount": 10,
     "AttackAngle": 45,

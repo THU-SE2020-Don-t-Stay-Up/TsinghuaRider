@@ -38,6 +38,7 @@ public class MonsterAgent : LivingBaseAgent
     void Start()
     {
         living = Global.monsters[monsterIndex].Clone() as Monster;
+        living.CurrentHealth = living.MaxHealth;
         print(Monster.Name);
 
         rigidbody2d = GetComponent<Rigidbody2D>();

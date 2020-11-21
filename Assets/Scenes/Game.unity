@@ -265,9 +265,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1183547313025078989, guid: d1cc3b07b9cd3b548ab3086582f4e7e4, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2276590418005463075, guid: d1cc3b07b9cd3b548ab3086582f4e7e4, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3361396231715526044, guid: d1cc3b07b9cd3b548ab3086582f4e7e4, type: 3}
       propertyPath: m_Name
       value: Room1 Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 4873758962709329626, guid: d1cc3b07b9cd3b548ab3086582f4e7e4, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5645337184329783347, guid: d1cc3b07b9cd3b548ab3086582f4e7e4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -311,6 +323,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5645337184329783347, guid: d1cc3b07b9cd3b548ab3086582f4e7e4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6875818088464052987, guid: d1cc3b07b9cd3b548ab3086582f4e7e4, type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7384242181606375179, guid: d1cc3b07b9cd3b548ab3086582f4e7e4, type: 3}
@@ -381,6 +397,10 @@ PrefabInstance:
       propertyPath: m_TileSpriteArray.Array.data[10].m_Data
       value: 
       objectReference: {fileID: -127006364204754901, guid: ede690351b1e25a4280f5d1bd08ff68b, type: 3}
+    - target: {fileID: 7421126686432587247, guid: d1cc3b07b9cd3b548ab3086582f4e7e4, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8035965949243846304, guid: d1cc3b07b9cd3b548ab3086582f4e7e4, type: 3}
       propertyPath: m_ColliderPaths.Array.data[0].m_ColliderPaths.Array.data[0].Array.size
       value: 4
@@ -990,8 +1010,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   monsterObject:
   - {fileID: 3529902308102217141, guid: a2e3fbc002ffdbc4899dbc72c14ae9bb, type: 3}
-  - {fileID: 6840133694130961993, guid: d384cb38dfc99c342a9eea4fbc329570, type: 3}
-  monsterNum: 0100000002000000
+  monsterNum: 01000000
 --- !u!4 &1330113168
 Transform:
   m_ObjectHideFlags: 0

@@ -101,9 +101,11 @@ MonoBehaviour:
   rotationSpeed: 45
   clearSprite: {fileID: 21300000, guid: 96c7b03c6eadb6a45bbb55add8a22da2, type: 3}
   teleportTag: Player
-  targetScene: MonsterTest
+  targetScene: DungeonScene
   mainCamera: {fileID: 0}
   vCamera: {fileID: 0}
+  ui: {fileID: 0}
+  itemAssets: {fileID: 0}
 --- !u!58 &6293268285984460582
 CircleCollider2D:
   m_ObjectHideFlags: 0
