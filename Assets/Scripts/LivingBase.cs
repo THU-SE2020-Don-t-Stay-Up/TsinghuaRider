@@ -38,7 +38,7 @@ public class LivingBase
     /// <summary>
     /// 远程武器
     /// </summary>
-    
+
     public MeleeWeapon MeleeWeapon { get; set; } = new MeleeWeapon();
     /// <summary>
     /// 实体各种状态
@@ -168,7 +168,18 @@ public class LivingBaseAgent : MonoBehaviour
     /// </summary>
     public void Destroy()
     {
-        GameObject.Destroy(gameObject);
+        try
+        {
+            living.Skills.Find(e => e.GetType() == new SplitSkill().GetType()).Perform(this, null);
+        }
+        catch(Exception)
+        {
+
+        }
+        finally
+        {
+            GameObject.Destroy(gameObject);
+        }
     }
 
     /// <summary>
