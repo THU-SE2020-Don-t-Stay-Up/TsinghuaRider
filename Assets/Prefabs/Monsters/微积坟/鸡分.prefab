@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5484263515946862244}
   - component: {fileID: 1196376800170384099}
   - component: {fileID: -412053420877883015}
-  m_Layer: 12
+  m_Layer: 13
   m_Name: "\u9E21\u5206"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -104,7 +104,7 @@ MonoBehaviour:
   attackClip: {fileID: 0}
   getHealingClip: {fileID: 0}
   rigidbody2d: {fileID: 0}
-  bulletPrefab: {fileID: 9195658036030075667, guid: ee453eaf1f52a0c44857f9f1088da468, type: 3}
+  bulletPrefab: {fileID: 2269785940787976222, guid: bd13f8eff7394964092a5fc1492e5078, type: 3}
   monsterIndex: 1
 --- !u!50 &1196376800170384099
 Rigidbody2D:

@@ -111,7 +111,7 @@ public class LivingBaseAgent : MonoBehaviour
     {
         if (amount < 0)
         {
-            if (living.State.HasStatus(Status.Invincible))
+            if (living.State.HasStatus(new InvincibleState()))
             {
                 Debug.Log($"{living.Name} Invincible");
                 return;
@@ -122,7 +122,8 @@ public class LivingBaseAgent : MonoBehaviour
                 living.CurrentHealth = Mathf.Clamp(living.CurrentHealth + amount, 0, living.MaxHealth);
                 //animator.SetTrigger("Hit");
                 //audioSource.PlayOneShot(getHitClip);
-                //living.State.AddStatus(Status.Invincible, living.TimeInvincible);
+                living.State.AddStatus(new InvincibleState(), living.TimeInvincible);
+                print($"{living.Name}获得无敌{living.TimeInvincible}");
                 if (IsDead())
                 {
                     //死亡动画
@@ -132,8 +133,8 @@ public class LivingBaseAgent : MonoBehaviour
         }
         else
         {
-            animator.SetTrigger("Heal");
-            audioSource.PlayOneShot(getHealingClip);
+            //animator.SetTrigger("Heal");
+            //audioSource.PlayOneShot(getHealingClip);
 
             living.CurrentHealth = Mathf.Clamp(living.CurrentHealth + amount, 0, living.MaxHealth);
         }
@@ -151,6 +152,11 @@ public class LivingBaseAgent : MonoBehaviour
             if (living.State.StateDuration[status] <= 0)
             {
                 living.State.RemoveStatus(status);
+                print($"移除{living.Name}的{status}");
+            }
+            else
+            {
+                status.Effect(this);
             }
         }
     }

@@ -1,5 +1,7 @@
+
+﻿using System.Collections.Generic;
 ﻿using UnityEngine;
-using Debug = UnityEngine.Debug;
+
 
 public class CharacterAgent : LivingBaseAgent
 {
@@ -23,22 +25,29 @@ public class CharacterAgent : LivingBaseAgent
     }
     private ActionState actionState;
 
-    // movement
 
+    /// <summary>
+    /// 物品栏
+    /// </summary>
+    private Inventory inventory;
+    [SerializeField] private UI_Inventory uiInventory;
+
+    // movement
     float horizontal;
     float vertical;
+
     // dash realting
     private bool isDashBottonDown;
-
     [SerializeField] private LayerMask dashLayerMask;
 
     // animation
 
-    Vector2 lookDirection = new Vector2(1, 0);
+    Vector2 lookDirection = new Vector2(0, 0);
 
     // actions
     public GameObject WeaponPrefab;
 
+    private bool godMode = false;
     public Skill MissleAttack => living.Skills[0];
     public Skill MeleeAttack => living.Skills[1];
 
@@ -56,6 +65,13 @@ public class CharacterAgent : LivingBaseAgent
 
         MoveSpeed = Character.MoveSpeed;
         actionState = ActionState.Normal;
+        living.State.AddStatus(new InvincibleState(), living.TimeInvincible);
+
+        // 初始化背包及UI
+        inventory = new Inventory();
+        uiInventory.SetInventory(inventory);
+
+        living.MissleWeapon.bulletPrefab = bulletPrefab;
     }
 
     private void Update()
@@ -65,7 +81,6 @@ public class CharacterAgent : LivingBaseAgent
             // when in Normal state, player can move, perform skills, get hurt ,attack and interact
             case ActionState.Normal:
                 // move
-                MoveSpeed = 10.0f;
                 HandleMovement();
 
                 // do special action such as dash and skills
@@ -80,8 +95,14 @@ public class CharacterAgent : LivingBaseAgent
 
             // when in Attacking state, player should be unable to move or interact, but can perform skills, be hurt or do another attack
             case ActionState.Attacking:
-                HandleAttacking();
                 Perform();
+
+                if (animator.GetCurrentAnimatorStateInfo(0).IsName("MeleeAttack"))
+                {
+                    SetState(0);
+                    Debug.Log("melee attack finish!");
+                }
+
                 break;
 
             // when in Skilling state, player could only wait until skill is over
@@ -102,20 +123,27 @@ public class CharacterAgent : LivingBaseAgent
         Dash();
     }
 
+    /// <summary>
+    /// 改变角色状态机的状态
+    /// </summary>
+    /// <param name="a"></param>
     public void SetState(int a)
     {
         switch (a)
         {
             case 0:
                 actionState = ActionState.Normal;
+                MoveSpeed = 10.0f;
                 break;
             case 1:
                 actionState = ActionState.Attacking;
+                Stop();
                 break;
             case 2:
                 actionState = ActionState.Dashing;
                 break;
             case 3:
+                Stop();
                 actionState = ActionState.Skilling;
                 break;
 
@@ -181,28 +209,25 @@ public class CharacterAgent : LivingBaseAgent
         if (Input.GetKeyDown(KeyCode.R))
         {
             SetState(3);
-            Stop();
-            Debug.Log("Should perform skill1!");
+            inventory.UseItem(new HealthPotion { amount = 1, isStackable = true}, this);
             SetState(0);
         }
         if (Input.GetKeyDown(KeyCode.F))
         {
             SetState(3);
-            Stop();
-            Debug.Log("Should perform skill2!");
+            inventory.UseItem(new StrengthPotion { amount = 1, isStackable = true}, this);
             SetState(0);
         }
         if (Input.GetKeyDown(KeyCode.C))
         {
             SetState(3);
-            Stop();
-            Debug.Log("Should perform skill3!");
+            inventory.UseItem(new Medkit { amount = 1, isStackable = false }, this);
             SetState(0);
         }
         if (Input.GetKeyDown(KeyCode.G))
         {
             SetState(3);
-            Stop();
+            godMode = !godMode;
             Debug.Log("Should perform skill4!");
             SetState(0);
         }
@@ -232,35 +257,61 @@ public class CharacterAgent : LivingBaseAgent
         }
     }
 
-
-
-
     private void HandleAttacking()
     {
-        SetState(1);
-        Vector3 mousePosition = gameObject.GetComponent<PlayerAim>().GetMouseWorldPosition();
+        Vector3 mousePosition = PlayerAim.GetMouseWorldPosition();
         living.AttackDirection = (mousePosition - transform.position).normalized;
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (living.AttackSpeed - deltaTime < 0.01)
+
+       // if (Input.GetMouseButtonDown(0))
+        if (godMode)
             {
+           // if (living.AttackSpeed - deltaTime < 0.01)
+            if (true)
+                {
+                SetState(1);
                 deltaTime = 0;
-                Stop();
                 MissleAttack.Perform(this, null);
+                //GameObject projectileObject = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+                //Bullet bullet = projectileObject.GetComponent<Bullet>();
+                //bullet.Shoot(living.AttackDirection, 10);
+
                 Debug.Log("MissleAttack!");
+                SetState(0);
             }
         }
+
         if (Input.GetMouseButtonDown(1))
         {
             if (living.AttackSpeed - deltaTime < 0.01)
             {
-                Stop();
+                SetState(1);
                 MeleeAttack.Perform(this, null);
                 Debug.Log("MeleeAttack!");
                 deltaTime = 0;
+                animator.SetTrigger("Melee");
+                SetState(0);
             }
         }
-        SetState(0);
     }
+
+    /// <summary>
+    /// 人物与环境交互，如果碰撞物体实现了IInteract接口，调用对应的InteractWith函数实现人物与环境的交互
+    /// </summary>
+    /// <param name="collision">碰撞实体</param>
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        IInteract interact = Utility.GetInterface<IInteract>(collision.gameObject);
+        if (interact != null)
+        {
+            interact.InteractWith(gameObject);
+        }
+    }
+
+    public void InventoryAddItem(Item item)
+    {
+        inventory.AddItem(item);
+    }
+
+
 }
 

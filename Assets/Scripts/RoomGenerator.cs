@@ -1,28 +1,40 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class RoomGenerator : MonoBehaviour
 {
-    [Header("房间属性")]
+    [Header("房间预制体")]
     public GameObject startRoom;
     public GameObject endRoom;
     public GameObject[] roomPrefabs;
-    
+
     [Header("生成规则")]
     public int generateNumber;
     public float xOffset;
     public float yOffset;
 
     Transform generatorPoint;
-    enum Direction {up, down, left, right};
+    enum Direction { up, down, left, right };
     Direction direction;
     List<Room> roomList = new List<Room>();
-    List<Vector3> roomPositionList = new List<Vector3>();
 
-    
     void Start()
     {
+        SceneManager.sceneUnloaded += OnSceneUnloaded;
+        SetupPlayer();
+    }
+
+    void OnSceneUnloaded(Scene previous)
+    {
+        SetupRoom();
+        SetupDoor();
+    }
+
+    void SetupRoom() 
+    { 
         GameObject roomPrefab;
         Room newRoom;
         generatorPoint = GetComponent<Transform>();
@@ -39,21 +51,11 @@ public class RoomGenerator : MonoBehaviour
             }
 
             newRoom = Instantiate(roomPrefab, generatorPoint.position, Quaternion.identity).GetComponent<Room>();
-
+            newRoom.stageClear = false;  // 初始设置为未通关状态
             roomList.Add(newRoom);
-            roomPositionList.Add(generatorPoint.position);
 
             ChangeGeneratePosition();
-        }
-
-        SetupDoor();
-
-    }
-
-    
-    void Update()
-    {
-        
+        }        
     }
 
     void ChangeGeneratePosition(){
@@ -77,40 +79,60 @@ public class RoomGenerator : MonoBehaviour
             }
 
             dist = 1.0f;
-            foreach (Vector3 roomPosition in roomPositionList) {
-                dist = Mathf.Min(dist, Vector3.Distance(roomPosition, generatorPoint.position));
+            foreach (Room room in roomList) {
+                dist = Mathf.Min(dist, Vector3.Distance(room.transform.position, generatorPoint.position));
             }
         } while(dist < 0.5f);
     }
 
     void SetupDoor(){
         float distUp, distDown, distLeft, distRight;
-        Vector3 roomPosition;
+        Vector3 roomPosition, otherRoomPosition;
+        TeleportController teleporter;
         foreach (Room room in roomList){
-            roomPosition = room.gameObject.transform.position;
+            roomPosition = room.transform.position;
             room.flagUp = false;
             room.flagDown = false;
             room.flagLeft = false;
             room.flagRight = false;
-            foreach (Vector3 otherRoomPosition in roomPositionList) {
+            foreach (Room otherRoom in roomList) {
+                otherRoomPosition = otherRoom.transform.position;
                 distUp = Vector3.Distance(otherRoomPosition, roomPosition + new Vector3(0, yOffset, 0));
                 distDown = Vector3.Distance(otherRoomPosition, roomPosition + new Vector3(0, -yOffset, 0));
                 distLeft = Vector3.Distance(otherRoomPosition, roomPosition + new Vector3(-xOffset, 0, 0));
                 distRight = Vector3.Distance(otherRoomPosition, roomPosition + new Vector3(xOffset, 0, 0));
                 if (distUp < 0.5f) {
                     room.flagUp = true;
+                    teleporter = room.doorUp.GetComponent<TeleportController>();
+                    teleporter.teleportDestination = otherRoom.transform;
                 }
                 if (distDown < 0.5f) {
-                    room.flagDown = true;                
+                    room.flagDown = true;
+                    teleporter = room.doorDown.GetComponent<TeleportController>();
+                    teleporter.teleportDestination = otherRoom.transform;
                 }
                 if (distLeft < 0.5f) {
                     room.flagLeft = true;
+                    teleporter = room.doorLeft.GetComponent<TeleportController>();
+                    teleporter.teleportDestination = otherRoom.transform;
                 }
                 if (distRight < 0.5f) {
                     room.flagRight = true;
+                    teleporter = room.doorRight.GetComponent<TeleportController>();
+                    teleporter.teleportDestination = otherRoom.transform;
                 }
             }
+            room.doorUp.SetActive(false);
+            room.doorDown.SetActive(false);
+            room.doorLeft.SetActive(false);
+            room.doorRight.SetActive(false);
         }
+    }
+
+    void SetupPlayer()
+    {
+        GameObject player = GameObject.FindWithTag("Player");
+        player.transform.position = transform.position;
     }
 
 }
