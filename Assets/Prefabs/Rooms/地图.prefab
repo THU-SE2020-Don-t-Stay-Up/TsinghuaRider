@@ -355,6 +355,10 @@ PrefabInstance:
       propertyPath: vCamera
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 6726826919440057028, guid: 0ec1ab22bb9aff347a536fcb14f051a7, type: 3}
+      propertyPath: targetScene
+      value: MonsterTest
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0ec1ab22bb9aff347a536fcb14f051a7, type: 3}
 --- !u!4 &7206701573937116135 stripped
@@ -424,10 +428,6 @@ PrefabInstance:
     - target: {fileID: 6726826919440057028, guid: 0ec1ab22bb9aff347a536fcb14f051a7, type: 3}
       propertyPath: vCamera
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 6726826919440057028, guid: 0ec1ab22bb9aff347a536fcb14f051a7, type: 3}
-      propertyPath: targetScene
-      value: MonsterTest
       objectReference: {fileID: 0}
     - target: {fileID: 6726826919440057029, guid: 0ec1ab22bb9aff347a536fcb14f051a7, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x

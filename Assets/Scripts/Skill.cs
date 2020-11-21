@@ -38,16 +38,12 @@ public class SplitSkill : Skill
     public int splitNum = 3;
     public override void Perform(LivingBaseAgent subject, LivingBaseAgent target)
     {
-        GameObject prefab = Global.GetPrefab("鸡分");
+        GameObject prefab = Global.GetPrefab($"微{subject.living.Name}");
         for(int i = 0; i < splitNum; i++)
         {
             Vector3 randomOffset = new Vector3(Random.Range(0, 1.0f), Random.Range(0, 1.0f));
-            GameObject little = GameObject.Instantiate(prefab, prefab.transform.position + randomOffset, Quaternion.identity);
-            LivingBase littleLiving = little.GetComponent<LivingBaseAgent>().living;
-            littleLiving.MaxHealth /= 2;
-            littleLiving.AttackAmount /= 2;
+            GameObject little = GameObject.Instantiate(prefab, subject.transform.position + randomOffset, Quaternion.identity);
             Debug.Log($"分裂{i}");
-            littleLiving.Skills.RemoveAt(littleLiving.Skills.IndexOf(new SplitSkill()));
         }
     }
 }

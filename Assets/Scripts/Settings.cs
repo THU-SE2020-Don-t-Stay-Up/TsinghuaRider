@@ -31,7 +31,7 @@ class Global
     public static string[] itemNames = { "HealthPotion", "StrengthPotion", "Coin", "Medkit", "Sword" };
     public static string[] prefabPaths;
 
-    public static void GetPrefabPaths()
+    public static void LoadPrefabPaths()
     {
         prefabPaths = AssetDatabase.FindAssets("t:prefab").Select(guid => AssetDatabase.GUIDToAssetPath(guid)).ToArray();
     }

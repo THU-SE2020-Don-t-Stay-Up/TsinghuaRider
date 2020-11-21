@@ -16,6 +16,8 @@ public class SceneTeleporter : MonoBehaviour
     public string targetScene;
     public GameObject mainCamera;
     public GameObject vCamera;
+    public GameObject ui;
+    public GameObject itemAssets;
 
     float timer;
     bool isTeleporting = false;
@@ -28,8 +30,6 @@ public class SceneTeleporter : MonoBehaviour
         timer = teleportTime;
         player = GameObject.FindGameObjectWithTag(teleportTag);
 
-        DontDestroyOnLoad(mainCamera);
-        DontDestroyOnLoad(vCamera);
     }
 
     void Update()
