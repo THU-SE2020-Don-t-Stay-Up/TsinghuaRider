@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using Debug = UnityEngine.Debug;
+﻿using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 
 class Settings
@@ -30,7 +29,18 @@ class Global
     /// </summary>
     public static List<Character> characters;
     public static string[] itemNames = { "HealthPotion", "StrengthPotion", "Coin", "Medkit", "Sword" };
+    public static string[] prefabPaths;
 
+    public static void GetPrefabPaths()
+    {
+        prefabPaths = AssetDatabase.FindAssets("t:prefab").Select(guid => AssetDatabase.GUIDToAssetPath(guid)).ToArray();
+    }
+
+    public static GameObject GetPrefab(string name)
+    {
+        string path = prefabPaths.First(p => p.Contains(name));
+        return AssetDatabase.LoadAssetAtPath(path, typeof(GameObject)) as GameObject;
+    }
 }
 
 /// <summary>
@@ -104,6 +114,10 @@ public class State
     /// <param name="status">待添加状态</param>
     public void AddStatus(StateBase status, float duration)
     {
+        if (duration <= 0)
+        {
+            return;
+        }
         if (HasStatus(status))
         {
             StateDuration[status] += duration;
@@ -131,7 +145,7 @@ public class State
     /// <returns>处于该状态返回true，不处于则返回false</returns>
     public bool HasStatus(StateBase status)
     {
-        if(StateDuration.ContainsKey(status))
+        if (StateDuration.ContainsKey(status))
         {
             return true;
         }
@@ -152,7 +166,7 @@ public class State
 
 public static class Utility
 {
-    public static T GetInterface<T>(GameObject gameObject) where T: class
+    public static T GetInterface<T>(GameObject gameObject) where T : class
     {
         if (!typeof(T).IsInterface)
         {

@@ -16,8 +16,7 @@
     "Reward": 1,
     "Difficulty": 20,
     "Skills": [
-      "MeleeAttack",
-      "Split"
+      "MeleeAttack"
     ]
   },
   {
