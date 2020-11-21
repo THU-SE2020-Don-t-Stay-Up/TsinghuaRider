@@ -81,7 +81,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1886171756276275987, guid: fa7c88058e40dd74eb8cfa6e73be8f9f, type: 3}
       propertyPath: interval
-      value: 15
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 1886171756276275987, guid: fa7c88058e40dd74eb8cfa6e73be8f9f, type: 3}
       propertyPath: difficulty

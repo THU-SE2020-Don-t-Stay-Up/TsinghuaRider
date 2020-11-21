@@ -210,6 +210,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &431853850 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3542966706506695565, guid: 252a9bb49a41b3e4db05bc588d2c9153, type: 3}
+  m_PrefabInstance: {fileID: 1139729303}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &521061258 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1550602760931735205, guid: da640df4836b77940bab112d78497220, type: 3}
@@ -272,6 +277,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5743b8fcba72647489dc230496b13820, type: 3}
+--- !u!1 &702526327 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3748331706569714031, guid: 5743b8fcba72647489dc230496b13820, type: 3}
+  m_PrefabInstance: {fileID: 565031388}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1039090232
 GameObject:
   m_ObjectHideFlags: 0
@@ -322,11 +332,11 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
-  far clip plane: 1000
-  field of view: 60
+  near clip plane: 0.1
+  far clip plane: 5000
+  field of view: 40
   orthographic: 1
-  orthographic size: 7
+  orthographic size: 8
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -507,10 +517,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1844270432}
     - target: {fileID: 5565679003278344399, guid: da640df4836b77940bab112d78497220, type: 3}
-      propertyPath: WeaponPrefab
-      value: 
-      objectReference: {fileID: 7972467719648981591, guid: aaee016c93efe8d4d844eeeaf92f05e3, type: 3}
-    - target: {fileID: 5565679003278344399, guid: da640df4836b77940bab112d78497220, type: 3}
       propertyPath: bulletPrefab
       value: 
       objectReference: {fileID: 2269785940787976222, guid: bd13f8eff7394964092a5fc1492e5078, type: 3}
@@ -554,10 +560,10 @@ MonoBehaviour:
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 521061258}
   m_Lens:
-    FieldOfView: 60
-    OrthographicSize: 7
-    NearClipPlane: 0.3
-    FarClipPlane: 1000
+    FieldOfView: 40
+    OrthographicSize: 8
+    NearClipPlane: 0.1
+    FarClipPlane: 5000
     Dutch: 0
     LensShift: {x: 0, y: 0}
   m_Transitions:
@@ -709,9 +715,13 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1389292578}
     - target: {fileID: 4132375464781814997, guid: 863cb53b4ecf8be42ab56d72403a21db, type: 3}
-      propertyPath: targetScene
-      value: DungeonScene
-      objectReference: {fileID: 0}
+      propertyPath: ui
+      value: 
+      objectReference: {fileID: 431853850}
+    - target: {fileID: 4132375464781814997, guid: 863cb53b4ecf8be42ab56d72403a21db, type: 3}
+      propertyPath: itemAssets
+      value: 
+      objectReference: {fileID: 702526327}
     - target: {fileID: 7206701573937116057, guid: 863cb53b4ecf8be42ab56d72403a21db, type: 3}
       propertyPath: mainCamera
       value: 

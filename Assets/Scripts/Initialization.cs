@@ -13,6 +13,17 @@ public class Initialization : MonoBehaviour
         Debug.Log("init");
         Global.monsters = Monster.LoadMonster();
         Global.characters = Character.LoadCharacter();
+        Global.LoadPrefabPaths();
+
+        GameObject mainCamera = GameObject.Find("Main Camera");
+        GameObject vCamera = GameObject.Find("CM vcam1");
+        GameObject ui = GameObject.Find("UI");
+        GameObject itemAssets = GameObject.Find("ItemAssets");
+        DontDestroyOnLoad(mainCamera);
+        DontDestroyOnLoad(vCamera);
+        DontDestroyOnLoad(ui);
+        DontDestroyOnLoad(itemAssets);
+
 
         Destroy(gameObject);
     }

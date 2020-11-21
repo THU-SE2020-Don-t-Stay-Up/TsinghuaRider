@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class MonsterAgent : LivingBaseAgent
 {
@@ -39,6 +38,7 @@ public class MonsterAgent : LivingBaseAgent
     void Start()
     {
         living = Global.monsters[monsterIndex].Clone() as Monster;
+        living.CurrentHealth = living.MaxHealth;
         print(Monster.Name);
 
         rigidbody2d = GetComponent<Rigidbody2D>();
@@ -60,6 +60,10 @@ public class MonsterAgent : LivingBaseAgent
         {
             case ActionState.Roaming:
                 rigidbody2d.velocity = roamingDirection * MoveSpeed;
+                if ((transform.position - startPosition).magnitude > 100)
+                {
+                    actionState = ActionState.Restarting;
+                }
                 FindTarget();
                 break;
             case ActionState.Chasing:
@@ -106,7 +110,7 @@ public class MonsterAgent : LivingBaseAgent
     {
         if (living.AttackSpeed - attackDeltaTime < 0.01)
         {
-            living.AttackDirection = target.transform.position - transform.position;
+            living.AttackDirection = (target.transform.position - transform.position).normalized;
             AttackSkill.Perform(this, target.GetComponent<LivingBaseAgent>());
             //print("attack target");
             attackDeltaTime = 0;
