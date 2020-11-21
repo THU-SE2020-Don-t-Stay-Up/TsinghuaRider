@@ -21,6 +21,8 @@ public class MissleWeapon : Item, IWeapon
     {
         GameObject projectileObject = GameObject.Instantiate(bulletPrefab, user.transform.position + direction * 0.5f, Quaternion.identity);
         Bullet bullet = projectileObject.GetComponent<Bullet>();
+        bullet.startPoint = user.transform.position;
+        bullet.Damage = user.GetComponent<LivingBaseAgent>().living.AttackAmount;
         bullet.userTag = user.tag;
         bullet.Shoot(direction, 10);
     }

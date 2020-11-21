@@ -4,6 +4,8 @@ public class Bullet : MonoBehaviour, IInteract
 {
     private Rigidbody2D rigidbody2d;
     private Transform aimTransform;
+    public Vector3 startPoint;
+    public int Damage { get; set; }
     public string userTag;
 
     private void Awake()
@@ -31,15 +33,15 @@ public class Bullet : MonoBehaviour, IInteract
         {
             if (!gameObject.CompareTag(userTag))
             {
-                living.ChangeHealth(-10);
+                living.ChangeHealth(-Damage);
+                Destroy(this.gameObject);
             }
         }
-        Destroy(this.gameObject);
     }
 
     private void Update()
     {
-        if (transform.position.magnitude > 50f)
+        if ((transform.position - startPoint).magnitude > 50f)
         {
             Destroy(gameObject);
         }
