@@ -13,7 +13,7 @@ public class Initialization : MonoBehaviour
         Debug.Log("init");
         Global.monsters = Monster.LoadMonster();
         Global.characters = Character.LoadCharacter();
-
+        Global.LoadPrefabPaths();
         Destroy(gameObject);
     }
 }

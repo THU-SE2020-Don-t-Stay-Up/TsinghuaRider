@@ -176,18 +176,12 @@ public class LivingBaseAgent : MonoBehaviour
     /// </summary>
     public void Destroy()
     {
-        try
+        SplitSkill splitSkill = living.Skills.FirstOrDefault(e => e.GetType() == new SplitSkill().GetType()) as SplitSkill;
+        if (splitSkill != null)
         {
-            living.Skills.Find(e => e.GetType() == new SplitSkill().GetType()).Perform(this, null);
+            splitSkill.Perform(this, null);
         }
-        catch(Exception)
-        {
-
-        }
-        finally
-        {
-            GameObject.Destroy(gameObject);
-        }
+        GameObject.Destroy(gameObject);
     }
 
     /// <summary>

@@ -39,5 +39,25 @@
       "MissleAttack",
       "Split"
     ]
+  },
+  {
+    "Name": "微鸡分",
+    "MoveSpeed": 5.0,
+    "MaxHealth": 20,
+    "CurrentHealth": 20,
+    "Defense": 0,
+    "Tenacity": 0.0,
+    "AttackSpeed": 1.5,
+    "AttackRadius": 8,
+    "AttackAmount": 5,
+    "AttackAngle": 0,
+    "ViewAngle": 360,
+    "ViewRadius": 10,
+    "Reward": 1,
+    "TimeInvincible": 0,
+    "Difficulty": 30,
+    "Skills": [
+      "MissleAttack"
+    ]
   }
 ]
