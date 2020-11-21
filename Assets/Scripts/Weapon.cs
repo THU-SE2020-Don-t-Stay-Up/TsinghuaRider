@@ -22,7 +22,6 @@ public class MissleWeapon : Item, IWeapon
         //bulletPrefab.GetComponent<Bullets>().Direction = direction;
         //bulletPrefab.GetComponent<Bullets>().AttackAmount = user.GetComponent<LivingBaseAgent>().living.AttackAmount;
 
-        Debug.Log(user.GetComponent<LivingBaseAgent>().living.Name+user.transform.position);
         GameObject projectileObject =  GameObject.Instantiate(bulletPrefab, user.transform.position+direction * 0.5f, Quaternion.identity);
         Bullet bullet = projectileObject.GetComponent<Bullet>();
         bullet.Shoot(direction, 50);
