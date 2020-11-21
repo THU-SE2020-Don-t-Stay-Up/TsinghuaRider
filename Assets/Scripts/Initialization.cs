@@ -10,6 +10,7 @@ public class Initialization : MonoBehaviour
 
     private void Awake()
     {
+        Debug.Log("init");
         Global.monsters = Monster.LoadMonster();
         Global.characters = Character.LoadCharacter();
 

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6499765829611139546}
   - component: {fileID: 5565679003278344399}
   - component: {fileID: 704157198687868794}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: MahouPrefabs
   m_TagString: Player
   m_Icon: {fileID: 0}

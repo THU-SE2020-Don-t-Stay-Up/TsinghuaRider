@@ -4,25 +4,69 @@ using UnityEngine;
 
 public class MonsterGenerator : MonoBehaviour
 {
-    public GameObject[] monsterObject;
-    public int[] monsterNum;
-    // Start is called before the first frame update
-    void Start()
+    /// <summary>
+    /// 可生成的怪物组
+    /// </summary>
+    public GameObject[] monsterGroups;
+    /// <summary>
+    /// 生成点，每个生成点每波生成一组怪物
+    /// </summary>
+    public Transform[] generatePoints;
+    /// <summary>
+    /// 生成波数
+    /// </summary>
+    public int wave;
+    /// <summary>
+    /// 每波时间间隔
+    /// </summary>
+    public float interval;
+    /// <summary>
+    /// 每个怪物组的参考难度
+    /// </summary>
+    public float difficulty;
+
+    float timer;
+    bool generating = false;
+
+    public void Generate(float delay = 1.0f)
     {
-        
-        for (int index = 0; index < monsterNum.Length; index++)
-        {
-            for (int i = 0; i < monsterNum[index]; i++)
-            {
-                Vector3 position = new Vector3(Random.Range(-5, 5), Random.Range(-5, 5));
-                GameObject.Instantiate(monsterObject[index], position, Quaternion.identity);
-            }
-        }
+        timer = delay;
+        generating = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (generating)
+        {
+            if (wave > 0)
+            {
+                timer -= Time.deltaTime;
+                if (timer < 0)
+                {
+                    int type = Random.Range(0, monsterGroups.Length);
+                    foreach (var point in generatePoints)
+                    {
+                        MonsterGroup monsterGroup = Instantiate(monsterGroups[type], point.position, Quaternion.identity).GetComponent<MonsterGroup>();
+                        monsterGroup.Generate(difficulty);
+                    }
+                    wave -= 1;
+                    timer = interval;
+                }
+            }
+            else
+            {
+                if (null == GameObject.FindGameObjectWithTag("Monster"))
+                {
+                    Debug.Log("No monster");
+                    Room room = GetComponentInParent<Room>();
+                    if (room != null)
+                    {
+                        room.Clear();
+                    }
+                    generating = false;
+                }
+            }
+        }
     }
 }

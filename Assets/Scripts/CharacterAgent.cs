@@ -261,8 +261,8 @@ public class CharacterAgent : LivingBaseAgent
         Vector3 mousePosition = PlayerAim.GetMouseWorldPosition();
         living.AttackDirection = (mousePosition - transform.position).normalized;
 
-       // if (Input.GetMouseButtonDown(0))
-        if (godMode)
+        if (Input.GetMouseButtonDown(0))
+            //if (godMode)
             {
            // if (living.AttackSpeed - deltaTime < 0.01)
             if (true)

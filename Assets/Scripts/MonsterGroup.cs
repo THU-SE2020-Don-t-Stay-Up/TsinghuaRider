@@ -15,22 +15,17 @@ public class MonsterGroup : MonoBehaviour
     /// <summary>
     /// 参考难度（会影响生成怪物的数量）
     /// </summary>
-    public float difficulty = 100.0f;
 
-    private void Start()
+    public void Generate(float difficulty)
     {
-        Generate();
-    }
-
-    public void Generate()
-    {
+        Debug.Log("generate monster group");
         float[] monsterDifficulty = new float[monsterObjects.Length];
         float usedDifficulty = 0.0f;
         float totalProbability = 0.0f;
 
         for(int i = 0; i < monsterObjects.Length; i++)
         {
-            Monster monster = monsterObjects[i].GetComponent<Monster>();
+            Monster monster = Global.monsters[monsterObjects[i].GetComponent<MonsterAgent>().monsterIndex];
             monsterDifficulty[i] = monster.Difficulty;
 
             totalProbability += probability[i];
@@ -45,11 +40,13 @@ public class MonsterGroup : MonoBehaviour
                 current += probability[i];
                 if (tmp < current)
                 {
-                    Instantiate(monsterObjects[i], transform, true);
+                    Instantiate(monsterObjects[i], transform.position, Quaternion.identity);
                     usedDifficulty += monsterDifficulty[i];
                     break;
                 }
             }
         }
+
+        Destroy(gameObject);
     }
 }
