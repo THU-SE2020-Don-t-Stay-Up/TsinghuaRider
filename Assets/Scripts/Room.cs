@@ -18,16 +18,20 @@ public class Room : MonoBehaviour
     public bool flagDown { set; private get; }
     public bool flagLeft { set; private get; } /**< 记录上下左右是否有房间，以此判断是否需要生成门*/
     public bool flagRight { set; private get; }
-    
-    public bool stageClear { set; get; }
 
-    void Awake() {
-        stageClear = false;      
-    }
+    public bool stageClear = false;
 
-    void Start()
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        Clear();
+        if (other.CompareTag("Player"))
+        {
+            Debug.Log("Player entered room: " + gameObject);
+            if (!stageClear)
+            {
+                MonsterGenerator generator = GetComponentInChildren<MonsterGenerator>();
+                generator.Generate();
+            }
+        }
     }
 
     public void Clear()

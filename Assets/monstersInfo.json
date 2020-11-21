@@ -14,7 +14,7 @@
     "ViewAngle": 180,
     "ViewRadius": 10,
     "Reward": 1,
-    "Difficulty": 1,
+    "Difficulty": 20,
     "Skills": [
       "MeleeAttack"
     ]
@@ -34,7 +34,7 @@
     "ViewRadius": 10,
     "Reward": 1,
     "TimeInvincible": 0,
-    "Difficulty": 1,
+    "Difficulty": 30,
     "Skills": [
       "MissleAttack",
       "Split"

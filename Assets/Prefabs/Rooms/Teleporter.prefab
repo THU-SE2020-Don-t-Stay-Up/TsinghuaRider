@@ -96,7 +96,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e5f98c3bba54534c8fd757237266f5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  teleportTime: 3
+  teleportTime: 2
   amplifyScale: 1.5
   rotationSpeed: 45
   clearSprite: {fileID: 21300000, guid: 96c7b03c6eadb6a45bbb55add8a22da2, type: 3}
