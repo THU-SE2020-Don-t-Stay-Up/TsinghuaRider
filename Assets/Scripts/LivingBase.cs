@@ -96,17 +96,18 @@ public class LivingBaseAgent : MonoBehaviour
     /// <summary>
     /// 实际移动速度，受减速效果影响
     /// </summary>
-    public float MoveSpeed;
+    public float MoveSpeed { get; set; }
+    public Animator Animator { get; set; }
+    public AudioSource AudioSource { get; set; }
+    public AudioClip GetHitClip { get; set; }
+    public AudioClip AttackClip { get; set; }
+    public AudioClip GetHealingClip { get; set; }
 
-    public Animator animator;
-    public AudioSource audioSource;
-    public AudioClip getHitClip;
-    public AudioClip attackClip;
-    public AudioClip getHealingClip;
-
-    public Rigidbody2D rigidbody2d;
+    public Rigidbody2D rigidbody2d { get; set; }
 
     public GameObject bulletPrefab;
+
+
     public void ChangeHealth(int amount)
     {
         if (amount < 0)
@@ -120,10 +121,11 @@ public class LivingBaseAgent : MonoBehaviour
             else
             {
                 living.CurrentHealth = Mathf.Clamp(living.CurrentHealth + amount, 0, living.MaxHealth);
+                Debug.Log($"{living.Name} now health is {living.CurrentHealth}");
                 //animator.SetTrigger("Hit");
                 //audioSource.PlayOneShot(getHitClip);
                 living.State.AddStatus(new InvincibleState(), living.TimeInvincible);
-                print($"{living.Name}获得无敌{living.TimeInvincible}");
+                //print($"{living.Name}获得无敌{living.TimeInvincible}");
                 if (IsDead())
                 {
                     //死亡动画

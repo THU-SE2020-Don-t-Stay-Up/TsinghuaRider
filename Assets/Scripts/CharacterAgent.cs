@@ -60,8 +60,8 @@ public class CharacterAgent : LivingBaseAgent
         print(Character.Name);
 
         rigidbody2d = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
-        audioSource = GetComponent<AudioSource>();
+        Animator = GetComponent<Animator>();
+        AudioSource = GetComponent<AudioSource>();
 
         MoveSpeed = Character.MoveSpeed;
         actionState = ActionState.Normal;
@@ -97,7 +97,7 @@ public class CharacterAgent : LivingBaseAgent
             case ActionState.Attacking:
                 Perform();
 
-                if (animator.GetCurrentAnimatorStateInfo(0).IsName("MeleeAttack"))
+                if (Animator.GetCurrentAnimatorStateInfo(0).IsName("MeleeAttack"))
                 {
                     SetState(0);
                     Debug.Log("melee attack finish!");
@@ -165,9 +165,9 @@ public class CharacterAgent : LivingBaseAgent
         }
 
         // set moving animaion paraments
-        animator.SetFloat("Look X", lookDirection.x);
-        animator.SetFloat("Look Y", lookDirection.y);
-        animator.SetFloat("Speed", move.magnitude);
+        Animator.SetFloat("Look X", lookDirection.x);
+        Animator.SetFloat("Look Y", lookDirection.y);
+        Animator.SetFloat("Speed", move.magnitude);
 
     }
 
@@ -262,20 +262,13 @@ public class CharacterAgent : LivingBaseAgent
         Vector3 mousePosition = PlayerAim.GetMouseWorldPosition();
         living.AttackDirection = (mousePosition - transform.position).normalized;
 
-       // if (Input.GetMouseButtonDown(0))
-        if (godMode)
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (living.AttackSpeed - deltaTime < 0.01)
             {
-           // if (living.AttackSpeed - deltaTime < 0.01)
-            if (true)
-                {
                 SetState(1);
                 deltaTime = 0;
                 MissleAttack.Perform(this, null);
-                //GameObject projectileObject = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
-                //Bullet bullet = projectileObject.GetComponent<Bullet>();
-                //bullet.Shoot(living.AttackDirection, 10);
-
-                Debug.Log("MissleAttack!");
                 SetState(0);
             }
         }
@@ -286,9 +279,8 @@ public class CharacterAgent : LivingBaseAgent
             {
                 SetState(1);
                 MeleeAttack.Perform(this, null);
-                Debug.Log("MeleeAttack!");
                 deltaTime = 0;
-                animator.SetTrigger("Melee");
+                Animator.SetTrigger("Melee");
                 SetState(0);
             }
         }
