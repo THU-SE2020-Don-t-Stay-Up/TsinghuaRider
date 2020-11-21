@@ -1,11 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Bullet : MonoBehaviour, IInteract
 {
     private Rigidbody2D rigidbody2d;
     private Transform aimTransform;
+    public string userTag;
 
     private void Awake()
     {
@@ -30,10 +29,12 @@ public class Bullet : MonoBehaviour, IInteract
         LivingBaseAgent living = gameObject.GetComponent<LivingBaseAgent>();
         if (living != null)
         {
-            living.ChangeHealth(-10);
+            if (!gameObject.CompareTag(userTag))
+            {
+                living.ChangeHealth(-10);
+            }
         }
         Destroy(this.gameObject);
-
     }
 
     private void Update()
