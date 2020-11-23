@@ -14,10 +14,6 @@ public class SceneTeleporter : MonoBehaviour
     [Header("传送逻辑")]
     public string teleportTag;
     public string targetScene;
-    public GameObject mainCamera;
-    public GameObject vCamera;
-    public GameObject ui;
-    public GameObject itemAssets;
 
     float timer;
     bool isTeleporting = false;

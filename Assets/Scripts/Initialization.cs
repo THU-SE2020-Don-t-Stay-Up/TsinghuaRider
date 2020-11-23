@@ -19,11 +19,12 @@ public class Initialization : MonoBehaviour
         GameObject vCamera = GameObject.Find("CM vcam1");
         GameObject ui = GameObject.Find("UI");
         GameObject itemAssets = GameObject.Find("ItemAssets");
+        GameObject minimapCamera = GameObject.Find("Minimap Camera");
         DontDestroyOnLoad(mainCamera);
         DontDestroyOnLoad(vCamera);
         DontDestroyOnLoad(ui);
         DontDestroyOnLoad(itemAssets);
-
+        DontDestroyOnLoad(minimapCamera);
 
         Destroy(gameObject);
     }
