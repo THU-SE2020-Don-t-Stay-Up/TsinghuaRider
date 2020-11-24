@@ -6,6 +6,8 @@ public class MonsterAgent : LivingBaseAgent
     /// 怪物基本属性信息
     /// </summary>
     private Monster Monster => living as Monster;
+
+    public Monster ActualMonster => actualLiving as Monster;
     /// <summary>
     /// 怪物编号，用于加载对应怪物的属性信息
     /// </summary>
@@ -38,6 +40,7 @@ public class MonsterAgent : LivingBaseAgent
     void Start()
     {
         living = Global.monsters[monsterIndex].Clone() as Monster;
+        actualLiving = Monster.Clone() as Monster;
         living.CurrentHealth = living.MaxHealth;
         print(Monster.Name);
 
@@ -48,7 +51,6 @@ public class MonsterAgent : LivingBaseAgent
         startPosition = transform.position;
         SetRandomDirection();
 
-        MoveSpeed = living.MoveSpeed;
         actionState = ActionState.Roaming;
         living.MissleWeapon.bulletPrefab = bulletPrefab;
     }
@@ -59,7 +61,7 @@ public class MonsterAgent : LivingBaseAgent
         switch (actionState)
         {
             case ActionState.Roaming:
-                rigidbody2d.velocity = roamingDirection * MoveSpeed;
+                rigidbody2d.velocity = roamingDirection * actualLiving.MoveSpeed;
                 if ((transform.position - startPosition).magnitude > 100)
                 {
                     actionState = ActionState.Restarting;
@@ -70,7 +72,7 @@ public class MonsterAgent : LivingBaseAgent
                 if (target != null)
                 {
                     SetMovingDirection(target.transform.position);
-                    rigidbody2d.velocity = movingDirection * MoveSpeed;
+                    rigidbody2d.velocity = movingDirection * actualLiving.MoveSpeed;
                     float distance = Vector3.Distance(transform.position, target.transform.position);
                     if (distance <= living.AttackRadius)
                     {
@@ -88,7 +90,7 @@ public class MonsterAgent : LivingBaseAgent
                 break;
             case ActionState.Restarting:
                 SetMovingDirection(startPosition);
-                rigidbody2d.velocity = movingDirection * MoveSpeed;
+                rigidbody2d.velocity = movingDirection * actualLiving.MoveSpeed;
                 if (HasArrived(startPosition))
                     actionState = ActionState.Roaming;
                 break;

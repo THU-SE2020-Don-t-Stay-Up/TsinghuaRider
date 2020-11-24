@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 /// <summary>
@@ -8,28 +10,5 @@ using UnityEngine;
 /// </summary>
 public class ItemAssets : MonoBehaviour
 {
-    public static ItemAssets Instance { get; private set; }
 
-    private void Awake()
-    {
-        Instance = this;
-        foreach (var itemName in Global.itemNames)
-        {
-            items.Add((Item)Activator.CreateInstance(typeof(Item).Assembly.GetType(itemName)));
-        }
-    }
-
-    public List<Item> items = new List<Item>();
-    public GameObject[] itemPrefabs;
-
-    public static GameObject GetItemPrefab(Item item)
-    {
-        int index = Instance.items.FindIndex(e => e.Equals(item));
-        return Array.Find(Instance.itemPrefabs, e => e.GetComponent<ItemAgent>().ItemIndex == index);
-    }
-
-    public static Sprite GetSprite(Item item)
-    {
-        return GetItemPrefab(item).GetComponent<SpriteRenderer>().sprite;
-    }
 }

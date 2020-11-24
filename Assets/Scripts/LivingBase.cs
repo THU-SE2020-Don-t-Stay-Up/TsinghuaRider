@@ -93,10 +93,12 @@ public class LivingBaseAgent : MonoBehaviour
     /// </summary>
     public LivingBase living;
 
+    public LivingBase actualLiving;
+
     /// <summary>
     /// 实际移动速度，受减速效果影响
     /// </summary>
-    public float MoveSpeed { get; set; }
+    //public float MoveSpeed { get; set; }
     public Animator Animator { get; set; }
     public AudioSource AudioSource { get; set; }
     public AudioClip GetHitClip { get; set; }
@@ -153,6 +155,7 @@ public class LivingBaseAgent : MonoBehaviour
             living.State.StateDuration[status] -= Time.deltaTime;
             if (living.State.StateDuration[status] <= 0)
             {
+                status.Resume(this);
                 living.State.RemoveStatus(status);
                 print($"移除{living.Name}的{status}");
             }
