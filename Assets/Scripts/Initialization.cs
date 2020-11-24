@@ -11,18 +11,19 @@ public class Initialization : MonoBehaviour
     private void Awake()
     {
         Debug.Log("init");
+        Global.LoadPrefabPaths();
         Global.monsters = Monster.LoadMonster();
         Global.characters = Character.LoadCharacter();
-        Global.LoadPrefabPaths();
+        Global.items = Item.LoadItem();
 
         GameObject mainCamera = GameObject.Find("Main Camera");
         GameObject vCamera = GameObject.Find("CM vcam1");
         GameObject ui = GameObject.Find("UI");
-        GameObject itemAssets = GameObject.Find("ItemAssets");
+        //GameObject itemAssets = GameObject.Find("ItemAssets");
         DontDestroyOnLoad(mainCamera);
         DontDestroyOnLoad(vCamera);
         DontDestroyOnLoad(ui);
-        DontDestroyOnLoad(itemAssets);
+        //DontDestroyOnLoad(itemAssets);
 
 
         Destroy(gameObject);

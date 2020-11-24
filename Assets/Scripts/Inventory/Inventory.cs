@@ -25,9 +25,9 @@ public class Inventory
     {
 
         itemList = new List<Item>();
-        AddItem(new HealthPotion {  amount = 3, isStackable = true });
-        AddItem(new StrengthPotion {  amount = 4, isStackable = true });
-        AddItem(new Medkit {  amount = 1, isStackable = false });
+        AddItem(new HealthPotion {  Amount = 3 });
+        AddItem(new StrengthPotion {  Amount = 4 });
+        AddItem(new Medkit { Amount = 1 });
 
         //Debug.Log("I have an INVENTORY!!");
         //Debug.Log(itemList.Count);
@@ -40,7 +40,7 @@ public class Inventory
     /// <param name="item"></param>
     public void AddItem(Item item)
     {
-        if (item.IsStackable())
+        if (item.IsStackable)
         {
             var inventoryItem = itemList.Find(e => e.Equals(item));
             if (inventoryItem == null)
@@ -49,7 +49,7 @@ public class Inventory
             }
             else
             {
-                inventoryItem.amount += item.amount;
+                inventoryItem.Amount += item.Amount;
             }
         }
         else
@@ -66,8 +66,8 @@ public class Inventory
         var inventoryItem = itemList.Find(e => e.Equals(item));
         if (inventoryItem != null)
         {
-            inventoryItem.amount -= item.amount;
-            if (inventoryItem.amount <= 0)
+            inventoryItem.Amount -= item.Amount;
+            if (inventoryItem.Amount <= 0)
             {
                 itemList.Remove(inventoryItem);
             }

@@ -55,9 +55,9 @@ public class UI_Inventory : MonoBehaviour
             image.sprite = item.GetSprite();
 
             TextMeshProUGUI uiText = itemSlotRectTransform.Find("amountText").GetComponent<TextMeshProUGUI>();
-            if (item.amount > 1)
+            if (item.Amount > 1)
             {
-                uiText.SetText(item.amount.ToString());
+                uiText.SetText(item.Amount.ToString());
             }
             else
             {
