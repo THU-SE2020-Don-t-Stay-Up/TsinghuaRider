@@ -4,11 +4,12 @@ using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using System;
 
 /// <summary>
 /// 角色属性类，继承自LivingBase，存储角色所有基本属性
 /// </summary>
-public class Character : LivingBase
+public class Character : LivingBase, ICloneable
 {
     /// <summary>
     /// 魔力值
@@ -35,5 +36,10 @@ public class Character : LivingBase
         {
             JsonSerializer.CreateDefault().Serialize(new JsonTextWriter(sw), characters);
         }
+    }
+
+    public object Clone()
+    {
+        return MemberwiseClone();
     }
 }

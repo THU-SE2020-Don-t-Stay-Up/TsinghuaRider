@@ -10,7 +10,7 @@ abstract public class Skill
 }
 
 /// <summary>
-/// 近战普攻技能
+/// 远程武器攻击
 /// </summary>
 public class MissleAttackSkill : Skill
 {
@@ -20,8 +20,10 @@ public class MissleAttackSkill : Skill
     }
 }
 
+
+
 /// <summary>
-/// 远程武器攻击
+/// 近战普攻技能
 /// </summary>
 public class MeleeAttackSkill : Skill
 {
@@ -30,6 +32,21 @@ public class MeleeAttackSkill : Skill
         subject.living.MeleeWeapon.Attack(subject.gameObject, subject.living.AttackDirection);
     }
 }
+
+/// <summary>
+/// 近战普攻减速技能
+/// </summary>
+public class MeleeSlowAttackSkill : Skill
+{
+    public override void Perform(LivingBaseAgent subject, LivingBaseAgent target)
+    {
+        subject.living.MeleeWeapon.Attack(subject.gameObject, subject.living.AttackDirection);
+        //Debug.Log($"{target.living.Name}获得减速效果");
+        target.living.State.AddStatus(new SlowState(), 2);
+    }
+}
+
+
 /// <summary>
 /// 分裂技能
 /// </summary>

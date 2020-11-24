@@ -9,6 +9,7 @@ public class CharacterAgent : LivingBaseAgent
     /// 角色基本属性信息
     /// </summary>
     private Character Character => living as Character;
+    private Character ActualCharacter => actualLiving as Character;
     /// <summary>
     /// 怪物编号，用于加载对应怪物的属性信息
     /// </summary>
@@ -55,14 +56,14 @@ public class CharacterAgent : LivingBaseAgent
     private void Awake()
     {
 
-        living = Global.characters[characterIndex];
+        living = Global.characters[characterIndex].Clone() as Character;
+        actualLiving = Global.characters[characterIndex].Clone() as Character;
         print(Character.Name);
 
         rigidbody2d = GetComponent<Rigidbody2D>();
         Animator = GetComponent<Animator>();
         AudioSource = GetComponent<AudioSource>();
 
-        MoveSpeed = Character.MoveSpeed;
         actionState = ActionState.Normal;
         living.State.AddStatus(new InvincibleState(), living.TimeInvincible);
 
@@ -115,8 +116,8 @@ public class CharacterAgent : LivingBaseAgent
     private void FixedUpdate()
     {
         Vector2 position = rigidbody2d.position;
-        position.x += MoveSpeed * horizontal * Time.deltaTime;
-        position.y += MoveSpeed * vertical * Time.deltaTime;
+        position.x += ActualCharacter.MoveSpeed * horizontal * Time.deltaTime;
+        position.y += ActualCharacter.MoveSpeed * vertical * Time.deltaTime;
         rigidbody2d.MovePosition(position);
 
         Dash();
@@ -132,7 +133,7 @@ public class CharacterAgent : LivingBaseAgent
         {
             case 0:
                 actionState = ActionState.Normal;
-                MoveSpeed = 10.0f;
+                ActualCharacter.MoveSpeed = Character.MoveSpeed;
                 break;
             case 1:
                 actionState = ActionState.Attacking;
@@ -172,7 +173,7 @@ public class CharacterAgent : LivingBaseAgent
 
     private void Stop()
     {
-        MoveSpeed = 0.0f;
+        ActualCharacter.MoveSpeed = 0.0f;
         lookDirection = Vector2.zero;
     }
 
@@ -183,10 +184,15 @@ public class CharacterAgent : LivingBaseAgent
             SetState(2);
             float dashAmount = 5f;
             Vector2 dashPosition = rigidbody2d.position + lookDirection * dashAmount;
-            RaycastHit2D dashHit = Physics2D.Raycast(rigidbody2d.position, lookDirection, dashAmount, dashLayerMask);
-            if (dashHit.collider != null)
+            for(int i = 0; i < 1000; i++)
             {
-                dashPosition = dashHit.point;
+                RaycastHit2D dashHit = Physics2D.Raycast(rigidbody2d.position + gameObject.GetComponent<BoxCollider2D>().offset + lookDirection * gameObject.GetComponent<BoxCollider2D>().size, lookDirection, dashAmount * i / 1000, dashLayerMask);
+                if (dashHit.collider != null)
+                {
+                    dashPosition = dashHit.point;
+                    break;
+                }
+
             }
             rigidbody2d.MovePosition(dashPosition);
             isDashBottonDown = false;
@@ -208,19 +214,19 @@ public class CharacterAgent : LivingBaseAgent
         if (Input.GetKeyDown(KeyCode.R))
         {
             SetState(3);
-            inventory.UseItem(new HealthPotion { amount = 1, isStackable = true}, this);
+            inventory.UseItem(new HealthPotion { Amount = 1}, this);
             SetState(0);
         }
         if (Input.GetKeyDown(KeyCode.F))
         {
             SetState(3);
-            inventory.UseItem(new StrengthPotion { amount = 1, isStackable = true}, this);
+            inventory.UseItem(new StrengthPotion { Amount = 1}, this);
             SetState(0);
         }
         if (Input.GetKeyDown(KeyCode.C))
         {
             SetState(3);
-            inventory.UseItem(new Medkit { amount = 1, isStackable = false }, this);
+            inventory.UseItem(new Medkit { Amount = 1}, this);
             SetState(0);
         }
         if (Input.GetKeyDown(KeyCode.G))
@@ -261,9 +267,11 @@ public class CharacterAgent : LivingBaseAgent
         Vector3 mousePosition = PlayerAim.GetMouseWorldPosition();
         living.AttackDirection = (mousePosition - transform.position).normalized;
 
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (living.AttackSpeed - deltaTime < 0.01)
+        //if (Input.GetMouseButtonDown(0))
+        //{
+        if (godMode) { 
+            if(true)
+            //if (living.AttackSpeed - deltaTime < 0.01)
             {
                 SetState(1);
                 deltaTime = 0;
