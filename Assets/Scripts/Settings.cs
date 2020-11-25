@@ -58,6 +58,14 @@ public static class Utility
         if (interfaces.Count() == 0) return null;
         return interfaces.First();
     }
+    public static Vector3 Rotate(Vector3 v, float angle)
+    {
+        Vector3 vector = new Vector3(0, 0);
+        float radian = angle * Mathf.PI / 180;
+        vector.x = v.x * Mathf.Cos(radian) - v.y * Mathf.Sin(radian);
+        vector.y = v.x * Mathf.Sin(radian) + v.y * Mathf.Cos(radian);
+        return vector.normalized;
+    }
 }
 
 public interface IInteract
