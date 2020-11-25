@@ -11,7 +11,7 @@ using UnityEngine;
 /// </summary>
 public class ItemAgent : MonoBehaviour, IInteract
 {
-    public int ItemIndex;
+    public int itemIndex;
 
 
     /// <summary>
@@ -27,15 +27,12 @@ public class ItemAgent : MonoBehaviour, IInteract
         itemAgent.SetItem(item);
     }
 
-
     public Item Item { get; set; }
-    private TextMeshPro textMeshPro;
-
-
+    protected TextMeshPro textMeshPro;
 
     private void Awake()
     {
-        Item = Global.items[ItemIndex].Clone() as Item;
+        Item = Global.items[itemIndex].Clone() as Item;
         textMeshPro = transform.Find("Text").GetComponent<TextMeshPro>();
     }
 

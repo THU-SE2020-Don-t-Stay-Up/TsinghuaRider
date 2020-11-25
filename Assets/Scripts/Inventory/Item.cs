@@ -108,16 +108,6 @@ public class Coin : Item
 
 }
 
-public class Sword : Item
-{
-    public Sword()
-    {
-        this.IsStackable = false;
-        this.Amount = 1;
-    }
-    public override void Use(CharacterAgent character) { }
-
-}
 
 public class Medkit : Item
 {

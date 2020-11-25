@@ -34,7 +34,7 @@ public class LivingBase
     /// <summary>
     /// 近战武器
     /// </summary>
-    public MissleWeapon MissleWeapon { get; set; } = new MissleWeapon();
+   // public MissleWeapon MissleWeapon { get; set; } = new MissleWeapon();
     /// <summary>
     /// 远程武器
     /// </summary>
