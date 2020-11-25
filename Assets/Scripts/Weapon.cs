@@ -10,14 +10,46 @@ interface IWeapon
 /// <summary>
 /// 远程武器类
 /// </summary> 
-public class MissleWeapon : Item, IWeapon
+abstract public class Weapon : Item, IWeapon
 {
     /// <summary>
     /// 子弹prefab
     /// </summary>
     public GameObject bulletPrefab;
+    abstract public void Attack(GameObject user, Vector3 direction);
+}
+
+public class Sword : Item, IWeapon
+{
+    public Sword()
+    {
+        this.IsStackable = false;
+        this.Amount = 1;
+    }
 
     public void Attack(GameObject user, Vector3 direction)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override void Use(CharacterAgent character) 
+    {
+        WeaponAgent.Use(character, this);
+        character.InventoryAddItem(character.WeaponPrefab.GetComponent<WeaponAgent>().Weapon.Clone() as Item);
+        GameObject.Destroy(character.WeaponPrefab);
+    }
+
+}
+
+public class Gun : Weapon
+{
+    public Gun()
+    {
+        this.IsStackable = false;
+        this.Amount = 1;
+    }
+
+    public override void Attack(GameObject user, Vector3 direction)
     {
         GameObject projectileObject = GameObject.Instantiate(bulletPrefab, user.transform.position + direction * 0.5f, Quaternion.identity);
         Bullet bullet = projectileObject.GetComponent<Bullet>();
@@ -29,9 +61,10 @@ public class MissleWeapon : Item, IWeapon
 
     public override void Use(CharacterAgent character)
     {
-        throw new System.NotImplementedException();
+        WeaponAgent.Use(character, this);
+        character.InventoryAddItem(character.WeaponPrefab.GetComponent<WeaponAgent>().Weapon.Clone() as Item);
+        GameObject.Destroy(character.WeaponPrefab);
     }
-
 
 }
 

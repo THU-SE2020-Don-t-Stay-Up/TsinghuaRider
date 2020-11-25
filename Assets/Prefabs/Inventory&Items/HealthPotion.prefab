@@ -11,10 +11,9 @@ GameObject:
   - component: {fileID: 3286491459962138946}
   - component: {fileID: 3286491459962138947}
   - component: {fileID: 3286491459962138948}
-  - component: {fileID: 3286491459962138949}
   - component: {fileID: 7948407954655087806}
   m_Layer: 0
-  m_Name: HealthPotion 1
+  m_Name: HealthPotion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -112,27 +111,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.923559, y: 1.3570108}
   m_EdgeRadius: 0
---- !u!50 &3286491459962138949
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3286491459962138950}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!114 &7948407954655087806
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -145,6 +123,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3622c36b0621df34fa70c61078d17a0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemIndex: 0
 --- !u!1 &5553544869447704412
 GameObject:
   m_ObjectHideFlags: 0

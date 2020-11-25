@@ -180,10 +180,9 @@ GameObject:
   - component: {fileID: 7972467719648981587}
   - component: {fileID: 7972467719648981586}
   - component: {fileID: 7972467719648981589}
-  - component: {fileID: 7972467719648981588}
-  - component: {fileID: 3275939211975118767}
+  - component: {fileID: -3541652731126628395}
   m_Layer: 0
-  m_Name: Sword 1
+  m_Name: Sword
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -281,28 +280,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.923559, y: 1.3570108}
   m_EdgeRadius: 0
---- !u!50 &7972467719648981588
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7972467719648981591}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
---- !u!114 &3275939211975118767
+--- !u!114 &-3541652731126628395
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -311,7 +289,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 7972467719648981591}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3622c36b0621df34fa70c61078d17a0d, type: 3}
+  m_Script: {fileID: 11500000, guid: ed3c3c8f9feeaca48b365d76d8c5747d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ItemIndex: 4
+  itemIndex: 4
+  bulletPrefab: {fileID: 0}

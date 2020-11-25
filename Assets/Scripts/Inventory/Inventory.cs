@@ -28,6 +28,7 @@ public class Inventory
         AddItem(new HealthPotion {  Amount = 3 });
         AddItem(new StrengthPotion {  Amount = 4 });
         AddItem(new Medkit { Amount = 1 });
+        AddItem(new Sword { Amount = 1 });
 
         //Debug.Log("I have an INVENTORY!!");
         //Debug.Log(itemList.Count);
@@ -59,28 +60,29 @@ public class Inventory
         OnItemListChanged?.Invoke(this, EventArgs.Empty);
     }
 
-    public bool RemoveItem(Item item)
+    public void RemoveItem(Item item)
     {
-        bool itemFlag = true;
+        var inventoryItem = itemList.Find(e => e.Equals(item));
+        inventoryItem.Amount -= item.Amount;
+        if (inventoryItem.Amount <= 0)
+        {
+            itemList.Remove(inventoryItem);
+        }
+        OnItemListChanged?.Invoke(this, EventArgs.Empty);
+    }
 
+    public bool HasItem(Item item)
+    {
         var inventoryItem = itemList.Find(e => e.Equals(item));
         if (inventoryItem != null)
         {
-            inventoryItem.Amount -= item.Amount;
-            if (inventoryItem.Amount <= 0)
-            {
-                itemList.Remove(inventoryItem);
-            }
+            return true;
         }
         else
         {
-            itemFlag = false;
+            return false;
         }
-
-        OnItemListChanged?.Invoke(this, EventArgs.Empty);
-        return itemFlag;
     }
-
     public List<Item> GetItemList()
     {
         return itemList;
@@ -88,9 +90,10 @@ public class Inventory
 
     public void UseItem(Item item, CharacterAgent character)
     {
-        if (RemoveItem(item))
+        if (HasItem(item))
         {
             item.Use(character);
+            RemoveItem(item);
         }
         else
         {
