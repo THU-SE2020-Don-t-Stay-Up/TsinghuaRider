@@ -69,6 +69,22 @@ public class InvincibleState : StateBase
     }
 }
 
+public class FierceState : StateBase
+{
+    public override void Effect(LivingBaseAgent agent)
+    {
+        agent.actualLiving.MoveSpeed = agent.living.MoveSpeed * 1.2f;
+        agent.actualLiving.AttackAmount = agent.living.AttackAmount * 2;
+        agent.actualLiving.AttackSpeed = agent.living.AttackSpeed * 1.2f;
+    }
+
+    public override void Resume(LivingBaseAgent agent)
+    {
+        agent.actualLiving.MoveSpeed = agent.living.MoveSpeed;
+        agent.actualLiving.AttackAmount = agent.living.AttackAmount;
+        agent.actualLiving.AttackSpeed = agent.living.AttackSpeed;
+    }
+}
 /// <summary>
 /// 状态类，存储并操作object的状态
 /// </summary>
@@ -89,9 +105,9 @@ public class State
         {
             return;
         }
-        if (HasStatus(status))
+        if (HasStatus(status) && StateDuration[status] < duration)
         {
-            StateDuration[status] += duration;
+            StateDuration[status] = duration;
         }
         else
         {

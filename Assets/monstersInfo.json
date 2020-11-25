@@ -94,5 +94,24 @@
     "Skills": [
       "MeleeSlowAttack"
     ]
+  },
+  {
+    "Name": "拉格朗日",
+    "MoveSpeed": 2.0,
+    "MaxHealth": 800,
+    "Defense": 0,
+    "Tenacity": 0.0,
+    "AttackSpeed": 3,
+    "AttackRadius": 15,
+    "AttackAmount": 10,
+    "AttackAngle": 30,
+    "TimeInvincible": 0,
+    "ViewAngle": 360,
+    "ViewRadius": 30,
+    "Reward": 1,
+    "Difficulty": 20,
+    "Skills": [
+      "MissleAttack"
+    ]
   }
 ]

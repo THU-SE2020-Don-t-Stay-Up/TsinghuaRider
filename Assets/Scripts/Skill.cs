@@ -59,8 +59,21 @@ public class SplitSkill : Skill
         for(int i = 0; i < splitNum; i++)
         {
             Vector3 randomOffset = new Vector3(Random.Range(0, 1.0f), Random.Range(0, 1.0f));
-            GameObject little = GameObject.Instantiate(prefab, subject.transform.position + randomOffset, Quaternion.identity);
+            GameObject.Instantiate(prefab, subject.transform.position + randomOffset, Quaternion.identity);
             Debug.Log($"分裂{i}");
+        }
+    }
+}
+
+public class FierceSkill : Skill
+{
+    public override void Perform(LivingBaseAgent subject, LivingBaseAgent target)
+    {
+        BossAgent boss = subject as BossAgent;
+        if (boss.living.CurrentHealth * 1.0f / boss.living.MaxHealth <= boss.bloodLine)
+        {
+            subject.gameObject.GetComponent<SpriteRenderer>().color = Color.red;
+            boss.living.State.AddStatus(new FierceState(), 1);
         }
     }
 }
