@@ -185,7 +185,7 @@ public class MonsterAgent : LivingBaseAgent
         }
 
     }
-    public new void Destroy()
+    public override void Destroy()
     {
         SplitSkill splitSkill = Monster.Skills.FirstOrDefault(e => e.GetType() == new SplitSkill().GetType()) as SplitSkill;
         if (splitSkill != null)

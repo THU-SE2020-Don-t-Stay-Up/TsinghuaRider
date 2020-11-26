@@ -133,9 +133,8 @@ public class LivingBaseAgent : MonoBehaviour
     /// <summary>
     /// 血量为零时销毁gameObject
     /// </summary>
-    public void Destroy()
+    public virtual void Destroy()
     {
-
         GameObject.Destroy(gameObject);
     }
 

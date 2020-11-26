@@ -313,6 +313,16 @@ public class CharacterAgent : LivingBaseAgent
                     SetState(0);
                 }
             }
+            else
+            {
+                if (ActualCharacter.AttackSpeed - deltaTime < 0.01)
+                {
+                    SetState(1);
+                    MeleeAttack();
+                    deltaTime = 0;
+                    SetState(0);
+                }
+            }
         }
     }
 
@@ -338,6 +348,18 @@ public class CharacterAgent : LivingBaseAgent
         inventory.AddItem(item);
     }
 
+    public void MeleeAttack()
+    {
+        Animator.SetTrigger("Melee");
+        Vector3 mousePosition = WeaponAgent.GetMouseWorldPosition();
+        Vector3 attackDirection = (mousePosition - transform.position).normalized;
+        IEnumerable<GameObject> targetObjects = GetAttackRangeObjects(transform.position, attackDirection, ActualCharacter.AttackRadius, ActualCharacter.AttackAngle, "Monster");
+        foreach (var targetObject in targetObjects)
+        {
+            LivingBaseAgent targetAgent = targetObject.GetComponent<LivingBaseAgent>();
+            targetAgent.ChangeHealth(-ActualCharacter.AttackAmount);
+        }
+    }
 
 }
 
