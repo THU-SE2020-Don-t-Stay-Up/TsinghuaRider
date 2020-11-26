@@ -259,8 +259,9 @@ public class CharacterAgent : LivingBaseAgent
         if (Input.GetKeyDown(KeyCode.H))
         {
             List<Item> items = inventory.ItemList;
-            Item weapon = items.First(e => e is Weapon);
-            inventory.UseItem(weapon, this);
+            Item weapon = items.FirstOrDefault(e => e is Weapon);
+            if (weapon != null)
+                inventory.UseItem(weapon, this);
             SetState(0);
         }
 
@@ -301,13 +302,16 @@ public class CharacterAgent : LivingBaseAgent
 
         if (Input.GetMouseButtonDown(0))
         {
-            WeaponAgent weaponAgent = WeaponPrefab.GetComponent<WeaponAgent>();
-            if (ActualCharacter.AttackSpeed * weaponAgent.Weapon.AttackSpeed - deltaTime < 0.01)
+            if (WeaponPrefab != null)
             {
-                SetState(1);
-                weaponAgent.Attack();
-                deltaTime = 0;
-                SetState(0);
+                WeaponAgent weaponAgent = WeaponPrefab.GetComponent<WeaponAgent>();
+                if (ActualCharacter.AttackSpeed * weaponAgent.Weapon.AttackSpeed - deltaTime < 0.01)
+                {
+                    SetState(1);
+                    weaponAgent.Attack();
+                    deltaTime = 0;
+                    SetState(0);
+                }
             }
         }
     }

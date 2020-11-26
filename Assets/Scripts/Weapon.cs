@@ -12,10 +12,12 @@ public class Weapon : Item
 
     public override void Use(CharacterAgent character)
     {
-        character.InventoryAddItem(character.WeaponPrefab.GetComponent<WeaponAgent>().Weapon.Clone() as Item);
-        var oldWeapon = character.WeaponPrefab;
+        if (character.WeaponPrefab != null)
+        {
+            character.InventoryAddItem(character.WeaponPrefab.GetComponent<WeaponAgent>().Weapon.Clone() as Item);
+            GameObject.Destroy(character.WeaponPrefab);
+        }
         WeaponAgent.Use(character, this);
-        GameObject.Destroy(oldWeapon);
     }
 }
 
