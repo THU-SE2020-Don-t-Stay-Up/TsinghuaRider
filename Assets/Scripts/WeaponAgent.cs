@@ -52,7 +52,7 @@ public class WeaponAgent : ItemAgent
 
     internal static void Use(CharacterAgent character, Item item)
     {
-        character.WeaponPrefab = GameObject.Instantiate(Global.GetPrefab(item.GetType().ToString()), character.transform);
+        character.WeaponPrefab = GameObject.Instantiate(Global.GetPrefab(item.GetType().ToString()), character.transform.position, Quaternion.identity, character.transform);
         Debug.Log(character.WeaponPrefab);
     }
 
