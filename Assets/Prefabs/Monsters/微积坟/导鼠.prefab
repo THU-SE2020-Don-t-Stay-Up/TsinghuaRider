@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 6840133694130961993}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -74,12 +74,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 2f07a8e4e161f7d468b7992fae52ece8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: de45e2628987d044da8ed4234dce1fbd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.04, y: 0.04}
+  m_Size: {x: 1.98, y: 1.99}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -97,13 +97,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddae7640c4889a34f893c40092456f0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveSpeed: 0
-  animator: {fileID: 0}
-  audioSource: {fileID: 0}
-  getHitClip: {fileID: 0}
-  attackClip: {fileID: 0}
-  getHealingClip: {fileID: 0}
-  rigidbody2d: {fileID: 0}
   bulletPrefab: {fileID: 2269785940787976222, guid: bd13f8eff7394964092a5fc1492e5078, type: 3}
   monsterIndex: 0
 --- !u!50 &902533353708823891
@@ -140,16 +133,16 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -0.2}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 0.04, y: 0.04}
+    oldSize: {x: 1.98, y: 1.99}
+    newSize: {x: 1.98, y: 1.99}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.8, y: 1}
   m_EdgeRadius: 0

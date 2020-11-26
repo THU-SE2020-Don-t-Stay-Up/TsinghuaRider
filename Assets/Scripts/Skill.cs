@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 /// <summary>
@@ -6,44 +7,83 @@ using Debug = UnityEngine.Debug;
 /// </summary>
 abstract public class Skill
 {
-    public abstract void Perform(LivingBaseAgent subject, LivingBaseAgent target);
-}
-
-/// <summary>
-/// 近战普攻技能
-/// </summary>
-public class MissleAttackSkill : Skill
-{
-    public override void Perform(LivingBaseAgent subject, LivingBaseAgent target)
-    {
-        subject.living.MissleWeapon.Attack(subject.gameObject, subject.living.AttackDirection);
-    }
+    public abstract void Perform(MonsterAgent subject, LivingBaseAgent target);
 }
 
 /// <summary>
 /// 远程武器攻击
 /// </summary>
-public class MeleeAttackSkill : Skill
+public class MissleAttackSkill : Skill
 {
-    public override void Perform(LivingBaseAgent subject, LivingBaseAgent target)
+    public override void Perform(MonsterAgent subject, LivingBaseAgent target)
     {
-        subject.living.MeleeWeapon.Attack(subject.gameObject, subject.living.AttackDirection);
+        GameObject projectileObject = GameObject.Instantiate(subject.bulletPrefab, subject.transform.position + subject.ActualMonster.AttackDirection * subject.GetComponent<BoxCollider2D>().size.x, Quaternion.identity);
+        Bullet bullet = projectileObject.GetComponent<Bullet>();
+        bullet.StartPoint = subject.transform.position;
+        bullet.Damage = subject.ActualMonster.AttackAmount;
+        bullet.UserTag = subject.tag;
+        bullet.Shoot(subject.ActualMonster.AttackDirection, subject.ActualMonster.BulletSpeed);
     }
 }
+
+
+
+/// <summary>
+/// 近战普攻技能
+/// </summary>
+public class MeleeAttackSkill : Skill
+{
+    public override void Perform(MonsterAgent subject, LivingBaseAgent target)
+    {
+        IEnumerable<GameObject> targetObjects = subject.GetAttackRangeObjects(subject.transform.position, subject.ActualMonster.AttackDirection, subject.ActualMonster.AttackRadius, subject.ActualMonster.AttackAngle, "Player");
+        foreach (var targetObject in targetObjects)
+        {
+            LivingBaseAgent targetAgent = targetObject.GetComponent<LivingBaseAgent>();
+            targetAgent.ChangeHealth(-subject.ActualMonster.AttackAmount);
+        }
+    }
+}
+
+/// <summary>
+/// 近战普攻减速技能
+/// </summary>
+public class MeleeSlowAttackSkill : Skill
+{
+    public override void Perform(MonsterAgent subject, LivingBaseAgent target)
+    {
+        new MeleeAttackSkill().Perform(subject, target);
+        target.actualLiving.State.AddStatus(new SlowState(), 2);
+    }
+}
+
+
 /// <summary>
 /// 分裂技能
 /// </summary>
 public class SplitSkill : Skill
 {
     public int splitNum = 3;
-    public override void Perform(LivingBaseAgent subject, LivingBaseAgent target)
+    public override void Perform(MonsterAgent subject, LivingBaseAgent target)
     {
         GameObject prefab = Global.GetPrefab($"微{subject.living.Name}");
         for(int i = 0; i < splitNum; i++)
         {
             Vector3 randomOffset = new Vector3(Random.Range(0, 1.0f), Random.Range(0, 1.0f));
-            GameObject little = GameObject.Instantiate(prefab, subject.transform.position + randomOffset, Quaternion.identity);
+            GameObject.Instantiate(prefab, subject.transform.position + randomOffset, Quaternion.identity);
             Debug.Log($"分裂{i}");
+        }
+    }
+}
+
+public class FierceSkill : Skill
+{
+    public override void Perform(MonsterAgent subject, LivingBaseAgent target)
+    {
+        BossAgent boss = subject as BossAgent;
+        if (boss.living.CurrentHealth * 1.0f / boss.living.MaxHealth <= boss.bloodLine)
+        {
+            subject.gameObject.GetComponent<SpriteRenderer>().color = Color.red;
+            boss.living.State.AddStatus(new FierceState(), 1);
         }
     }
 }

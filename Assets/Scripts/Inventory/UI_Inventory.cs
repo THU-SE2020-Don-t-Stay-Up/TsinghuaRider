@@ -46,7 +46,7 @@ public class UI_Inventory : MonoBehaviour
         float itemSlotCellSize = 50.0f;
 
         // 在UI上摆放物品，并显示其图片
-        foreach (Item item in inventory.GetItemList())
+        foreach (Item item in inventory.ItemList)
         {
             RectTransform itemSlotRectTransform = Instantiate(itemSlotTemplate, itemSlotContainer).GetComponent<RectTransform>();
             itemSlotRectTransform.gameObject.SetActive(true);
@@ -55,9 +55,9 @@ public class UI_Inventory : MonoBehaviour
             image.sprite = item.GetSprite();
 
             TextMeshProUGUI uiText = itemSlotRectTransform.Find("amountText").GetComponent<TextMeshProUGUI>();
-            if (item.amount > 1)
+            if (item.Amount > 1)
             {
-                uiText.SetText(item.amount.ToString());
+                uiText.SetText(item.Amount.ToString());
             }
             else
             {

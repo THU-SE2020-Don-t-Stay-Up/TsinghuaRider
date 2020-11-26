@@ -1,7 +1,7 @@
 [
   {
     "Name": "导鼠",
-    "MoveSpeed": 6.0,
+    "MoveSpeed": 5.0,
     "MaxHealth": 50,
     "Defense": 0,
     "Tenacity": 0.0,
@@ -9,7 +9,8 @@
     "AttackRadius": 2,
     "AttackAmount": 8,
     "AttackAngle": 30,
-    "TimeInvincible": 0, 
+    "BulletSpeed": 10,
+    "TimeInvincible": 0,
     "ViewAngle": 360,
     "ViewRadius": 15,
     "Reward": 1,
@@ -28,6 +29,27 @@
     "AttackRadius": 10,
     "AttackAmount": 10,
     "AttackAngle": 0,
+    "BulletSpeed": 10,
+    "ViewAngle": 360,
+    "ViewRadius": 12,
+    "Reward": 1,
+    "TimeInvincible": 0,
+    "Difficulty": 40,
+    "Skills": [
+      "MissleAttack"
+    ]
+  },
+  {
+    "Name": "多元鸡分",
+    "MoveSpeed": 4.0,
+    "MaxHealth": 40,
+    "Defense": 0,
+    "Tenacity": 0.0,
+    "AttackSpeed": 1.0,
+    "AttackRadius": 10,
+    "AttackAmount": 10,
+    "AttackAngle": 0,
+    "BulletSpeed": 10,
     "ViewAngle": 360,
     "ViewRadius": 12,
     "Reward": 1,
@@ -39,20 +61,61 @@
     ]
   },
   {
-    "Name": "微鸡分",
+    "Name": "微多元鸡分",
     "MoveSpeed": 5.0,
-    "MaxHealth": 10,
+    "MaxHealth": 20,
     "Defense": 0,
     "Tenacity": 0.0,
-    "AttackSpeed": 1.5,
+    "AttackSpeed": 2.0,
     "AttackRadius": 8,
     "AttackAmount": 5,
     "AttackAngle": 0,
+    "BulletSpeed": 10,
     "ViewAngle": 360,
     "ViewRadius": 10,
     "Reward": 1,
     "TimeInvincible": 0,
     "Difficulty": 30,
+    "Skills": [
+      "MissleAttack"
+    ]
+  },
+  {
+    "Name": "寒鼠",
+    "MoveSpeed": 4.0,
+    "MaxHealth": 80,
+    "Defense": 0,
+    "Tenacity": 0.0,
+    "AttackSpeed": 1.2,
+    "AttackRadius": 2,
+    "AttackAmount": 10,
+    "AttackAngle": 30,
+    "BulletSpeed": 10,
+    "TimeInvincible": 0,
+    "ViewAngle": 360,
+    "ViewRadius": 15,
+    "Reward": 1,
+    "Difficulty": 20,
+    "Skills": [
+      "MeleeSlowAttack"
+    ]
+  },
+  {
+    "Name": "拉格朗日",
+    "MoveSpeed": 2.0,
+    "MaxHealth": 800,
+    "Defense": 0,
+    "Tenacity": 0.0,
+    "AttackSpeed": 3,
+    "AttackRadius": 15,
+    "AttackAmount": 10,
+    "AttackAngle": 30,
+    "BulletSpeed": 10,
+    "TimeInvincible": 0,
+    "ViewAngle": 360,
+    "ViewRadius": 30,
+    "Reward": 1,
+    "Difficulty": 20,
     "Skills": [
       "MissleAttack"
     ]

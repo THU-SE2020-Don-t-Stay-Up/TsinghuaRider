@@ -14,7 +14,7 @@ public class Inventory
     /// </summary>
     public event EventHandler OnItemListChanged;
 
-    private List<Item> itemList;
+    public List<Item> ItemList { get; private set; }
     //private Action<Item> useItemAction;
 
     /// <summary>
@@ -23,15 +23,11 @@ public class Inventory
     /// <param name="useItemAction"></param>
     public Inventory() 
     {
-
-        itemList = new List<Item>();
-        AddItem(new HealthPotion {  amount = 3, isStackable = true });
-        AddItem(new StrengthPotion {  amount = 4, isStackable = true });
-        AddItem(new Medkit {  amount = 1, isStackable = false });
-
-        //Debug.Log("I have an INVENTORY!!");
-        //Debug.Log(itemList.Count);
-
+        ItemList = new List<Item>();
+        AddItem(new HealthPotion {  Amount = 3 });
+        AddItem(new StrengthPotion {  Amount = 4 });
+        AddItem(new Medkit { Amount = 1 });
+        AddItem(new Sword { Amount = 1 });
     }
 
     /// <summary>
@@ -40,57 +36,55 @@ public class Inventory
     /// <param name="item"></param>
     public void AddItem(Item item)
     {
-        if (item.IsStackable())
+        if (item.IsStackable)
         {
-            var inventoryItem = itemList.Find(e => e.Equals(item));
+            var inventoryItem = ItemList.FirstOrDefault(e => e.Equals(item));
             if (inventoryItem == null)
             {
-                itemList.Add(item);
+                ItemList.Add(item);
             }
             else
             {
-                inventoryItem.amount += item.amount;
+                inventoryItem.Amount += item.Amount;
             }
         }
         else
         {
-            itemList.Add(item);
+            ItemList.Add(item);
         }
         OnItemListChanged?.Invoke(this, EventArgs.Empty);
     }
 
-    public bool RemoveItem(Item item)
+    public void RemoveItem(Item item)
     {
-        bool itemFlag = true;
+        var inventoryItem = ItemList.FirstOrDefault(e => e.Equals(item));
+        inventoryItem.Amount -= item.Amount;
+        if (inventoryItem.Amount <= 0)
+        {
+            ItemList.Remove(inventoryItem);
+        }
+        OnItemListChanged?.Invoke(this, EventArgs.Empty);
+    }
 
-        var inventoryItem = itemList.Find(e => e.Equals(item));
+    public bool HasItem(Item item)
+    {
+        var inventoryItem = ItemList.FirstOrDefault(e => e.Equals(item));
         if (inventoryItem != null)
         {
-            inventoryItem.amount -= item.amount;
-            if (inventoryItem.amount <= 0)
-            {
-                itemList.Remove(inventoryItem);
-            }
+            return true;
         }
         else
         {
-            itemFlag = false;
+            return false;
         }
-
-        OnItemListChanged?.Invoke(this, EventArgs.Empty);
-        return itemFlag;
-    }
-
-    public List<Item> GetItemList()
-    {
-        return itemList;
     }
 
     public void UseItem(Item item, CharacterAgent character)
     {
-        if (RemoveItem(item))
+        if (HasItem(item))
         {
             item.Use(character);
+            RemoveItem(item);
         }
         else
         {

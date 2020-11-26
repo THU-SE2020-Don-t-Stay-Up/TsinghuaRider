@@ -1,6 +1,7 @@
 
-﻿using System.Collections.Generic;
-﻿using UnityEngine;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 
 
 public class CharacterAgent : LivingBaseAgent
@@ -9,6 +10,10 @@ public class CharacterAgent : LivingBaseAgent
     /// 角色基本属性信息
     /// </summary>
     private Character Character => living as Character;
+    /// <summary>
+    /// 角色实际属性，受各种buff影响
+    /// </summary>
+    public Character ActualCharacter => actualLiving as Character;
     /// <summary>
     /// 怪物编号，用于加载对应怪物的属性信息
     /// </summary>
@@ -44,33 +49,37 @@ public class CharacterAgent : LivingBaseAgent
 
     Vector2 lookDirection = new Vector2(0, 0);
 
-    // actions
-    public GameObject WeaponPrefab;
+    // Weapons
+    public GameObject WeaponPrefab { get; set; }
 
     private bool godMode = false;
-    public Skill MissleAttack => living.Skills[0];
-    public Skill MeleeAttack => living.Skills[1];
 
     float deltaTime = 0;
+
+
+
     private void Awake()
     {
 
-        living = Global.characters[characterIndex];
+        living = Global.characters[characterIndex].Clone() as Character;
+        actualLiving = Global.characters[characterIndex].Clone() as Character;
         print(Character.Name);
 
         rigidbody2d = GetComponent<Rigidbody2D>();
         Animator = GetComponent<Animator>();
         AudioSource = GetComponent<AudioSource>();
 
-        MoveSpeed = Character.MoveSpeed;
         actionState = ActionState.Normal;
-        living.State.AddStatus(new InvincibleState(), living.TimeInvincible);
+        ActualCharacter.State.AddStatus(new InvincibleState(), ActualCharacter.TimeInvincible);
 
         // 初始化背包及UI
         inventory = new Inventory();
         uiInventory.SetInventory(inventory);
 
-        living.MissleWeapon.bulletPrefab = bulletPrefab;
+        UpdateWeaponPrefab();
+        //living.MissleWeapon.bulletPrefab = bulletPrefab;
+
+
     }
 
     private void Update()
@@ -115,13 +124,24 @@ public class CharacterAgent : LivingBaseAgent
     private void FixedUpdate()
     {
         Vector2 position = rigidbody2d.position;
-        position.x += MoveSpeed * horizontal * Time.deltaTime;
-        position.y += MoveSpeed * vertical * Time.deltaTime;
+        position.x += ActualCharacter.MoveSpeed * horizontal * Time.deltaTime;
+        position.y += ActualCharacter.MoveSpeed * vertical * Time.deltaTime;
         rigidbody2d.MovePosition(position);
 
         Dash();
     }
 
+    public void UpdateWeaponPrefab()
+    {
+        try
+        {
+            WeaponPrefab = transform.GetChild(0).gameObject;
+        }
+        catch (System.Exception)
+        {
+            WeaponPrefab = null;
+        }
+    }
     /// <summary>
     /// 改变角色状态机的状态
     /// </summary>
@@ -132,7 +152,7 @@ public class CharacterAgent : LivingBaseAgent
         {
             case 0:
                 actionState = ActionState.Normal;
-                MoveSpeed = 10.0f;
+                ActualCharacter.MoveSpeed = Character.MoveSpeed;
                 break;
             case 1:
                 actionState = ActionState.Attacking;
@@ -172,7 +192,7 @@ public class CharacterAgent : LivingBaseAgent
 
     private void Stop()
     {
-        MoveSpeed = 0.0f;
+        ActualCharacter.MoveSpeed = 0.0f;
         lookDirection = Vector2.zero;
     }
 
@@ -183,10 +203,15 @@ public class CharacterAgent : LivingBaseAgent
             SetState(2);
             float dashAmount = 5f;
             Vector2 dashPosition = rigidbody2d.position + lookDirection * dashAmount;
-            RaycastHit2D dashHit = Physics2D.Raycast(rigidbody2d.position, lookDirection, dashAmount, dashLayerMask);
-            if (dashHit.collider != null)
+            for (int i = 0; i < 1000; i++)
             {
-                dashPosition = dashHit.point;
+                RaycastHit2D dashHit = Physics2D.Raycast(rigidbody2d.position + gameObject.GetComponent<BoxCollider2D>().offset + lookDirection * gameObject.GetComponent<BoxCollider2D>().size, lookDirection, dashAmount * i / 1000, dashLayerMask);
+                if (dashHit.collider != null)
+                {
+                    dashPosition = dashHit.point;
+                    break;
+                }
+
             }
             rigidbody2d.MovePosition(dashPosition);
             isDashBottonDown = false;
@@ -208,19 +233,19 @@ public class CharacterAgent : LivingBaseAgent
         if (Input.GetKeyDown(KeyCode.R))
         {
             SetState(3);
-            inventory.UseItem(new HealthPotion { amount = 1, isStackable = true}, this);
+            inventory.UseItem(new HealthPotion { Amount = 1 }, this);
             SetState(0);
         }
         if (Input.GetKeyDown(KeyCode.F))
         {
             SetState(3);
-            inventory.UseItem(new StrengthPotion { amount = 1, isStackable = true}, this);
+            inventory.UseItem(new StrengthPotion { Amount = 1 }, this);
             SetState(0);
         }
         if (Input.GetKeyDown(KeyCode.C))
         {
             SetState(3);
-            inventory.UseItem(new Medkit { amount = 1, isStackable = false }, this);
+            inventory.UseItem(new Medkit { Amount = 1 }, this);
             SetState(0);
         }
         if (Input.GetKeyDown(KeyCode.G))
@@ -228,6 +253,15 @@ public class CharacterAgent : LivingBaseAgent
             SetState(3);
             godMode = !godMode;
             Debug.Log("Should perform skill4!");
+            SetState(0);
+        }
+
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            List<Item> items = inventory.ItemList;
+            Item weapon = items.FirstOrDefault(e => e is Weapon);
+            if (weapon != null)
+                inventory.UseItem(weapon, this);
             SetState(0);
         }
 
@@ -258,29 +292,36 @@ public class CharacterAgent : LivingBaseAgent
 
     private void HandleAttacking()
     {
-        Vector3 mousePosition = PlayerAim.GetMouseWorldPosition();
-        living.AttackDirection = (mousePosition - transform.position).normalized;
+        if (godMode)
+        {
+            SetState(1);
+            deltaTime = 0;
+            WeaponPrefab.GetComponent<WeaponAgent>().Attack();
+            SetState(0);
+        }
 
         if (Input.GetMouseButtonDown(0))
         {
-            if (living.AttackSpeed - deltaTime < 0.01)
+            if (WeaponPrefab != null)
             {
-                SetState(1);
-                deltaTime = 0;
-                MissleAttack.Perform(this, null);
-                SetState(0);
+                WeaponAgent weaponAgent = WeaponPrefab.GetComponent<WeaponAgent>();
+                if (ActualCharacter.AttackSpeed * weaponAgent.Weapon.AttackSpeed - deltaTime < 0.01)
+                {
+                    SetState(1);
+                    weaponAgent.Attack();
+                    deltaTime = 0;
+                    SetState(0);
+                }
             }
-        }
-
-        if (Input.GetMouseButtonDown(1))
-        {
-            if (living.AttackSpeed - deltaTime < 0.01)
+            else
             {
-                SetState(1);
-                MeleeAttack.Perform(this, null);
-                deltaTime = 0;
-                Animator.SetTrigger("Melee");
-                SetState(0);
+                if (ActualCharacter.AttackSpeed - deltaTime < 0.01)
+                {
+                    SetState(1);
+                    MeleeAttack();
+                    deltaTime = 0;
+                    SetState(0);
+                }
             }
         }
     }
@@ -291,6 +332,10 @@ public class CharacterAgent : LivingBaseAgent
     /// <param name="collision">碰撞实体</param>
     public void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision.gameObject.transform == this.transform)
+        {
+            return;
+        }
         IInteract interact = Utility.GetInterface<IInteract>(collision.gameObject);
         if (interact != null)
         {
@@ -303,6 +348,18 @@ public class CharacterAgent : LivingBaseAgent
         inventory.AddItem(item);
     }
 
+    public void MeleeAttack()
+    {
+        Animator.SetTrigger("Melee");
+        Vector3 mousePosition = WeaponAgent.GetMouseWorldPosition();
+        Vector3 attackDirection = (mousePosition - transform.position).normalized;
+        IEnumerable<GameObject> targetObjects = GetAttackRangeObjects(transform.position, attackDirection, ActualCharacter.AttackRadius, ActualCharacter.AttackAngle, "Monster");
+        foreach (var targetObject in targetObjects)
+        {
+            LivingBaseAgent targetAgent = targetObject.GetComponent<LivingBaseAgent>();
+            targetAgent.ChangeHealth(-ActualCharacter.AttackAmount);
+        }
+    }
 
 }
 

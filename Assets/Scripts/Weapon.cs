@@ -1,67 +1,71 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.UIElements;
 
-interface IWeapon
+public class Weapon : Item
 {
-    void Attack(GameObject user, Vector3 direction);
-}
-/// <summary>
-/// 远程武器类
-/// </summary> 
-public class MissleWeapon : Item, IWeapon
-{
-    /// <summary>
-    /// 子弹prefab
-    /// </summary>
+    public float AttackSpeed;
+    public float AttackRadius;
+    public float AttackAmount;
+    public float AttackAngle;
     public GameObject bulletPrefab;
-
-    public void Attack(GameObject user, Vector3 direction)
-    {
-        GameObject projectileObject = GameObject.Instantiate(bulletPrefab, user.transform.position + direction * 0.5f, Quaternion.identity);
-        Bullet bullet = projectileObject.GetComponent<Bullet>();
-        bullet.startPoint = user.transform.position;
-        bullet.Damage = user.GetComponent<LivingBaseAgent>().living.AttackAmount;
-        bullet.userTag = user.tag;
-        bullet.Shoot(direction, 10);
-    }
+    public virtual void Attack(CharacterAgent user, Vector3 direction) { }
 
     public override void Use(CharacterAgent character)
     {
-        throw new System.NotImplementedException();
+        if (character.WeaponPrefab != null)
+        {
+            character.InventoryAddItem(character.WeaponPrefab.GetComponent<WeaponAgent>().Weapon.Clone() as Item);
+            GameObject.Destroy(character.WeaponPrefab);
+        }
+        WeaponAgent.Use(character, this);
     }
-
-
 }
 
-public class MeleeWeapon : Item, IWeapon
+
+public class Sword : Weapon
 {
-    public void Attack(GameObject user, Vector3 Direction)
+    public Sword()
     {
-        string layerMask;
-        LivingBaseAgent agent = user.GetComponent<LivingBaseAgent>();
-        // 判断进行攻击的是角色还是怪物
-        if (agent is CharacterAgent)
-        {
-            layerMask = "Monster";
-        }
-        else
-        {
-            layerMask = "Player";
-        }
-        IEnumerable<GameObject> targetObjects = agent.GetAttackRangeObjects(user.transform.position, agent.living.AttackDirection, layerMask);
+        AttackSpeed = 1;
+        AttackRadius = 2;
+        AttackAmount = 10;
+        AttackAngle = 45;
+        IsStackable = false;
+        Amount = 1;
+    }
+
+    public override void Attack(CharacterAgent user, Vector3 direction)
+    {
+        user.Animator.SetTrigger("Melee");
+        IEnumerable<GameObject> targetObjects = user.GetAttackRangeObjects(user.transform.position, user.ActualCharacter.AttackDirection, user.ActualCharacter.AttackRadius * AttackRadius, AttackAngle, "Monster");
         foreach (var targetObject in targetObjects)
         {
             LivingBaseAgent targetAgent = targetObject.GetComponent<LivingBaseAgent>();
-            targetAgent.ChangeHealth(-agent.living.AttackAmount);
+            targetAgent.ChangeHealth(-user.ActualCharacter.AttackAmount * AttackAmount);
         }
     }
 
-    public override void Use(CharacterAgent character)
+}
+
+public class Gun : Weapon
+{
+    public Gun()
     {
-        throw new System.NotImplementedException();
+        AttackSpeed = 0.2f;
+        AttackRadius = 20;
+        AttackAmount = 10;
+        AttackAngle = 0;
+        IsStackable = false;
+        AttackAmount = 8;
+        Amount = 1;
     }
 
+    public override void Attack(CharacterAgent user, Vector3 direction)
+    {
+        GameObject projectileObject = GameObject.Instantiate(bulletPrefab, user.transform.position + direction * 0.5f, Quaternion.identity);
+        Bullet bullet = projectileObject.GetComponent<Bullet>();
+        bullet.SetBullet(user, this);
+        bullet.Shoot(direction, 10);
+    }
 
 }

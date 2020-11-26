@@ -4,9 +4,14 @@ public class Bullet : MonoBehaviour, IInteract
 {
     private Rigidbody2D rigidbody2d;
     private Transform aimTransform;
-    public Vector3 startPoint;
-    public int Damage { get; set; }
-    public string userTag;
+    public Vector3 StartPoint { get; set; }
+    /// <summary>
+    /// 子弹飞行的最大距离
+    /// </summary>
+    public float AttackRadius { get; set; }
+    public float Damage { get; set; }
+
+    public string UserTag { get; set; }
 
     private void Awake()
     {
@@ -14,6 +19,12 @@ public class Bullet : MonoBehaviour, IInteract
         aimTransform = transform;
     }
 
+    public void SetBullet(CharacterAgent user, Weapon weapon)
+    {
+        StartPoint = user.transform.position;
+        Damage = user.ActualCharacter.AttackAmount * weapon.AttackAmount;
+        UserTag = user.tag;
+    }
     private void HandleAiming(Vector3 shootDir)
     {
         float angle = Mathf.Atan2(shootDir.y, shootDir.x) * Mathf.Rad2Deg;
@@ -31,7 +42,7 @@ public class Bullet : MonoBehaviour, IInteract
         LivingBaseAgent living = gameObject.GetComponent<LivingBaseAgent>();
         if (living != null)
         {
-            if (!gameObject.CompareTag(userTag))
+            if (!gameObject.CompareTag(UserTag))
             {
                 living.ChangeHealth(-Damage);
                 Destroy(this.gameObject);
@@ -41,7 +52,7 @@ public class Bullet : MonoBehaviour, IInteract
 
     private void Update()
     {
-        if ((transform.position - startPoint).magnitude > 50f)
+        if ((transform.position - StartPoint).magnitude > 100.0f)
         {
             Destroy(gameObject);
         }

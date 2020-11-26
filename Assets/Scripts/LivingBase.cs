@@ -27,19 +27,11 @@ public class LivingBase
     public float AttackRadius { get; set; }
     public int AttackAngle { get; set; }
 
+    public bool isDead { get; set; } = false;
     /// <summary>
     /// 攻击方向
     /// </summary>
     public Vector3 AttackDirection { get; set; } = Vector3.zero;
-    /// <summary>
-    /// 近战武器
-    /// </summary>
-    public MissleWeapon MissleWeapon { get; set; } = new MissleWeapon();
-    /// <summary>
-    /// 远程武器
-    /// </summary>
-
-    public MeleeWeapon MeleeWeapon { get; set; } = new MeleeWeapon();
     /// <summary>
     /// 实体各种状态
     /// </summary>
@@ -48,39 +40,7 @@ public class LivingBase
     /// 无敌时间
     /// </summary>
     public float TimeInvincible { get; set; }
-    /// <summary>
-    /// 技能列表，存储实体可施放的技能
-    /// </summary>
-    [JsonConverter(typeof(SkillsJsonConverter))]
-    public List<Skill> Skills { get; set; }
-}
 
-class SkillsJsonConverter : JsonConverter<List<Skill>>
-{
-    public override List<Skill> ReadJson(JsonReader reader, Type objectType, List<Skill> existingValue, bool hasExistingValue, JsonSerializer serializer)
-    {
-        if (existingValue == null) existingValue = new List<Skill>();
-        JArray arr = JArray.Load(reader);
-        foreach (var s in arr)
-        {
-            existingValue.Add((Skill)Activator.CreateInstance(typeof(Skill).Assembly.GetType(s.ToString() + "Skill")));
-        }
-        return existingValue;
-    }
-
-    public override void WriteJson(JsonWriter writer, List<Skill> value, JsonSerializer serializer)
-    {
-        writer.WriteStartArray();
-        if (value != null)
-        {
-            foreach (var s in value)
-            {
-                string name = s.GetType().Name;
-                writer.WriteValue(name.Substring(0, name.Length - 5));
-            }
-        }
-        writer.WriteEndArray();
-    }
 }
 
 /// <summary>
@@ -93,10 +53,12 @@ public class LivingBaseAgent : MonoBehaviour
     /// </summary>
     public LivingBase living;
 
+    public LivingBase actualLiving;
+
     /// <summary>
     /// 实际移动速度，受减速效果影响
     /// </summary>
-    public float MoveSpeed { get; set; }
+    //public float MoveSpeed { get; set; }
     public Animator Animator { get; set; }
     public AudioSource AudioSource { get; set; }
     public AudioClip GetHitClip { get; set; }
@@ -105,10 +67,7 @@ public class LivingBaseAgent : MonoBehaviour
 
     public Rigidbody2D rigidbody2d { get; set; }
 
-    public GameObject bulletPrefab;
-
-
-    public void ChangeHealth(int amount)
+    public void ChangeHealth(float amount)
     {
         if (amount < 0)
         {
@@ -120,13 +79,13 @@ public class LivingBaseAgent : MonoBehaviour
 
             else
             {
-                living.CurrentHealth = Mathf.Clamp(living.CurrentHealth + amount, 0, living.MaxHealth);
+                living.CurrentHealth = (int)Mathf.Clamp(living.CurrentHealth + amount, 0, living.MaxHealth);
                 Debug.Log($"{living.Name} now health is {living.CurrentHealth}");
                 //animator.SetTrigger("Hit");
                 //audioSource.PlayOneShot(getHitClip);
                 living.State.AddStatus(new InvincibleState(), living.TimeInvincible);
                 //print($"{living.Name}获得无敌{living.TimeInvincible}");
-                if (IsDead())
+                if (!living.isDead && IsDead())
                 {
                     //死亡动画
                     Destroy();
@@ -138,7 +97,7 @@ public class LivingBaseAgent : MonoBehaviour
             //animator.SetTrigger("Heal");
             //audioSource.PlayOneShot(getHealingClip);
 
-            living.CurrentHealth = Mathf.Clamp(living.CurrentHealth + amount, 0, living.MaxHealth);
+            living.CurrentHealth = (int)Mathf.Clamp(living.CurrentHealth + amount, 0, living.MaxHealth);
         }
         // UI change
     }
@@ -153,6 +112,7 @@ public class LivingBaseAgent : MonoBehaviour
             living.State.StateDuration[status] -= Time.deltaTime;
             if (living.State.StateDuration[status] <= 0)
             {
+                status.Resume(this);
                 living.State.RemoveStatus(status);
                 print($"移除{living.Name}的{status}");
             }
@@ -166,7 +126,10 @@ public class LivingBaseAgent : MonoBehaviour
     public bool IsDead()
     {
         if (living.CurrentHealth <= 0)
+        {
+            living.isDead = true;
             return true;
+        }
         else
             return false;
     }
@@ -174,13 +137,8 @@ public class LivingBaseAgent : MonoBehaviour
     /// <summary>
     /// 血量为零时销毁gameObject
     /// </summary>
-    public void Destroy()
+    public virtual void Destroy()
     {
-        SplitSkill splitSkill = living.Skills.FirstOrDefault(e => e.GetType() == new SplitSkill().GetType()) as SplitSkill;
-        if (splitSkill != null)
-        {
-            splitSkill.Perform(this, null);
-        }
         GameObject.Destroy(gameObject);
     }
 
@@ -190,12 +148,12 @@ public class LivingBaseAgent : MonoBehaviour
     /// <param name="attackDirection">攻击方向</param>
     /// <param name="mask">layerMask名称</param>
     /// <returns>GameObject列表</returns>
-    public IEnumerable<GameObject> GetAttackRangeObjects(Vector3 position, Vector3 attackDirection, string mask)
+    public IEnumerable<GameObject> GetAttackRangeObjects(Vector3 position, Vector3 attackDirection, float attackRadius, float attackAngle, params string[] mask)
     {
-        return from collider in Physics2D.OverlapCircleAll(position, living.AttackRadius, LayerMask.GetMask(mask))
+        return from collider in Physics2D.OverlapCircleAll(position, attackRadius, LayerMask.GetMask(mask))
                let targetDirection = collider.gameObject.transform.position - transform.position
                let angle = Vector3.Angle(targetDirection, attackDirection)
-               where angle < living.AttackAngle
+               where angle < attackAngle
                select collider.gameObject;
     }
 }

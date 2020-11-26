@@ -7,7 +7,7 @@ using UnityEngine;
 /// </summary>
 public class ItemAgent : MonoBehaviour, IInteract
 {
-    public int ItemIndex;
+    public int itemIndex;
 
 
     /// <summary>
@@ -17,19 +17,18 @@ public class ItemAgent : MonoBehaviour, IInteract
     /// <param name="item">要生成的物品</param>
     public static void GenerateItem(Vector3 position, Item item)
     {
-        GameObject itemPrefab = ItemAssets.GetItemPrefab(item);
+        GameObject itemPrefab = item.GetItemPrefab();
         GameObject realItem = Instantiate(itemPrefab, position, Quaternion.identity);
         ItemAgent itemAgent = realItem.GetComponent<ItemAgent>();
         itemAgent.SetItem(item);
     }
 
-
     public Item Item { get; set; }
-    private TextMeshPro textMeshPro;
+    protected TextMeshPro textMeshPro;
 
     private void Awake()
     {
-        Item = ItemAssets.Instance.items[ItemIndex];
+        Item = Global.items[itemIndex].Clone() as Item;
         textMeshPro = transform.Find("Text").GetComponent<TextMeshPro>();
     }
 
@@ -41,9 +40,9 @@ public class ItemAgent : MonoBehaviour, IInteract
     {
         this.Item = item;
 
-        if (item.amount > 1)
+        if (item.Amount > 1)
         {
-            textMeshPro.SetText(item.amount.ToString());
+            textMeshPro.SetText(item.Amount.ToString());
         }
         else
         {
