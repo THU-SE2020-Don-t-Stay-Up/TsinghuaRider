@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -25,6 +26,13 @@ public class Monster : LivingBase, ICloneable
     /// </summary>
     public int Difficulty { get; set; }
 
+    public float BulletSpeed { get; set; }
+
+    /// <summary>
+    /// 技能列表，存储实体可施放的技能
+    /// </summary>
+    [JsonConverter(typeof(SkillsJsonConverter))]
+    public List<Skill> Skills { get; set; }
     public object Clone()
     {
         return MemberwiseClone();
@@ -51,3 +59,30 @@ public class Monster : LivingBase, ICloneable
     }
 }
 
+class SkillsJsonConverter : JsonConverter<List<Skill>>
+{
+    public override List<Skill> ReadJson(JsonReader reader, Type objectType, List<Skill> existingValue, bool hasExistingValue, JsonSerializer serializer)
+    {
+        if (existingValue == null) existingValue = new List<Skill>();
+        JArray arr = JArray.Load(reader);
+        foreach (var s in arr)
+        {
+            existingValue.Add((Skill)Activator.CreateInstance(typeof(Skill).Assembly.GetType(s.ToString() + "Skill")));
+        }
+        return existingValue;
+    }
+
+    public override void WriteJson(JsonWriter writer, List<Skill> value, JsonSerializer serializer)
+    {
+        writer.WriteStartArray();
+        if (value != null)
+        {
+            foreach (var s in value)
+            {
+                string name = s.GetType().Name;
+                writer.WriteValue(name.Substring(0, name.Length - 5));
+            }
+        }
+        writer.WriteEndArray();
+    }
+}

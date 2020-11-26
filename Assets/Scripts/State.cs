@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 /// <summary>
 /// 状态类，存储状态Effect方法
 /// </summary>
@@ -73,6 +74,7 @@ public class FierceState : StateBase
 {
     public override void Effect(LivingBaseAgent agent)
     {
+        Debug.Log("fierce");
         agent.actualLiving.MoveSpeed = agent.living.MoveSpeed * 1.2f;
         agent.actualLiving.AttackAmount = agent.living.AttackAmount * 2;
         agent.actualLiving.AttackSpeed = agent.living.AttackSpeed * 1.2f;

@@ -1,17 +1,19 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 
 public class MonsterAgent : LivingBaseAgent
 {
     /// <summary>
     /// 怪物基本属性信息
     /// </summary>
-    private Monster Monster => living as Monster;
+    protected Monster Monster => living as Monster;
 
     public Monster ActualMonster => actualLiving as Monster;
     /// <summary>
     /// 怪物编号，用于加载对应怪物的属性信息
     /// </summary>
     public int monsterIndex;
+    public GameObject bulletPrefab;
     /// <summary>
     /// 状态机
     /// </summary>
@@ -34,7 +36,7 @@ public class MonsterAgent : LivingBaseAgent
     protected Vector3 startPosition;
     protected Vector3 roamingDirection;
     protected Vector3 movingDirection;
-    public Skill AttackSkill => living.Skills[0];
+    public Skill AttackSkill => Monster.Skills[0];
     //public GameObject Prefab;
     // Start is called before the first frame update
     void Start()
@@ -52,7 +54,6 @@ public class MonsterAgent : LivingBaseAgent
         SetRandomDirection();
 
         actionState = ActionState.Roaming;
-        living.MissleWeapon.bulletPrefab = bulletPrefab;
     }
 
     // Update is called once per frame
@@ -89,7 +90,7 @@ public class MonsterAgent : LivingBaseAgent
     {
         if (target != null)
         {
-            living.AttackDirection = (target.transform.position - transform.position).normalized;
+            actualLiving.AttackDirection = (target.transform.position - transform.position).normalized;
         }
     }
     protected bool AttackTarget()
@@ -184,5 +185,17 @@ public class MonsterAgent : LivingBaseAgent
         }
 
     }
-
+    public new void Destroy()
+    {
+        SplitSkill splitSkill = Monster.Skills.FirstOrDefault(e => e.GetType() == new SplitSkill().GetType()) as SplitSkill;
+        if (splitSkill != null)
+        {
+            splitSkill.Perform(this, null);
+        }
+        else
+        {
+            ItemAgent.GenerateItem(transform.position, new Coin { Amount = ActualMonster.Reward });
+        }
+        GameObject.Destroy(gameObject);
+    }
 }

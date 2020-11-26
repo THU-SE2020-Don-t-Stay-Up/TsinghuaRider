@@ -1,10 +1,7 @@
-﻿using System.Linq;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class BossAgent : MonsterAgent
 {
-    private Monster Boss => living as Monster;
-    public Monster ActualBoss => actualLiving as Monster;
     public LineRenderer LineRenderer { get; set; }
 
     public float bloodLine = 0.4f;
@@ -29,10 +26,10 @@ public class BossAgent : MonsterAgent
     void Start()
     {
         living = Global.monsters[monsterIndex].Clone() as Monster;
-        actualLiving = Boss.Clone() as Monster;
         living.CurrentHealth = living.MaxHealth;
-        print(Boss.Name);
-        
+        actualLiving = Monster.Clone() as Monster;
+        print(Monster.Name);
+
         rigidbody2d = GetComponent<Rigidbody2D>();
         roamingTime = Random.Range(0.5f, 0.8f);
         roamingDeltaTime = roamingTime;
@@ -43,7 +40,6 @@ public class BossAgent : MonsterAgent
         actionState = ActionState.Roaming;
         attackState = AttackState.Attack;
         NextAttackStateFlag = false;
-        living.MissleWeapon.bulletPrefab = bulletPrefab;
 
         lasers = new Lasers(this, 3, 1f, 45, 30);
     }
@@ -57,9 +53,9 @@ public class BossAgent : MonsterAgent
                 Roaming();
                 break;
             case ActionState.Chasing:
-                if (!NextAttackStateFlag || target != null && (target.transform.position - transform.position).magnitude <= Boss.ViewRadius)
+                if (!NextAttackStateFlag || target != null && (target.transform.position - transform.position).magnitude <= Monster.ViewRadius)
                 {
-                    switch(attackState)
+                    switch (attackState)
                     {
                         case AttackState.Attack:
                             NextAttackStateFlag = Attack();
@@ -131,7 +127,7 @@ public class Lasers
     }
     public void ClearFlags()
     {
-        for(int i = 0; i < lasers.Length; i++)
+        for (int i = 0; i < lasers.Length; i++)
         {
             laserFlags[i] = false;
         }
@@ -139,7 +135,7 @@ public class Lasers
     public bool AutoPerform()
     {
         bool flag = true;
-        for(int i = 0; i < lasers.Length; i++)
+        for (int i = 0; i < lasers.Length; i++)
         {
             if (!laserFlags[i])
             {
@@ -204,7 +200,7 @@ public class Laser
         {
             LaserStartFlag = true;
             LaserAngle = -LaserScope;
-            LaserStartDirection = Agent.living.AttackDirection;
+            LaserStartDirection = Agent.actualLiving.AttackDirection;
         }
     }
     public void EndLaser()
@@ -240,7 +236,7 @@ public class Laser
     /// </summary>
     public void DrawLaser()
     {
-        Vector3 firePosition = Agent.transform.position + LaserDirection * 2f;
+        Vector3 firePosition = Agent.transform.position + LaserDirection * Agent.GetComponent<BoxCollider2D>().size.x;
         hit = Physics2D.Raycast(firePosition, LaserDirection, 100, LayerMask.GetMask("Obstacle", "Player"));
         if (hit && LineRenderer.enabled == true)//如果遇到障碍物且射线打开
         {

@@ -1,5 +1,5 @@
 
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -10,7 +10,10 @@ public class CharacterAgent : LivingBaseAgent
     /// 角色基本属性信息
     /// </summary>
     private Character Character => living as Character;
-    private Character ActualCharacter => actualLiving as Character;
+    /// <summary>
+    /// 角色实际属性，受各种buff影响
+    /// </summary>
+    public Character ActualCharacter => actualLiving as Character;
     /// <summary>
     /// 怪物编号，用于加载对应怪物的属性信息
     /// </summary>
@@ -47,11 +50,9 @@ public class CharacterAgent : LivingBaseAgent
     Vector2 lookDirection = new Vector2(0, 0);
 
     // Weapons
-    public GameObject WeaponPrefab;
+    public GameObject WeaponPrefab { get; set; }
 
     private bool godMode = false;
-    public Skill MissleAttack => living.Skills[0];
-    public Skill MeleeAttack => living.Skills[1];
 
     float deltaTime = 0;
 
@@ -69,21 +70,15 @@ public class CharacterAgent : LivingBaseAgent
         AudioSource = GetComponent<AudioSource>();
 
         actionState = ActionState.Normal;
-        living.State.AddStatus(new InvincibleState(), living.TimeInvincible);
+        ActualCharacter.State.AddStatus(new InvincibleState(), ActualCharacter.TimeInvincible);
 
         // 初始化背包及UI
         inventory = new Inventory();
         uiInventory.SetInventory(inventory);
 
+        UpdateWeaponPrefab();
         //living.MissleWeapon.bulletPrefab = bulletPrefab;
-        try
-        {
-            WeaponPrefab = transform.GetChild(0).gameObject;
-        }
-        catch (System.Exception)
-        {
-            WeaponPrefab = null;
-        }
+
 
     }
 
@@ -136,6 +131,17 @@ public class CharacterAgent : LivingBaseAgent
         Dash();
     }
 
+    public void UpdateWeaponPrefab()
+    {
+        try
+        {
+            WeaponPrefab = transform.GetChild(0).gameObject;
+        }
+        catch (System.Exception)
+        {
+            WeaponPrefab = null;
+        }
+    }
     /// <summary>
     /// 改变角色状态机的状态
     /// </summary>
@@ -197,7 +203,7 @@ public class CharacterAgent : LivingBaseAgent
             SetState(2);
             float dashAmount = 5f;
             Vector2 dashPosition = rigidbody2d.position + lookDirection * dashAmount;
-            for(int i = 0; i < 1000; i++)
+            for (int i = 0; i < 1000; i++)
             {
                 RaycastHit2D dashHit = Physics2D.Raycast(rigidbody2d.position + gameObject.GetComponent<BoxCollider2D>().offset + lookDirection * gameObject.GetComponent<BoxCollider2D>().size, lookDirection, dashAmount * i / 1000, dashLayerMask);
                 if (dashHit.collider != null)
@@ -227,19 +233,19 @@ public class CharacterAgent : LivingBaseAgent
         if (Input.GetKeyDown(KeyCode.R))
         {
             SetState(3);
-            inventory.UseItem(new HealthPotion { Amount = 1}, this);
+            inventory.UseItem(new HealthPotion { Amount = 1 }, this);
             SetState(0);
         }
         if (Input.GetKeyDown(KeyCode.F))
         {
             SetState(3);
-            inventory.UseItem(new StrengthPotion { Amount = 1}, this);
+            inventory.UseItem(new StrengthPotion { Amount = 1 }, this);
             SetState(0);
         }
         if (Input.GetKeyDown(KeyCode.C))
         {
             SetState(3);
-            inventory.UseItem(new Medkit { Amount = 1}, this);
+            inventory.UseItem(new Medkit { Amount = 1 }, this);
             SetState(0);
         }
         if (Input.GetKeyDown(KeyCode.G))
@@ -252,13 +258,9 @@ public class CharacterAgent : LivingBaseAgent
 
         if (Input.GetKeyDown(KeyCode.H))
         {
-            List<Item> items = inventory.GetItemList();
-            Item weapon = items.First(e => e is IWeapon);
-            
-            Debug.Log(weapon);
-
+            List<Item> items = inventory.ItemList;
+            Item weapon = items.First(e => e is Weapon);
             inventory.UseItem(weapon, this);
-
             SetState(0);
         }
 
@@ -289,30 +291,22 @@ public class CharacterAgent : LivingBaseAgent
 
     private void HandleAttacking()
     {
-        //Vector3 mousePosition = PlayerAim.GetMouseWorldPosition();
-        //living.AttackDirection = (mousePosition - transform.position).normalized;
-
-        //if (Input.GetMouseButtonDown(0))
-        //{
-        if (godMode) { 
-            if(true)
-            //if (living.AttackSpeed - deltaTime < 0.01)
-            {
-                SetState(1);
-                deltaTime = 0;
-                WeaponPrefab.GetComponent<WeaponAgent>().Attack();
-                SetState(0);
-            }
+        if (godMode)
+        {
+            SetState(1);
+            deltaTime = 0;
+            WeaponPrefab.GetComponent<WeaponAgent>().Attack();
+            SetState(0);
         }
 
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(0))
         {
-            if (living.AttackSpeed - deltaTime < 0.01)
+            WeaponAgent weaponAgent = WeaponPrefab.GetComponent<WeaponAgent>();
+            if (ActualCharacter.AttackSpeed * weaponAgent.Weapon.AttackSpeed - deltaTime < 0.01)
             {
                 SetState(1);
-                MeleeAttack.Perform(this, null);
+                weaponAgent.Attack();
                 deltaTime = 0;
-                Animator.SetTrigger("Melee");
                 SetState(0);
             }
         }

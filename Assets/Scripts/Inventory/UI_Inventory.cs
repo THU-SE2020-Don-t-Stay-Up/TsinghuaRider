@@ -46,7 +46,7 @@ public class UI_Inventory : MonoBehaviour
         float itemSlotCellSize = 50.0f;
 
         // 在UI上摆放物品，并显示其图片
-        foreach (Item item in inventory.GetItemList())
+        foreach (Item item in inventory.ItemList)
         {
             RectTransform itemSlotRectTransform = Instantiate(itemSlotTemplate, itemSlotContainer).GetComponent<RectTransform>();
             itemSlotRectTransform.gameObject.SetActive(true);

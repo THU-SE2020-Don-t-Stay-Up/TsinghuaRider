@@ -5,7 +5,7 @@ using UnityEngine;
 public class WeaponAgent : ItemAgent
 {
     private Transform aimTransform;
-    GameObject parent;
+    private CharacterAgent user;
     public GameObject bulletPrefab;
     public Weapon Weapon { get; set; }
 
@@ -13,22 +13,23 @@ public class WeaponAgent : ItemAgent
     private void Awake()
     {
         Weapon = Global.items[itemIndex].Clone() as Weapon;
+        Weapon.bulletPrefab = bulletPrefab;
         textMeshPro = transform.Find("Text").GetComponent<TextMeshPro>();
 
         aimTransform = transform;
         try
         {
-            parent = transform.parent.gameObject;
+            user = transform.parent.gameObject.GetComponent<CharacterAgent>();
         }
         catch (Exception)
         {
-            parent = null;
+            user = null;
         }
     }
 
     private void Update()
     {
-        if (parent != null)
+        if (user != null)
         {
             HandleAiming();
         }
@@ -44,23 +45,20 @@ public class WeaponAgent : ItemAgent
     private void HandleAiming()
     {
         Vector3 mousePosition = GetMouseWorldPosition();
-         aimDir = (mousePosition - transform.position).normalized;
+        aimDir = (mousePosition - transform.position).normalized;
         float angle = Mathf.Atan2(aimDir.y, aimDir.x) * Mathf.Rad2Deg;
         aimTransform.eulerAngles = new Vector3(0, 0, angle);
     }
 
     internal static void Use(CharacterAgent character, Item item)
     {
-        GameObject.Instantiate(Global.GetPrefab(item.GetType().ToString()), character.transform);
-        character.WeaponPrefab = character.transform.GetChild(0).gameObject;
-
+        character.WeaponPrefab = GameObject.Instantiate(Global.GetPrefab(item.GetType().ToString()), character.transform);
+        Debug.Log(character.WeaponPrefab);
     }
 
     public void Attack()
     {
-        //Weapon.GetType().GetInterface("IWeapon")
-        Weapon.Attack(parent, aimDir);
-        Debug.Log("Should Attack");
+        Weapon.Attack(user, aimDir);
     }
 
 }

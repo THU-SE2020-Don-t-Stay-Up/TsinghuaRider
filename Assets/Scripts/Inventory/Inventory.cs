@@ -14,7 +14,7 @@ public class Inventory
     /// </summary>
     public event EventHandler OnItemListChanged;
 
-    private List<Item> itemList;
+    public List<Item> ItemList { get; private set; }
     //private Action<Item> useItemAction;
 
     /// <summary>
@@ -23,16 +23,11 @@ public class Inventory
     /// <param name="useItemAction"></param>
     public Inventory() 
     {
-
-        itemList = new List<Item>();
+        ItemList = new List<Item>();
         AddItem(new HealthPotion {  Amount = 3 });
         AddItem(new StrengthPotion {  Amount = 4 });
         AddItem(new Medkit { Amount = 1 });
         AddItem(new Sword { Amount = 1 });
-
-        //Debug.Log("I have an INVENTORY!!");
-        //Debug.Log(itemList.Count);
-
     }
 
     /// <summary>
@@ -43,10 +38,10 @@ public class Inventory
     {
         if (item.IsStackable)
         {
-            var inventoryItem = itemList.Find(e => e.Equals(item));
+            var inventoryItem = ItemList.FirstOrDefault(e => e.Equals(item));
             if (inventoryItem == null)
             {
-                itemList.Add(item);
+                ItemList.Add(item);
             }
             else
             {
@@ -55,25 +50,25 @@ public class Inventory
         }
         else
         {
-            itemList.Add(item);
+            ItemList.Add(item);
         }
         OnItemListChanged?.Invoke(this, EventArgs.Empty);
     }
 
     public void RemoveItem(Item item)
     {
-        var inventoryItem = itemList.Find(e => e.Equals(item));
+        var inventoryItem = ItemList.FirstOrDefault(e => e.Equals(item));
         inventoryItem.Amount -= item.Amount;
         if (inventoryItem.Amount <= 0)
         {
-            itemList.Remove(inventoryItem);
+            ItemList.Remove(inventoryItem);
         }
         OnItemListChanged?.Invoke(this, EventArgs.Empty);
     }
 
     public bool HasItem(Item item)
     {
-        var inventoryItem = itemList.Find(e => e.Equals(item));
+        var inventoryItem = ItemList.FirstOrDefault(e => e.Equals(item));
         if (inventoryItem != null)
         {
             return true;
@@ -82,10 +77,6 @@ public class Inventory
         {
             return false;
         }
-    }
-    public List<Item> GetItemList()
-    {
-        return itemList;
     }
 
     public void UseItem(Item item, CharacterAgent character)

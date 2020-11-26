@@ -1,42 +1,46 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.UIElements;
 
-interface IWeapon
+public class Weapon : Item
 {
-    void Attack(GameObject user, Vector3 direction);
-}
-/// <summary>
-/// 远程武器类
-/// </summary> 
-abstract public class Weapon : Item, IWeapon
-{
-    /// <summary>
-    /// 子弹prefab
-    /// </summary>
+    public float AttackSpeed;
+    public float AttackRadius;
+    public float AttackAmount;
+    public float AttackAngle;
     public GameObject bulletPrefab;
-    abstract public void Attack(GameObject user, Vector3 direction);
+    public virtual void Attack(CharacterAgent user, Vector3 direction) { }
+
+    public override void Use(CharacterAgent character)
+    {
+        character.InventoryAddItem(character.WeaponPrefab.GetComponent<WeaponAgent>().Weapon.Clone() as Item);
+        var oldWeapon = character.WeaponPrefab;
+        WeaponAgent.Use(character, this);
+        GameObject.Destroy(oldWeapon);
+    }
 }
 
-public class Sword : Item, IWeapon
+
+public class Sword : Weapon
 {
     public Sword()
     {
-        this.IsStackable = false;
-        this.Amount = 1;
+        AttackSpeed = 1;
+        AttackRadius = 2;
+        AttackAmount = 10;
+        AttackAngle = 45;
+        IsStackable = false;
+        Amount = 1;
     }
 
-    public void Attack(GameObject user, Vector3 direction)
+    public override void Attack(CharacterAgent user, Vector3 direction)
     {
-        throw new System.NotImplementedException();
-    }
-
-    public override void Use(CharacterAgent character) 
-    {
-        WeaponAgent.Use(character, this);
-        character.InventoryAddItem(character.WeaponPrefab.GetComponent<WeaponAgent>().Weapon.Clone() as Item);
-        GameObject.Destroy(character.WeaponPrefab);
+        user.Animator.SetTrigger("Melee");
+        IEnumerable<GameObject> targetObjects = user.GetAttackRangeObjects(user.transform.position, user.ActualCharacter.AttackDirection, user.ActualCharacter.AttackRadius * AttackRadius, AttackAngle, "Monster");
+        foreach (var targetObject in targetObjects)
+        {
+            LivingBaseAgent targetAgent = targetObject.GetComponent<LivingBaseAgent>();
+            targetAgent.ChangeHealth(-user.ActualCharacter.AttackAmount * AttackAmount);
+        }
     }
 
 }
@@ -45,56 +49,21 @@ public class Gun : Weapon
 {
     public Gun()
     {
-        this.IsStackable = false;
-        this.Amount = 1;
+        AttackSpeed = 0.2f;
+        AttackRadius = 20;
+        AttackAmount = 10;
+        AttackAngle = 0;
+        IsStackable = false;
+        AttackAmount = 8;
+        Amount = 1;
     }
 
-    public override void Attack(GameObject user, Vector3 direction)
+    public override void Attack(CharacterAgent user, Vector3 direction)
     {
         GameObject projectileObject = GameObject.Instantiate(bulletPrefab, user.transform.position + direction * 0.5f, Quaternion.identity);
         Bullet bullet = projectileObject.GetComponent<Bullet>();
-        bullet.startPoint = user.transform.position;
-        bullet.Damage = user.GetComponent<LivingBaseAgent>().living.AttackAmount;
-        bullet.userTag = user.tag;
+        bullet.SetBullet(user, this);
         bullet.Shoot(direction, 10);
     }
-
-    public override void Use(CharacterAgent character)
-    {
-        WeaponAgent.Use(character, this);
-        character.InventoryAddItem(character.WeaponPrefab.GetComponent<WeaponAgent>().Weapon.Clone() as Item);
-        GameObject.Destroy(character.WeaponPrefab);
-    }
-
-}
-
-public class MeleeWeapon : Item, IWeapon
-{
-    public void Attack(GameObject user, Vector3 Direction)
-    {
-        string layerMask;
-        LivingBaseAgent agent = user.GetComponent<LivingBaseAgent>();
-        // 判断进行攻击的是角色还是怪物
-        if (agent is CharacterAgent)
-        {
-            layerMask = "Monster";
-        }
-        else
-        {
-            layerMask = "Player";
-        }
-        IEnumerable<GameObject> targetObjects = agent.GetAttackRangeObjects(user.transform.position, agent.living.AttackDirection, layerMask);
-        foreach (var targetObject in targetObjects)
-        {
-            LivingBaseAgent targetAgent = targetObject.GetComponent<LivingBaseAgent>();
-            targetAgent.ChangeHealth(-agent.living.AttackAmount);
-        }
-    }
-
-    public override void Use(CharacterAgent character)
-    {
-        throw new System.NotImplementedException();
-    }
-
 
 }
