@@ -3,6 +3,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using UnityEngine;
 
 /// <summary>
@@ -27,7 +28,7 @@ public class LivingBase
     public float AttackRadius { get; set; }
     public int AttackAngle { get; set; }
 
-    public bool isDead { get; set; } = false;
+    public int isDead = 0;
     /// <summary>
     /// 攻击方向
     /// </summary>
@@ -85,10 +86,13 @@ public class LivingBaseAgent : MonoBehaviour
                 //audioSource.PlayOneShot(getHitClip);
                 living.State.AddStatus(new InvincibleState(), living.TimeInvincible);
                 //print($"{living.Name}获得无敌{living.TimeInvincible}");
-                if (!living.isDead && IsDead())
+                if (IsDead())
                 {
-                    //死亡动画
-                    Destroy();
+                    if (Interlocked.Exchange(ref living.isDead, 1) == 0)
+                    {
+                        //死亡动画
+                        Destroy();
+                    }
                 }
             }
         }
@@ -125,13 +129,7 @@ public class LivingBaseAgent : MonoBehaviour
 
     public bool IsDead()
     {
-        if (living.CurrentHealth <= 0)
-        {
-            living.isDead = true;
-            return true;
-        }
-        else
-            return false;
+        return living.CurrentHealth <= 0;
     }
 
     /// <summary>
