@@ -27,6 +27,7 @@ public class LivingBase
     public float AttackRadius { get; set; }
     public int AttackAngle { get; set; }
 
+    public bool isDead { get; set; } = false;
     /// <summary>
     /// 攻击方向
     /// </summary>
@@ -84,7 +85,7 @@ public class LivingBaseAgent : MonoBehaviour
                 //audioSource.PlayOneShot(getHitClip);
                 living.State.AddStatus(new InvincibleState(), living.TimeInvincible);
                 //print($"{living.Name}获得无敌{living.TimeInvincible}");
-                if (IsDead())
+                if (!living.isDead && IsDead())
                 {
                     //死亡动画
                     Destroy();
@@ -125,7 +126,10 @@ public class LivingBaseAgent : MonoBehaviour
     public bool IsDead()
     {
         if (living.CurrentHealth <= 0)
+        {
+            living.isDead = true;
             return true;
+        }
         else
             return false;
     }
