@@ -8,16 +8,23 @@ public class BossAgent : MonsterAgent
 
     public Lasers lasers;
 
+    private int barrageNum = 100;
+    private int nowBarrageNum = 0;
+    private float barrageInternal = 0.1f;
+    private float nowBarrageInternal = 0;
+
     public enum AttackState
     {
         Attack,
-        Laser
+        Laser,
+        Barrage
     }
 
     /// <summary>
     /// 攻击顺序
     /// </summary>
-    private AttackState[] attackOrder = { AttackState.Attack, AttackState.Attack, AttackState.Attack, AttackState.Laser };
+    private AttackState[] attackOrder = { AttackState.Attack, AttackState.Attack, AttackState.Laser, AttackState.Attack, AttackState.Attack, AttackState.Barrage };
+    //private AttackState[] attackOrder = { AttackState.Barrage };
 
     private AttackState attackState;
     public bool NextAttackStateFlag { get; set; }
@@ -38,7 +45,7 @@ public class BossAgent : MonsterAgent
         SetRandomDirection();
 
         actionState = ActionState.Roaming;
-        attackState = AttackState.Attack;
+        attackState = attackOrder[attackIndex];
         NextAttackStateFlag = false;
 
         lasers = new Lasers(this, 3, 1f, 45, 30);
@@ -63,6 +70,9 @@ public class BossAgent : MonsterAgent
                         case AttackState.Laser:
                             NextAttackStateFlag = ShootLaser();
                             break;
+                        case AttackState.Barrage:
+                            NextAttackStateFlag = Barrage();
+                            break;
                         default:
                             break;
                     }
@@ -71,6 +81,8 @@ public class BossAgent : MonsterAgent
                         attackState = NextAttackState();
                         NextAttackStateFlag = false;
                         lasers.ClearFlags();
+                        //ClearBarrage();
+                        Debug.Log(attackState);
                     }
                 }
                 else
@@ -106,6 +118,37 @@ public class BossAgent : MonsterAgent
     public void Fierce()
     {
         new FierceSkill().Perform(this, null);
+    }
+
+    public bool Barrage()
+    {
+        RandomFireBall();
+        if (nowBarrageNum >= barrageNum)
+        {
+            Debug.Log("end");
+            ClearBarrage();
+            return true;
+        }
+        else
+            return false;
+    }
+
+    public void RandomFireBall()
+    {
+        nowBarrageInternal += Time.deltaTime;
+        if (nowBarrageInternal >= barrageInternal)
+        {
+            ActualMonster.AttackDirection = new Vector3(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f)).normalized;
+            AttackSkill.Perform(this, null);
+            nowBarrageNum++;
+            nowBarrageInternal = 0;
+        }
+    }
+
+    public void ClearBarrage()
+    {
+        nowBarrageNum = 0;
+        nowBarrageInternal = 0;
     }
 }
 
@@ -274,3 +317,4 @@ public class Laser
         return false;
     }
 }
+
