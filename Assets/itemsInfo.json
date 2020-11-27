@@ -4,5 +4,11 @@
   "Coin",
   "Medkit",
   "Sword",
-  "Gun"
+  "Gun",
+  "EnergyGun",
+  "ChargeGun",
+  "Gatling",
+  "Saber1",
+  "Saber2",
+  "Saber3"
 ]

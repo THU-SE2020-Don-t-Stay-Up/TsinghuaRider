@@ -47,6 +47,81 @@ public class Sword : Weapon
 
 }
 
+public class Saber1 : Weapon
+{
+    public Saber1()
+    {
+        AttackSpeed = 1;
+        AttackRadius = 2;
+        AttackAmount = 10;
+        AttackAngle = 45;
+        IsStackable = false;
+        Amount = 1;
+    }
+
+    public override void Attack(CharacterAgent user, Vector3 direction)
+    {
+        user.Animator.SetTrigger("Melee");
+        IEnumerable<GameObject> targetObjects = user.GetAttackRangeObjects(user.transform.position, user.ActualCharacter.AttackDirection, user.ActualCharacter.AttackRadius * AttackRadius, AttackAngle, "Monster");
+        foreach (var targetObject in targetObjects)
+        {
+            LivingBaseAgent targetAgent = targetObject.GetComponent<LivingBaseAgent>();
+            targetAgent.ChangeHealth(-user.ActualCharacter.AttackAmount * AttackAmount);
+        }
+    }
+
+}
+
+public class Saber2 : Weapon
+{
+    public Saber2()
+    {
+        AttackSpeed = 1;
+        AttackRadius = 2;
+        AttackAmount = 10;
+        AttackAngle = 45;
+        IsStackable = false;
+        Amount = 1;
+    }
+
+    public override void Attack(CharacterAgent user, Vector3 direction)
+    {
+        user.Animator.SetTrigger("Melee");
+        IEnumerable<GameObject> targetObjects = user.GetAttackRangeObjects(user.transform.position, user.ActualCharacter.AttackDirection, user.ActualCharacter.AttackRadius * AttackRadius, AttackAngle, "Monster");
+        foreach (var targetObject in targetObjects)
+        {
+            LivingBaseAgent targetAgent = targetObject.GetComponent<LivingBaseAgent>();
+            targetAgent.ChangeHealth(-user.ActualCharacter.AttackAmount * AttackAmount);
+        }
+    }
+
+}
+
+public class Saber3 : Weapon
+{
+    public Saber3()
+    {
+        AttackSpeed = 1;
+        AttackRadius = 2;
+        AttackAmount = 10;
+        AttackAngle = 45;
+        IsStackable = false;
+        Amount = 1;
+    }
+
+    public override void Attack(CharacterAgent user, Vector3 direction)
+    {
+        user.Animator.SetTrigger("Melee");
+        IEnumerable<GameObject> targetObjects = user.GetAttackRangeObjects(user.transform.position, user.ActualCharacter.AttackDirection, user.ActualCharacter.AttackRadius * AttackRadius, AttackAngle, "Monster");
+        foreach (var targetObject in targetObjects)
+        {
+            LivingBaseAgent targetAgent = targetObject.GetComponent<LivingBaseAgent>();
+            targetAgent.ChangeHealth(-user.ActualCharacter.AttackAmount * AttackAmount);
+        }
+    }
+
+}
+
 public class Gun : Weapon
 {
     public Gun()
@@ -63,6 +138,79 @@ public class Gun : Weapon
     public override void Attack(CharacterAgent user, Vector3 direction)
     {
         GameObject projectileObject = GameObject.Instantiate(bulletPrefab, user.transform.position + direction * 0.5f, Quaternion.identity);
+        Bullet bullet = projectileObject.GetComponent<Bullet>();
+        bullet.SetBullet(user, this);
+        bullet.Shoot(direction, 10);
+    }
+
+}
+
+public class EnergyGun : Weapon
+{
+    public EnergyGun()
+    {
+        AttackSpeed = 0.2f;
+        AttackRadius = 20;
+        AttackAmount = 10;
+        AttackAngle = 0;
+        IsStackable = false;
+        AttackAmount = 8;
+        Amount = 1;
+    }
+
+    public override void Attack(CharacterAgent user, Vector3 direction)
+    {
+        Vector3 offset = new Vector3(1, 1, 0);
+        GameObject projectileObject = GameObject.Instantiate(bulletPrefab, user.transform.position + offset +direction * 0.5f, Quaternion.identity);
+        Bullet bullet = projectileObject.GetComponent<Bullet>();
+        bullet.SetBullet(user, this);
+        bullet.Shoot(direction, 10);
+    }
+
+}
+
+public class ChargeGun : Weapon
+{
+    public ChargeGun()
+    {
+        AttackSpeed = 0.2f;
+        AttackRadius = 20;
+        AttackAmount = 10;
+        AttackAngle = 0;
+        IsStackable = false;
+        AttackAmount = 8;
+        Amount = 1;
+    }
+
+    public override void Attack(CharacterAgent user, Vector3 direction)
+    {
+        Vector3 offset = new Vector3(1, 1, 0);
+        GameObject projectileObject = GameObject.Instantiate(bulletPrefab, user.transform.position + offset + direction * 0.5f, Quaternion.identity);
+        Bullet bullet = projectileObject.GetComponent<Bullet>();
+        bullet.SetBullet(user, this);
+        bullet.Shoot(direction, 10);
+    }
+
+}
+
+
+public class Gatling : Weapon
+{
+    public Gatling()
+    {
+        AttackSpeed = 0.2f;
+        AttackRadius = 20;
+        AttackAmount = 10;
+        AttackAngle = 0;
+        IsStackable = false;
+        AttackAmount = 8;
+        Amount = 1;
+    }
+
+    public override void Attack(CharacterAgent user, Vector3 direction)
+    {
+        Vector3 offset = new Vector3(1, 1, 0);
+        GameObject projectileObject = GameObject.Instantiate(bulletPrefab, user.transform.position + offset + direction * 0.5f, Quaternion.identity);
         Bullet bullet = projectileObject.GetComponent<Bullet>();
         bullet.SetBullet(user, this);
         bullet.Shoot(direction, 10);
