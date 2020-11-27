@@ -24,8 +24,7 @@ public class Initialization : MonoBehaviour
         DontDestroyOnLoad(mainCamera);
         DontDestroyOnLoad(vCamera);
         DontDestroyOnLoad(ui);
-        //DontDestroyOnLoad(minimapCamera);
-
+        DontDestroyOnLoad(minimapCamera);
 
         Destroy(gameObject);
     }

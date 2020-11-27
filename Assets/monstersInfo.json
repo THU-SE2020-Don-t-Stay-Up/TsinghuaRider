@@ -1,7 +1,7 @@
 [
   {
     "Name": "导鼠",
-    "MoveSpeed": 5.0,
+    "MoveSpeed": 4.5,
     "MaxHealth": 50,
     "Defense": 0,
     "Tenacity": 0.0,
@@ -21,7 +21,7 @@
   },
   {
     "Name": "鸡分",
-    "MoveSpeed": 4.0,
+    "MoveSpeed": 3.0,
     "MaxHealth": 30,
     "Defense": 0,
     "Tenacity": 0.0,
@@ -41,7 +41,7 @@
   },
   {
     "Name": "多元鸡分",
-    "MoveSpeed": 4.0,
+    "MoveSpeed": 3.0,
     "MaxHealth": 40,
     "Defense": 0,
     "Tenacity": 0.0,
@@ -54,7 +54,7 @@
     "ViewRadius": 12,
     "Reward": 1,
     "TimeInvincible": 0,
-    "Difficulty": 40,
+    "Difficulty": 50,
     "Skills": [
       "MissleAttack",
       "Split"
@@ -62,7 +62,7 @@
   },
   {
     "Name": "微多元鸡分",
-    "MoveSpeed": 5.0,
+    "MoveSpeed": 4.0,
     "MaxHealth": 20,
     "Defense": 0,
     "Tenacity": 0.0,
@@ -75,14 +75,14 @@
     "ViewRadius": 10,
     "Reward": 1,
     "TimeInvincible": 0,
-    "Difficulty": 30,
+    "Difficulty": 10,
     "Skills": [
       "MissleAttack"
     ]
   },
   {
     "Name": "寒鼠",
-    "MoveSpeed": 4.0,
+    "MoveSpeed": 3.5,
     "MaxHealth": 80,
     "Defense": 0,
     "Tenacity": 0.0,
@@ -95,7 +95,7 @@
     "ViewAngle": 360,
     "ViewRadius": 15,
     "Reward": 1,
-    "Difficulty": 20,
+    "Difficulty": 40,
     "Skills": [
       "MeleeSlowAttack"
     ]
@@ -115,7 +115,7 @@
     "ViewAngle": 360,
     "ViewRadius": 30,
     "Reward": 1,
-    "Difficulty": 20,
+    "Difficulty": 100,
     "Skills": [
       "MissleAttack"
     ]

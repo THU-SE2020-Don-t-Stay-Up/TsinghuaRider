@@ -77,15 +77,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1886171756276275987, guid: fa7c88058e40dd74eb8cfa6e73be8f9f, type: 3}
       propertyPath: wave
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1886171756276275987, guid: fa7c88058e40dd74eb8cfa6e73be8f9f, type: 3}
       propertyPath: interval
-      value: 20
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 1886171756276275987, guid: fa7c88058e40dd74eb8cfa6e73be8f9f, type: 3}
       propertyPath: difficulty
-      value: 70
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 1886171756276275987, guid: fa7c88058e40dd74eb8cfa6e73be8f9f, type: 3}
       propertyPath: monsterGroups.Array.data[0]
