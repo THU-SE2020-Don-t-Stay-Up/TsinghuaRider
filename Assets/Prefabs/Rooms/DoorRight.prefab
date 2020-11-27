@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3639985413633389568}
   - component: {fileID: -6561078201123618918}
   - component: {fileID: -8652709565286383086}
-  m_Layer: 11
+  m_Layer: 8
   m_Name: DoorRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -194,8 +194,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -168510935
-  m_SortingLayer: -1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 10
   m_Sprite: {fileID: 21300000, guid: 053494b239a8083438def7dd9d879446, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
