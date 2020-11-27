@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6929976430578235403}
   - component: {fileID: -2535644761419221258}
   - component: {fileID: 8567192495038035229}
-  m_Layer: 11
+  m_Layer: 8
   m_Name: DoorDown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
