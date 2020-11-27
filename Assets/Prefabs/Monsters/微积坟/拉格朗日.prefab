@@ -475,7 +475,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!50 &6483179190566933743
 Rigidbody2D:
   serializedVersion: 4
@@ -510,10 +510,10 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 0.78905475}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0.5, y: 0}
     oldSize: {x: 1.6, y: 1.6}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
@@ -521,7 +521,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.8, y: 0.8}
+  m_Size: {x: 0.8, y: 0.90134645}
   m_EdgeRadius: 0
 --- !u!114 &6376139993095558259
 MonoBehaviour:
@@ -535,8 +535,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf46927b40970b242b1b6df05190dc34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 6930816689405685355, guid: 279ab947aa7df724d9c3d88b4d67891f, type: 3}
   monsterIndex: 5
+  bulletPrefab: {fileID: 6930816689405685355, guid: 279ab947aa7df724d9c3d88b4d67891f, type: 3}
   bloodLine: 0.4
 --- !u!120 &6440271111711192111
 LineRenderer:
