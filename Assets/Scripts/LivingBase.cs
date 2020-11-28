@@ -72,23 +72,23 @@ public class LivingBaseAgent : MonoBehaviour
     {
         if (amount < 0)
         {
-            if (living.State.HasStatus(new InvincibleState()))
+            if (actualLiving.State.HasStatus(new InvincibleState()))
             {
-                Debug.Log($"{living.Name} Invincible");
+                Debug.Log($"{actualLiving.Name} Invincible");
                 return;
             }
 
             else
             {
-                living.CurrentHealth = (int)Mathf.Clamp(living.CurrentHealth + amount, 0, living.MaxHealth);
-                Debug.Log($"{living.Name} now health is {living.CurrentHealth}");
+                actualLiving.CurrentHealth = (int)Mathf.Clamp(actualLiving.CurrentHealth + amount, 0, actualLiving.MaxHealth);
+                Debug.Log($"{actualLiving.Name} now health is {actualLiving.CurrentHealth}");
                 //animator.SetTrigger("Hit");
                 //audioSource.PlayOneShot(getHitClip);
-                living.State.AddStatus(new InvincibleState(), living.TimeInvincible);
-                //print($"{living.Name}获得无敌{living.TimeInvincible}");
+                actualLiving.State.AddStatus(new InvincibleState(), actualLiving.TimeInvincible);
+                //print($"{actualLiving.Name}获得无敌{actualLiving.TimeInvincible}");
                 if (IsDead())
                 {
-                    if (Interlocked.Exchange(ref living.isDead, 1) == 0)
+                    if (Interlocked.Exchange(ref actualLiving.isDead, 1) == 0)
                     {
                         //死亡动画
                         Destroy();
@@ -101,7 +101,7 @@ public class LivingBaseAgent : MonoBehaviour
             //animator.SetTrigger("Heal");
             //audioSource.PlayOneShot(getHealingClip);
 
-            living.CurrentHealth = (int)Mathf.Clamp(living.CurrentHealth + amount, 0, living.MaxHealth);
+            actualLiving.CurrentHealth = (int)Mathf.Clamp(actualLiving.CurrentHealth + amount, 0, actualLiving.MaxHealth);
         }
         // UI change
     }
@@ -111,14 +111,14 @@ public class LivingBaseAgent : MonoBehaviour
     /// </summary>
     public void CheckState()
     {
-        foreach (var status in living.State.StateDuration.Keys.ToArray())
+        foreach (var status in actualLiving.State.StateDuration.Keys.ToArray())
         {
-            living.State.StateDuration[status] -= Time.deltaTime;
-            if (living.State.StateDuration[status] <= 0)
+            actualLiving.State.StateDuration[status] -= Time.deltaTime;
+            if (actualLiving.State.StateDuration[status] <= 0)
             {
                 status.Resume(this);
-                living.State.RemoveStatus(status);
-                print($"移除{living.Name}的{status}");
+                actualLiving.State.RemoveStatus(status);
+                print($"移除{actualLiving.Name}的{status}");
             }
             else
             {
@@ -129,7 +129,7 @@ public class LivingBaseAgent : MonoBehaviour
 
     public bool IsDead()
     {
-        return living.CurrentHealth <= 0;
+        return actualLiving.CurrentHealth <= 0;
     }
 
     /// <summary>
@@ -154,4 +154,6 @@ public class LivingBaseAgent : MonoBehaviour
                where angle < attackAngle
                select collider.gameObject;
     }
+
+    public virtual Vector3 GetAttackDirection() { return Vector3.zero; }
 }
