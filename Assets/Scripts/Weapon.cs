@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class Weapon : Item
+abstract public class Weapon : Item
 {
     public float AttackSpeed;
     public float AttackRadius;
@@ -22,6 +22,8 @@ public class Weapon : Item
         }
         WeaponAgent.Use(character, this);
     }
+
+    protected virtual void ExtraEffect(LivingBaseAgent agent) { }
 }
 
 
@@ -45,6 +47,7 @@ public class Sword : Weapon
         {
             LivingBaseAgent targetAgent = targetObject.GetComponent<LivingBaseAgent>();
             targetAgent.ChangeHealth(-user.ActualCharacter.AttackAmount * AttackAmount);
+            ExtraEffect(targetAgent);
         }
     }
 
@@ -70,6 +73,7 @@ public class Saber1 : Weapon
         {
             LivingBaseAgent targetAgent = targetObject.GetComponent<LivingBaseAgent>();
             targetAgent.ChangeHealth(-user.ActualCharacter.AttackAmount * AttackAmount);
+            ExtraEffect(targetAgent);
         }
     }
 
@@ -95,6 +99,7 @@ public class Saber2 : Weapon
         {
             LivingBaseAgent targetAgent = targetObject.GetComponent<LivingBaseAgent>();
             targetAgent.ChangeHealth(-user.ActualCharacter.AttackAmount * AttackAmount);
+            ExtraEffect(targetAgent);
         }
     }
 
@@ -120,6 +125,7 @@ public class Saber3 : Weapon
         {
             LivingBaseAgent targetAgent = targetObject.GetComponent<LivingBaseAgent>();
             targetAgent.ChangeHealth(-user.ActualCharacter.AttackAmount * AttackAmount);
+            ExtraEffect(targetAgent);
         }
     }
 
@@ -145,6 +151,7 @@ public class BlackExcalibur : Weapon
         {
             LivingBaseAgent targetAgent = targetObject.GetComponent<LivingBaseAgent>();
             targetAgent.ChangeHealth(-user.ActualCharacter.AttackAmount * AttackAmount);
+            ExtraEffect(targetAgent);
         }
     }
 
@@ -170,6 +177,7 @@ public class Excalibur : Weapon
         {
             LivingBaseAgent targetAgent = targetObject.GetComponent<LivingBaseAgent>();
             targetAgent.ChangeHealth(-user.ActualCharacter.AttackAmount * AttackAmount);
+            ExtraEffect(targetAgent);
         }
     }
 
@@ -195,6 +203,7 @@ public class Faith : Weapon
         {
             LivingBaseAgent targetAgent = targetObject.GetComponent<LivingBaseAgent>();
             targetAgent.ChangeHealth(-user.ActualCharacter.AttackAmount * AttackAmount);
+            ExtraEffect(targetAgent);
         }
     }
 
@@ -220,6 +229,7 @@ public class GilgameshEa : Weapon
         {
             LivingBaseAgent targetAgent = targetObject.GetComponent<LivingBaseAgent>();
             targetAgent.ChangeHealth(-user.ActualCharacter.AttackAmount * AttackAmount);
+            ExtraEffect(targetAgent);
         }
     }
 
@@ -245,6 +255,7 @@ public class MasterSword : Weapon
         {
             LivingBaseAgent targetAgent = targetObject.GetComponent<LivingBaseAgent>();
             targetAgent.ChangeHealth(-user.ActualCharacter.AttackAmount * AttackAmount);
+            ExtraEffect(targetAgent);
         }
     }
 
@@ -270,6 +281,7 @@ public class VirtuousTreaty : Weapon
         {
             LivingBaseAgent targetAgent = targetObject.GetComponent<LivingBaseAgent>();
             targetAgent.ChangeHealth(-user.ActualCharacter.AttackAmount * AttackAmount);
+            ExtraEffect(targetAgent);
         }
     }
 
@@ -295,6 +307,7 @@ public class xianyu : Weapon
         {
             LivingBaseAgent targetAgent = targetObject.GetComponent<LivingBaseAgent>();
             targetAgent.ChangeHealth(-user.ActualCharacter.AttackAmount * AttackAmount);
+            ExtraEffect(targetAgent);
         }
     }
 
@@ -320,7 +333,7 @@ public class Gun : Weapon
         
         GameObject projectileObject = GameObject.Instantiate(bulletPrefab, user.WeaponPrefab.transform.position + direction * 0.5f, Quaternion.identity);
         Bullet bullet = projectileObject.GetComponent<Bullet>();
-        bullet.SetBullet(user, this);
+        bullet.SetBullet(user, user.ActualCharacter.AttackAmount * AttackAmount, ExtraEffect);
         bullet.Shoot(direction, 10);
     }
 
@@ -344,7 +357,7 @@ public class EnergyGun : Weapon
         Vector3 offset = new Vector3(1, 1, 0);
         GameObject projectileObject = GameObject.Instantiate(bulletPrefab, user.transform.position + offset +direction * 1f, Quaternion.identity);
         Bullet bullet = projectileObject.GetComponent<Bullet>();
-        bullet.SetBullet(user, this);
+        bullet.SetBullet(user, user.ActualCharacter.AttackAmount * AttackAmount, ExtraEffect);
         bullet.Shoot(direction, 10);
     }
 
@@ -368,7 +381,7 @@ public class ChargeGun : Weapon
         Vector3 offset = new Vector3(1, 1, 0);
         GameObject projectileObject = GameObject.Instantiate(bulletPrefab, user.transform.position + offset + direction * 0.5f, Quaternion.identity);
         Bullet bullet = projectileObject.GetComponent<Bullet>();
-        bullet.SetBullet(user, this);
+        bullet.SetBullet(user, user.ActualCharacter.AttackAmount * AttackAmount, ExtraEffect);
         bullet.Shoot(direction, 10);
     }
 
@@ -393,7 +406,7 @@ public class Gatling : Weapon
         Vector3 offset = new Vector3(1, 1, 0);
         GameObject projectileObject = GameObject.Instantiate(bulletPrefab, user.transform.position + offset + direction * 0.5f, Quaternion.identity);
         Bullet bullet = projectileObject.GetComponent<Bullet>();
-        bullet.SetBullet(user, this);
+        bullet.SetBullet(user, user.ActualCharacter.AttackAmount * AttackAmount, ExtraEffect);
         bullet.Shoot(direction, 10);
     }
 
@@ -418,7 +431,7 @@ public class Puella : Weapon
 
         GameObject projectileObject = GameObject.Instantiate(bulletPrefab, user.WeaponPrefab.transform.position + direction * 0.5f, Quaternion.identity);
         Bullet bullet = projectileObject.GetComponent<Bullet>();
-        bullet.SetBullet(user, this);
+        bullet.SetBullet(user, user.ActualCharacter.AttackAmount * AttackAmount, ExtraEffect);
         bullet.Shoot(direction, 10);
     }
 
@@ -443,7 +456,7 @@ public class RathBuster : Weapon
 
         GameObject projectileObject = GameObject.Instantiate(bulletPrefab, user.WeaponPrefab.transform.position + direction * 0.5f, Quaternion.identity);
         Bullet bullet = projectileObject.GetComponent<Bullet>();
-        bullet.SetBullet(user, this);
+        bullet.SetBullet(user, user.ActualCharacter.AttackAmount * AttackAmount, ExtraEffect);
         bullet.Shoot(direction, 10);
     }
 
@@ -468,7 +481,7 @@ public class RathGunlance : Weapon
 
         GameObject projectileObject = GameObject.Instantiate(bulletPrefab, user.WeaponPrefab.transform.position + direction * 0.5f, Quaternion.identity);
         Bullet bullet = projectileObject.GetComponent<Bullet>();
-        bullet.SetBullet(user, this);
+        bullet.SetBullet(user, user.ActualCharacter.AttackAmount * AttackAmount, ExtraEffect);
         bullet.Shoot(direction, 10);
     }
 
