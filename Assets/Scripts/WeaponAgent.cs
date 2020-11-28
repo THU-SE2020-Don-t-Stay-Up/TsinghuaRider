@@ -68,6 +68,16 @@ public class WeaponAgent : ItemAgent
         Weapon.Attack(user, aimDir);
     }
 
+    public override void InteractWith(GameObject gameObject)
+    {
+        CharacterAgent character = gameObject.GetComponent<CharacterAgent>();
+        if (character != null)
+        {
+            character.WeaponColumnAddItem(Item);
+            Destroy(this.gameObject);
+        }
+    }
+
     private void HandlePosition()
     {
         if (user.characterIndex == 0)
