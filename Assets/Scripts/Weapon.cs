@@ -17,7 +17,7 @@ public class Weapon : Item
     {
         if (character.WeaponPrefab != null)
         {
-            character.InventoryAddItem(character.WeaponPrefab.GetComponent<WeaponAgent>().Weapon.Clone() as Item);
+            character.WeaponColumnAddItem(character.WeaponPrefab.GetComponent<WeaponAgent>().Weapon.Clone() as Item);
             GameObject.Destroy(character.WeaponPrefab);
         }
         WeaponAgent.Use(character, this);

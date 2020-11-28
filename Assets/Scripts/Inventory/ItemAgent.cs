@@ -50,7 +50,7 @@ public class ItemAgent : MonoBehaviour, IInteract
         }
     }
 
-    public void InteractWith(GameObject gameObject)
+    public virtual void InteractWith(GameObject gameObject)
     {
         CharacterAgent character = gameObject.GetComponent<CharacterAgent>();
         if (character != null)
