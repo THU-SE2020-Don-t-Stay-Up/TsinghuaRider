@@ -8,9 +8,9 @@ public class BossAgent : MonsterAgent
 
     public Lasers lasers;
 
-    private int barrageNum = 100;
+    private int barrageNum = 1000;
     private int nowBarrageNum = 0;
-    private float barrageInternal = 0.1f;
+    private float barrageInternal = 0.01f;
     private float nowBarrageInternal = 0;
 
     public enum AttackState

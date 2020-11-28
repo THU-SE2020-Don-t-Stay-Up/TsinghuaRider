@@ -8,6 +8,9 @@ public class Weapon : Item
     public float AttackAmount;
     public float AttackAngle;
     public GameObject bulletPrefab;
+    public Vector3 handleOffset;
+    public Vector3 attackOffset;
+
     public virtual void Attack(CharacterAgent user, Vector3 direction) { }
 
     public override void Use(CharacterAgent character)
@@ -126,6 +129,7 @@ public class Gun : Weapon
 {
     public Gun()
     {
+        handleOffset = new Vector3 (0.35f, -0.3f, 0f);
         AttackSpeed = 0.2f;
         AttackRadius = 20;
         AttackAmount = 10;
@@ -137,7 +141,8 @@ public class Gun : Weapon
 
     public override void Attack(CharacterAgent user, Vector3 direction)
     {
-        GameObject projectileObject = GameObject.Instantiate(bulletPrefab, user.transform.position + direction * 0.5f, Quaternion.identity);
+        
+        GameObject projectileObject = GameObject.Instantiate(bulletPrefab, user.WeaponPrefab.transform.position + direction * 0.5f, Quaternion.identity);
         Bullet bullet = projectileObject.GetComponent<Bullet>();
         bullet.SetBullet(user, this);
         bullet.Shoot(direction, 10);
@@ -161,7 +166,7 @@ public class EnergyGun : Weapon
     public override void Attack(CharacterAgent user, Vector3 direction)
     {
         Vector3 offset = new Vector3(1, 1, 0);
-        GameObject projectileObject = GameObject.Instantiate(bulletPrefab, user.transform.position + offset +direction * 0.5f, Quaternion.identity);
+        GameObject projectileObject = GameObject.Instantiate(bulletPrefab, user.transform.position + offset +direction * 1f, Quaternion.identity);
         Bullet bullet = projectileObject.GetComponent<Bullet>();
         bullet.SetBullet(user, this);
         bullet.Shoot(direction, 10);

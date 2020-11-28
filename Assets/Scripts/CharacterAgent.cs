@@ -44,10 +44,11 @@ public class CharacterAgent : LivingBaseAgent
     // dash realting
     private bool isDashBottonDown;
     [SerializeField] private LayerMask dashLayerMask;
+    private int dashBar;
 
     // animation
 
-    Vector2 lookDirection = new Vector2(0, 0);
+    //Vector2 lookDirection = new Vector2(0, 0);
 
     // Weapons
     public GameObject WeaponPrefab { get; set; }
@@ -56,7 +57,8 @@ public class CharacterAgent : LivingBaseAgent
 
     float deltaTime = 0;
 
-
+    Vector3 attackDirection = new Vector3(0, 0, 0);
+    Vector3 mousePosition = new Vector3(0, 0, 0);
 
     private void Awake()
     {
@@ -117,8 +119,16 @@ public class CharacterAgent : LivingBaseAgent
             case ActionState.Skilling:
                 break;
         }
+        HandleDirection();
         CheckState();
         deltaTime += Time.deltaTime;
+
+        dashBar = Mathf.Clamp(dashBar + 1, 0, 901);
+        if (dashBar % 300 == 0)
+        {
+            Debug.Log("老子dash回复了一次");
+        }
+
     }
 
     private void FixedUpdate()
@@ -160,6 +170,7 @@ public class CharacterAgent : LivingBaseAgent
                 break;
             case 2:
                 actionState = ActionState.Dashing;
+                living.State.AddStatus(new InvincibleState(), 0.5f);
                 break;
             case 3:
                 Stop();
@@ -177,45 +188,55 @@ public class CharacterAgent : LivingBaseAgent
         horizontal = Input.GetAxis("Horizontal");
         vertical = Input.GetAxis("Vertical");
         Vector2 move = new Vector2(horizontal, vertical);
-        if (!Mathf.Approximately(move.x, 0.0f) || (!Mathf.Approximately(move.y, 0.0f)))
-        {
-            lookDirection.Set(move.x, move.y);
-            lookDirection.Normalize();
-        }
+        //if (!Mathf.Approximately(move.x, 0.0f) || (!Mathf.Approximately(move.y, 0.0f)))
+        //{
+        //    lookDirection.Set(move.x, move.y);
+        //    lookDirection.Normalize();
+        //}
 
         // set moving animaion paraments
-        Animator.SetFloat("Look X", lookDirection.x);
-        Animator.SetFloat("Look Y", lookDirection.y);
-        Animator.SetFloat("Speed", move.magnitude);
 
+        Animator.SetFloat("Speed", move.magnitude);
+    }
+
+    private void HandleDirection()
+    {
+        mousePosition = WeaponAgent.GetMouseWorldPosition();
+        attackDirection = (mousePosition - transform.position).normalized;
+        Animator.SetFloat("Look X", attackDirection.x);
+        Animator.SetFloat("Look Y", attackDirection.y);
     }
 
     private void Stop()
     {
         ActualCharacter.MoveSpeed = 0.0f;
-        lookDirection = Vector2.zero;
+        //lookDirection = Vector2.zero;
     }
 
     private void Dash()
     {
-        if (isDashBottonDown)
+        if (isDashBottonDown && dashBar >= 300)
         {
             SetState(2);
-            float dashAmount = 5f;
-            Vector2 dashPosition = rigidbody2d.position + lookDirection * dashAmount;
-            for (int i = 0; i < 1000; i++)
+            float dashAmount = 3f;
+            Vector2 dashPosition = rigidbody2d.position + new Vector2(attackDirection.x,attackDirection.y) * dashAmount;
+            RaycastHit2D dashHit = Physics2D.Raycast(rigidbody2d.position + gameObject.GetComponent<BoxCollider2D>().offset + attackDirection * gameObject.GetComponent<BoxCollider2D>().size, attackDirection, dashAmount, dashLayerMask);
+            if (dashHit.collider != null)
             {
-                RaycastHit2D dashHit = Physics2D.Raycast(rigidbody2d.position + gameObject.GetComponent<BoxCollider2D>().offset + lookDirection * gameObject.GetComponent<BoxCollider2D>().size, lookDirection, dashAmount * i / 1000, dashLayerMask);
-                if (dashHit.collider != null)
-                {
-                    dashPosition = dashHit.point;
-                    break;
-                }
-
+                Debug.Log("撞墙了woc！");
+                dashPosition = dashHit.point;
             }
+
             rigidbody2d.MovePosition(dashPosition);
+            dashBar -= 300;
             isDashBottonDown = false;
+
             SetState(0);
+        }
+        else if(isDashBottonDown && dashBar < 300)
+        {
+            Debug.Log("老子累了，爬爬爬爬！");
+            Debug.Log(dashBar);
         }
     }
 
@@ -273,7 +294,7 @@ public class CharacterAgent : LivingBaseAgent
         if (Input.GetKeyDown(KeyCode.T))
         {
             RaycastHit2D hit = Physics2D.Raycast(rigidbody2d.position + Vector2.up * 0.2f,
-            lookDirection, 1.5f, LayerMask.GetMask("Interactable"));
+            attackDirection, 1.5f, LayerMask.GetMask("Interactable"));
             if (hit.collider != null)
             {
                 NonPlayerCharacter npc = hit.collider.GetComponent<NonPlayerCharacter>();
@@ -351,8 +372,7 @@ public class CharacterAgent : LivingBaseAgent
     public void MeleeAttack()
     {
         Animator.SetTrigger("Melee");
-        Vector3 mousePosition = WeaponAgent.GetMouseWorldPosition();
-        Vector3 attackDirection = (mousePosition - transform.position).normalized;
+       
         IEnumerable<GameObject> targetObjects = GetAttackRangeObjects(transform.position, attackDirection, ActualCharacter.AttackRadius, ActualCharacter.AttackAngle, "Monster");
         foreach (var targetObject in targetObjects)
         {
@@ -361,5 +381,9 @@ public class CharacterAgent : LivingBaseAgent
         }
     }
 
+    public Vector3 GetPosition()
+    {
+        return transform.position;
+    }
 }
 
