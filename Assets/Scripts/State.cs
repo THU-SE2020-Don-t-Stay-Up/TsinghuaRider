@@ -87,6 +87,21 @@ public class FierceState : StateBase
         agent.actualLiving.AttackSpeed = agent.living.AttackSpeed;
     }
 }
+
+public class SpeedUpState : StateBase
+{
+    public override void Effect(LivingBaseAgent agent)
+    {
+        agent.actualLiving.MoveSpeed = agent.living.MoveSpeed * 2.0f;
+        agent.actualLiving.AttackRadius = 2.0f;
+    }
+
+    public override void Resume(LivingBaseAgent agent)
+    {
+        agent.actualLiving.MoveSpeed = agent.actualLiving.MoveSpeed;
+        agent.actualLiving.AttackRadius = agent.living.AttackRadius;
+    }
+}
 /// <summary>
 /// 状态类，存储并操作object的状态
 /// </summary>

@@ -87,3 +87,19 @@ public class FierceSkill : Skill
         }
     }
 }
+
+public class ObstacleSkill : Skill
+{
+    public override void Perform(MonsterAgent subject, LivingBaseAgent target)
+    {
+        Vector3 randomOffset = new Vector3(Random.Range(-2.0f, 2.0f), Random.Range(-2.0f, 2.0f));
+        GameObject.Instantiate(subject.bulletPrefab, target.transform.position + randomOffset, Quaternion.identity);
+    }
+}
+
+public class MeleeDashAttackSkill : Skill
+{
+    public override void Perform(MonsterAgent subject, LivingBaseAgent target)
+    {
+    }
+}
