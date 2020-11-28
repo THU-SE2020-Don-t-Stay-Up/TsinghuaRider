@@ -107,9 +107,10 @@ public class State
         {
             return;
         }
-        if (HasStatus(status) && StateDuration[status] < duration)
+        if (HasStatus(status))
         {
-            StateDuration[status] = duration;
+            if (StateDuration[status] < duration)
+                StateDuration[status] = duration;
         }
         else
         {
