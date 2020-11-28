@@ -68,7 +68,7 @@ public class LivingBaseAgent : MonoBehaviour
 
     public Rigidbody2D rigidbody2d { get; set; }
 
-    public void ChangeHealth(float amount)
+    public virtual void ChangeHealth(float amount)
     {
         if (amount < 0)
         {

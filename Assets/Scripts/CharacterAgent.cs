@@ -141,8 +141,6 @@ public class CharacterAgent : LivingBaseAgent
         {
             Debug.Log("老子dash回复了一次");
         }
-        Debug.Log(actualLiving.CurrentHealth);
-        UIHealthBar.instance.SetValue(actualLiving.CurrentHealth / (float)actualLiving.MaxHealth);
 
     }
 
@@ -413,7 +411,7 @@ public class CharacterAgent : LivingBaseAgent
         return transform.position;
     }
 
-    public new void ChangeHealth(float amount)
+    public override void ChangeHealth(float amount)
     {
         if (amount < 0)
         {
@@ -450,7 +448,6 @@ public class CharacterAgent : LivingBaseAgent
 
             actualLiving.CurrentHealth = (int)Mathf.Clamp(actualLiving.CurrentHealth + amount, 0, actualLiving.MaxHealth);
         }
-        // UI change
     }
 }
 
