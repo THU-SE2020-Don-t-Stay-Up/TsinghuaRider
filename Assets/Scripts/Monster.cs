@@ -28,11 +28,16 @@ public class Monster : LivingBase, ICloneable
 
     public float BulletSpeed { get; set; }
 
+    public float BloodLine { get; set; }
+
     /// <summary>
     /// 技能列表，存储实体可施放的技能
     /// </summary>
     [JsonConverter(typeof(SkillsJsonConverter))]
     public List<Skill> Skills { get; set; }
+    [JsonConverter(typeof(SkillsJsonConverter))]
+    public List<Skill> SkillOrder { get; set; }
+    public AttackSkill AttackSkill => Skills[0] as AttackSkill;
     public object Clone()
     {
         return MemberwiseClone();
