@@ -111,8 +111,10 @@ public class State
         {
             if (StateDuration[status] < duration)
                 StateDuration[status] = duration;
-            else
-                StateDuration.Add(status, duration);
+        }
+        else
+        {
+            StateDuration.Add(status, duration);
         }
     }
     /// <summary>
