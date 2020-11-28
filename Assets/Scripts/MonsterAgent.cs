@@ -28,22 +28,23 @@ public class MonsterAgent : LivingBaseAgent
     /// <summary>
     /// 攻击目标，默认为玩家
     /// </summary>
-    protected GameObject target;
+    public LivingBaseAgent target { get; set; }
 
-    protected float attackDeltaTime = 0;
     protected float roamingTime;
     protected float roamingDeltaTime;
     protected Vector3 startPosition;
     protected Vector3 roamingDirection;
     protected Vector3 movingDirection;
-    public Skill AttackSkill => Monster.Skills[0];
+    protected bool NextSkillFlag { get; set; }
+    protected int SkillIndex { get; set; }
+
     //public GameObject Prefab;
     // Start is called before the first frame update
     void Start()
     {
         living = Global.monsters[monsterIndex].Clone() as Monster;
-        living.CurrentHealth = living.MaxHealth;
         actualLiving = Monster.Clone() as Monster;
+        actualLiving.CurrentHealth = actualLiving.MaxHealth;
         print(Monster.Name);
 
         rigidbody2d = GetComponent<Rigidbody2D>();
@@ -54,6 +55,11 @@ public class MonsterAgent : LivingBaseAgent
         SetRandomDirection();
 
         actionState = ActionState.Roaming;
+
+        SkillIndex = 0;
+        NextSkillFlag = false;
+        ActualMonster.SkillOrder.ForEach(skill => skill.Init(this));
+        ActualMonster.Skills.ForEach(skill => skill.Init(this));
     }
 
     // Update is called once per frame
@@ -65,9 +71,19 @@ public class MonsterAgent : LivingBaseAgent
                 Roaming();
                 break;
             case ActionState.Chasing:
-                Attack();
-                if (target == null)
+                if (!NextSkillFlag || target != null && (target.transform.position - transform.position).magnitude <= Monster.ViewRadius)
+                {
+                    NextSkillFlag = ActualMonster.SkillOrder[SkillIndex].Perform();
+                    if (NextSkillFlag && target != null)
+                    {
+                        SkillIndex = (SkillIndex + 1) % ActualMonster.SkillOrder.Count;
+                        NextSkillFlag = false;
+                    }
+                }
+                else
+                {
                     actionState = ActionState.Restarting;
+                }
                 break;
             case ActionState.Restarting:
                 Restart();
@@ -77,47 +93,12 @@ public class MonsterAgent : LivingBaseAgent
         }
         CheckState();
         SetRandomDirection();
-        attackDeltaTime += Time.deltaTime;
         roamingDeltaTime += Time.deltaTime;
     }
 
     void FixedUpdate()
     {
 
-    }
-
-    protected void SetAttackDirection()
-    {
-        if (target != null)
-        {
-            actualLiving.AttackDirection = (target.transform.position - transform.position).normalized;
-        }
-    }
-    protected bool AttackTarget()
-    {
-        if (actualLiving.AttackSpeed - attackDeltaTime < 0.01)
-        {
-            SetAttackDirection();
-            AttackSkill.Perform(this, target.GetComponent<LivingBaseAgent>());
-            //print("attack target");
-            attackDeltaTime = 0;
-            return true;
-        }
-        return false;
-    }
-    public bool Attack()
-    {
-        if (target == null)
-            return true;
-        SetMovingDirection(target.transform.position);
-        rigidbody2d.velocity = movingDirection * actualLiving.MoveSpeed;
-        float distance = Vector3.Distance(transform.position, target.transform.position);
-        if (distance <= actualLiving.AttackRadius)
-        {
-            if (AttackTarget())
-                return true;
-        }
-        return false;
     }
 
 
@@ -140,6 +121,24 @@ public class MonsterAgent : LivingBaseAgent
             movingDirection = (moveDirection + roamingDirection).normalized;
         }
     }
+    
+    public override Vector3 GetAttackDirection()
+    {
+        if (target != null)
+        {
+            return (target.transform.position - transform.position).normalized;
+        }
+        return Vector3.zero;
+    }
+    public void MoveTo(Vector3 position)
+    {
+        SetMovingDirection(position);
+        rigidbody2d.velocity = movingDirection * actualLiving.MoveSpeed;
+    }
+    public void MoveTowards(Vector3 direction)
+    {
+        rigidbody2d.velocity = direction * actualLiving.MoveSpeed;
+    }
     protected void Roaming()
     {
         rigidbody2d.velocity = roamingDirection * actualLiving.MoveSpeed;
@@ -156,9 +155,17 @@ public class MonsterAgent : LivingBaseAgent
         if (HasArrived(startPosition))
             actionState = ActionState.Roaming;
     }
+
     protected void FindTarget()
     {
-        target = GameObject.FindWithTag("Player");
+        try
+        {
+            target = GameObject.FindWithTag("Player").GetComponent<LivingBaseAgent>();
+        }
+        catch (System.Exception)
+        {
+            target = null;
+        }
         if (target != null)
         {
             if (Vector3.Distance(transform.position, target.transform.position) < Monster.ViewRadius)
@@ -187,10 +194,10 @@ public class MonsterAgent : LivingBaseAgent
     }
     public override void Destroy()
     {
-        SplitSkill splitSkill = Monster.Skills.FirstOrDefault(e => e.GetType() == new SplitSkill().GetType()) as SplitSkill;
+        Skill splitSkill = Monster.Skills.FirstOrDefault(e => e is SplitSkill);
         if (splitSkill != null)
         {
-            splitSkill.Perform(this, null);
+            splitSkill.Perform();
         }
         else
         {
