@@ -119,5 +119,105 @@
     "Skills": [
       "MissleAttack"
     ]
+  },
+  {
+    "Name": "特征枝",
+    "MoveSpeed": 4.5,
+    "MaxHealth": 50,
+    "Defense": 0,
+    "Tenacity": 0.0,
+    "AttackSpeed": 1.0,
+    "AttackRadius": 2,
+    "AttackAmount": 8,
+    "AttackAngle": 30,
+    "BulletSpeed": 10,
+    "TimeInvincible": 0,
+    "ViewAngle": 360,
+    "ViewRadius": 15,
+    "Reward": 1,
+    "Difficulty": 20,
+    "Skills": [
+      "MeleeAttack"
+    ]
+  },
+  {
+    "Name": "矩阵",
+    "MoveSpeed": 3,
+    "MaxHealth": 50,
+    "Defense": 0,
+    "Tenacity": 0.0,
+    "AttackSpeed": 2.0,
+    "AttackRadius": 15,
+    "AttackAmount": 8,
+    "AttackAngle": 30,
+    "BulletSpeed": 10,
+    "TimeInvincible": 0,
+    "ViewAngle": 360,
+    "ViewRadius": 20,
+    "Reward": 1,
+    "Difficulty": 20,
+    "Skills": [
+      "Obstacle"
+    ]
+  },
+  {
+    "Name": "行列狮",
+    "MoveSpeed": 4.5,
+    "MaxHealth": 50,
+    "Defense": 0,
+    "Tenacity": 0.0,
+    "AttackSpeed": 1.0,
+    "AttackRadius": 8,
+    "AttackAmount": 8,
+    "AttackAngle": 30,
+    "BulletSpeed": 10,
+    "TimeInvincible": 0,
+    "ViewAngle": 360,
+    "ViewRadius": 15,
+    "Reward": 1,
+    "Difficulty": 20,
+    "Skills": [
+      "MeleeDashAttack"
+    ]
+  },
+  {
+    "Name": "象两",
+    "MoveSpeed": 4.5,
+    "MaxHealth": 50,
+    "Defense": 0,
+    "Tenacity": 0.0,
+    "AttackSpeed": 1.0,
+    "AttackRadius": 2,
+    "AttackAmount": 8,
+    "AttackAngle": 30,
+    "BulletSpeed": 10,
+    "TimeInvincible": 0,
+    "ViewAngle": 360,
+    "ViewRadius": 15,
+    "Reward": 1,
+    "Difficulty": 20,
+    "Skills": [
+      "MeleeAttack"
+    ]
+  },
+  {
+    "Name": "特征象两",
+    "MoveSpeed": 4,
+    "MaxHealth": 80,
+    "Defense": 0,
+    "Tenacity": 0.0,
+    "AttackSpeed": 2.0,
+    "AttackRadius": 2,
+    "AttackAmount": 12,
+    "AttackAngle": 30,
+    "BulletSpeed": 10,
+    "TimeInvincible": 0,
+    "ViewAngle": 360,
+    "ViewRadius": 15,
+    "Reward": 1,
+    "Difficulty": 20,
+    "Skills": [
+      "MeleeAttack"
+    ]
   }
 ]
