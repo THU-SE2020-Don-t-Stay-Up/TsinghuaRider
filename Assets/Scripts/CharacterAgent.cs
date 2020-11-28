@@ -35,7 +35,7 @@ public class CharacterAgent : LivingBaseAgent
     /// 物品栏
     /// </summary>
     private Inventory inventory;
-    [SerializeField] private UI_Inventory uiInventory;
+    private UI_Inventory uiInventory;
 
     // movement
     float horizontal;
@@ -75,6 +75,7 @@ public class CharacterAgent : LivingBaseAgent
         ActualCharacter.State.AddStatus(new InvincibleState(), ActualCharacter.TimeInvincible);
 
         // 初始化背包及UI
+        uiInventory = GameObject.Find("UI_Inventory").GetComponent<UI_Inventory>();
         inventory = new Inventory();
         uiInventory.SetInventory(inventory);
 
@@ -233,11 +234,7 @@ public class CharacterAgent : LivingBaseAgent
 
             SetState(0);
         }
-        else if(isDashBottonDown && dashBar < 300)
-        {
-            Debug.Log("老子累了，爬爬爬爬！");
-            Debug.Log(dashBar);
-        }
+
     }
 
     private void Perform()
@@ -246,8 +243,17 @@ public class CharacterAgent : LivingBaseAgent
         // dash
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            isDashBottonDown = true;
-            Debug.Log("Should perform dash!");
+            if (dashBar >= 300)
+            {
+                isDashBottonDown = true;
+                Debug.Log("Should perform dash!");
+            }
+            else
+            {
+                isDashBottonDown = false;
+
+                Debug.Log("Dash CD中");
+            }
         }
 
         // skills
