@@ -147,10 +147,7 @@ public class CharacterAgent : LivingBaseAgent
 
     private void FixedUpdate()
     {
-        Vector2 position = rigidbody2d.position;
-        position.x += ActualCharacter.MoveSpeed * horizontal * Time.deltaTime;
-        position.y += ActualCharacter.MoveSpeed * vertical * Time.deltaTime;
-        rigidbody2d.MovePosition(position);
+        rigidbody2d.velocity = new Vector2(horizontal, vertical) * ActualCharacter.MoveSpeed;
 
         Dash();
     }

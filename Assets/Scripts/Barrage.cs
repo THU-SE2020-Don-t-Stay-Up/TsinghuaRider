@@ -36,7 +36,7 @@ public class Barrage
         if (nowBarrageInternal >= barrageInternal)
         {
             randomDirection = new Vector3(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f)).normalized;
-            agent.ActualMonster.AttackSkill.AttackAt(randomDirection, null);
+            agent.ActualMonster.AttackSkill.AttackAt(randomDirection, null, agent);
             nowBarrageNum++;
             nowBarrageInternal = 0;
         }

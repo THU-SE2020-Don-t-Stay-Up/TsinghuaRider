@@ -170,4 +170,9 @@ public class Lasers
         }
         return flag;
     }
+    public void EndLasers()
+    {
+        for (int i = 0; i < lasers.Length; i++)
+            lasers[i].EndLaser();
+    }
 }
