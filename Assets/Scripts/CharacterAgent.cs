@@ -1,6 +1,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using UnityEngine;
 
 
@@ -35,7 +36,9 @@ public class CharacterAgent : LivingBaseAgent
     /// 物品栏
     /// </summary>
     private Inventory inventory;
-    [SerializeField] private UI_Inventory uiInventory;
+    private Inventory weaponColumn;
+    private UI_Inventory uiInventory;
+    private UI_Inventory uiWeaponColumn;
 
     // movement
     float horizontal;
@@ -48,7 +51,7 @@ public class CharacterAgent : LivingBaseAgent
 
     // animation
 
-    //Vector2 lookDirection = new Vector2(0, 0);
+    Vector2 lookDirection = new Vector2(0, 0);
 
     // Weapons
     public GameObject WeaponPrefab { get; set; }
@@ -74,18 +77,27 @@ public class CharacterAgent : LivingBaseAgent
         actionState = ActionState.Normal;
         ActualCharacter.State.AddStatus(new InvincibleState(), ActualCharacter.TimeInvincible);
 
-        // 初始化背包及UI
+        // 初始化背包及其UI
+        uiInventory = GameObject.Find("UI_Inventory").GetComponent<UI_Inventory>();
         inventory = new Inventory();
+        inventory.AddItem(new HealthPotion { Amount = 3 });
+        inventory.AddItem(new StrengthPotion { Amount = 4 });
+        inventory.AddItem(new Medkit { Amount = 1 });
         uiInventory.SetInventory(inventory);
 
+
+        uiWeaponColumn = GameObject.Find("UI_Weapons").GetComponent<UI_Inventory>();
+        weaponColumn = new Inventory();
+        weaponColumn.AddItem(new Sword { Amount = 1 });
+        weaponColumn.AddItem(new Gun { Amount = 1 });
+        uiWeaponColumn.SetInventory(weaponColumn);
+
         UpdateWeaponPrefab();
-        //living.MissleWeapon.bulletPrefab = bulletPrefab;
-
-
     }
 
     private void Update()
     {
+
         switch (actionState)
         {
             // when in Normal state, player can move, perform skills, get hurt ,attack and interact
@@ -119,6 +131,7 @@ public class CharacterAgent : LivingBaseAgent
             case ActionState.Skilling:
                 break;
         }
+
         HandleDirection();
         CheckState();
         deltaTime += Time.deltaTime;
@@ -188,11 +201,11 @@ public class CharacterAgent : LivingBaseAgent
         horizontal = Input.GetAxis("Horizontal");
         vertical = Input.GetAxis("Vertical");
         Vector2 move = new Vector2(horizontal, vertical);
-        //if (!Mathf.Approximately(move.x, 0.0f) || (!Mathf.Approximately(move.y, 0.0f)))
-        //{
-        //    lookDirection.Set(move.x, move.y);
-        //    lookDirection.Normalize();
-        //}
+        if (!Mathf.Approximately(move.x, 0.0f) || (!Mathf.Approximately(move.y, 0.0f)))
+        {
+            lookDirection.Set(move.x, move.y);
+            lookDirection.Normalize();
+        }
 
         // set moving animaion paraments
 
@@ -219,8 +232,10 @@ public class CharacterAgent : LivingBaseAgent
         {
             SetState(2);
             float dashAmount = 3f;
-            Vector2 dashPosition = rigidbody2d.position + new Vector2(attackDirection.x,attackDirection.y) * dashAmount;
-            RaycastHit2D dashHit = Physics2D.Raycast(rigidbody2d.position + gameObject.GetComponent<BoxCollider2D>().offset + attackDirection * gameObject.GetComponent<BoxCollider2D>().size, attackDirection, dashAmount, dashLayerMask);
+            //Vector2 dashPosition = rigidbody2d.position + new Vector2(attackDirection.x,attackDirection.y) * dashAmount;
+            //RaycastHit2D dashHit = Physics2D.Raycast(rigidbody2d.position + gameObject.GetComponent<BoxCollider2D>().offset + attackDirection * gameObject.GetComponent<BoxCollider2D>().size, attackDirection, dashAmount, dashLayerMask);
+            Vector2 dashPosition = rigidbody2d.position + lookDirection * dashAmount;
+            RaycastHit2D dashHit = Physics2D.Raycast(rigidbody2d.position + gameObject.GetComponent<BoxCollider2D>().offset + lookDirection* gameObject.GetComponent<BoxCollider2D>().size, lookDirection, dashAmount, dashLayerMask);
             if (dashHit.collider != null)
             {
                 Debug.Log("撞墙了woc！");
@@ -233,11 +248,7 @@ public class CharacterAgent : LivingBaseAgent
 
             SetState(0);
         }
-        else if(isDashBottonDown && dashBar < 300)
-        {
-            Debug.Log("老子累了，爬爬爬爬！");
-            Debug.Log(dashBar);
-        }
+
     }
 
     private void Perform()
@@ -246,8 +257,17 @@ public class CharacterAgent : LivingBaseAgent
         // dash
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            isDashBottonDown = true;
-            Debug.Log("Should perform dash!");
+            if (dashBar >= 300)
+            {
+                isDashBottonDown = true;
+                Debug.Log("Should perform dash!");
+            }
+            else
+            {
+                isDashBottonDown = false;
+
+                Debug.Log("Dash CD中");
+            }
         }
 
         // skills
@@ -273,16 +293,16 @@ public class CharacterAgent : LivingBaseAgent
         {
             SetState(3);
             godMode = !godMode;
-            Debug.Log("Should perform skill4!");
+            Debug.Log("God Mode!");
             SetState(0);
         }
 
         if (Input.GetKeyDown(KeyCode.H))
         {
-            List<Item> items = inventory.ItemList;
+            List<Item> items = weaponColumn.ItemList;
             Item weapon = items.FirstOrDefault(e => e is Weapon);
             if (weapon != null)
-                inventory.UseItem(weapon, this);
+                weaponColumn.UseItem(weapon, this);
             SetState(0);
         }
 
@@ -323,6 +343,7 @@ public class CharacterAgent : LivingBaseAgent
 
         if (Input.GetMouseButtonDown(0))
         {
+            Debug.Log(WeaponPrefab);
             if (WeaponPrefab != null)
             {
                 WeaponAgent weaponAgent = WeaponPrefab.GetComponent<WeaponAgent>();
@@ -364,6 +385,10 @@ public class CharacterAgent : LivingBaseAgent
         }
     }
 
+    public void WeaponColumnAddItem(Item item)
+    {
+        weaponColumn.AddItem(item);
+    }
     public void InventoryAddItem(Item item)
     {
         inventory.AddItem(item);
@@ -384,6 +409,48 @@ public class CharacterAgent : LivingBaseAgent
     public Vector3 GetPosition()
     {
         return transform.position;
+    }
+
+    public override void ChangeHealth(float amount)
+    {
+        if (amount < 0)
+        {
+            if (actualLiving.State.HasStatus(new InvincibleState()))
+            {
+                Debug.Log($"{actualLiving.Name} Invincible");
+                return;
+            }
+
+            else
+            {
+                actualLiving.CurrentHealth = (int)Mathf.Clamp(actualLiving.CurrentHealth + amount, 0, actualLiving.MaxHealth);
+                UIHealthBar.instance.SetValue(actualLiving.CurrentHealth / (float)actualLiving.MaxHealth);
+
+                Debug.Log($"{actualLiving.Name} now health is {actualLiving.CurrentHealth}");
+                //animator.SetTrigger("Hit");
+                //audioSource.PlayOneShot(getHitClip);
+                actualLiving.State.AddStatus(new InvincibleState(), actualLiving.TimeInvincible);
+                //print($"{actualLiving.Name}获得无敌{actualLiving.TimeInvincible}");
+                if (IsDead())
+                {
+                    if (Interlocked.Exchange(ref actualLiving.isDead, 1) == 0)
+                    {
+                        //死亡动画
+                        Destroy();
+                    }
+                }
+            }
+        }
+        else
+        {
+            //animator.SetTrigger("Heal");
+            //audioSource.PlayOneShot(getHealingClip);
+
+            actualLiving.CurrentHealth = (int)Mathf.Clamp(actualLiving.CurrentHealth + amount, 0, actualLiving.MaxHealth);
+            UIHealthBar.instance.SetValue(actualLiving.CurrentHealth / (float)actualLiving.MaxHealth);
+
+
+        }
     }
 }
 

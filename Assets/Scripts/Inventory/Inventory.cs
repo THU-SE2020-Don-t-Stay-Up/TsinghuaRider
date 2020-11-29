@@ -24,10 +24,6 @@ public class Inventory
     public Inventory() 
     {
         ItemList = new List<Item>();
-        AddItem(new HealthPotion {  Amount = 3 });
-        AddItem(new StrengthPotion {  Amount = 4 });
-        AddItem(new Medkit { Amount = 1 });
-        AddItem(new Sword { Amount = 1 });
     }
 
     /// <summary>

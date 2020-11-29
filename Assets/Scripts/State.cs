@@ -33,18 +33,6 @@ abstract public class StateBase
     }
 }
 
-public class NormalState : StateBase
-{
-    public override void Effect(LivingBaseAgent agent)
-    {
-        //Debug.Log("我很正常");
-    }
-
-    public override void Resume(LivingBaseAgent agent)
-    {
-    }
-}
-
 public class SlowState : StateBase
 {
     public override void Effect(LivingBaseAgent agent)
@@ -87,6 +75,40 @@ public class FierceState : StateBase
         agent.actualLiving.AttackSpeed = agent.living.AttackSpeed;
     }
 }
+
+public class SpeedUpState : StateBase
+{
+    public override void Effect(LivingBaseAgent agent)
+    {
+        agent.actualLiving.MoveSpeed = agent.living.MoveSpeed * 2.0f;
+        agent.actualLiving.AttackRadius = 2.0f;
+    }
+
+    public override void Resume(LivingBaseAgent agent)
+    {
+        agent.actualLiving.MoveSpeed = agent.actualLiving.MoveSpeed;
+        agent.actualLiving.AttackRadius = agent.living.AttackRadius;
+    }
+}
+
+public class BleedState: StateBase
+{
+    private float Timer = 0;
+    private float DamagePerSecond = 3.0f;
+    public override void Effect(LivingBaseAgent agent)
+    {
+        Timer += Time.deltaTime;
+        if (Timer >= 1.0f)
+        {
+            agent.ChangeHealth(-DamagePerSecond);
+            Timer = 0;
+        }
+    }
+
+    public override void Resume(LivingBaseAgent agent)
+    {
+    }
+}
 /// <summary>
 /// 状态类，存储并操作object的状态
 /// </summary>
@@ -107,9 +129,10 @@ public class State
         {
             return;
         }
-        if (HasStatus(status) && StateDuration[status] < duration)
+        if (HasStatus(status))
         {
-            StateDuration[status] = duration;
+            if (StateDuration[status] < duration)
+                StateDuration[status] = duration;
         }
         else
         {

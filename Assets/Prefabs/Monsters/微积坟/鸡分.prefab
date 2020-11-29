@@ -98,7 +98,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monsterIndex: 1
-  bulletPrefab: {fileID: 2269785940787976222, guid: bd13f8eff7394964092a5fc1492e5078, type: 3}
+  bulletPrefab: {fileID: 1761219922449699061, guid: 09ecaf93ed43bb04e8baaeddce0be4dc, type: 3}
 --- !u!50 &1196376800170384099
 Rigidbody2D:
   serializedVersion: 4

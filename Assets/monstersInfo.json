@@ -2,7 +2,7 @@
   {
     "Name": "导鼠",
     "MoveSpeed": 4.5,
-    "MaxHealth": 50,
+    "MaxHealth": 30,
     "Defense": 0,
     "Tenacity": 0.0,
     "AttackSpeed": 1.0,
@@ -17,7 +17,11 @@
     "Difficulty": 20,
     "Skills": [
       "MeleeAttack"
-    ]
+    ],
+    "SkillOrder": [
+      "MeleeAttack"
+    ],
+    "BloodLine": 0
   },
   {
     "Name": "鸡分",
@@ -37,7 +41,11 @@
     "Difficulty": 40,
     "Skills": [
       "MissleAttack"
-    ]
+    ],
+    "SkillOrder": [
+      "MissleAttack"
+    ],
+    "BloodLine": 0
   },
   {
     "Name": "多元鸡分",
@@ -58,7 +66,11 @@
     "Skills": [
       "MissleAttack",
       "Split"
-    ]
+    ],
+    "SkillOrder": [
+      "MissleAttack"
+    ],
+    "BloodLine": 0
   },
   {
     "Name": "微多元鸡分",
@@ -78,12 +90,16 @@
     "Difficulty": 10,
     "Skills": [
       "MissleAttack"
-    ]
+    ],
+    "SkillOrder": [
+      "MissleAttack"
+    ],
+    "BloodLine": 0
   },
   {
     "Name": "寒鼠",
     "MoveSpeed": 3.5,
-    "MaxHealth": 80,
+    "MaxHealth": 50,
     "Defense": 0,
     "Tenacity": 0.0,
     "AttackSpeed": 1.2,
@@ -98,7 +114,11 @@
     "Difficulty": 40,
     "Skills": [
       "MeleeSlowAttack"
-    ]
+    ],
+    "SkillOrder": [
+      "MeleeSlowAttack"
+    ],
+    "BloodLine": 0
   },
   {
     "Name": "拉格朗日",
@@ -117,7 +137,136 @@
     "Reward": 1,
     "Difficulty": 100,
     "Skills": [
-      "MissleAttack"
-    ]
+      "MissleAttack",
+      "Fierce",
+      "Laser",
+      "Barrage"
+    ],
+    "SkillOrder": [
+      "MissleAttack",
+      "Laser",
+      "Barrage"
+    ],
+    "BloodLine": 0.4
+  },
+  {
+    "Name": "特征枝",
+    "MoveSpeed": 4.5,
+    "MaxHealth": 30,
+    "Defense": 0,
+    "Tenacity": 0.0,
+    "AttackSpeed": 1.5,
+    "AttackRadius": 15,
+    "AttackAmount": 8,
+    "AttackAngle": 30,
+    "BulletSpeed": 10,
+    "TimeInvincible": 0,
+    "ViewAngle": 360,
+    "ViewRadius": 15,
+    "Reward": 1,
+    "Difficulty": 20,
+    "Skills": [
+      "MissleBleedAttack"
+    ],
+    "SkillOrder": [
+      "MissleBleedAttack"
+    ],
+    "BloodLine": 0
+  },
+  {
+    "Name": "矩阵",
+    "MoveSpeed": 3,
+    "MaxHealth": 50,
+    "Defense": 0,
+    "Tenacity": 0.0,
+    "AttackSpeed": 2.0,
+    "AttackRadius": 15,
+    "AttackAmount": 8,
+    "AttackAngle": 30,
+    "BulletSpeed": 10,
+    "TimeInvincible": 0,
+    "ViewAngle": 360,
+    "ViewRadius": 20,
+    "Reward": 1,
+    "Difficulty": 20,
+    "Skills": [
+      "Obstacle"
+    ],
+    "SkillOrder": [
+      "Obstacle"
+    ],
+    "BloodLine": 0
+  },
+  {
+    "Name": "行列狮",
+    "MoveSpeed": 4.5,
+    "MaxHealth": 50,
+    "Defense": 0,
+    "Tenacity": 0.0,
+    "AttackSpeed": 3.0,
+    "AttackRadius": 6,
+    "AttackAmount": 12,
+    "AttackAngle": 30,
+    "BulletSpeed": 10,
+    "TimeInvincible": 0,
+    "ViewAngle": 360,
+    "ViewRadius": 15,
+    "Reward": 1,
+    "Difficulty": 20,
+    "Skills": [
+      "MeleeChargeAttack"
+    ],
+    "SkillOrder": [
+      "MeleeChargeAttack"
+    ],
+    "BloodLine": 0
+  },
+  {
+    "Name": "象两",
+    "MoveSpeed": 4.5,
+    "MaxHealth": 50,
+    "Defense": 0,
+    "Tenacity": 0.0,
+    "AttackSpeed": 1.0,
+    "AttackRadius": 2,
+    "AttackAmount": 8,
+    "AttackAngle": 30,
+    "BulletSpeed": 10,
+    "TimeInvincible": 0,
+    "ViewAngle": 360,
+    "ViewRadius": 15,
+    "Reward": 1,
+    "Difficulty": 20,
+    "Skills": [
+      "MeleeAttack"
+    ],
+    "SkillOrder": [
+      "MeleeAttack"
+    ],
+    "BloodLine": 0
+  },
+  {
+    "Name": "特征象两",
+    "MoveSpeed": 4,
+    "MaxHealth": 80,
+    "Defense": 0,
+    "Tenacity": 0.0,
+    "AttackSpeed": 2.0,
+    "AttackRadius": 2,
+    "AttackAmount": 12,
+    "AttackAngle": 30,
+    "BulletSpeed": 10,
+    "TimeInvincible": 0,
+    "ViewAngle": 360,
+    "ViewRadius": 15,
+    "Reward": 1,
+    "Difficulty": 20,
+    "Skills": [
+      "MeleeAttack"
+    ],
+    "SkillOrder": [
+      "MeleeAttack"
+    ],
+    "BloodLine": 0
   }
 ]
