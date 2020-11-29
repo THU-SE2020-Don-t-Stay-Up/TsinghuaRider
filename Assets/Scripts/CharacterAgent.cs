@@ -447,6 +447,9 @@ public class CharacterAgent : LivingBaseAgent
             //audioSource.PlayOneShot(getHealingClip);
 
             actualLiving.CurrentHealth = (int)Mathf.Clamp(actualLiving.CurrentHealth + amount, 0, actualLiving.MaxHealth);
+            UIHealthBar.instance.SetValue(actualLiving.CurrentHealth / (float)actualLiving.MaxHealth);
+
+
         }
     }
 }
