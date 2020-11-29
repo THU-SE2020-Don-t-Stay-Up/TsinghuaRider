@@ -68,6 +68,8 @@ public class LivingBaseAgent : MonoBehaviour
 
     public Rigidbody2D rigidbody2d { get; set; }
 
+    public Collider2D collider2d { get; set; }
+
     public virtual void ChangeHealth(float amount)
     {
         if (amount < 0)
@@ -153,6 +155,11 @@ public class LivingBaseAgent : MonoBehaviour
                let angle = Vector3.Angle(targetDirection, attackDirection)
                where angle < attackAngle
                select collider.gameObject;
+    }
+
+    public Vector3 GetCentralPosition()
+    {
+        return collider2d.offset + rigidbody2d.position;
     }
 
     public virtual Vector3 GetAttackDirection() { return Vector3.zero; }

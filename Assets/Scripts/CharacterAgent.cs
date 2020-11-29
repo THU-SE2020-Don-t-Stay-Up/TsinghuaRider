@@ -37,8 +37,8 @@ public class CharacterAgent : LivingBaseAgent
     /// </summary>
     private Inventory inventory;
     private Inventory weaponColumn;
-    private UI_Inventory uiInventory;
-    private UI_Inventory uiWeaponColumn;
+    private UIInventory uiInventory;
+    private UIInventory uiWeaponColumn;
 
     // movement
     float horizontal;
@@ -71,6 +71,7 @@ public class CharacterAgent : LivingBaseAgent
         print(Character.Name);
 
         rigidbody2d = GetComponent<Rigidbody2D>();
+        collider2d = GetComponent<Collider2D>();
         Animator = GetComponent<Animator>();
         AudioSource = GetComponent<AudioSource>();
 
@@ -78,7 +79,7 @@ public class CharacterAgent : LivingBaseAgent
         ActualCharacter.State.AddStatus(new InvincibleState(), ActualCharacter.TimeInvincible);
 
         // 初始化背包及其UI
-        uiInventory = GameObject.Find("UI_Inventory").GetComponent<UI_Inventory>();
+        uiInventory = GameObject.Find("UI_Inventory").GetComponent<UIInventory>();
         inventory = new Inventory();
         inventory.AddItem(new HealthPotion { Amount = 3 });
         inventory.AddItem(new StrengthPotion { Amount = 4 });
@@ -86,7 +87,7 @@ public class CharacterAgent : LivingBaseAgent
         uiInventory.SetInventory(inventory);
 
 
-        uiWeaponColumn = GameObject.Find("UI_Weapons").GetComponent<UI_Inventory>();
+        uiWeaponColumn = GameObject.Find("UI_Weapons").GetComponent<UIInventory>();
         weaponColumn = new Inventory();
         weaponColumn.AddItem(new Sword { Amount = 1 });
         weaponColumn.AddItem(new Gun { Amount = 1 });
@@ -137,6 +138,7 @@ public class CharacterAgent : LivingBaseAgent
         deltaTime += Time.deltaTime;
 
         dashBar = Mathf.Clamp(dashBar + 1, 0, 901);
+        UIDashBar.instance.SetValue((float)dashBar / 901f);
         if (dashBar % 300 == 0)
         {
             Debug.Log("老子dash回复了一次");
@@ -146,10 +148,8 @@ public class CharacterAgent : LivingBaseAgent
 
     private void FixedUpdate()
     {
-        Vector2 position = rigidbody2d.position;
-        position.x += ActualCharacter.MoveSpeed * horizontal * Time.deltaTime;
-        position.y += ActualCharacter.MoveSpeed * vertical * Time.deltaTime;
-        rigidbody2d.MovePosition(position);
+        rigidbody2d.velocity = new Vector2(horizontal, vertical) * ActualCharacter.MoveSpeed;
+        //rigidbody2d.AddForce(new Vector2(horizontal, vertical) * ActualCharacter.MoveSpeed);
 
         Dash();
     }
@@ -158,7 +158,7 @@ public class CharacterAgent : LivingBaseAgent
     {
         try
         {
-            WeaponPrefab = transform.GetChild(0).gameObject;
+            WeaponPrefab = transform.GetComponentInChildren<WeaponAgent>().gameObject;
         }
         catch (System.Exception)
         {
@@ -244,6 +244,8 @@ public class CharacterAgent : LivingBaseAgent
 
             rigidbody2d.MovePosition(dashPosition);
             dashBar -= 300;
+            UIDashBar.instance.SetValue((float)dashBar / 901f);
+
             isDashBottonDown = false;
 
             SetState(0);

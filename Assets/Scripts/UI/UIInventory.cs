@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UI_Inventory : MonoBehaviour
+public class UIInventory : MonoBehaviour
 {
     private Inventory inventory;
     public Transform itemSlotContainer;

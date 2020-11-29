@@ -5,69 +5,178 @@ using Random = UnityEngine.Random;
 /// <summary>
 /// 技能抽象类，增加新技能时继承此抽象类，实现Perform方法
 /// </summary>
-abstract public class Skill
+abstract public class Skill : ICloneable
 {
-    protected float Timer;
-    protected MonsterAgent agent;
-    protected LivingBaseAgent target;
+    protected float CD;
+    protected float CDTimer;
+    protected float performTimer;
+    protected bool skillStartFlag;
 
+    protected float beforePerformTime;
+    protected float afterPerformTime;
+
+    protected Vector3 performDirection;
+    protected int nowPerformStage;
+    protected List<Func<MonsterAgent, bool>> performStage = new List<Func<MonsterAgent, bool>>();
     public virtual void Init(MonsterAgent agent)
     {
-        this.Timer = 0;
-        this.agent = agent;
+        CD = agent.ActualMonster.AttackSpeed;
+        CDTimer = 0;
+        performTimer = 0;
+        skillStartFlag = false;
+
+        beforePerformTime = CD / agent.ActualMonster.Agility;
+        afterPerformTime = CD / agent.ActualMonster.Agility;
+
+        performStage.Add(BeforePerform);
+        performStage.Add(DuringPerform);
+        performStage.Add(AfterPerform);
     }
-    public abstract bool Perform();
+    public bool Perform(MonsterAgent agent)
+    {
+        try
+        {
+            if (agent != null)
+            {
+                CDTimer += Time.deltaTime;
+                if (CDTimer >= CD)
+                    return PerformSkill(agent);
+            }
+        }
+        catch (MissingReferenceException ex)
+        {
+            Debug.Log(ex);
+        }
+        catch (NullReferenceException ex)
+        {
+            Debug.Log(ex);
+        }
+        return true;
+    }
+
+    public void EndSkill(MonsterAgent agent)
+    {
+        EndPerform(agent);
+    }
+    protected bool PerformSkill(MonsterAgent agent)
+    {
+        if (agent == null)
+            return true;
+        if (!skillStartFlag)
+            if (!InitPerform(agent))
+            {
+                EndPerform(agent);
+                return false;
+            }
+        if (performStage[nowPerformStage].Invoke(agent))
+            nowPerformStage++;
+        if (nowPerformStage == 3)
+        {
+            EndPerform(agent);
+            return true;
+        }
+        return false;
+    }
+    protected virtual bool InitPerform(MonsterAgent agent)
+    {
+        skillStartFlag = true;
+        if (agent.target == null)
+            return false;
+        else
+        {
+            performDirection = (agent.target.GetCentralPosition() - agent.GetCentralPosition()).normalized;
+            return true;
+        }
+    }
+    protected virtual bool BeforePerform(MonsterAgent agent)
+    {
+        performTimer += Time.deltaTime;
+        agent.rigidbody2d.velocity = Vector3.zero;
+        if (performTimer > beforePerformTime)
+        {
+            performTimer = 0;
+            return true;
+        }
+        else
+            return false;
+    }
+    protected virtual bool DuringPerform(MonsterAgent agent) { return true; }
+    protected virtual bool AfterPerform(MonsterAgent agent)
+    {
+        performTimer += Time.deltaTime;
+        agent.rigidbody2d.velocity = Vector3.zero;
+        if (performTimer > afterPerformTime)
+        {
+            performTimer = 0;
+            return true;
+        }
+        else
+            return false;
+    }
+    protected virtual void EndPerform(MonsterAgent agent)
+    {
+        skillStartFlag = false;
+        nowPerformStage = 0;
+        CDTimer = 0;
+    }
+
+    public object Clone()
+    {
+        Skill skill = MemberwiseClone() as Skill;
+        skill.performStage = new List<Func<MonsterAgent, bool>>();
+        return skill;
+    }
 }
 
 abstract public class AttackSkill : Skill
 {
+    protected override bool InitPerform(MonsterAgent agent)
+    {
+        skillStartFlag = true;
+        if (agent.target == null)
+            return false;
+        else
+        {
+            float distance = Vector3.Distance(agent.GetCentralPosition(), agent.target.GetCentralPosition());
+            if (distance > agent.ActualMonster.AttackRadius)
+                return false;
+            else
+            {
+                performDirection = (agent.target.GetCentralPosition() - agent.GetCentralPosition()).normalized;
+                return true;
+            }
+        }
+    }
+    protected override bool DuringPerform(MonsterAgent agent) => DuringPerform(agent, null);
+    protected bool DuringPerform(MonsterAgent agent, Action<LivingBaseAgent> extraEffect)
+    {
+        AttackAt(performDirection, extraEffect, agent);
+        performTimer = 0;
+        return true;
+    }
     /// <summary>
     /// 向指定方向攻击
     /// </summary>
     /// <param name="attackDirection">攻击方向</param>
     /// <param name="extraEffect">攻击附带的额外效果（lambda）</param>
-    public abstract bool AttackAt(Vector3 attackDirection, Action<LivingBaseAgent> extraEffect);
+    /// <param name="agent"></param>
+    public abstract bool AttackAt(Vector3 attackDirection, Action<LivingBaseAgent> extraEffect, MonsterAgent agent);
 }
 /// <summary>
 /// 远程武器攻击
 /// </summary>
 public class MissleAttackSkill : AttackSkill
 {
-    public override bool Perform()
+    public override bool AttackAt(Vector3 attackDirection, Action<LivingBaseAgent> extraEffect, MonsterAgent agent)
     {
-        Timer += Time.deltaTime;
-        target = agent.target;
-        if (target == null)
-            return true;
-        agent.MoveTo(target.transform.position);
-        return Attack();
-    }
-
-    protected bool Attack(Action<LivingBaseAgent> extraEffect)
-    {
-        float distance = Vector3.Distance(agent.transform.position, target.transform.position);
-        if (distance <= agent.ActualMonster.AttackRadius)
-        {
-            if (agent.living.AttackSpeed < Timer)
-            {
-                Vector3 attackDirection = agent.GetAttackDirection();
-                AttackAt(attackDirection, extraEffect);
-                Timer = 0;
-                return true;
-            }
-        }
-        return false;
-    }
-    public override bool AttackAt(Vector3 attackDirection, Action<LivingBaseAgent> extraEffect)
-    {
-        GameObject projectileObject = GameObject.Instantiate(agent.bulletPrefab, agent.transform.position + attackDirection * agent.GetComponent<BoxCollider2D>().size.x, Quaternion.identity);
+        GameObject projectileObject = GameObject.Instantiate(agent.bulletPrefab, agent.GetCentralPosition(), Quaternion.identity);
         Bullet bullet = projectileObject.GetComponent<Bullet>();
         bullet.SetBullet(agent, agent.actualLiving.AttackAmount, extraEffect);
         bullet.Shoot(attackDirection, agent.ActualMonster.BulletSpeed);
         return true;
     }
 
-    protected virtual bool Attack() => Attack(null);
+    protected override bool DuringPerform(MonsterAgent agent) => DuringPerform(agent, null);
 }
 
 
@@ -77,47 +186,21 @@ public class MissleAttackSkill : AttackSkill
 /// </summary>
 public class MeleeAttackSkill : AttackSkill
 {
-    public override bool Perform()
-    {
-        Timer += Time.deltaTime;
-        target = agent.target;
-        if (target == null)
-            return true;
-        agent.MoveTo(target.transform.position);
-        return Attack();
-    }
-    protected bool Attack(Action<LivingBaseAgent> extraEffect)
-    {
-        float distance = Vector3.Distance(agent.transform.position, target.transform.position);
-        if (distance <= agent.ActualMonster.AttackRadius)
-        {
-            if (agent.living.AttackSpeed < Timer)
-            {
-                Vector3 attackDirection = agent.GetAttackDirection();
-                AttackAt(attackDirection, extraEffect);
-                Timer = 0;
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public override bool AttackAt(Vector3 attackDirection, Action<LivingBaseAgent> extraEffect)
+    public override bool AttackAt(Vector3 attackDirection, Action<LivingBaseAgent> extraEffect, MonsterAgent agent)
     {
         bool attackFlag = false;
-        IEnumerable<GameObject> targetObjects = agent.GetAttackRangeObjects(agent.transform.position, attackDirection, agent.ActualMonster.AttackRadius, agent.ActualMonster.AttackAngle, "Player");
+        IEnumerable<GameObject> targetObjects = agent.GetAttackRangeObjects(agent.GetCentralPosition(), attackDirection, agent.ActualMonster.AttackRadius, agent.ActualMonster.AttackAngle, "Player");
         foreach (var targetObject in targetObjects)
         {
             LivingBaseAgent targetAgent = targetObject.GetComponent<LivingBaseAgent>();
             targetAgent.ChangeHealth(-agent.ActualMonster.AttackAmount);
-            extraEffect?.Invoke(target);
+            extraEffect?.Invoke(targetAgent);
             attackFlag = true;
         }
         return attackFlag;
-        
     }
 
-    protected virtual bool Attack() => Attack(null);
+    protected override bool DuringPerform(MonsterAgent agent) => DuringPerform(agent, null);
 }
 
 /// <summary>
@@ -126,10 +209,7 @@ public class MeleeAttackSkill : AttackSkill
 public class MeleeSlowAttackSkill : MeleeAttackSkill
 {
 
-    protected override bool Attack()
-    {
-        return base.Attack(target => target.actualLiving.State.AddStatus(new SlowState(), 2));
-    }
+    protected override bool DuringPerform(MonsterAgent agent) => DuringPerform(agent, target => target.actualLiving.State.AddStatus(new SlowState(), 2));
 }
 
 
@@ -139,13 +219,20 @@ public class MeleeSlowAttackSkill : MeleeAttackSkill
 public class SplitSkill : Skill
 {
     public int splitNum = 3;
-    public override bool Perform()
+
+    public override void Init(MonsterAgent agent)
+    {
+        base.Init(agent);
+        beforePerformTime = 0;
+        afterPerformTime = 0;
+    }
+    protected override bool DuringPerform(MonsterAgent agent)
     {
         GameObject prefab = Global.GetPrefab($"微{agent.living.Name}");
         for (int i = 0; i < splitNum; i++)
         {
             Vector3 randomOffset = new Vector3(Random.Range(0, 1.0f), Random.Range(0, 1.0f));
-            GameObject.Instantiate(prefab, agent.transform.position + randomOffset, Quaternion.identity);
+            GameObject.Instantiate(prefab, agent.GetCentralPosition() + randomOffset, Quaternion.identity);
         }
         return true;
     }
@@ -159,7 +246,7 @@ public class FierceSkill : Skill
         base.Init(agent);
         bloodLine = agent.ActualMonster.BloodLine;
     }
-    public override bool Perform()
+    protected override bool DuringPerform(MonsterAgent agent)
     {
         if (agent.ActualMonster.CurrentHealth * 1.0f / agent.ActualMonster.MaxHealth <= bloodLine)
         {
@@ -181,9 +268,15 @@ public class LaserSkill : Skill
         lasers = boss.GetLasers();
     }
 
-    public override bool Perform()
+    protected override bool DuringPerform(MonsterAgent agent)
     {
         return lasers.AutoPerform();
+    }
+
+    protected override void EndPerform(MonsterAgent agent)
+    {
+        base.EndPerform(agent);
+        lasers.EndLasers();
     }
 }
 
@@ -198,7 +291,7 @@ public class BarrageSkill : Skill
         barrage = boss.GetBarrage();
     }
 
-    public override bool Perform()
+    protected override bool DuringPerform(MonsterAgent agent)
     {
         return barrage.Perform();
     }
@@ -206,108 +299,92 @@ public class BarrageSkill : Skill
 
 public class ObstacleSkill : Skill
 {
-    public override bool Perform()
+    private float randomTime;
+    private Vector3 obstaclePosition;
+    public override void Init(MonsterAgent agent)
     {
-        target = agent.target;
-        Vector3 randomOffset = new Vector3(Random.Range(-2.0f, 2.0f), Random.Range(-2.0f, 2.0f));
-        GameObject.Instantiate(agent.bulletPrefab, target.transform.position + randomOffset, Quaternion.identity);
+        base.Init(agent);
+        randomTime = Random.Range(0, 1.0f);
+        beforePerformTime += randomTime;
+    }
+
+    protected override bool InitPerform(MonsterAgent agent)
+    {
+        skillStartFlag = true;
+        if (agent.target == null)
+            return false;
+        else
+        {
+            obstaclePosition = agent.target.GetCentralPosition();
+            return true;
+        }
+    }
+    protected override bool DuringPerform(MonsterAgent agent)
+    {
+        Vector3 randomOffset = new Vector3(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f));
+        GameObject.Instantiate(agent.bulletPrefab, obstaclePosition + randomOffset, Quaternion.identity);
+        performTimer = 0;
         return true;
     }
 }
 
 public class MissleBleedAttackSkill : MissleAttackSkill
 {
-    protected override bool Attack()
+    protected override bool DuringPerform(MonsterAgent agent)
     {
-        return base.Attack(agent => agent.actualLiving.State.AddStatus(new BleedState(), 2));
+        return DuringPerform(agent, target => target.actualLiving.State.AddStatus(new BleedState(), 2));
     }
 }
 public class MeleeChargeAttackSkill : MeleeAttackSkill
 {
-    private bool chargeStartFlag;
-    private Vector3 chargeDirection;
     private float chargeTime = 1;
-    private float chargeTimer;
     private int speedTimes = 3;
-    private bool attackFlag;
     private float beatDistance = 3;
+    private bool attackFlag;
     public override void Init(MonsterAgent agent)
     {
         base.Init(agent);
-        chargeStartFlag = false;
-        chargeTimer = 0;
         attackFlag = false;
     }
-    public override bool Perform()
+
+    protected override bool InitPerform(MonsterAgent agent)
     {
-        Timer += Time.deltaTime;
-        target = agent.target;
-        if (target == null)
+        bool flag = base.InitPerform(agent);
+        agent.actualLiving.MoveSpeed = agent.living.MoveSpeed * speedTimes;
+        agent.actualLiving.AttackRadius = 1.5f;
+        return flag;
+    }
+    protected override bool DuringPerform(MonsterAgent agent)
+    {
+        performTimer += Time.deltaTime;
+        agent.MoveTowards(performDirection);
+        if (!attackFlag)
+            if (AttackAt(performDirection, BeatBack, agent))
+                attackFlag = true;
+        if (chargeTime < performTimer)
             return true;
-        agent.MoveTo(target.transform.position);
-        if (agent.ActualMonster.AttackSpeed < Timer)
-        {
-            startChargeAttack();
-            if (Charge())
-            {
-                EndChargeAttack();
-                return true;
-            }
-        }
-        return false;
+        else
+            return false;
     }
-    public void startChargeAttack()
+
+    protected override void EndPerform(MonsterAgent agent)
     {
-        if (!chargeStartFlag)
-        {
-            chargeStartFlag = true;
-            chargeDirection = agent.GetAttackDirection();
-            agent.actualLiving.MoveSpeed = agent.living.MoveSpeed * speedTimes;
-            agent.actualLiving.AttackRadius = 1.5f;
-        }
-    }
-    
-    public void EndChargeAttack()
-    {
-        Timer = 0;
-        chargeTimer = 0;
-        chargeStartFlag = false;
+        base.EndPerform(agent);
         attackFlag = false;
         agent.actualLiving.MoveSpeed = agent.living.MoveSpeed;
         agent.actualLiving.AttackRadius = agent.living.AttackRadius;
     }
 
-    public bool Charge()
-    {
-        chargeTimer += Time.deltaTime;
-        agent.MoveTowards(chargeDirection);
-        if (!attackFlag)
-        {
-            if (AttackAt(chargeDirection, BeatBack))
-            {
-                attackFlag = true;
-            }
-        }
-        if (chargeTime < chargeTimer)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-
     public void BeatBack(LivingBaseAgent target)
     {
-        Vector3 beatPosition = target.transform.position + chargeDirection * beatDistance;
-        RaycastHit2D dashHit = Physics2D.Raycast(target.rigidbody2d.position, chargeDirection, beatDistance, LayerMask.GetMask("Obstacle"));
+        Vector3 beatPosition = target.GetCentralPosition() + performDirection * beatDistance;
+        RaycastHit2D dashHit = Physics2D.Raycast(target.rigidbody2d.position, performDirection, beatDistance, LayerMask.GetMask("Obstacle"));
         if (dashHit.collider != null)
         {
             beatPosition = dashHit.point;
         }
-        //target.rigidbody2d.MovePosition(new Vector2(beatPosition.x, beatPosition.y));
-        target.transform.position = beatPosition;
+        target.rigidbody2d.MovePosition(new Vector2(beatPosition.x, beatPosition.y));
+        //target.transform.position = beatposition;
     }
 }
 
