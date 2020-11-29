@@ -318,7 +318,7 @@ public class Gun : Weapon
 {
     public Gun()
     {
-        handleOffset = new Vector3 (0.35f, -0.3f, 0f);
+        handleOffset = new Vector3 (0.5f, 0.3f, 0f);
         AttackSpeed = 0.2f;
         AttackRadius = 20;
         AttackAmount = 10;

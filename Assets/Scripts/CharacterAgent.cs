@@ -148,6 +148,7 @@ public class CharacterAgent : LivingBaseAgent
     private void FixedUpdate()
     {
         rigidbody2d.velocity = new Vector2(horizontal, vertical) * ActualCharacter.MoveSpeed;
+        //rigidbody2d.AddForce(new Vector2(horizontal, vertical) * ActualCharacter.MoveSpeed);
 
         Dash();
     }
@@ -445,6 +446,9 @@ public class CharacterAgent : LivingBaseAgent
             //audioSource.PlayOneShot(getHealingClip);
 
             actualLiving.CurrentHealth = (int)Mathf.Clamp(actualLiving.CurrentHealth + amount, 0, actualLiving.MaxHealth);
+            UIHealthBar.instance.SetValue(actualLiving.CurrentHealth / (float)actualLiving.MaxHealth);
+
+
         }
     }
 }
