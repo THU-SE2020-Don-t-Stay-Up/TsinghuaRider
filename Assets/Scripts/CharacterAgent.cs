@@ -71,6 +71,7 @@ public class CharacterAgent : LivingBaseAgent
         print(Character.Name);
 
         rigidbody2d = GetComponent<Rigidbody2D>();
+        collider2d = GetComponent<Collider2D>();
         Animator = GetComponent<Animator>();
         AudioSource = GetComponent<AudioSource>();
 
@@ -146,11 +147,6 @@ public class CharacterAgent : LivingBaseAgent
 
     private void FixedUpdate()
     {
-        //Vector2 position = rigidbody2d.position;
-        //position.x += ActualCharacter.MoveSpeed * horizontal * Time.deltaTime;
-        //position.y += ActualCharacter.MoveSpeed * vertical * Time.deltaTime;
-        //rigidbody2d.MovePosition(position);
-
         rigidbody2d.velocity = new Vector2(horizontal, vertical) * ActualCharacter.MoveSpeed;
         //rigidbody2d.AddForce(new Vector2(horizontal, vertical) * ActualCharacter.MoveSpeed);
 
@@ -161,7 +157,7 @@ public class CharacterAgent : LivingBaseAgent
     {
         try
         {
-            WeaponPrefab = transform.GetChild(0).gameObject;
+            WeaponPrefab = transform.GetComponentInChildren<WeaponAgent>().gameObject;
         }
         catch (System.Exception)
         {

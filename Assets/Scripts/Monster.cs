@@ -3,12 +3,17 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 /// <summary>
 /// 怪物属性类，继承自LivingBase，存储角色所有基本属性
 /// </summary>
 public class Monster : LivingBase, ICloneable
 {
+    /// <summary>
+    /// 敏捷性，决定前后摇时间长短
+    /// </summary>
+    public float Agility { get; set; }
     /// <summary>
     /// 视野角度
     /// </summary>
@@ -40,7 +45,11 @@ public class Monster : LivingBase, ICloneable
     public AttackSkill AttackSkill => Skills[0] as AttackSkill;
     public object Clone()
     {
-        return MemberwiseClone();
+        Monster monster =  MemberwiseClone() as Monster;
+        List<Skill> newSkills = new List<Skill>();
+        monster.Skills = monster.Skills.Select(skill => skill.Clone() as Skill).ToList();
+        monster.SkillOrder = monster.SkillOrder.Select(skill => skill = skill.Clone() as Skill).ToList();
+        return monster;
     }
 
     /// <summary>
