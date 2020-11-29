@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class Bullet : MonoBehaviour, IInteract
 {
@@ -13,17 +14,20 @@ public class Bullet : MonoBehaviour, IInteract
 
     public string UserTag { get; set; }
 
+    public Action<LivingBaseAgent> ExtraEffect { get; set; }
+
     private void Awake()
     {
         rigidbody2d = GetComponent<Rigidbody2D>();
         aimTransform = transform;
     }
 
-    public void SetBullet(CharacterAgent user, Weapon weapon)
+    public void SetBullet(LivingBaseAgent user, float attackAmount, Action<LivingBaseAgent> extraEffect)
     {
         StartPoint = user.transform.position;
-        Damage = user.ActualCharacter.AttackAmount * weapon.AttackAmount;
         UserTag = user.tag;
+        Damage = attackAmount;
+        ExtraEffect = extraEffect;
     }
     private void HandleAiming(Vector3 shootDir)
     {
@@ -39,12 +43,13 @@ public class Bullet : MonoBehaviour, IInteract
 
     public void InteractWith(GameObject gameObject)
     {
-        LivingBaseAgent living = gameObject.GetComponent<LivingBaseAgent>();
-        if (living != null)
+        LivingBaseAgent agent = gameObject.GetComponent<LivingBaseAgent>();
+        if (agent != null)
         {
             if (!gameObject.CompareTag(UserTag))
             {
-                living.ChangeHealth(-Damage);
+                agent.ChangeHealth(-Damage);
+                ExtraEffect?.Invoke(agent);
                 Destroy(this.gameObject);
             }
         }

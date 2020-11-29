@@ -33,18 +33,6 @@ abstract public class StateBase
     }
 }
 
-public class NormalState : StateBase
-{
-    public override void Effect(LivingBaseAgent agent)
-    {
-        //Debug.Log("我很正常");
-    }
-
-    public override void Resume(LivingBaseAgent agent)
-    {
-    }
-}
-
 public class SlowState : StateBase
 {
     public override void Effect(LivingBaseAgent agent)
@@ -100,6 +88,25 @@ public class SpeedUpState : StateBase
     {
         agent.actualLiving.MoveSpeed = agent.actualLiving.MoveSpeed;
         agent.actualLiving.AttackRadius = agent.living.AttackRadius;
+    }
+}
+
+public class BleedState: StateBase
+{
+    private float Timer = 0;
+    private float DamagePerSecond = 3.0f;
+    public override void Effect(LivingBaseAgent agent)
+    {
+        Timer += Time.deltaTime;
+        if (Timer >= 1.0f)
+        {
+            agent.ChangeHealth(-DamagePerSecond);
+            Timer = 0;
+        }
+    }
+
+    public override void Resume(LivingBaseAgent agent)
+    {
     }
 }
 /// <summary>
