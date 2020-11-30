@@ -17,7 +17,7 @@ abstract public class Skill : ICloneable
 
     protected Vector3 performDirection;
     protected int nowPerformStage;
-    protected List<Func<MonsterAgent, bool>> performStage = new List<Func<MonsterAgent, bool>>();
+    protected List<Func<MonsterAgent, bool>> performStage;
     public virtual void Init(MonsterAgent agent)
     {
         CD = agent.ActualMonster.AttackSpeed;
@@ -28,9 +28,13 @@ abstract public class Skill : ICloneable
         beforePerformTime = CD / agent.ActualMonster.Agility;
         afterPerformTime = CD / agent.ActualMonster.Agility;
 
-        performStage.Add(BeforePerform);
-        performStage.Add(DuringPerform);
-        performStage.Add(AfterPerform);
+        nowPerformStage = 0;
+        performStage = new List<Func<MonsterAgent, bool>>
+        {
+            BeforePerform,
+            DuringPerform,
+            AfterPerform
+        };
     }
     public bool Perform(MonsterAgent agent)
     {
@@ -41,8 +45,8 @@ abstract public class Skill : ICloneable
                 CDTimer += Time.deltaTime;
                 if (CDTimer >= CD)
                     return PerformSkill(agent);
+                }
             }
-        }
         catch (MissingReferenceException ex)
         {
             Debug.Log(ex);
@@ -70,7 +74,7 @@ abstract public class Skill : ICloneable
             }
         if (performStage[nowPerformStage].Invoke(agent))
             nowPerformStage++;
-        if (nowPerformStage == 3)
+        if (nowPerformStage == performStage.Count)
         {
             EndPerform(agent);
             return true;
@@ -123,7 +127,6 @@ abstract public class Skill : ICloneable
     public object Clone()
     {
         Skill skill = MemberwiseClone() as Skill;
-        skill.performStage = new List<Func<MonsterAgent, bool>>();
         return skill;
     }
 }
@@ -222,9 +225,21 @@ public class SplitSkill : Skill
 
     public override void Init(MonsterAgent agent)
     {
-        base.Init(agent);
-        beforePerformTime = 0;
-        afterPerformTime = 0;
+        CD = 0;
+        CDTimer = 0;
+        performTimer = 0;
+        nowPerformStage = 0;
+        skillStartFlag = false;
+        performStage = new List<Func<MonsterAgent, bool>>
+        {
+            DuringPerform,
+        };
+        Debug.Log($"{GetType()} {performStage.Count}");
+    }
+    protected override bool InitPerform(MonsterAgent agent)
+    {
+        skillStartFlag = true;
+        return true;
     }
     protected override bool DuringPerform(MonsterAgent agent)
     {
@@ -304,8 +319,8 @@ public class ObstacleSkill : Skill
     public override void Init(MonsterAgent agent)
     {
         base.Init(agent);
-        randomTime = Random.Range(0, 1.0f);
-        beforePerformTime += randomTime;
+        randomTime = Random.Range(0, 0.3f);
+        beforePerformTime = randomTime;
     }
 
     protected override bool InitPerform(MonsterAgent agent)
@@ -321,8 +336,7 @@ public class ObstacleSkill : Skill
     }
     protected override bool DuringPerform(MonsterAgent agent)
     {
-        Vector3 randomOffset = new Vector3(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f));
-        GameObject.Instantiate(agent.bulletPrefab, obstaclePosition + randomOffset, Quaternion.identity);
+        GameObject.Instantiate(agent.bulletPrefab, obstaclePosition, Quaternion.identity);
         performTimer = 0;
         return true;
     }
@@ -332,7 +346,7 @@ public class MissleBleedAttackSkill : MissleAttackSkill
 {
     protected override bool DuringPerform(MonsterAgent agent)
     {
-        return DuringPerform(agent, target => target.actualLiving.State.AddStatus(new BleedState(), 2));
+        return DuringPerform(agent, target => target.actualLiving.State.AddStatus(new BleedState(), 10));
     }
 }
 public class MeleeChargeAttackSkill : MeleeAttackSkill

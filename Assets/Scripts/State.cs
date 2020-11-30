@@ -94,7 +94,7 @@ public class SpeedUpState : StateBase
 public class BleedState: StateBase
 {
     private float Timer = 0;
-    private float DamagePerSecond = 3.0f;
+    private float DamagePerSecond = 1.0f;
     public override void Effect(LivingBaseAgent agent)
     {
         Timer += Time.deltaTime;
