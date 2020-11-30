@@ -62,10 +62,9 @@ public class FierceState : StateBase
 {
     public override void Effect(LivingBaseAgent agent)
     {
-        Debug.Log("fierce");
-        agent.actualLiving.MoveSpeed = agent.living.MoveSpeed * 1.2f;
+        agent.actualLiving.MoveSpeed = agent.living.MoveSpeed * 1.5f;
         agent.actualLiving.AttackAmount = agent.living.AttackAmount * 2;
-        agent.actualLiving.AttackSpeed = agent.living.AttackSpeed * 1.2f;
+        agent.actualLiving.AttackSpeed = agent.living.AttackSpeed * 2f;
     }
 
     public override void Resume(LivingBaseAgent agent)
@@ -109,6 +108,7 @@ public class BleedState: StateBase
     {
     }
 }
+
 /// <summary>
 /// 状态类，存储并操作object的状态
 /// </summary>
