@@ -123,6 +123,8 @@ public class Medkit : Item
 }
 //修改了Weapon中的部分内容；试图整合了原来Item与ItemAsset中的内容
 
+
+
 class ItemsJsonConverter : JsonConverter<List<Item>>
 {
     public override List<Item> ReadJson(JsonReader reader, Type objectType, List<Item> existingValue, bool hasExistingValue, JsonSerializer serializer)
