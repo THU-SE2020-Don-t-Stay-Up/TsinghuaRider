@@ -37,8 +37,10 @@ public class CharacterAgent : LivingBaseAgent
     /// </summary>
     private Inventory inventory;
     private Inventory weaponColumn;
+    private Inventory buffColumn;
     private UIInventory uiInventory;
     private UIInventory uiWeaponColumn;
+    private UIInventory uiBuffColumn;
 
     // movement
     float horizontal;
@@ -92,6 +94,11 @@ public class CharacterAgent : LivingBaseAgent
         weaponColumn.AddItem(new Sword { Amount = 1 });
         weaponColumn.AddItem(new Gun { Amount = 1 });
         uiWeaponColumn.SetInventory(weaponColumn);
+
+        uiBuffColumn = GameObject.Find("UI_Buffs").GetComponent<UIInventory>();
+        buffColumn = new Inventory();
+        uiBuffColumn.SetInventory(buffColumn);
+
 
         UpdateWeaponPrefab();
     }
@@ -394,6 +401,11 @@ public class CharacterAgent : LivingBaseAgent
     public void InventoryAddItem(Item item)
     {
         inventory.AddItem(item);
+    }
+
+    public void BuffColumnAddItem(Item item)
+    {
+        buffColumn.AddItem(item);
     }
 
     public void MeleeAttack()
