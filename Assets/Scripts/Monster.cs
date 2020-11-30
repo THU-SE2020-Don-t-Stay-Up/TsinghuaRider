@@ -48,7 +48,7 @@ public class Monster : LivingBase, ICloneable
         Monster monster =  MemberwiseClone() as Monster;
         List<Skill> newSkills = new List<Skill>();
         monster.Skills = monster.Skills.Select(skill => skill.Clone() as Skill).ToList();
-        monster.SkillOrder = monster.SkillOrder.Select(skill => skill = skill.Clone() as Skill).ToList();
+        monster.SkillOrder = monster.SkillOrder.Select(skill => skill.Clone() as Skill).ToList();
         return monster;
     }
 
