@@ -36,6 +36,7 @@ public class MonsterAgent : LivingBaseAgent
     protected Vector3 roamingDirection;
     protected Vector3 movingDirection;
     protected int SkillIndex { get; set; }
+    protected bool SkillFinishedFlag { get; set; }
 
     //public GameObject Prefab;
     // Start is called before the first frame update
@@ -73,6 +74,7 @@ public class MonsterAgent : LivingBaseAgent
                 Roaming();
                 break;
             case ActionState.Chasing:
+                SkillFinishedFlag = ActualMonster.SkillOrder[SkillIndex].Perform();
                 if (target != null && (target.transform.position - transform.position).magnitude <= Monster.ViewRadius)
                 {
                     SetMovingDirection(target.transform.position);
@@ -80,12 +82,19 @@ public class MonsterAgent : LivingBaseAgent
                 }
                 else
                 {
-                    actionState = ActionState.Restarting;
-                    ActualMonster.SkillOrder[SkillIndex].EndSkill(this);
-                    SkillIndex = 0;
+                    if (SkillFinishedFlag)
+                    {
+                        actionState = ActionState.Restarting;
+                        //ActualMonster.SkillOrder[SkillIndex].EndSkill();
+                        SkillIndex = 0;
+                    }
                 }
-                if (ActualMonster.SkillOrder[SkillIndex].Perform(this))
+                if (SkillFinishedFlag)
+                {
+                    SkillFinishedFlag = false;
                     SkillIndex = (SkillIndex + 1) % ActualMonster.SkillOrder.Count;
+                }
+
                 break;
             case ActionState.Restarting:
                 Restart();
@@ -119,7 +128,7 @@ public class MonsterAgent : LivingBaseAgent
         if (roamingTime < roamingTimer)
         {
             Vector3 direction = (position - transform.position).normalized;
-            Vector3 moveDirection = (position - transform.position - direction * actualLiving.AttackRadius).normalized;
+            Vector3 moveDirection = (position - transform.position - direction * actualLiving.AttackRadius * 2 / 3).normalized;
             movingDirection = (moveDirection + roamingDirection).normalized;
         }
     }
@@ -155,7 +164,9 @@ public class MonsterAgent : LivingBaseAgent
         SetMovingDirection(startPosition);
         rigidbody2d.velocity = movingDirection * actualLiving.MoveSpeed;
         if (HasArrived(startPosition))
+        {
             actionState = ActionState.Roaming;
+        }
     }
 
     protected void FindTarget()
@@ -180,9 +191,13 @@ public class MonsterAgent : LivingBaseAgent
     protected bool HasArrived(Vector3 position)
     {
         if (Vector3.Distance(transform.position, position) < actualLiving.AttackRadius)
+        {
             return true;
+        }
         else
+        {
             return false;
+        }
     }
 
     public void OnTriggerEnter2D(Collider2D collision)
@@ -199,7 +214,7 @@ public class MonsterAgent : LivingBaseAgent
         Skill splitSkill = ActualMonster.Skills.FirstOrDefault(e => e is SplitSkill);
         if (splitSkill != null)
         {
-            splitSkill.Perform(this);
+            splitSkill.Perform();
         }
         else
         {

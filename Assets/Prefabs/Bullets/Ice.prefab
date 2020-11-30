@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1975860453013616587}
   - component: {fileID: 1360636370836200705}
   - component: {fileID: 3619940036381603691}
+  - component: {fileID: 7408734962258740135}
   m_Layer: 14
   m_Name: Ice
   m_TagString: Untagged
@@ -51,7 +52,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 3.6, y: 3.5}
+    oldSize: {x: 4.97, y: 4.97}
     newSize: {x: 20, y: 20}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -59,18 +60,24 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -1.7, y: -1.7}
+    - - {x: 0, y: -1.9}
+      - {x: -1.35, y: -1.35}
+      - {x: -1.9, y: 0}
+      - {x: -1.35, y: 1.35}
+      - {x: 0, y: 1.9}
+      - {x: 1.35, y: 1.35}
+      - {x: 1.9, y: 0}
+      - {x: 1.35, y: -1.35}
+      - {x: 0, y: -1.9}
       - {x: 0, y: -1.7}
-      - {x: 0, y: -1.3}
-      - {x: -1.3, y: -1.3}
-      - {x: -1.3, y: 1.3}
-      - {x: 1.3, y: 1.3}
-      - {x: 1.3, y: -1.3}
-      - {x: 0.05, y: -1.3}
-      - {x: 0.05, y: -1.7}
-      - {x: 1.7, y: -1.7}
-      - {x: 1.7, y: 1.7}
-      - {x: -1.7, y: 1.7}
+      - {x: 1.25, y: -1.2}
+      - {x: 1.7, y: 0}
+      - {x: 1.25, y: 1.2}
+      - {x: 0, y: 1.7}
+      - {x: -1.25, y: 1.2}
+      - {x: -1.7, y: 0}
+      - {x: -1.25, y: -1.2}
+      - {x: 0, y: -1.7}
 --- !u!50 &1975860453013616587
 Rigidbody2D:
   serializedVersion: 4
@@ -132,7 +139,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 8e875821815565746908c837a054975a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 728d776113e2ef34d878ed5c8c478d70, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -155,3 +162,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7372ed057baa41347ac160c472414814, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!58 &7408734962258740135
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5978245576809750528}
+  m_Enabled: 0
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 1.85

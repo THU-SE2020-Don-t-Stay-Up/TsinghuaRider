@@ -24,7 +24,7 @@ public class LivingBase
     /// <summary>
     /// 攻击力
     /// </summary>
-    public int AttackAmount { get; set; }
+    public float AttackAmount { get; set; }
     public float AttackRadius { get; set; }
     public int AttackAngle { get; set; }
 

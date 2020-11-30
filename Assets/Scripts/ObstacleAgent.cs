@@ -8,7 +8,7 @@ public class ObstacleAgent : MonoBehaviour
     private float PrepareTime { get; set; }
     private float LastTime { get; set; }
     private float deltaTime;
-    private PolygonCollider2D Collider2D { get; set; }
+    private Collider2D Collider2D { get; set; }
     private SpriteRenderer sprite;
     private Color color;
     // Start is called before the first frame update
@@ -18,7 +18,7 @@ public class ObstacleAgent : MonoBehaviour
         LastTime = 3.0f;
         IsTriggered = false;
         sprite = GetComponent<SpriteRenderer>();
-        Collider2D = GetComponent<PolygonCollider2D>();
+        Collider2D = GetComponent<Collider2D>();
         Collider2D.enabled = false;
         deltaTime = 0;
         color = sprite.color;

@@ -76,25 +76,25 @@ abstract public class Item:ICloneable
 
 public class HealthPotion : Item
 {
-    public int Recovery { get; set; } = 2;
+    public float Recovery { get; set; } = 0.1f;
 
     public HealthPotion()
     {
         this.IsStackable = true;
         this.Amount = 1;
     }
-    public override void Use(CharacterAgent character) { character.ChangeHealth(Recovery); }
+    public override void Use(CharacterAgent character) { character.ChangeHealth(Recovery * character.ActualCharacter.MaxHealth); }
 }
 
 public class StrengthPotion : Item
 {
-    public int AdditionalStrength { get; set; } = 4;
+    public float AdditionalStrength { get; set; } = 0.2f;
     public StrengthPotion()
     {
         this.IsStackable = true;
         this.Amount = 1;
     }
-    public override void Use(CharacterAgent character) { character.living.AttackAmount += AdditionalStrength; }
+    public override void Use(CharacterAgent character) { character.ActualCharacter.AttackAmount *= (1 + AdditionalStrength); }
 }
 
 public class Coin : Item
@@ -111,7 +111,7 @@ public class Coin : Item
 
 public class Medkit : Item
 {
-    public int Recovery { get; set; } = 11;
+    public float Recovery { get; set; } = 0.5f;
 
     public Medkit()
     {
@@ -119,7 +119,7 @@ public class Medkit : Item
         this.Amount = 1;
     }
 
-    public override void Use(CharacterAgent character) { character.ChangeHealth(Recovery); }
+    public override void Use(CharacterAgent character) { character.ChangeHealth(Recovery * character.ActualCharacter.MaxHealth); }
 }
 //修改了Weapon中的部分内容；试图整合了原来Item与ItemAsset中的内容
 
