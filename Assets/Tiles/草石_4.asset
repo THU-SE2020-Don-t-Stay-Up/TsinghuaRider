@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: dungeon_tiles_0_127
+  m_Name: "\u8349\u77F3_4"
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 6725750402393700669, guid: e9bd8f90ca0181947bb6b2fb80723617, type: 3}
+  m_Sprite: {fileID: -481340901542717623, guid: 9814565fa48a1b9429720c7a7096b3ad, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
@@ -33,4 +33,4 @@ MonoBehaviour:
     e33: 1
   m_InstancedGameObject: {fileID: 0}
   m_Flags: 1
-  m_ColliderType: 0
+  m_ColliderType: 1
