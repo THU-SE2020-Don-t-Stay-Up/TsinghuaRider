@@ -248,8 +248,9 @@ public class SplitSkill : Skill
 {
     public int splitNum = 3;
 
-    public override void Init(MonsterAgent monster)
+    public override void Init(MonsterAgent agent)
     {
+        this.agent = agent;
         CD = 0;
         CDTimer = 0;
         performTimer = 0;
