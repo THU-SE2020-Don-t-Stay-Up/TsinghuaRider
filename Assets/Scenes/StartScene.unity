@@ -710,6 +710,10 @@ PrefabInstance:
       propertyPath: itemAssets
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 2519955820291700133, guid: 863cb53b4ecf8be42ab56d72403a21db, type: 3}
+      propertyPath: targetScene
+      value: DungeonScene2
+      objectReference: {fileID: 0}
     - target: {fileID: 4132375463806858954, guid: 863cb53b4ecf8be42ab56d72403a21db, type: 3}
       propertyPath: m_Name
       value: "\u5730\u56FE"
