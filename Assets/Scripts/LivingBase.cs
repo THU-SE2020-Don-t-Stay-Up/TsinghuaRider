@@ -107,7 +107,10 @@ public class LivingBaseAgent : MonoBehaviour
         }
         // UI change
     }
-
+    public void RestoreHealth()
+    {
+        ChangeHealth(actualLiving.MaxHealth);
+    }
     /// <summary>
     /// 检查状态，若持续时间为零则移除该状态，每帧调用
     /// </summary>

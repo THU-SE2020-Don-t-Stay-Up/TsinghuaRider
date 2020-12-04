@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Cryptography;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class RoomGenerator : MonoBehaviour
 {
@@ -16,18 +16,34 @@ public class RoomGenerator : MonoBehaviour
     public float xOffset;
     public float yOffset;
 
+    [Header("传送规则")]
+    public GameObject teleporterPrefab;
+    public string targetScene;
+
     Transform generatorPoint;
     enum Direction { up, down, left, right };
     Direction direction;
     List<Room> roomList = new List<Room>();
+    bool stageClear = false;
+    bool teleporterCreated = false;
 
-    void Start()
+    private void Update()
     {
-        SceneManager.sceneUnloaded += OnSceneUnloaded;
-        SetupPlayer();
+        if (roomList.Count != 0)
+        {
+            if (roomList.Last().stageClear)
+            {
+                stageClear = true;
+            }
+        }
+
+        if (stageClear)
+        {
+            Clear();
+        }
     }
 
-    void OnSceneUnloaded(Scene previous)
+    public void Generate()
     {
         SetupRoom();
         SetupDoor();
@@ -55,7 +71,7 @@ public class RoomGenerator : MonoBehaviour
             roomList.Add(newRoom);
 
             ChangeGeneratePosition();
-        }        
+        }
     }
 
     void ChangeGeneratePosition(){
@@ -129,10 +145,15 @@ public class RoomGenerator : MonoBehaviour
         }
     }
 
-    void SetupPlayer()
+    void Clear()
     {
-        GameObject player = GameObject.FindWithTag("Player");
-        player.transform.position = transform.position;
+        if (!teleporterCreated)
+        {
+            GameObject teleportRoom = Instantiate(teleporterPrefab, roomList.Last().transform.position, Quaternion.identity);
+            SceneTeleporter teleporter = teleportRoom.GetComponent<SceneTeleporter>();
+            teleporter.targetScene = targetScene;
+            teleporterCreated = true;
+        }
+        
     }
-
 }

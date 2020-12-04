@@ -176,7 +176,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2840401539398693362, guid: 42d50e69a83e94d45a4ff3fa67301225, type: 3}
       propertyPath: generateNumber
-      value: 12
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 2840401539398693362, guid: 42d50e69a83e94d45a4ff3fa67301225, type: 3}
       propertyPath: roomPrefabs.Array.data[0]
@@ -190,6 +190,18 @@ PrefabInstance:
       propertyPath: roomPrefabs.Array.data[2]
       value: 
       objectReference: {fileID: 591839071798933787, guid: 1433a0ab135a91043adf49ebee15295b, type: 3}
+    - target: {fileID: 2840401539398693362, guid: 42d50e69a83e94d45a4ff3fa67301225, type: 3}
+      propertyPath: nextSceneName
+      value: DungeonScene
+      objectReference: {fileID: 0}
+    - target: {fileID: 2840401539398693362, guid: 42d50e69a83e94d45a4ff3fa67301225, type: 3}
+      propertyPath: endRoom
+      value: 
+      objectReference: {fileID: 2489902701700580785, guid: 7c30a792326017842bc44fc21bfac013, type: 3}
+    - target: {fileID: 2840401539398693362, guid: 42d50e69a83e94d45a4ff3fa67301225, type: 3}
+      propertyPath: targetScene
+      value: DungeonScene
+      objectReference: {fileID: 0}
     - target: {fileID: 2840401539398693363, guid: 42d50e69a83e94d45a4ff3fa67301225, type: 3}
       propertyPath: m_Name
       value: RoomGenerator
