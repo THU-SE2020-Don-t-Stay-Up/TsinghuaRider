@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1183534434561137944}
   - component: {fileID: 1183534434561137945}
   - component: {fileID: 1183534434561137950}
-  - component: {fileID: 3465136121441161374}
+  - component: {fileID: 4693390687369538439}
   m_Layer: 0
   m_Name: Excalibur
   m_TagString: Untagged
@@ -111,7 +111,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.3972642, y: 20.942472}
   m_EdgeRadius: 0
---- !u!114 &3465136121441161374
+--- !u!114 &4693390687369538439
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -120,7 +120,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1183534434561137948}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed3c3c8f9feeaca48b365d76d8c5747d, type: 3}
+  m_Script: {fileID: 11500000, guid: d4148c0864ce2a34589e5b11e9d6711b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   itemIndex: 16
