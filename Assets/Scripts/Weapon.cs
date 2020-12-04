@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 abstract public class Weapon : Item
@@ -20,7 +21,7 @@ abstract public class Weapon : Item
             character.WeaponColumnAddItem(character.WeaponPrefab.GetComponent<WeaponAgent>().Weapon.Clone() as Item);
             GameObject.Destroy(character.WeaponPrefab);
         }
-        WeaponAgent.Use(character, this);
+        character.WeaponPrefab = GameObject.Instantiate(Global.GetPrefab(GetType().ToString()), character.transform.position + handleOffset, Quaternion.identity, character.transform);
     }
 
     protected virtual void ExtraEffect(LivingBaseAgent agent) { }
@@ -33,23 +34,23 @@ public class Sword : Weapon
     {
         AttackSpeed = 1;
         AttackRadius = 2;
-        AttackAmount = 10;
-        AttackAngle = 45;
+        AttackAmount = 100;
+        AttackAngle = 70;
         IsStackable = false;
         Amount = 1;
     }
 
-    public override void Attack(CharacterAgent user, Vector3 direction)
-    {
-        user.Animator.SetTrigger("Melee");
-        IEnumerable<GameObject> targetObjects = user.GetAttackRangeObjects(user.transform.position, user.ActualCharacter.AttackDirection, user.ActualCharacter.AttackRadius * AttackRadius, AttackAngle, "Monster");
-        foreach (var targetObject in targetObjects)
-        {
-            LivingBaseAgent targetAgent = targetObject.GetComponent<LivingBaseAgent>();
-            targetAgent.ChangeHealth(-user.ActualCharacter.AttackAmount * AttackAmount);
-            ExtraEffect(targetAgent);
-        }
-    }
+    //public override void Attack(CharacterAgent user, Vector3 direction)
+    //{
+    //    user.Animator.SetTrigger("Melee");
+    //    IEnumerable<GameObject> targetObjects = user.GetAttackRangeObjects(user.transform.position, user.ActualCharacter.AttackDirection, user.ActualCharacter.AttackRadius * AttackRadius, AttackAngle, "Monster");
+    //    foreach (var targetObject in targetObjects)
+    //    {
+    //        LivingBaseAgent targetAgent = targetObject.GetComponent<LivingBaseAgent>();
+    //        targetAgent.ChangeHealth(-user.ActualCharacter.AttackAmount * AttackAmount);
+    //        ExtraEffect(targetAgent);
+    //    }
+    //}
 
 }
 

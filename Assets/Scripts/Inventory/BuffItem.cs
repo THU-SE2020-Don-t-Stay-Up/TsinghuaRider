@@ -11,6 +11,7 @@ public class InvincibleItem : Item
     }
     public override void Use(CharacterAgent character)
     {
-        character.living.State.AddStatus(new InvincibleState(), float.NaN);
+        character.actualLiving.State.AddStatus(new InvincibleState(), float.NaN);
+        //character.ActualCharacter.TimeInvincible = 3f;
     }
 }

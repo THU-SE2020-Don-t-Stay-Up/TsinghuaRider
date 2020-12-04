@@ -11,7 +11,7 @@ public class ItemGenerator : MonoBehaviour
     public void Awake()
     {
         ItemAgent.GenerateItem(new Vector3(2, 0), new HealthPotion { Amount = 10});
-        ItemAgent.GenerateItem(new Vector3(-3, -4), new Medkit { Amount = 1});
+        ItemAgent.GenerateItem(new Vector3(-3, -3), new Medkit { Amount = 1});
         ItemAgent.GenerateItem(new Vector3(-3, -2), new Sword { Amount = 1});
         ItemAgent.GenerateItem(new Vector3(3, 5), new InvincibleItem { Amount = 1 });
         //ItemWorld.SpawnItemWorld(new Vector3(0, 2), new Item { itemType = Item.ItemType.Sword, amount = 1 });

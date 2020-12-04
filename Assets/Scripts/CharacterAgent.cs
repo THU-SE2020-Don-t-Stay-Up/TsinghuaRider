@@ -346,12 +346,13 @@ public class CharacterAgent : LivingBaseAgent
         {
             SetState(1);
             deltaTime = 0;
-            WeaponPrefab.GetComponent<WeaponAgent>().Attack();
+            godMode = !WeaponPrefab.GetComponent<WeaponAgent>().Attack();
             SetState(0);
         }
 
         if (Input.GetMouseButtonDown(0))
         {
+            godMode = true;
             Debug.Log(WeaponPrefab);
             if (WeaponPrefab != null)
             {
@@ -394,9 +395,14 @@ public class CharacterAgent : LivingBaseAgent
         }
     }
 
-    public void WeaponColumnAddItem(Item item)
+    /// <summary>
+    /// 如果武器不在武器栏内，返回false；否则返回true
+    /// </summary>
+    /// <param name="item"></param>
+    /// <returns></returns>
+    public bool WeaponColumnAddItem(Item item)
     {
-        weaponColumn.AddItem(item);
+        return weaponColumn.AddItem(item);
     }
     public void InventoryAddItem(Item item)
     {

@@ -28,27 +28,29 @@ public class Inventory
 
     /// <summary>
     /// 用来处理背包内物品的增加，并且记录在事件中。
+    /// 规定：武器均为unstackable，其他均为stackable
+    /// 如果item添加之前不在背包中，返回false，否则返回true
     /// </summary>
     /// <param name="item"></param>
-    public void AddItem(Item item)
+    public bool AddItem(Item item)
     {
-        if (item.IsStackable)
+        bool isInInventory;
+        var inventoryItem = ItemList.FirstOrDefault(e => e.Equals(item));
+        if (inventoryItem == null)
         {
-            var inventoryItem = ItemList.FirstOrDefault(e => e.Equals(item));
-            if (inventoryItem == null)
-            {
-                ItemList.Add(item);
-            }
-            else
+            isInInventory = false;
+            ItemList.Add(item);
+        }
+        else
+        {
+            isInInventory = true;
+            if (item.IsStackable)
             {
                 inventoryItem.Amount += item.Amount;
             }
         }
-        else
-        {
-            ItemList.Add(item);
-        }
         OnItemListChanged?.Invoke(this, EventArgs.Empty);
+        return isInInventory;
     }
 
     public void RemoveItem(Item item)
