@@ -52,3 +52,5 @@ MonoBehaviour:
   generateNumber: 6
   xOffset: 24
   yOffset: 24
+  teleporterPrefab: {fileID: 6726826919440057016, guid: 0ec1ab22bb9aff347a536fcb14f051a7, type: 3}
+  nextSceneName: 

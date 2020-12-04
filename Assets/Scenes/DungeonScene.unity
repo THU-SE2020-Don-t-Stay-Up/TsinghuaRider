@@ -176,11 +176,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2840401539398693362, guid: 42d50e69a83e94d45a4ff3fa67301225, type: 3}
       propertyPath: roomPrefabs.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2840401539398693362, guid: 42d50e69a83e94d45a4ff3fa67301225, type: 3}
       propertyPath: generateNumber
-      value: 20
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 2840401539398693362, guid: 42d50e69a83e94d45a4ff3fa67301225, type: 3}
       propertyPath: roomPrefabs.Array.data[1]
@@ -190,6 +190,22 @@ PrefabInstance:
       propertyPath: roomPrefabs.Array.data[0]
       value: 
       objectReference: {fileID: 3361396231715526044, guid: d1cc3b07b9cd3b548ab3086582f4e7e4, type: 3}
+    - target: {fileID: 2840401539398693362, guid: 42d50e69a83e94d45a4ff3fa67301225, type: 3}
+      propertyPath: startRoom
+      value: 
+      objectReference: {fileID: 6331358220654674241, guid: 043528eec15691947b77a27d1ceab9f0, type: 3}
+    - target: {fileID: 2840401539398693362, guid: 42d50e69a83e94d45a4ff3fa67301225, type: 3}
+      propertyPath: nextSceneName
+      value: DungeonScene2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2840401539398693362, guid: 42d50e69a83e94d45a4ff3fa67301225, type: 3}
+      propertyPath: roomPrefabs.Array.data[2]
+      value: 
+      objectReference: {fileID: 8947849330790007877, guid: 6857f36c4da642c46ba6016210a6f967, type: 3}
+    - target: {fileID: 2840401539398693362, guid: 42d50e69a83e94d45a4ff3fa67301225, type: 3}
+      propertyPath: targetScene
+      value: DungeonScene2
+      objectReference: {fileID: 0}
     - target: {fileID: 2840401539398693363, guid: 42d50e69a83e94d45a4ff3fa67301225, type: 3}
       propertyPath: m_Name
       value: RoomGenerator

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7155974667268604058}
   - component: {fileID: 6120750806497047599}
   m_Layer: 0
-  m_Name: RawImage
+  m_Name: UI_Minimap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -58,14 +58,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.7058824}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 0}
+  m_Texture: {fileID: 8400000, guid: 2adbe1fe80cd76b43921214153fbf27d, type: 2}
   m_UVRect:
     serializedVersion: 2
     x: 0
