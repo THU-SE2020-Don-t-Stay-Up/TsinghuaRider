@@ -180,7 +180,7 @@ GameObject:
   - component: {fileID: 6191353996031496581}
   - component: {fileID: 6191353996031496580}
   - component: {fileID: 6191353996031496579}
-  - component: {fileID: 8473095101947747331}
+  - component: {fileID: 1060279058094291139}
   m_Layer: 0
   m_Name: Saber1
   m_TagString: Untagged
@@ -280,7 +280,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.2185984, y: 2.1422734}
   m_EdgeRadius: 0
---- !u!114 &8473095101947747331
+--- !u!114 &1060279058094291139
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -289,7 +289,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6191353996031496577}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed3c3c8f9feeaca48b365d76d8c5747d, type: 3}
+  m_Script: {fileID: 11500000, guid: d4148c0864ce2a34589e5b11e9d6711b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   itemIndex: 9

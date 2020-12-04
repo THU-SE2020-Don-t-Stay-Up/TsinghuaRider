@@ -180,7 +180,7 @@ GameObject:
   - component: {fileID: 6314032702112491463}
   - component: {fileID: 6314032702112491462}
   - component: {fileID: 6314032702112491457}
-  - component: {fileID: 8639474152367516225}
+  - component: {fileID: 6320459194282407033}
   m_Layer: 0
   m_Name: BlackExcalibur
   m_TagString: Untagged
@@ -280,7 +280,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.4470748, y: 4.7449026}
   m_EdgeRadius: 0
---- !u!114 &8639474152367516225
+--- !u!114 &6320459194282407033
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -289,7 +289,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6314032702112491459}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed3c3c8f9feeaca48b365d76d8c5747d, type: 3}
+  m_Script: {fileID: 11500000, guid: d4148c0864ce2a34589e5b11e9d6711b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   itemIndex: 15

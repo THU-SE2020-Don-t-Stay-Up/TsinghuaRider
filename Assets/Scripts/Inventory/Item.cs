@@ -111,11 +111,11 @@ public class Coin : Item
 
 public class Medkit : Item
 {
-    public float Recovery { get; set; } = 0.5f;
+    public float Recovery { get; set; } = 0.7f;
 
     public Medkit()
     {
-        this.IsStackable = false;
+        this.IsStackable = true;
         this.Amount = 1;
     }
 

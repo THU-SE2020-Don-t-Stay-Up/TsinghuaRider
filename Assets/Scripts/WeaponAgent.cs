@@ -4,16 +4,24 @@ using UnityEngine;
 
 public class WeaponAgent : ItemAgent
 {
-    private Transform aimTransform;
-    private CharacterAgent user;
+    protected Transform aimTransform;
+    protected CharacterAgent user;
 
     public GameObject bulletPrefab;
     public Weapon Weapon { get; set; }
 
     private Vector3 aimDir;
 
-    bool leftFlag = false;
-    bool upFlag = false;
+    protected bool leftFlag = false;
+    protected bool upFlag = false;
+
+    protected enum State
+    {
+        Normal,
+        MeleeAttack
+    }
+
+    protected State state = State.Normal;
 
     private void Awake()
     {
@@ -32,12 +40,22 @@ public class WeaponAgent : ItemAgent
         }
     }
 
-    private void Update()
+    protected void Update()
     {
-        if (user != null)
+        //Debug.Log($"{GetType()} {state}");
+        switch (state)
         {
-            HandleAiming();
-            HandlePosition();
+            case State.Normal:
+                if (user != null)
+                {
+                    HandleAiming();
+                    HandlePosition();
+                    //Debug.Log("Normal");
+                }
+                break;
+            case State.MeleeAttack:
+                //Debug.Log("Weapon Attacking");
+                break;
         }
     }
 
@@ -48,33 +66,49 @@ public class WeaponAgent : ItemAgent
         return vec;
     }
 
-    private void HandleAiming()
+    protected float GetCurrentAngle()
     {
         Vector3 mousePosition = GetMouseWorldPosition();
         aimDir = (mousePosition - transform.position).normalized;
         float angle = Mathf.Atan2(aimDir.y, aimDir.x) * Mathf.Rad2Deg;
-        aimTransform.eulerAngles = new Vector3(0, 0, angle);
+        return angle;
     }
 
-    internal static void Use(CharacterAgent character, Item item)
+    private void HandleAiming()
     {
-        
-        character.WeaponPrefab = GameObject.Instantiate(Global.GetPrefab(item.GetType().ToString()), character.transform.position + ((Weapon) item).handleOffset, Quaternion.identity, character.transform);
-        Debug.Log(character.WeaponPrefab);
+        HandleAiming(GetCurrentAngle(), 0f, true);
     }
 
-    public void Attack()
+    protected void HandleAiming(float offSet, float angle,  bool leftFlag)
+    {
+        if (leftFlag)
+        {
+            aimTransform.eulerAngles = new Vector3(0, 0, offSet - angle);
+         }
+        else
+        {
+            aimTransform.eulerAngles = new Vector3(0, 0, offSet + angle);
+        }
+    }
+
+
+    public virtual bool Attack()
     {
         Weapon.Attack(user, aimDir);
+        return true;
     }
+
 
     public override void InteractWith(GameObject gameObject)
     {
         CharacterAgent character = gameObject.GetComponent<CharacterAgent>();
         if (character != null)
         {
-            character.WeaponColumnAddItem(Item);
-            Destroy(this.gameObject);
+            //不捡已有的武器
+            if (character.WeaponPrefab.GetComponent<WeaponAgent>().itemIndex != itemIndex && !character.WeaponColumnAddItem(Item))
+            {
+                Destroy(this.gameObject);
+            }
         }
     }
 
