@@ -25,6 +25,10 @@ public class MeleeWeaponAgent : WeaponAgent, IInteract
         }
     }
 
+    /// <summary>
+    /// 完成一次近战攻击，返回true；近战攻击未完成，返回false
+    /// </summary>
+    /// <returns></returns>
     public override bool Attack()
     {
         state = State.MeleeAttack;

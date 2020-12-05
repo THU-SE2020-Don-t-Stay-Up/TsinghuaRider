@@ -32,7 +32,7 @@ public class Sword : Weapon
 {
     public Sword()
     {
-        AttackSpeed = 1;
+        AttackSpeed = 3;
         AttackRadius = 2;
         AttackAmount = 100;
         AttackAngle = 70;
