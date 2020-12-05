@@ -58,7 +58,7 @@ public class CharacterAgent : LivingBaseAgent
     // Weapons
     public GameObject WeaponPrefab { get; set; }
 
-    private bool godMode = false;
+    private bool attackingFlag = false;
 
     float deltaTime = 0;
 
@@ -301,7 +301,7 @@ public class CharacterAgent : LivingBaseAgent
         if (Input.GetKeyDown(KeyCode.G))
         {
             SetState(3);
-            godMode = !godMode;
+            attackingFlag = !attackingFlag;
             Debug.Log("God Mode!");
             SetState(0);
         }
@@ -342,25 +342,25 @@ public class CharacterAgent : LivingBaseAgent
 
     private void HandleAttacking()
     {
-        if (godMode)
+        if (attackingFlag)
         {
             SetState(1);
             deltaTime = 0;
-            godMode = !WeaponPrefab.GetComponent<WeaponAgent>().Attack();
+            attackingFlag = !WeaponPrefab.GetComponent<WeaponAgent>().Attack();
             SetState(0);
         }
 
         if (Input.GetMouseButtonDown(0))
         {
-            godMode = true;
-            Debug.Log(WeaponPrefab);
+            //attackingFlag = true;
+            //Debug.Log(WeaponPrefab);
             if (WeaponPrefab != null)
             {
                 WeaponAgent weaponAgent = WeaponPrefab.GetComponent<WeaponAgent>();
                 if (ActualCharacter.AttackSpeed * weaponAgent.Weapon.AttackSpeed - deltaTime < 0.01)
                 {
                     SetState(1);
-                    weaponAgent.Attack();
+                    attackingFlag = !weaponAgent.Attack();
                     deltaTime = 0;
                     SetState(0);
                 }
