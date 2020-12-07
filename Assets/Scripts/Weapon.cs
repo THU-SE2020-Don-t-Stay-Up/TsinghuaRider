@@ -315,6 +315,32 @@ public class xianyu : Weapon
 }
 
 
+public class qingqing : Weapon
+{
+    public qingqing()
+    {
+        AttackSpeed = 1;
+        AttackRadius = 2;
+        AttackAmount = 10;
+        AttackAngle = 45;
+        IsStackable = false;
+        Amount = 1;
+    }
+
+    public override void Attack(CharacterAgent user, Vector3 direction)
+    {
+        user.Animator.SetTrigger("Melee");
+        IEnumerable<GameObject> targetObjects = user.GetAttackRangeObjects(user.transform.position, user.ActualCharacter.AttackDirection, user.ActualCharacter.AttackRadius * AttackRadius, AttackAngle, "Monster");
+        foreach (var targetObject in targetObjects)
+        {
+            LivingBaseAgent targetAgent = targetObject.GetComponent<LivingBaseAgent>();
+            targetAgent.ChangeHealth(-user.ActualCharacter.AttackAmount * AttackAmount);
+            ExtraEffect(targetAgent);
+        }
+    }
+
+}
+
 public class Gun : Weapon
 {
     public Gun()
