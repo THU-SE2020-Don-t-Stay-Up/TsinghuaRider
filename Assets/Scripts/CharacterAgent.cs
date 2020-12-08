@@ -65,7 +65,8 @@ public class CharacterAgent : LivingBaseAgent
     Vector3 attackDirection = new Vector3(0, 0, 0);
     Vector3 mousePosition = new Vector3(0, 0, 0);
 
-    private void Awake()
+    // 为了测试改成public，之后要改回private
+    public void Awake()
     {
 
         living = Global.characters[characterIndex].Clone() as Character;
@@ -103,7 +104,8 @@ public class CharacterAgent : LivingBaseAgent
         UpdateWeaponPrefab();
     }
 
-    private void Update()
+    // 为了测试改成public，之后要改回private
+    public void Update()
     {
 
         switch (actionState)
@@ -153,7 +155,8 @@ public class CharacterAgent : LivingBaseAgent
 
     }
 
-    private void FixedUpdate()
+    // 为了测试改成public，之后要改回private
+    public void FixedUpdate()
     {
         rigidbody2d.velocity = new Vector2(horizontal, vertical) * ActualCharacter.MoveSpeed;
         //rigidbody2d.AddForce(new Vector2(horizontal, vertical) * ActualCharacter.MoveSpeed);
@@ -317,6 +320,14 @@ public class CharacterAgent : LivingBaseAgent
 
     }
 
+    /// <summary>
+    /// 用于测试Character使用Item的函数，最终要删除
+    /// </summary>
+    /// <param name="item"></param>
+    public void UseItem(Item item)
+    {
+        inventory.UseItem(item, this);
+    }
 
     private void HandleInteraction()
     {
@@ -358,7 +369,8 @@ public class CharacterAgent : LivingBaseAgent
             {
                 WeaponAgent weaponAgent = WeaponPrefab.GetComponent<WeaponAgent>();
                 if (ActualCharacter.AttackSpeed * weaponAgent.Weapon.AttackSpeed - deltaTime < 0.01)
-                {
+               // if (true)
+                 {
                     SetState(1);
                     attackingFlag = !weaponAgent.Attack();
                     deltaTime = 0;
@@ -400,10 +412,16 @@ public class CharacterAgent : LivingBaseAgent
     /// </summary>
     /// <param name="item"></param>
     /// <returns></returns>
-    public bool WeaponColumnAddItem(Item item)
+    public bool HasWeapon(Item item)
     {
-        return weaponColumn.AddItem(item);
+        return weaponColumn.HasItem(item);
     }
+
+    public void WeaponColumnAddItem(Item item)
+    {
+        weaponColumn.AddItem(item);
+    }
+
     public void InventoryAddItem(Item item)
     {
         inventory.AddItem(item);
