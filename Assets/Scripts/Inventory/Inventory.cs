@@ -71,6 +71,24 @@ public class Inventory
         }
     }
 
+    public int GetItemAmount(Item item)
+    {
+        var inventoryItem = ItemList.FirstOrDefault(e => e.Equals(item));
+        if (inventoryItem != null)
+        {
+            return inventoryItem.Amount;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
+    public bool IsEmpty()
+    {
+        return ItemList.Count == 0;
+    }
+
     /// <summary>
     /// 一键清理所有道具
     /// </summary>
@@ -84,8 +102,11 @@ public class Inventory
     {
         if (HasItem(item))
         {
-            item.Use(character);
-            RemoveItem(item);
+            bool usedFlag = item.Use(character);
+            if (usedFlag)
+            {
+                RemoveItem(item);
+            }
         }
         else
         {

@@ -1,18 +1,33 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using NUnit.Framework;
 using UnityEngine;
+using UnityEngine.TestTools;
 
-public class WeaponTest : MonoBehaviour
+namespace Tests
 {
-    // Start is called before the first frame update
-    void Start()
+    public class WeaponTest
     {
-        
-    }
+        [SetUp]
+        public void SetUp()
+        {
+            var initialGame = new Initialization();
+            initialGame.Awake();
+            Debug.Log("Set up.");
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        [TearDown]
+        public void TearDown()
+        {
+            Debug.Log("Tear down.");
+        }
+
+        [UnityTest]
+        public IEnumerator WeaponLoadTest()
+        {
+            Weapon gun = new Gun { };
+            yield return null;
+        }
+
     }
 }

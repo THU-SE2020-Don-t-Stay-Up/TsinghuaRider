@@ -49,7 +49,7 @@ public class CharacterAgent : LivingBaseAgent
     // dash realting
     private bool isDashBottonDown;
     [SerializeField] private LayerMask dashLayerMask;
-    private int dashBar;
+    public int dashBar;     // 为了测试改成了public
 
     // animation
 
@@ -255,7 +255,7 @@ public class CharacterAgent : LivingBaseAgent
             rigidbody2d.MovePosition(dashPosition);
             dashBar -= 300;
             UIDashBar.instance.SetValue((float)dashBar / 901f);
-
+            Debug.Log("我闪！");
             isDashBottonDown = false;
 
             SetState(0);
@@ -318,15 +318,6 @@ public class CharacterAgent : LivingBaseAgent
             SetState(0);
         }
 
-    }
-
-    /// <summary>
-    /// 用于测试Character使用Item的函数，最终要删除
-    /// </summary>
-    /// <param name="item"></param>
-    public void UseItem(Item item)
-    {
-        inventory.UseItem(item, this);
     }
 
     private void HandleInteraction()
@@ -490,5 +481,70 @@ public class CharacterAgent : LivingBaseAgent
 
         }
     }
+
+    /// <summary>
+    /// 用于测试Character使用Item的函数，最终要删除
+    /// </summary>
+    /// <param name="item"></param>
+    public void UseItem(Item item)
+    {
+        inventory.UseItem(item, this);
+    }
+    public bool IsInventoryEmpty()
+    {
+        return inventory.IsEmpty();
+    }
+    public int GetItemAmount(Item item)
+    {
+        return inventory.GetItemAmount(item);
+    }
+    public void CleanInventory()
+    {
+        inventory.Clean();
+    }
+
+
+    public void UseBuffItem(Item item)
+    {
+        buffColumn.UseItem(item, this);
+    }
+    public int GetBuffItemAmount(Item item)
+    {
+        return buffColumn.GetItemAmount(item);
+    }
+    public void CleanBuffColumn()
+    {
+        buffColumn.Clean();
+    }
+
+    public void SwapeWeapon()
+    {
+        List<Item> items2 = weaponColumn.ItemList;
+        Item weapon = items2.FirstOrDefault(e => e is Weapon);
+        if (weapon != null)
+            weaponColumn.UseItem(weapon, this);
+    }
+    public void CleanWeaponColumn()
+    {
+        weaponColumn.Clean();
+    }
+    public int GetWeaponAmount(Item item)
+    {
+        return weaponColumn.GetItemAmount(item);
+    }
+    public bool IsWeaponColumnEmpty()
+    {
+        return weaponColumn.IsEmpty();
+    }
+
+
+    public void ForceDash()
+    {
+        lookDirection = new Vector2(1, 0);
+        isDashBottonDown = true;
+        Dash();
+    }
+    // 以上的函数测试使用
+
 }
 
