@@ -14,14 +14,17 @@ abstract public class Weapon : Item
 
     public virtual void Attack(CharacterAgent user, Vector3 direction) { }
 
-    public override void Use(CharacterAgent character)
+    public override bool Use(CharacterAgent character)
     {
+
         if (character.WeaponPrefab != null)
         {
             character.WeaponColumnAddItem(character.WeaponPrefab.GetComponent<WeaponAgent>().Weapon.Clone() as Item);
             GameObject.Destroy(character.WeaponPrefab);
         }
         character.WeaponPrefab = GameObject.Instantiate(Global.GetPrefab(GetType().ToString()), character.transform.position + handleOffset, Quaternion.identity, character.transform);
+
+        return true;
     }
 
     protected virtual void ExtraEffect(LivingBaseAgent agent) { }
