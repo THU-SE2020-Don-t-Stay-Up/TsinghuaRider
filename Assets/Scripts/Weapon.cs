@@ -35,7 +35,7 @@ public class Sword : Weapon
         AttackSpeed = 3;
         AttackRadius = 2;
         AttackAmount = 100;
-        AttackAngle = 70;
+        AttackAngle = 120;
         IsStackable = false;
         Amount = 1;
     }
@@ -61,7 +61,7 @@ public class Saber1 : Weapon
         AttackSpeed = 1;
         AttackRadius = 2;
         AttackAmount = 10;
-        AttackAngle = 45;
+        AttackAngle = 120;
         IsStackable = false;
         Amount = 1;
     }
@@ -87,7 +87,7 @@ public class Saber2 : Weapon
         AttackSpeed = 1;
         AttackRadius = 2;
         AttackAmount = 10;
-        AttackAngle = 45;
+        AttackAngle = 120;
         IsStackable = false;
         Amount = 1;
     }
@@ -113,7 +113,7 @@ public class Saber3 : Weapon
         AttackSpeed = 1;
         AttackRadius = 2;
         AttackAmount = 10;
-        AttackAngle = 45;
+        AttackAngle = 120;
         IsStackable = false;
         Amount = 1;
     }
@@ -139,7 +139,7 @@ public class BlackExcalibur : Weapon
         AttackSpeed = 1;
         AttackRadius = 2;
         AttackAmount = 10;
-        AttackAngle = 45;
+        AttackAngle = 120;
         IsStackable = false;
         Amount = 1;
     }
@@ -165,7 +165,7 @@ public class Excalibur : Weapon
         AttackSpeed = 1;
         AttackRadius = 2;
         AttackAmount = 10;
-        AttackAngle = 45;
+        AttackAngle = 120;
         IsStackable = false;
         Amount = 1;
     }
@@ -191,7 +191,7 @@ public class Faith : Weapon
         AttackSpeed = 1;
         AttackRadius = 2;
         AttackAmount = 10;
-        AttackAngle = 45;
+        AttackAngle = 120;
         IsStackable = false;
         Amount = 1;
     }
@@ -217,7 +217,7 @@ public class GilgameshEa : Weapon
         AttackSpeed = 1;
         AttackRadius = 2;
         AttackAmount = 10;
-        AttackAngle = 45;
+        AttackAngle = 120;
         IsStackable = false;
         Amount = 1;
     }
@@ -243,7 +243,7 @@ public class MasterSword : Weapon
         AttackSpeed = 1;
         AttackRadius = 2;
         AttackAmount = 10;
-        AttackAngle = 45;
+        AttackAngle = 120;
         IsStackable = false;
         Amount = 1;
     }
@@ -269,7 +269,7 @@ public class VirtuousTreaty : Weapon
         AttackSpeed = 1;
         AttackRadius = 2;
         AttackAmount = 10;
-        AttackAngle = 45;
+        AttackAngle = 120;
         IsStackable = false;
         Amount = 1;
     }
@@ -295,7 +295,7 @@ public class xianyu : Weapon
         AttackSpeed = 1;
         AttackRadius = 2;
         AttackAmount = 10;
-        AttackAngle = 45;
+        AttackAngle = 120;
         IsStackable = false;
         Amount = 1;
     }
@@ -322,7 +322,7 @@ public class qingqing : Weapon
         AttackSpeed = 1;
         AttackRadius = 2;
         AttackAmount = 10;
-        AttackAngle = 45;
+        AttackAngle = 120;
         IsStackable = false;
         Amount = 1;
     }
