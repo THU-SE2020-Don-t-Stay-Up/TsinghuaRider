@@ -8,7 +8,7 @@ using UnityEngine;
 public class Initialization : MonoBehaviour
 {
 
-    private void Awake()
+    public void Awake()
     {
         Debug.Log("init");
         Global.LoadPrefabPaths();
@@ -22,12 +22,16 @@ public class Initialization : MonoBehaviour
         GameObject minimapCamera = GameObject.Find("Minimap Camera");
         GameObject acrossSceneController = GameObject.Find("Across Scene Controller");
         
+        // 为了进行editor mode测试，把以下部分注释，之后需要还原！
+        /*
         DontDestroyOnLoad(mainCamera);
         DontDestroyOnLoad(vCamera);
         DontDestroyOnLoad(ui);
         DontDestroyOnLoad(minimapCamera);
         DontDestroyOnLoad(acrossSceneController);
+        
 
         Destroy(gameObject);
+        */
     }
 }

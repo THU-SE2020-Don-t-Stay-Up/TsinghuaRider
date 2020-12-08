@@ -28,29 +28,23 @@ public class Inventory
 
     /// <summary>
     /// 用来处理背包内物品的增加，并且记录在事件中。
-    /// 规定：武器均为unstackable，其他均为stackable
-    /// 如果item添加之前不在背包中，返回false，否则返回true
     /// </summary>
     /// <param name="item"></param>
-    public bool AddItem(Item item)
+    public void AddItem(Item item)
     {
-        bool isInInventory;
         var inventoryItem = ItemList.FirstOrDefault(e => e.Equals(item));
-        if (inventoryItem == null)
+        if (inventoryItem == null || (inventoryItem != null && !item.IsStackable))
         {
-            isInInventory = false;
             ItemList.Add(item);
         }
         else
-        {
-            isInInventory = true;
+        { 
             if (item.IsStackable)
             {
                 inventoryItem.Amount += item.Amount;
             }
         }
         OnItemListChanged?.Invoke(this, EventArgs.Empty);
-        return isInInventory;
     }
 
     public void RemoveItem(Item item)
@@ -75,6 +69,23 @@ public class Inventory
         {
             return false;
         }
+    }
+
+    /// <summary>
+    /// 一键清理所有道具
+    /// </summary>
+    public void Clean()
+    {
+        List<Item> _itemList  = new List<Item>();
+        foreach (var item in ItemList)
+        {
+            _itemList.Add(item);
+        }
+        foreach (var item in _itemList)
+        {
+            RemoveItem(item);
+        }
+        _itemList.Clear();
     }
 
     public void UseItem(Item item, CharacterAgent character)
