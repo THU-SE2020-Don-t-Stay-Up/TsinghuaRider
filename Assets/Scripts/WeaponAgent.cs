@@ -115,8 +115,8 @@ public class WeaponAgent : ItemAgent
 
     private void HandlePosition()
     {
-        Debug.Log("角色编号：");
-        Debug.Log(user.characterIndex);
+        //Debug.Log("角色编号：");
+        //Debug.Log(user.characterIndex);
         if (user.characterIndex == 0)
         {
             Vector3 weaponPosition = transform.position;
@@ -168,41 +168,34 @@ public class WeaponAgent : ItemAgent
 
             if (upFlag && aimDir.y <= 0)
             {
-                //Debug.Log("向下看！"); 
+
                 upFlag = false;
-                float deltaX = transform.position.x - user.GetPosition().x;
-                transform.position = Vector3.MoveTowards(weaponPosition, new Vector3(user.GetPosition().x - deltaX, weaponPosition.y), 10000f);
-
-                //transform.Translate(new Vector3(user.GetPosition().x, weaponPosition.y));
-
+               // Vector3 scale = transform.localScale;
+                //scale.y = -scale.y;
+                //transform.localScale = scale;
             }
             else if (!upFlag && aimDir.y > 0)
             {
-                //Debug.Log("向上看！");
 
                 upFlag = true;
-                float deltaX = transform.position.x - user.GetPosition().x;
-
-                transform.position = Vector3.MoveTowards(weaponPosition, new Vector3(user.GetPosition().x - deltaX, weaponPosition.y), 10000f);
-
-                //transform.Translate(new Vector3(user.GetPosition().x, weaponPosition.y));
-
+                //Vector3 scale = transform.localScale;
+                //scale.y = -scale.y;
+                //transform.localScale = scale;
             }
 
             if (!leftFlag && aimDir.x < 0)
             {
                 leftFlag = true;
-                Vector3 scale = transform.localScale;
-                scale.y = -scale.y;
-                transform.localScale = scale;
+                float deltaX = transform.position.x - user.GetPosition().x;
+                transform.position = Vector3.MoveTowards(weaponPosition, new Vector3(user.GetPosition().x - deltaX, weaponPosition.y), 10000f);
 
             }
             else if (leftFlag && aimDir.x >= 0)
             {
                 leftFlag = false;
-                Vector3 scale = transform.localScale;
-                scale.y = -scale.y;
-                transform.localScale = scale;
+                float deltaX = transform.position.x - user.GetPosition().x;
+
+                transform.position = Vector3.MoveTowards(weaponPosition, new Vector3(user.GetPosition().x - deltaX, weaponPosition.y), 10000f);
 
             }
         }
