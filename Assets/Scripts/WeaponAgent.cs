@@ -105,8 +105,9 @@ public class WeaponAgent : ItemAgent
         if (character != null)
         {
             //不捡已有的武器
-            if (character.WeaponPrefab.GetComponent<WeaponAgent>().itemIndex != itemIndex && !character.WeaponColumnAddItem(Item))
+           if (character.WeaponPrefab.GetComponent<WeaponAgent>().itemIndex != itemIndex && !character.HasWeapon(Item))
             {
+                character.WeaponColumnAddItem(Item);
                 Destroy(this.gameObject);
             }
         }
