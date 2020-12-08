@@ -76,16 +76,8 @@ public class Inventory
     /// </summary>
     public void Clean()
     {
-        List<Item> _itemList  = new List<Item>();
-        foreach (var item in ItemList)
-        {
-            _itemList.Add(item);
-        }
-        foreach (var item in _itemList)
-        {
-            RemoveItem(item);
-        }
-        _itemList.Clear();
+        ItemList.Clear();
+        OnItemListChanged?.Invoke(this, EventArgs.Empty);
     }
 
     public void UseItem(Item item, CharacterAgent character)
