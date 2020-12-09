@@ -544,6 +544,10 @@ public class CharacterAgent : LivingBaseAgent
         isDashBottonDown = true;
         Dash();
     }
+    public void ClearDashBar()
+    {
+        dashBar = 0;
+    }
     // 以上的函数测试使用
 
 }
