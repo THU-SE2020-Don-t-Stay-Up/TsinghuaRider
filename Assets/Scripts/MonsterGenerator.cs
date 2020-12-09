@@ -21,7 +21,7 @@ public class MonsterGenerator : MonoBehaviour
     /// </summary>
     public float interval;
     /// <summary>
-    /// 每个怪物组的参考难度
+    /// 总参考难度
     /// </summary>
     public float difficulty;
 
@@ -45,11 +45,11 @@ public class MonsterGenerator : MonoBehaviour
                 if (timer < 0)
                 {
                     int type = Random.Range(0, monsterGroups.Length);
-                    foreach (var point in generatePoints)
-                    {
-                        MonsterGroup monsterGroup = Instantiate(monsterGroups[type], point.position, Quaternion.identity).GetComponent<MonsterGroup>();
-                        monsterGroup.Generate(difficulty);
-                    }
+                    int point = Random.Range(0, generatePoints.Length);
+
+                    MonsterGroup monsterGroup = Instantiate(monsterGroups[type], generatePoints[point].position, Quaternion.identity).GetComponent<MonsterGroup>();
+                    monsterGroup.Generate(difficulty);
+
                     wave -= 1;
                     timer = interval;
                 }

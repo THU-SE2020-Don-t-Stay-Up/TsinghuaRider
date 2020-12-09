@@ -18,7 +18,7 @@ public class MonsterGroup : MonoBehaviour
 
     public void Generate(float difficulty)
     {
-        Debug.Log("generate monster group");
+        //Debug.Log("generate monster group");
         float[] monsterDifficulty = new float[monsterObjects.Length];
         float usedDifficulty = 0.0f;
         float totalProbability = 0.0f;
