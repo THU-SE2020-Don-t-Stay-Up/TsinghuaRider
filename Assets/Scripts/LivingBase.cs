@@ -70,8 +70,13 @@ public class LivingBaseAgent : MonoBehaviour
 
     public Collider2D collider2d { get; set; }
 
+    public UIMonsterHealthBar monsterHealthBar = null;
+
     public virtual void ChangeHealth(float amount)
     {
+
+        monsterHealthBar = transform.Find("MonsterHealth").Find("MonsterHealthBar").GetComponent<UIMonsterHealthBar>();
+
         if (amount < 0)
         {
             if (actualLiving.State.HasStatus(new InvincibleState()))
@@ -83,6 +88,7 @@ public class LivingBaseAgent : MonoBehaviour
             else
             {
                 actualLiving.CurrentHealth = (int)Mathf.Clamp(actualLiving.CurrentHealth + amount, 0, actualLiving.MaxHealth);
+                monsterHealthBar.SetValue(actualLiving.CurrentHealth / (float)actualLiving.MaxHealth);
                 Debug.Log($"{actualLiving.Name} now health is {actualLiving.CurrentHealth}");
                 //animator.SetTrigger("Hit");
                 //audioSource.PlayOneShot(getHitClip);
@@ -104,6 +110,7 @@ public class LivingBaseAgent : MonoBehaviour
             //audioSource.PlayOneShot(getHealingClip);
 
             actualLiving.CurrentHealth = (int)Mathf.Clamp(actualLiving.CurrentHealth + amount, 0, actualLiving.MaxHealth);
+            monsterHealthBar.SetValue(actualLiving.CurrentHealth / (float)actualLiving.MaxHealth);
         }
         // UI change
     }
