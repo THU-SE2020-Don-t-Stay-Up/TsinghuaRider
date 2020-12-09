@@ -20,6 +20,8 @@ public class UIMonsterHealthBar : MonoBehaviour
 
     public void SetValue(float value)
     {
+        // 为了Edit Mode测试，加入Awake()，之后需要删除
+        Awake();
         mask.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, originalSize * value);
     }
 
