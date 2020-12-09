@@ -131,7 +131,7 @@ public class State
         }
         if (HasStatus(status))
         {
-            if (StateDuration[status] < duration)
+            if (StateDuration[status] < duration || float.IsNaN(duration))
                 StateDuration[status] = duration;
         }
         else

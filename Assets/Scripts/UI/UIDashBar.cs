@@ -10,7 +10,8 @@ public class UIDashBar : MonoBehaviour
     private Image mask;
     float originalSize;
 
-    private void Awake()
+    // 为了测试改成public，之后要改回private
+    public void Awake()
     {
         mask = GameObject.Find("DashMask").GetComponent<Image>();
         instance = this;

@@ -9,8 +9,10 @@ public class InvincibleItem : Item
         this.IsStackable = true;
         this.Amount = 1;
     }
-    public override void Use(CharacterAgent character)
+    public override bool Use(CharacterAgent character)
     {
-        character.living.State.AddStatus(new InvincibleState(), float.NaN);
+        character.actualLiving.State.AddStatus(new InvincibleState(), float.NaN);
+        //character.ActualCharacter.TimeInvincible = 3f;
+        return true;
     }
 }

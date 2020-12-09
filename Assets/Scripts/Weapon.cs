@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 abstract public class Weapon : Item
@@ -13,14 +14,17 @@ abstract public class Weapon : Item
 
     public virtual void Attack(CharacterAgent user, Vector3 direction) { }
 
-    public override void Use(CharacterAgent character)
+    public override bool Use(CharacterAgent character)
     {
+
         if (character.WeaponPrefab != null)
         {
             character.WeaponColumnAddItem(character.WeaponPrefab.GetComponent<WeaponAgent>().Weapon.Clone() as Item);
             GameObject.Destroy(character.WeaponPrefab);
         }
-        WeaponAgent.Use(character, this);
+        character.WeaponPrefab = GameObject.Instantiate(Global.GetPrefab(GetType().ToString()), character.transform.position + handleOffset, Quaternion.identity, character.transform);
+
+        return true;
     }
 
     protected virtual void ExtraEffect(LivingBaseAgent agent) { }
@@ -31,25 +35,25 @@ public class Sword : Weapon
 {
     public Sword()
     {
-        AttackSpeed = 1;
+        AttackSpeed = 3;
         AttackRadius = 2;
-        AttackAmount = 10;
-        AttackAngle = 45;
+        AttackAmount = 100;
+        AttackAngle = 120;
         IsStackable = false;
         Amount = 1;
     }
 
-    public override void Attack(CharacterAgent user, Vector3 direction)
-    {
-        user.Animator.SetTrigger("Melee");
-        IEnumerable<GameObject> targetObjects = user.GetAttackRangeObjects(user.transform.position, user.ActualCharacter.AttackDirection, user.ActualCharacter.AttackRadius * AttackRadius, AttackAngle, "Monster");
-        foreach (var targetObject in targetObjects)
-        {
-            LivingBaseAgent targetAgent = targetObject.GetComponent<LivingBaseAgent>();
-            targetAgent.ChangeHealth(-user.ActualCharacter.AttackAmount * AttackAmount);
-            ExtraEffect(targetAgent);
-        }
-    }
+    //public override void Attack(CharacterAgent user, Vector3 direction)
+    //{
+    //    user.Animator.SetTrigger("Melee");
+    //    IEnumerable<GameObject> targetObjects = user.GetAttackRangeObjects(user.transform.position, user.ActualCharacter.AttackDirection, user.ActualCharacter.AttackRadius * AttackRadius, AttackAngle, "Monster");
+    //    foreach (var targetObject in targetObjects)
+    //    {
+    //        LivingBaseAgent targetAgent = targetObject.GetComponent<LivingBaseAgent>();
+    //        targetAgent.ChangeHealth(-user.ActualCharacter.AttackAmount * AttackAmount);
+    //        ExtraEffect(targetAgent);
+    //    }
+    //}
 
 }
 
@@ -60,7 +64,7 @@ public class Saber1 : Weapon
         AttackSpeed = 1;
         AttackRadius = 2;
         AttackAmount = 10;
-        AttackAngle = 45;
+        AttackAngle = 120;
         IsStackable = false;
         Amount = 1;
     }
@@ -86,7 +90,7 @@ public class Saber2 : Weapon
         AttackSpeed = 1;
         AttackRadius = 2;
         AttackAmount = 10;
-        AttackAngle = 45;
+        AttackAngle = 120;
         IsStackable = false;
         Amount = 1;
     }
@@ -112,7 +116,7 @@ public class Saber3 : Weapon
         AttackSpeed = 1;
         AttackRadius = 2;
         AttackAmount = 10;
-        AttackAngle = 45;
+        AttackAngle = 120;
         IsStackable = false;
         Amount = 1;
     }
@@ -138,7 +142,7 @@ public class BlackExcalibur : Weapon
         AttackSpeed = 1;
         AttackRadius = 2;
         AttackAmount = 10;
-        AttackAngle = 45;
+        AttackAngle = 120;
         IsStackable = false;
         Amount = 1;
     }
@@ -164,7 +168,7 @@ public class Excalibur : Weapon
         AttackSpeed = 1;
         AttackRadius = 2;
         AttackAmount = 10;
-        AttackAngle = 45;
+        AttackAngle = 120;
         IsStackable = false;
         Amount = 1;
     }
@@ -190,7 +194,7 @@ public class Faith : Weapon
         AttackSpeed = 1;
         AttackRadius = 2;
         AttackAmount = 10;
-        AttackAngle = 45;
+        AttackAngle = 120;
         IsStackable = false;
         Amount = 1;
     }
@@ -216,7 +220,7 @@ public class GilgameshEa : Weapon
         AttackSpeed = 1;
         AttackRadius = 2;
         AttackAmount = 10;
-        AttackAngle = 45;
+        AttackAngle = 120;
         IsStackable = false;
         Amount = 1;
     }
@@ -242,7 +246,7 @@ public class MasterSword : Weapon
         AttackSpeed = 1;
         AttackRadius = 2;
         AttackAmount = 10;
-        AttackAngle = 45;
+        AttackAngle = 120;
         IsStackable = false;
         Amount = 1;
     }
@@ -268,7 +272,7 @@ public class VirtuousTreaty : Weapon
         AttackSpeed = 1;
         AttackRadius = 2;
         AttackAmount = 10;
-        AttackAngle = 45;
+        AttackAngle = 120;
         IsStackable = false;
         Amount = 1;
     }
@@ -294,7 +298,7 @@ public class xianyu : Weapon
         AttackSpeed = 1;
         AttackRadius = 2;
         AttackAmount = 10;
-        AttackAngle = 45;
+        AttackAngle = 120;
         IsStackable = false;
         Amount = 1;
     }
@@ -313,6 +317,32 @@ public class xianyu : Weapon
 
 }
 
+
+public class qingqing : Weapon
+{
+    public qingqing()
+    {
+        AttackSpeed = 1;
+        AttackRadius = 2;
+        AttackAmount = 10;
+        AttackAngle = 120;
+        IsStackable = false;
+        Amount = 1;
+    }
+
+    public override void Attack(CharacterAgent user, Vector3 direction)
+    {
+        user.Animator.SetTrigger("Melee");
+        IEnumerable<GameObject> targetObjects = user.GetAttackRangeObjects(user.transform.position, user.ActualCharacter.AttackDirection, user.ActualCharacter.AttackRadius * AttackRadius, AttackAngle, "Monster");
+        foreach (var targetObject in targetObjects)
+        {
+            LivingBaseAgent targetAgent = targetObject.GetComponent<LivingBaseAgent>();
+            targetAgent.ChangeHealth(-user.ActualCharacter.AttackAmount * AttackAmount);
+            ExtraEffect(targetAgent);
+        }
+    }
+
+}
 
 public class Gun : Weapon
 {

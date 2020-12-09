@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3520121089238805044}
   - component: {fileID: 3520121089238805045}
   - component: {fileID: 3520121089238805042}
-  - component: {fileID: 1198973206386780082}
+  - component: {fileID: 7726663097399393609}
   m_Layer: 0
   m_Name: GilgameshEa
   m_TagString: Untagged
@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 3520121089238805040}
   m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 1.52, y: 0.686, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.48319}
+  m_LocalScale: {x: 0.15, y: 0.15, z: 0}
   m_Children:
   - {fileID: 5816066627097119698}
   m_Father: {fileID: 0}
@@ -111,7 +111,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.2803111, y: 19.539333}
   m_EdgeRadius: 0
---- !u!114 &1198973206386780082
+--- !u!114 &7726663097399393609
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -120,7 +120,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3520121089238805040}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed3c3c8f9feeaca48b365d76d8c5747d, type: 3}
+  m_Script: {fileID: 11500000, guid: d4148c0864ce2a34589e5b11e9d6711b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   itemIndex: 18

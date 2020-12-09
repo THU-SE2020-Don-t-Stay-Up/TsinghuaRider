@@ -49,7 +49,7 @@ public class CharacterAgent : LivingBaseAgent
     // dash realting
     private bool isDashBottonDown;
     [SerializeField] private LayerMask dashLayerMask;
-    private int dashBar;
+    public int dashBar;     // 为了测试改成了public
 
     // animation
 
@@ -58,14 +58,15 @@ public class CharacterAgent : LivingBaseAgent
     // Weapons
     public GameObject WeaponPrefab { get; set; }
 
-    private bool godMode = false;
+    private bool attackingFlag = false;
 
     float deltaTime = 0;
 
     Vector3 attackDirection = new Vector3(0, 0, 0);
     Vector3 mousePosition = new Vector3(0, 0, 0);
 
-    private void Awake()
+    // 为了测试改成public，之后要改回private
+    public void Awake()
     {
 
         living = Global.characters[characterIndex].Clone() as Character;
@@ -103,7 +104,8 @@ public class CharacterAgent : LivingBaseAgent
         UpdateWeaponPrefab();
     }
 
-    private void Update()
+    // 为了测试改成public，之后要改回private
+    public void Update()
     {
 
         switch (actionState)
@@ -153,7 +155,8 @@ public class CharacterAgent : LivingBaseAgent
 
     }
 
-    private void FixedUpdate()
+    // 为了测试改成public，之后要改回private
+    public void FixedUpdate()
     {
         rigidbody2d.velocity = new Vector2(horizontal, vertical) * ActualCharacter.MoveSpeed;
         //rigidbody2d.AddForce(new Vector2(horizontal, vertical) * ActualCharacter.MoveSpeed);
@@ -252,7 +255,7 @@ public class CharacterAgent : LivingBaseAgent
             rigidbody2d.MovePosition(dashPosition);
             dashBar -= 300;
             UIDashBar.instance.SetValue((float)dashBar / 901f);
-
+            Debug.Log("我闪！");
             isDashBottonDown = false;
 
             SetState(0);
@@ -301,7 +304,7 @@ public class CharacterAgent : LivingBaseAgent
         if (Input.GetKeyDown(KeyCode.G))
         {
             SetState(3);
-            godMode = !godMode;
+            attackingFlag = !attackingFlag;
             Debug.Log("God Mode!");
             SetState(0);
         }
@@ -316,7 +319,6 @@ public class CharacterAgent : LivingBaseAgent
         }
 
     }
-
 
     private void HandleInteraction()
     {
@@ -342,24 +344,26 @@ public class CharacterAgent : LivingBaseAgent
 
     private void HandleAttacking()
     {
-        if (godMode)
+        if (attackingFlag)
         {
             SetState(1);
             deltaTime = 0;
-            WeaponPrefab.GetComponent<WeaponAgent>().Attack();
+            attackingFlag = !WeaponPrefab.GetComponent<WeaponAgent>().Attack();
             SetState(0);
         }
 
         if (Input.GetMouseButtonDown(0))
         {
-            Debug.Log(WeaponPrefab);
+            //attackingFlag = true;
+            //Debug.Log(WeaponPrefab);
             if (WeaponPrefab != null)
             {
                 WeaponAgent weaponAgent = WeaponPrefab.GetComponent<WeaponAgent>();
                 if (ActualCharacter.AttackSpeed * weaponAgent.Weapon.AttackSpeed - deltaTime < 0.01)
-                {
+               // if (true)
+                 {
                     SetState(1);
-                    weaponAgent.Attack();
+                    attackingFlag = !weaponAgent.Attack();
                     deltaTime = 0;
                     SetState(0);
                 }
@@ -394,10 +398,21 @@ public class CharacterAgent : LivingBaseAgent
         }
     }
 
+    /// <summary>
+    /// 如果武器不在武器栏内，返回false；否则返回true
+    /// </summary>
+    /// <param name="item"></param>
+    /// <returns></returns>
+    public bool HasWeapon(Item item)
+    {
+        return weaponColumn.HasItem(item);
+    }
+
     public void WeaponColumnAddItem(Item item)
     {
         weaponColumn.AddItem(item);
     }
+
     public void InventoryAddItem(Item item)
     {
         inventory.AddItem(item);
@@ -466,5 +481,70 @@ public class CharacterAgent : LivingBaseAgent
 
         }
     }
+
+    /// <summary>
+    /// 用于测试Character使用Item的函数，最终要删除
+    /// </summary>
+    /// <param name="item"></param>
+    public void UseItem(Item item)
+    {
+        inventory.UseItem(item, this);
+    }
+    public bool IsInventoryEmpty()
+    {
+        return inventory.IsEmpty();
+    }
+    public int GetItemAmount(Item item)
+    {
+        return inventory.GetItemAmount(item);
+    }
+    public void CleanInventory()
+    {
+        inventory.Clean();
+    }
+
+
+    public void UseBuffItem(Item item)
+    {
+        buffColumn.UseItem(item, this);
+    }
+    public int GetBuffItemAmount(Item item)
+    {
+        return buffColumn.GetItemAmount(item);
+    }
+    public void CleanBuffColumn()
+    {
+        buffColumn.Clean();
+    }
+
+    public void SwapeWeapon()
+    {
+        List<Item> items2 = weaponColumn.ItemList;
+        Item weapon = items2.FirstOrDefault(e => e is Weapon);
+        if (weapon != null)
+            weaponColumn.UseItem(weapon, this);
+    }
+    public void CleanWeaponColumn()
+    {
+        weaponColumn.Clean();
+    }
+    public int GetWeaponAmount(Item item)
+    {
+        return weaponColumn.GetItemAmount(item);
+    }
+    public bool IsWeaponColumnEmpty()
+    {
+        return weaponColumn.IsEmpty();
+    }
+
+
+    public void ForceDash()
+    {
+        lookDirection = new Vector2(1, 0);
+        isDashBottonDown = true;
+        Dash();
+    }
+    // 以上的函数测试使用
+
 }
 

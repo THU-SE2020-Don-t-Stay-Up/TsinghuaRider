@@ -32,21 +32,17 @@ public class Inventory
     /// <param name="item"></param>
     public void AddItem(Item item)
     {
-        if (item.IsStackable)
+        var inventoryItem = ItemList.FirstOrDefault(e => e.Equals(item));
+        if (inventoryItem == null || (inventoryItem != null && !item.IsStackable))
         {
-            var inventoryItem = ItemList.FirstOrDefault(e => e.Equals(item));
-            if (inventoryItem == null)
-            {
-                ItemList.Add(item);
-            }
-            else
+            ItemList.Add(item);
+        }
+        else
+        { 
+            if (item.IsStackable)
             {
                 inventoryItem.Amount += item.Amount;
             }
-        }
-        else
-        {
-            ItemList.Add(item);
         }
         OnItemListChanged?.Invoke(this, EventArgs.Empty);
     }
@@ -75,12 +71,42 @@ public class Inventory
         }
     }
 
+    public int GetItemAmount(Item item)
+    {
+        var inventoryItem = ItemList.FirstOrDefault(e => e.Equals(item));
+        if (inventoryItem != null)
+        {
+            return inventoryItem.Amount;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
+    public bool IsEmpty()
+    {
+        return ItemList.Count == 0;
+    }
+
+    /// <summary>
+    /// 一键清理所有道具
+    /// </summary>
+    public void Clean()
+    {
+        ItemList.Clear();
+        OnItemListChanged?.Invoke(this, EventArgs.Empty);
+    }
+
     public void UseItem(Item item, CharacterAgent character)
     {
         if (HasItem(item))
         {
-            item.Use(character);
-            RemoveItem(item);
+            bool usedFlag = item.Use(character);
+            if (usedFlag)
+            {
+                RemoveItem(item);
+            }
         }
         else
         {

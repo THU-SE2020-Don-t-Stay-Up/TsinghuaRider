@@ -36,7 +36,7 @@ abstract public class Item:ICloneable
         return GetType().ToString();
     }
 
-    public abstract void Use(CharacterAgent character);
+    public abstract bool Use(CharacterAgent character);
 
     public GameObject GetItemPrefab()
     {
@@ -83,7 +83,18 @@ public class HealthPotion : Item
         this.IsStackable = true;
         this.Amount = 1;
     }
-    public override void Use(CharacterAgent character) { character.ChangeHealth(Recovery * character.ActualCharacter.MaxHealth); }
+    public override bool Use(CharacterAgent character)
+    { 
+        if (character.actualLiving.CurrentHealth < character.actualLiving.MaxHealth)
+        {
+            character.ChangeHealth(Recovery * character.ActualCharacter.MaxHealth);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 }
 
 public class StrengthPotion : Item
@@ -94,7 +105,11 @@ public class StrengthPotion : Item
         this.IsStackable = true;
         this.Amount = 1;
     }
-    public override void Use(CharacterAgent character) { character.ActualCharacter.AttackAmount *= (1 + AdditionalStrength); }
+    public override bool Use(CharacterAgent character) 
+    { 
+        character.ActualCharacter.AttackAmount *= (1 + AdditionalStrength);
+        return true;
+    }
 }
 
 public class Coin : Item
@@ -104,22 +119,33 @@ public class Coin : Item
         this.IsStackable = true;
         this.Amount = 1;
     }
-    public override void Use(CharacterAgent character) { }
+    public override bool Use(CharacterAgent character) { return true; }
 
 }
 
 
 public class Medkit : Item
 {
-    public float Recovery { get; set; } = 0.5f;
+    public float Recovery { get; set; } = 0.7f;
 
     public Medkit()
     {
-        this.IsStackable = false;
+        this.IsStackable = true;
         this.Amount = 1;
     }
 
-    public override void Use(CharacterAgent character) { character.ChangeHealth(Recovery * character.ActualCharacter.MaxHealth); }
+    public override bool Use(CharacterAgent character)
+    {
+        if (character.actualLiving.CurrentHealth < character.actualLiving.MaxHealth)
+        {
+            character.ChangeHealth(Recovery * character.ActualCharacter.MaxHealth);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 }
 //修改了Weapon中的部分内容；试图整合了原来Item与ItemAsset中的内容
 

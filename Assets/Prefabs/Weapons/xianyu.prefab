@@ -180,7 +180,7 @@ GameObject:
   - component: {fileID: 6487022577416501936}
   - component: {fileID: 6487022577416501937}
   - component: {fileID: 6487022577416501942}
-  - component: {fileID: 8826184558296495926}
+  - component: {fileID: 3302000975774994594}
   m_Layer: 0
   m_Name: xianyu
   m_TagString: Untagged
@@ -197,7 +197,7 @@ Transform:
   m_GameObject: {fileID: 6487022577416501940}
   m_LocalRotation: {x: 0, y: 0, z: -0.08715578, w: 0.9961947}
   m_LocalPosition: {x: 1.52, y: 0.686, z: 0}
-  m_LocalScale: {x: 0.48319, y: 0.48319, z: 0.48319}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 0}
   m_Children:
   - {fileID: 4209073553813347158}
   m_Father: {fileID: 0}
@@ -280,7 +280,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.4071875, y: 1.2118878}
   m_EdgeRadius: 0
---- !u!114 &8826184558296495926
+--- !u!114 &3302000975774994594
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -289,7 +289,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6487022577416501940}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed3c3c8f9feeaca48b365d76d8c5747d, type: 3}
+  m_Script: {fileID: 11500000, guid: d4148c0864ce2a34589e5b11e9d6711b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   itemIndex: 21

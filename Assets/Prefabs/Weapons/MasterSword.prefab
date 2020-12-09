@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3253038663794710283}
   - component: {fileID: 3253038663794710282}
   - component: {fileID: 3253038663794710285}
-  - component: {fileID: 963627178720615053}
+  - component: {fileID: 5645534386892935047}
   m_Layer: 0
   m_Name: MasterSword
   m_TagString: Untagged
@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 3253038663794710287}
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 1.52, y: 0.686, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.48319}
+  m_LocalScale: {x: 0.15, y: 0.15, z: 0}
   m_Children:
   - {fileID: 5569325321394075373}
   m_Father: {fileID: 0}
@@ -111,7 +111,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.4557418, y: 16.557693}
   m_EdgeRadius: 0
---- !u!114 &963627178720615053
+--- !u!114 &5645534386892935047
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -120,7 +120,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3253038663794710287}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed3c3c8f9feeaca48b365d76d8c5747d, type: 3}
+  m_Script: {fileID: 11500000, guid: d4148c0864ce2a34589e5b11e9d6711b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   itemIndex: 19

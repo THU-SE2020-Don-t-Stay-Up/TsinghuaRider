@@ -180,7 +180,7 @@ GameObject:
   - component: {fileID: 7972467719648981587}
   - component: {fileID: 7972467719648981586}
   - component: {fileID: 7972467719648981589}
-  - component: {fileID: -3541652731126628395}
+  - component: {fileID: 1819490720845941645}
   m_Layer: 0
   m_Name: Sword
   m_TagString: Untagged
@@ -267,7 +267,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.012140393, y: -0.4491918}
+  m_Offset: {x: 1.6616269, y: 1.4105495}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.17506269, y: 0.18596666}
@@ -278,9 +278,9 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.923559, y: 1.3570108}
+  m_Size: {x: 3.4275258, y: 3.3622973}
   m_EdgeRadius: 0
---- !u!114 &-3541652731126628395
+--- !u!114 &1819490720845941645
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -289,7 +289,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7972467719648981591}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed3c3c8f9feeaca48b365d76d8c5747d, type: 3}
+  m_Script: {fileID: 11500000, guid: d4148c0864ce2a34589e5b11e9d6711b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   itemIndex: 4

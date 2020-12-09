@@ -4,16 +4,24 @@ using UnityEngine;
 
 public class WeaponAgent : ItemAgent
 {
-    private Transform aimTransform;
-    private CharacterAgent user;
+    protected Transform aimTransform;
+    protected CharacterAgent user;
 
     public GameObject bulletPrefab;
     public Weapon Weapon { get; set; }
 
     private Vector3 aimDir;
 
-    bool leftFlag = false;
-    bool upFlag = false;
+    protected bool leftFlag = false;
+    protected bool upFlag = false;
+
+    protected enum State
+    {
+        Normal,
+        MeleeAttack
+    }
+
+    protected State state = State.Normal;
 
     private void Awake()
     {
@@ -32,12 +40,22 @@ public class WeaponAgent : ItemAgent
         }
     }
 
-    private void Update()
+    protected void Update()
     {
-        if (user != null)
+        //Debug.Log($"{GetType()} {state}");
+        switch (state)
         {
-            HandleAiming();
-            HandlePosition();
+            case State.Normal:
+                if (user != null)
+                {
+                    HandleAiming();
+                    HandlePosition();
+                    //Debug.Log("Normal");
+                }
+                break;
+            case State.MeleeAttack:
+                //Debug.Log("Weapon Attacking");
+                break;
         }
     }
 
@@ -48,38 +66,57 @@ public class WeaponAgent : ItemAgent
         return vec;
     }
 
-    private void HandleAiming()
+    protected float GetCurrentAngle()
     {
         Vector3 mousePosition = GetMouseWorldPosition();
         aimDir = (mousePosition - transform.position).normalized;
         float angle = Mathf.Atan2(aimDir.y, aimDir.x) * Mathf.Rad2Deg;
-        aimTransform.eulerAngles = new Vector3(0, 0, angle);
+        return angle;
     }
 
-    internal static void Use(CharacterAgent character, Item item)
+    private void HandleAiming()
     {
-        
-        character.WeaponPrefab = GameObject.Instantiate(Global.GetPrefab(item.GetType().ToString()), character.transform.position + ((Weapon) item).handleOffset, Quaternion.identity, character.transform);
-        Debug.Log(character.WeaponPrefab);
+        HandleAiming(GetCurrentAngle(), 0f, true);
     }
 
-    public void Attack()
+    protected void HandleAiming(float offSet, float angle,  bool leftFlag)
+    {
+        if (leftFlag)
+        {
+            aimTransform.eulerAngles = new Vector3(0, 0, offSet - angle);
+         }
+        else
+        {
+            aimTransform.eulerAngles = new Vector3(0, 0, offSet + angle);
+        }
+    }
+
+
+    public virtual bool Attack()
     {
         Weapon.Attack(user, aimDir);
+        return true;
     }
+
 
     public override void InteractWith(GameObject gameObject)
     {
         CharacterAgent character = gameObject.GetComponent<CharacterAgent>();
         if (character != null)
         {
-            character.WeaponColumnAddItem(Item);
-            Destroy(this.gameObject);
+            //不捡已有的武器
+           if (character.WeaponPrefab.GetComponent<WeaponAgent>().itemIndex != itemIndex && !character.HasWeapon(Item))
+            {
+                character.WeaponColumnAddItem(Item);
+                Destroy(this.gameObject);
+            }
         }
     }
 
     private void HandlePosition()
     {
+        //Debug.Log("角色编号：");
+        //Debug.Log(user.characterIndex);
         if (user.characterIndex == 0)
         {
             Vector3 weaponPosition = transform.position;
@@ -125,10 +162,48 @@ public class WeaponAgent : ItemAgent
             }
         }
 
+        else if(user.characterIndex == 1)
+        {
+            Vector3 weaponPosition = transform.position;
+
+            if (upFlag && aimDir.y <= 0)
+            {
+
+                upFlag = false;
+               // Vector3 scale = transform.localScale;
+                //scale.y = -scale.y;
+                //transform.localScale = scale;
+            }
+            else if (!upFlag && aimDir.y > 0)
+            {
+
+                upFlag = true;
+                //Vector3 scale = transform.localScale;
+                //scale.y = -scale.y;
+                //transform.localScale = scale;
+            }
+
+            if (!leftFlag && aimDir.x < 0)
+            {
+                leftFlag = true;
+                float deltaX = transform.position.x - user.GetPosition().x;
+                transform.position = Vector3.MoveTowards(weaponPosition, new Vector3(user.GetPosition().x - deltaX, weaponPosition.y), 10000f);
+
+            }
+            else if (leftFlag && aimDir.x >= 0)
+            {
+                leftFlag = false;
+                float deltaX = transform.position.x - user.GetPosition().x;
+
+                transform.position = Vector3.MoveTowards(weaponPosition, new Vector3(user.GetPosition().x - deltaX, weaponPosition.y), 10000f);
+
+            }
+        }
         else
         {
 
         }
+
 
 
 
