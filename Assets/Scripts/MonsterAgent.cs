@@ -38,9 +38,11 @@ public class MonsterAgent : LivingBaseAgent
     protected int SkillIndex { get; set; }
     protected bool SkillFinishedFlag { get; set; }
 
+    protected UIMonsterHealthBar monsterHealthBar = null;
+
     //public GameObject Prefab;
     // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
         living = Global.monsters[monsterIndex].Clone() as Monster;
         actualLiving = Monster.Clone() as Monster;
@@ -63,10 +65,12 @@ public class MonsterAgent : LivingBaseAgent
 
         rigidbody2d = GetComponent<Rigidbody2D>();
         collider2d = GetComponent<Collider2D>();
+
+        monsterHealthBar = transform.Find("MonsterHealth").Find("MonsterHealthBar").GetComponent<UIMonsterHealthBar>();
     }
 
     // Update is called once per frame
-    void Update()
+    public void Update()
     {
         switch (actionState)
         {
@@ -102,6 +106,8 @@ public class MonsterAgent : LivingBaseAgent
             default:
                 break;
         }
+        monsterHealthBar.SetValue(actualLiving.CurrentHealth / (float)actualLiving.MaxHealth);
+
         CheckState();
         SetRandomDirection();
         roamingTimer += Time.deltaTime;
