@@ -39,6 +39,7 @@ namespace Tests
 
 
         [UnityTest]
+        [Description("测试血瓶和血包能不能加人物血量")]
         public IEnumerator HealthItemTest()
         {
             LogAssert.ignoreFailingMessages = true;
@@ -101,6 +102,7 @@ namespace Tests
         }
 
         [UnityTest]
+        [Description("测试力量药水能不能加人物攻击")]
         public IEnumerator StrengthItemTest()
         {
             LogAssert.ignoreFailingMessages = true;

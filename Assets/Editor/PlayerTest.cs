@@ -11,20 +11,6 @@ namespace Tests
     {
         private CharacterAgent MahouAgent;
         
-        //[SetUp]
-        //public void Setup()
-        //{
-        //    MahouAgent = GameObject.Find("MahouPrefabs").GetComponent<CharacterAgent>();
-
-        //    Debug.Log("Set up.");
-        //}
-
-        //[TearDown]
-        //public void Teardown()
-        //{
-        //    MahouAgent = null;
-        //    Debug.Log("Tear down");
-        //}
 
         [SetUp]
         public void SetUp()
@@ -54,19 +40,6 @@ namespace Tests
         }
 
 
-
-        //[Test]
-        //public void LogError()
-        //{
-        //    //LogAssert.Expect(LogType.Error, "Failed.");
-        //    LogAssert.ignoreFailingMessages = true;
-        //    Debug.LogError("Wooops!.");
-        //    LogAssert.ignoreFailingMessages = false;
-
-        //}
-
-        // A UnityTest behaves like a coroutine in Play Mode. In Edit Mode you can use
-        // `yield return null;` to skip a frame.
         [UnityTest]
         [Order(0)]
         public IEnumerator CharacterLoadTest()
