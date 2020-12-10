@@ -81,7 +81,10 @@ public class WeaponAgent : ItemAgent
 
     protected void HandleAiming(float offSet, float angle,  bool leftFlag)
     {
-        if (leftFlag)
+        //为Robot调整武器指向角度
+        if (user.characterIndex == 1) offSet -= 90f;
+        
+            if (leftFlag)
         {
             aimTransform.eulerAngles = new Vector3(0, 0, offSet - angle);
          }
