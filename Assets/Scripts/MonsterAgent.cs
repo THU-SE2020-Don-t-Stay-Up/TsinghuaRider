@@ -106,6 +106,7 @@ public class MonsterAgent : LivingBaseAgent
             default:
                 break;
         }
+
         monsterHealthBar.SetValue(actualLiving.CurrentHealth / (float)actualLiving.MaxHealth);
 
         CheckState();
@@ -227,5 +228,19 @@ public class MonsterAgent : LivingBaseAgent
             ItemAgent.GenerateItem(transform.position, new Coin { Amount = ActualMonster.Reward });
         }
         base.Destroy();
+    }
+
+    /// <summary>
+    /// 以下函数供测试用
+    /// </summary>
+    /// <returns></returns>
+    public System.Collections.Generic.List<Skill> GetCurrentSkills()
+    {
+        return ActualMonster.Skills;
+    }
+
+    public bool IsChasing()
+    {
+        return actionState == ActionState.Chasing;
     }
 }
