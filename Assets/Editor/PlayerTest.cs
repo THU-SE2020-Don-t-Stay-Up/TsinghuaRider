@@ -42,6 +42,7 @@ namespace Tests
 
         [UnityTest]
         [Order(0)]
+        [Description("测试人物的index、各属性值是否正确加载")]
         public IEnumerator CharacterLoadTest()
         {
             LogAssert.ignoreFailingMessages = true;
@@ -80,12 +81,17 @@ namespace Tests
             frameCount = 0;
             Assert.IsFalse(MahouAgent.actualLiving.State.HasStatus(new InvincibleState()));
 
-
             // 测试伤害，扣20点血，受伤后应进入无敌
             MahouAgent.ChangeHealth(-20f);
             Assert.AreEqual(80f, MahouAgent.actualLiving.CurrentHealth);
             Assert.IsTrue(MahouAgent.actualLiving.State.HasStatus(new InvincibleState()));
 
+            // 无敌状态能够加血，血量上限不超过最大血量
+            MahouAgent.ChangeHealth(700f);
+            Assert.AreEqual(100f, MahouAgent.actualLiving.CurrentHealth);
+            Assert.AreEqual(MahouAgent.actualLiving.MaxHealth, MahouAgent.actualLiving.CurrentHealth);
+
+            // 等待无敌时间解除
             while ((frameCount++) <= 900)
             {
                 MahouAgent.Update();
@@ -94,24 +100,17 @@ namespace Tests
             frameCount = 0;
             Assert.IsFalse(MahouAgent.actualLiving.State.HasStatus(new InvincibleState()));
 
-            // 就算伤害值超过当前血量，血量最低也是0
+            // 就算伤害值超过当前血量，血量最低也是0，不过人已经没了
             MahouAgent.ChangeHealth(-700f);
             Assert.AreEqual(0f, MahouAgent.actualLiving.CurrentHealth);
-
-            // 血量上限不超过最大血量
-            MahouAgent.ChangeHealth(700f);
-            Assert.AreEqual(100f, MahouAgent.actualLiving.CurrentHealth);
-            Assert.AreEqual(MahouAgent.actualLiving.MaxHealth, MahouAgent.actualLiving.CurrentHealth);
+            Assert.IsTrue(MahouAgent.IsDead());
 
             LogAssert.ignoreFailingMessages = false;
         }
 
 
-        /// <summary>
-        /// 测试背包物品的添加、移除、使用
-        /// </summary>
-        /// <returns></returns>
         [UnityTest]
+        [Description("测试背包物品的添加、移除、使用")]
         public IEnumerator InventoryTest()
         {
             LogAssert.ignoreFailingMessages = true;

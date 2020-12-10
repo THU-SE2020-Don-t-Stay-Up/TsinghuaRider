@@ -68,6 +68,7 @@ namespace Tests
         public IEnumerator GunShot()
         {
             LogAssert.ignoreFailingMessages = true;
+            Assert.IsNull(GameObject.Find("BulletPrefab(Clone)"));
 
             gun.Attack();
             Assert.IsNotNull(GameObject.Find("BulletPrefab(Clone)"));
@@ -96,8 +97,6 @@ namespace Tests
                 yield return null;
             }
             Assert.IsTrue(finishFlag);
-
-
             yield return null;
 
             LogAssert.ignoreFailingMessages = false;
