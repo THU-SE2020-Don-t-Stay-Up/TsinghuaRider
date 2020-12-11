@@ -22,8 +22,6 @@ public class Initialization : MonoBehaviour
         GameObject minimapCamera = GameObject.Find("Minimap Camera");
         GameObject acrossSceneController = GameObject.Find("Across Scene Controller");
         
-        // 为了进行editor mode测试，把以下部分注释，之后需要还原！
-        /*
         DontDestroyOnLoad(mainCamera);
         DontDestroyOnLoad(vCamera);
         DontDestroyOnLoad(ui);
@@ -32,6 +30,6 @@ public class Initialization : MonoBehaviour
         
 
         Destroy(gameObject);
-        */
+
     }
 }

@@ -19,6 +19,7 @@ public class RoomGenerator : MonoBehaviour
     [Header("传送规则")]
     public GameObject teleporterPrefab;
     public string targetScene;
+    public float difficulty;
 
     Transform generatorPoint;
     enum Direction { up, down, left, right };
@@ -68,6 +69,8 @@ public class RoomGenerator : MonoBehaviour
 
             newRoom = Instantiate(roomPrefab, generatorPoint.position, Quaternion.identity).GetComponent<Room>();
             newRoom.stageClear = false;  // 初始设置为未通关状态
+            MonsterGenerator monsterGenerator = newRoom.gameObject.GetComponentInChildren<MonsterGenerator>();
+            monsterGenerator.difficulty = difficulty;  // 设置所有房间的难度
             roomList.Add(newRoom);
 
             ChangeGeneratePosition();

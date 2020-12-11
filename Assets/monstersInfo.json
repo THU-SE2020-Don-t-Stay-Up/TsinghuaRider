@@ -40,7 +40,7 @@
     "ViewRadius": 15,
     "Reward": 1,
     "TimeInvincible": 0,
-    "Difficulty": 40,
+    "Difficulty": 35,
     "Skills": [
       "MissleAttack"
     ],
@@ -65,7 +65,7 @@
     "ViewRadius": 15,
     "Reward": 1,
     "TimeInvincible": 0,
-    "Difficulty": 50,
+    "Difficulty": 60,
     "Skills": [
       "MissleAttack",
       "Split"
@@ -116,7 +116,7 @@
     "ViewAngle": 360,
     "ViewRadius": 15,
     "Reward": 1,
-    "Difficulty": 40,
+    "Difficulty": 35,
     "Skills": [
       "MeleeSlowAttack"
     ],
@@ -141,7 +141,7 @@
     "ViewAngle": 360,
     "ViewRadius": 30,
     "Reward": 1,
-    "Difficulty": 100,
+    "Difficulty": 1000,
     "Skills": [
       "MissleAttack",
       "Fierce",
@@ -158,7 +158,7 @@
   {
     "Name": "特征枝",
     "MoveSpeed": 4.5,
-    "MaxHealth": 30,
+    "MaxHealth": 25,
     "Defense": 0,
     "Tenacity": 0.0,
     "Agility": 5.0,
@@ -171,7 +171,7 @@
     "ViewAngle": 360,
     "ViewRadius": 15,
     "Reward": 1,
-    "Difficulty": 20,
+    "Difficulty": 25,
     "Skills": [
       "MissleBleedAttack"
     ],
@@ -183,12 +183,12 @@
   {
     "Name": "矩阵",
     "MoveSpeed": 3,
-    "MaxHealth": 50,
+    "MaxHealth": 40,
     "Defense": 0,
     "Tenacity": 0.0,
-    "Agility": 5.0,
-    "AttackSpeed": 2.0,
-    "AttackRadius": 15,
+    "Agility": 3.0,
+    "AttackSpeed": 4.0,
+    "AttackRadius": 8,
     "AttackAmount": 8,
     "AttackAngle": 30,
     "BulletSpeed": 10,
@@ -196,7 +196,7 @@
     "ViewAngle": 20,
     "ViewRadius": 20,
     "Reward": 1,
-    "Difficulty": 20,
+    "Difficulty": 30,
     "Skills": [
       "Obstacle"
     ],
@@ -221,7 +221,7 @@
     "ViewAngle": 360,
     "ViewRadius": 15,
     "Reward": 1,
-    "Difficulty": 20,
+    "Difficulty": 35,
     "Skills": [
       "MeleeChargeAttack"
     ],
@@ -232,8 +232,8 @@
   },
   {
     "Name": "象两",
-    "MoveSpeed": 4.5,
-    "MaxHealth": 50,
+    "MoveSpeed": 3.5,
+    "MaxHealth": 60,
     "Defense": 0,
     "Tenacity": 0.0,
     "Agility": 5.0,
@@ -246,7 +246,7 @@
     "ViewAngle": 360,
     "ViewRadius": 15,
     "Reward": 1,
-    "Difficulty": 20,
+    "Difficulty": 25,
     "Skills": [
       "MeleeAttack"
     ],
@@ -257,21 +257,21 @@
   },
   {
     "Name": "特征象两",
-    "MoveSpeed": 4,
-    "MaxHealth": 80,
+    "MoveSpeed": 2.5,
+    "MaxHealth": 100,
     "Defense": 0,
     "Tenacity": 0.0,
     "Agility": 5.0,
     "AttackSpeed": 2.0,
     "AttackRadius": 2,
-    "AttackAmount": 12,
+    "AttackAmount": 18,
     "AttackAngle": 30,
     "BulletSpeed": 10,
-    "TimeInvincible": 0,
+    "TimeInvincible": 2,
     "ViewAngle": 360,
     "ViewRadius": 15,
     "Reward": 1,
-    "Difficulty": 20,
+    "Difficulty": 50,
     "Skills": [
       "MeleeAttack"
     ],

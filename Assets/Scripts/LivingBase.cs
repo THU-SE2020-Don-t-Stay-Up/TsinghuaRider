@@ -88,7 +88,7 @@ public class LivingBaseAgent : MonoBehaviour
                 Debug.Log($"{actualLiving.Name} now health is {actualLiving.CurrentHealth}");
                 //animator.SetTrigger("Hit");
                 //audioSource.PlayOneShot(getHitClip);
-                actualLiving.State.AddStatus(new InvincibleState(), 0.5f);
+                actualLiving.State.AddStatus(new InvincibleState(), actualLiving.TimeInvincible);
                 //print($"{actualLiving.Name}获得无敌{actualLiving.TimeInvincible}");
                 if (IsDead())
                 {

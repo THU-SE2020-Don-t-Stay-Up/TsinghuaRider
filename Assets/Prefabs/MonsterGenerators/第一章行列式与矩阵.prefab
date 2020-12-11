@@ -25,11 +25,11 @@ PrefabInstance:
       objectReference: {fileID: 1118593486341943542, guid: 3c538a75fe8289446a87004cab39444e, type: 3}
     - target: {fileID: 1959152546303063255, guid: 395dc52d0af35114183ddabb090ee6fe, type: 3}
       propertyPath: probability.Array.data[0]
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1959152546303063255, guid: 395dc52d0af35114183ddabb090ee6fe, type: 3}
       propertyPath: probability.Array.data[1]
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4546046770748004663, guid: 395dc52d0af35114183ddabb090ee6fe, type: 3}
       propertyPath: m_LocalPosition.x
