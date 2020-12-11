@@ -22,12 +22,13 @@ public class Bullet : MonoBehaviour, IInteract
         aimTransform = transform;
     }
 
-    public void SetBullet(LivingBaseAgent user, float attackAmount, Action<LivingBaseAgent> extraEffect)
+    public void SetBullet(LivingBaseAgent user, float attackAmount, Action<LivingBaseAgent> extraEffect, float attackRadius=100.0f)
     {
         StartPoint = user.transform.position;
         UserTag = user.tag;
         Damage = attackAmount;
         ExtraEffect = extraEffect;
+        AttackRadius = attackRadius;
     }
 
     private void HandleAiming(Vector3 shootDir)
@@ -60,7 +61,7 @@ public class Bullet : MonoBehaviour, IInteract
 
     private void Update()
     {
-        if ((transform.position - StartPoint).magnitude > 100.0f)
+        if ((transform.position - StartPoint).magnitude > AttackRadius)
         {
             Destroy(gameObject);
         }

@@ -6,6 +6,7 @@ abstract public class Weapon : Item
 {
     public float AttackSpeed;
     public float AttackRadius;
+    public float SwordLightRadius=5.0f;
     public float AttackAmount;
     public float AttackAngle;
     public GameObject bulletPrefab;
@@ -13,6 +14,7 @@ abstract public class Weapon : Item
     public Vector3 attackOffset;
 
     public virtual void Attack(CharacterAgent user, Vector3 direction) { }
+    public virtual void SwordLightAttack(CharacterAgent user, Vector3 direction) { }
 
     public override bool Use(CharacterAgent character)
     {
@@ -81,6 +83,15 @@ public class Saber1 : Weapon
         }
     }
 
+    public override void SwordLightAttack(CharacterAgent user, Vector3 direction)
+    {
+        Vector3 offset = new Vector3(1, 1, 0);
+        GameObject projectileObject = GameObject.Instantiate(bulletPrefab, user.transform.position + offset + direction * 1f, Quaternion.identity);
+        Bullet bullet = projectileObject.GetComponent<Bullet>();
+        bullet.SetBullet(user, user.ActualCharacter.AttackAmount * AttackAmount, ExtraEffect, SwordLightRadius);
+        bullet.Shoot(direction, 10);
+    }
+
 }
 
 public class Saber2 : Weapon
@@ -106,7 +117,14 @@ public class Saber2 : Weapon
             ExtraEffect(targetAgent);
         }
     }
-
+    public override void SwordLightAttack(CharacterAgent user, Vector3 direction)
+    {
+        Vector3 offset = new Vector3(1, 1, 0);
+        GameObject projectileObject = GameObject.Instantiate(bulletPrefab, user.transform.position + offset + direction * 1f, Quaternion.identity);
+        Bullet bullet = projectileObject.GetComponent<Bullet>();
+        bullet.SetBullet(user, user.ActualCharacter.AttackAmount * AttackAmount, ExtraEffect, SwordLightRadius);
+        bullet.Shoot(direction, 10);
+    }
 }
 
 public class Saber3 : Weapon
@@ -131,6 +149,15 @@ public class Saber3 : Weapon
             targetAgent.ChangeHealth(-user.ActualCharacter.AttackAmount * AttackAmount);
             ExtraEffect(targetAgent);
         }
+    }
+
+    public override void SwordLightAttack(CharacterAgent user, Vector3 direction)
+    {
+        Vector3 offset = new Vector3(1, 1, 0);
+        GameObject projectileObject = GameObject.Instantiate(bulletPrefab, user.transform.position + offset + direction * 1f, Quaternion.identity);
+        Bullet bullet = projectileObject.GetComponent<Bullet>();
+        bullet.SetBullet(user, user.ActualCharacter.AttackAmount * AttackAmount, ExtraEffect, SwordLightRadius);
+        bullet.Shoot(direction, 10);
     }
 
 }
@@ -159,6 +186,14 @@ public class BlackExcalibur : Weapon
         }
     }
 
+    public override void SwordLightAttack(CharacterAgent user, Vector3 direction)
+    {
+        Vector3 offset = new Vector3(1, 1, 0);
+        GameObject projectileObject = GameObject.Instantiate(bulletPrefab, user.transform.position + offset + direction * 1f, Quaternion.identity);
+        Bullet bullet = projectileObject.GetComponent<Bullet>();
+        bullet.SetBullet(user, user.ActualCharacter.AttackAmount * AttackAmount, ExtraEffect, SwordLightRadius);
+        bullet.Shoot(direction, 10);
+    }
 }
 
 public class Excalibur : Weapon
@@ -183,6 +218,16 @@ public class Excalibur : Weapon
             targetAgent.ChangeHealth(-user.ActualCharacter.AttackAmount * AttackAmount);
             ExtraEffect(targetAgent);
         }
+    }
+
+    //SwordLightAttack
+    public override void SwordLightAttack(CharacterAgent user, Vector3 direction)
+    {
+        Vector3 offset = new Vector3(1, 1, 0);
+        GameObject projectileObject = GameObject.Instantiate(bulletPrefab, user.transform.position + offset + direction * 1f, Quaternion.identity);
+        Bullet bullet = projectileObject.GetComponent<Bullet>();
+        bullet.SetBullet(user, user.ActualCharacter.AttackAmount * AttackAmount, ExtraEffect, SwordLightRadius);
+        bullet.Shoot(direction, 10);
     }
 
 }
@@ -211,6 +256,15 @@ public class Faith : Weapon
         }
     }
 
+    public override void SwordLightAttack(CharacterAgent user, Vector3 direction)
+    {
+        Vector3 offset = new Vector3(1, 1, 0);
+        GameObject projectileObject = GameObject.Instantiate(bulletPrefab, user.transform.position + offset + direction * 1f, Quaternion.identity);
+        Bullet bullet = projectileObject.GetComponent<Bullet>();
+        bullet.SetBullet(user, user.ActualCharacter.AttackAmount * AttackAmount, ExtraEffect, SwordLightRadius);
+        bullet.Shoot(direction, 10);
+    }
+
 }
 
 public class GilgameshEa : Weapon
@@ -235,6 +289,15 @@ public class GilgameshEa : Weapon
             targetAgent.ChangeHealth(-user.ActualCharacter.AttackAmount * AttackAmount);
             ExtraEffect(targetAgent);
         }
+    }
+
+    public override void SwordLightAttack(CharacterAgent user, Vector3 direction)
+    {
+        Vector3 offset = new Vector3(1, 1, 0);
+        GameObject projectileObject = GameObject.Instantiate(bulletPrefab, user.transform.position + offset + direction * 1f, Quaternion.identity);
+        Bullet bullet = projectileObject.GetComponent<Bullet>();
+        bullet.SetBullet(user, user.ActualCharacter.AttackAmount * AttackAmount, ExtraEffect, SwordLightRadius);
+        bullet.Shoot(direction, 10);
     }
 
 }
@@ -263,6 +326,15 @@ public class MasterSword : Weapon
         }
     }
 
+    public override void SwordLightAttack(CharacterAgent user, Vector3 direction)
+    {
+        Vector3 offset = new Vector3(1, 1, 0);
+        GameObject projectileObject = GameObject.Instantiate(bulletPrefab, user.transform.position + offset + direction * 1f, Quaternion.identity);
+        Bullet bullet = projectileObject.GetComponent<Bullet>();
+        bullet.SetBullet(user, user.ActualCharacter.AttackAmount * AttackAmount, ExtraEffect, SwordLightRadius);
+        bullet.Shoot(direction, 10);
+    }
+
 }
 
 public class VirtuousTreaty : Weapon
@@ -289,6 +361,15 @@ public class VirtuousTreaty : Weapon
         }
     }
 
+    public override void SwordLightAttack(CharacterAgent user, Vector3 direction)
+    {
+        Vector3 offset = new Vector3(1, 1, 0);
+        GameObject projectileObject = GameObject.Instantiate(bulletPrefab, user.transform.position + offset + direction * 1f, Quaternion.identity);
+        Bullet bullet = projectileObject.GetComponent<Bullet>();
+        bullet.SetBullet(user, user.ActualCharacter.AttackAmount * AttackAmount, ExtraEffect, SwordLightRadius);
+        bullet.Shoot(direction, 10);
+    }
+
 }
 
 public class xianyu : Weapon
@@ -297,7 +378,7 @@ public class xianyu : Weapon
     {
         AttackSpeed = 0.2f;
         AttackRadius = 2;
-        AttackAmount = 10;
+        AttackAmount = 20;
         AttackAngle = 120;
         IsStackable = false;
         Amount = 1;
@@ -314,7 +395,7 @@ public class xianyu : Weapon
             ExtraEffect(targetAgent);
         }
     }
-
+    //咸鱼武器特点：没有刀光，但是近战伤害高
 }
 
 
@@ -324,7 +405,7 @@ public class qingqing : Weapon
     {
         AttackSpeed = 0.2f;
         AttackRadius = 2;
-        AttackAmount = 10;
+        AttackAmount = 20;
         AttackAngle = 120;
         IsStackable = false;
         Amount = 1;
@@ -341,7 +422,7 @@ public class qingqing : Weapon
             ExtraEffect(targetAgent);
         }
     }
-
+    //清青鸡肉卷的特点与咸鱼相同
 }
 
 public class Gun : Weapon
