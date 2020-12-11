@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8623174365866364272}
   - component: {fileID: 3111369030375657783}
   - component: {fileID: 4755722459872432813}
+  - component: {fileID: 1394767435001947960}
   m_Layer: 13
   m_Name: "\u591A\u5143\u9E21\u5206"
   m_TagString: Monster
@@ -98,7 +99,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddae7640c4889a34f893c40092456f0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monsterHealthBar: {fileID: 0}
   monsterIndex: 2
   bulletPrefab: {fileID: 5863988906583410607, guid: 2b192dffe9f737646b3ae9b27b3661f6, type: 3}
 --- !u!50 &3111369030375657783
@@ -148,6 +148,25 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.8, y: 2.2059796}
   m_EdgeRadius: 0
+--- !u!95 &1394767435001947960
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 813766749154334305}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &976077862409059729
 PrefabInstance:
   m_ObjectHideFlags: 0
