@@ -10,7 +10,7 @@ public class WeaponAgent : ItemAgent
     public GameObject bulletPrefab;
     public Weapon Weapon { get; set; }
 
-    private Vector3 aimDir;
+    private Vector3 aimDir = new Vector3(1,0,0);
 
     protected bool leftFlag = false;
     protected bool upFlag = false;
@@ -81,7 +81,10 @@ public class WeaponAgent : ItemAgent
 
     protected void HandleAiming(float offSet, float angle,  bool leftFlag)
     {
-        if (leftFlag)
+        //为Robot调整武器指向角度
+        if (user.characterIndex == 1) offSet -= 90f;
+        
+            if (leftFlag)
         {
             aimTransform.eulerAngles = new Vector3(0, 0, offSet - angle);
          }
@@ -211,5 +214,17 @@ public class WeaponAgent : ItemAgent
 
     }
 
+    /// <summary>
+    /// 以下的函数为了测试使用
+    /// </summary>
+    public virtual void TestAwake(CharacterAgent _user)
+    {
+        Weapon = Global.items[itemIndex].Clone() as Weapon;
+        Weapon.bulletPrefab = bulletPrefab;
+        textMeshPro = transform.Find("Text").GetComponent<TextMeshPro>();
+
+        aimTransform = transform;
+        user = _user;
+    }
 }
 

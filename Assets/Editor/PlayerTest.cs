@@ -11,24 +11,12 @@ namespace Tests
     {
         private CharacterAgent MahouAgent;
         
-        //[SetUp]
-        //public void Setup()
-        //{
-        //    MahouAgent = GameObject.Find("MahouPrefabs").GetComponent<CharacterAgent>();
-
-        //    Debug.Log("Set up.");
-        //}
-
-        //[TearDown]
-        //public void Teardown()
-        //{
-        //    MahouAgent = null;
-        //    Debug.Log("Tear down");
-        //}
 
         [SetUp]
         public void SetUp()
         {
+            LogAssert.ignoreFailingMessages = true;
+
             MahouAgent = GameObject.Find("MahouPrefabs").GetComponent<CharacterAgent>();
             var initialGame = new Initialization();
             initialGame.Awake();
@@ -45,35 +33,26 @@ namespace Tests
         [TearDown]
         public void TearDown()
         {
+            LogAssert.ignoreFailingMessages = false;
+
             MahouAgent = null;
             Debug.Log("Tear down.");
         }
 
 
-
-        //[Test]
-        //public void LogError()
-        //{
-        //    //LogAssert.Expect(LogType.Error, "Failed.");
-        //    LogAssert.ignoreFailingMessages = true;
-        //    Debug.LogError("Wooops!.");
-        //    LogAssert.ignoreFailingMessages = false;
-
-        //}
-
-        // A UnityTest behaves like a coroutine in Play Mode. In Edit Mode you can use
-        // `yield return null;` to skip a frame.
         [UnityTest]
+        [Order(0)]
+        [Description("测试人物的index、各属性值是否正确加载")]
         public IEnumerator CharacterLoadTest()
         {
             LogAssert.ignoreFailingMessages = true;
 
-            Assert.IsTrue(MahouAgent != null);
+            Assert.IsNotNull(MahouAgent);
             Assert.AreEqual(0, MahouAgent.characterIndex);
             Assert.AreEqual(1, MahouAgent.actualLiving.TimeInvincible);
             Assert.AreEqual(1, MahouAgent.actualLiving.AttackAmount);
             Assert.AreEqual(100f, MahouAgent.actualLiving.CurrentHealth);
-            Assert.IsTrue(MahouAgent.WeaponPrefab != null);
+            Assert.IsNotNull(MahouAgent.WeaponPrefab);
             Debug.Log(MahouAgent.WeaponPrefab);
             yield return null;
 
@@ -81,6 +60,7 @@ namespace Tests
         }
 
         [UnityTest]
+        [Order(1)]
         public IEnumerator CharacterHealthTest()
         {
             LogAssert.ignoreFailingMessages = true;
@@ -93,21 +73,26 @@ namespace Tests
 
             // 过1s以上，应该无敌状态消除
             var frameCount = 0;
-            while ((frameCount++) <= 90)
+            while ((frameCount++) <= 900)
             {
                 MahouAgent.Update();
                 yield return null;
             }
             frameCount = 0;
             Assert.IsFalse(MahouAgent.actualLiving.State.HasStatus(new InvincibleState()));
-
 
             // 测试伤害，扣20点血，受伤后应进入无敌
             MahouAgent.ChangeHealth(-20f);
             Assert.AreEqual(80f, MahouAgent.actualLiving.CurrentHealth);
             Assert.IsTrue(MahouAgent.actualLiving.State.HasStatus(new InvincibleState()));
 
-            while ((frameCount++) <= 60)
+            // 无敌状态能够加血，血量上限不超过最大血量
+            MahouAgent.ChangeHealth(700f);
+            Assert.AreEqual(100f, MahouAgent.actualLiving.CurrentHealth);
+            Assert.AreEqual(MahouAgent.actualLiving.MaxHealth, MahouAgent.actualLiving.CurrentHealth);
+
+            // 等待无敌时间解除
+            while ((frameCount++) <= 900)
             {
                 MahouAgent.Update();
                 yield return null;
@@ -115,44 +100,17 @@ namespace Tests
             frameCount = 0;
             Assert.IsFalse(MahouAgent.actualLiving.State.HasStatus(new InvincibleState()));
 
-            // 就算伤害值超过当前血量，血量最低也是0
+            // 就算伤害值超过当前血量，血量最低也是0，不过人已经没了
             MahouAgent.ChangeHealth(-700f);
             Assert.AreEqual(0f, MahouAgent.actualLiving.CurrentHealth);
-
-            // 血量上限不超过最大血量
-            MahouAgent.ChangeHealth(700f);
-            Assert.AreEqual(100f, MahouAgent.actualLiving.CurrentHealth);
-            Assert.AreEqual(MahouAgent.actualLiving.MaxHealth, MahouAgent.actualLiving.CurrentHealth);
+            Assert.IsTrue(MahouAgent.IsDead());
 
             LogAssert.ignoreFailingMessages = false;
         }
 
 
-        /// <summary>
-        /// 想测移动、速度的，但是似乎对rigidbody2d的操作不起作用；直接操作transform.position可行，但是没意义
-        /// </summary>
-        /// <returns></returns>
         [UnityTest]
-        public IEnumerator MoveTest()
-        {
-            Assert.AreEqual(new Vector3(0, 0, 0), MahouAgent.GetPosition());
-            
-            var frameCount = 0;
-            while ((frameCount++) <= 600)
-            {
-                MahouAgent.Update();
-                MahouAgent.rigidbody2d.velocity = new Vector2(1, 0) * MahouAgent.ActualCharacter.MoveSpeed;
-                //MahouAgent.transform.position = new Vector3(1, 2, 3);
-            }
-            Debug.Log(MahouAgent.GetPosition());
-            yield return null;
-        }
-
-        /// <summary>
-        /// 测试背包物品的添加、移除、使用
-        /// </summary>
-        /// <returns></returns>
-        [UnityTest]
+        [Description("测试背包物品的添加、移除、使用")]
         public IEnumerator InventoryTest()
         {
             LogAssert.ignoreFailingMessages = true;
@@ -240,6 +198,7 @@ namespace Tests
         [UnityTest]
         public IEnumerator DashTest()
         {
+            MahouAgent.ClearDashBar();
             Assert.AreEqual(0, MahouAgent.dashBar);
             var frameCount = 0;
             while ((frameCount++) <= 300)

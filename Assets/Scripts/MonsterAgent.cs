@@ -38,9 +38,11 @@ public class MonsterAgent : LivingBaseAgent
     protected int SkillIndex { get; set; }
     protected bool SkillFinishedFlag { get; set; }
 
+    protected UIMonsterHealthBar monsterHealthBar = null;
+
     //public GameObject Prefab;
     // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
         living = Global.monsters[monsterIndex].Clone() as Monster;
         actualLiving = Monster.Clone() as Monster;
@@ -65,12 +67,15 @@ public class MonsterAgent : LivingBaseAgent
         rigidbody2d = GetComponent<Rigidbody2D>();
         collider2d = GetComponent<Collider2D>();
 
+
         //测试
         Animator.SetTrigger("walk");
+        monsterHealthBar = transform.Find("MonsterHealth").Find("MonsterHealthBar").GetComponent<UIMonsterHealthBar>();
+
     }
 
     // Update is called once per frame
-    void Update()
+    public void Update()
     {
         switch (actionState)
         {
@@ -108,6 +113,9 @@ public class MonsterAgent : LivingBaseAgent
             default:
                 break;
         }
+
+        monsterHealthBar.SetValue(actualLiving.CurrentHealth / (float)actualLiving.MaxHealth);
+
         CheckState();
         SetRandomDirection();
         roamingTimer += Time.deltaTime;
@@ -227,5 +235,19 @@ public class MonsterAgent : LivingBaseAgent
             ItemAgent.GenerateItem(transform.position, new Coin { Amount = ActualMonster.Reward });
         }
         base.Destroy();
+    }
+
+    /// <summary>
+    /// 以下函数供测试用
+    /// </summary>
+    /// <returns></returns>
+    public System.Collections.Generic.List<Skill> GetCurrentSkills()
+    {
+        return ActualMonster.Skills;
+    }
+
+    public bool IsChasing()
+    {
+        return actionState == ActionState.Chasing;
     }
 }
