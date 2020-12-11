@@ -35,7 +35,7 @@ public class Sword : Weapon
 {
     public Sword()
     {
-        AttackSpeed = 3;
+        AttackSpeed = 0.2f;
         AttackRadius = 2;
         AttackAmount = 100;
         AttackAngle = 120;
@@ -61,7 +61,7 @@ public class Saber1 : Weapon
 {
     public Saber1()
     {
-        AttackSpeed = 1;
+        AttackSpeed = 0.2f;
         AttackRadius = 2;
         AttackAmount = 10;
         AttackAngle = 120;
@@ -87,7 +87,7 @@ public class Saber2 : Weapon
 {
     public Saber2()
     {
-        AttackSpeed = 1;
+        AttackSpeed = 0.2f;
         AttackRadius = 2;
         AttackAmount = 10;
         AttackAngle = 120;
@@ -113,7 +113,7 @@ public class Saber3 : Weapon
 {
     public Saber3()
     {
-        AttackSpeed = 1;
+        AttackSpeed = 0.2f;
         AttackRadius = 2;
         AttackAmount = 10;
         AttackAngle = 120;
@@ -139,7 +139,7 @@ public class BlackExcalibur : Weapon
 {
     public BlackExcalibur()
     {
-        AttackSpeed = 1;
+        AttackSpeed = 0.2f;
         AttackRadius = 2;
         AttackAmount = 10;
         AttackAngle = 120;
@@ -165,7 +165,7 @@ public class Excalibur : Weapon
 {
     public Excalibur()
     {
-        AttackSpeed = 1;
+        AttackSpeed = 0.2f;
         AttackRadius = 2;
         AttackAmount = 10;
         AttackAngle = 120;
@@ -191,7 +191,7 @@ public class Faith : Weapon
 {
     public Faith()
     {
-        AttackSpeed = 1;
+        AttackSpeed = 0.2f;
         AttackRadius = 2;
         AttackAmount = 10;
         AttackAngle = 120;
@@ -217,7 +217,7 @@ public class GilgameshEa : Weapon
 {
     public GilgameshEa()
     {
-        AttackSpeed = 1;
+        AttackSpeed = 0.2f;
         AttackRadius = 2;
         AttackAmount = 10;
         AttackAngle = 120;
@@ -243,7 +243,7 @@ public class MasterSword : Weapon
 {
     public MasterSword()
     {
-        AttackSpeed = 1;
+        AttackSpeed = 0.2f;
         AttackRadius = 2;
         AttackAmount = 10;
         AttackAngle = 120;
@@ -269,7 +269,7 @@ public class VirtuousTreaty : Weapon
 {
     public VirtuousTreaty()
     {
-        AttackSpeed = 1;
+        AttackSpeed = 0.2f;
         AttackRadius = 2;
         AttackAmount = 10;
         AttackAngle = 120;
@@ -295,7 +295,7 @@ public class xianyu : Weapon
 {
     public xianyu()
     {
-        AttackSpeed = 1;
+        AttackSpeed = 0.2f;
         AttackRadius = 2;
         AttackAmount = 10;
         AttackAngle = 120;
@@ -322,7 +322,7 @@ public class qingqing : Weapon
 {
     public qingqing()
     {
-        AttackSpeed = 1;
+        AttackSpeed = 0.2f;
         AttackRadius = 2;
         AttackAmount = 10;
         AttackAngle = 120;
@@ -360,7 +360,7 @@ public class Gun : Weapon
 
     public override void Attack(CharacterAgent user, Vector3 direction)
     {
-        
+        Debug.Log(user.WeaponPrefab.transform.position);
         GameObject projectileObject = GameObject.Instantiate(bulletPrefab, user.WeaponPrefab.transform.position + direction * 0.5f, Quaternion.identity);
         Bullet bullet = projectileObject.GetComponent<Bullet>();
         bullet.SetBullet(user, user.ActualCharacter.AttackAmount * AttackAmount, ExtraEffect);

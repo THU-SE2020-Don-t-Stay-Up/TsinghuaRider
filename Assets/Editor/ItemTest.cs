@@ -13,6 +13,8 @@ namespace Tests
         [SetUp]
         public void SetUp()
         {
+            LogAssert.ignoreFailingMessages = true;
+
             MahouAgent = GameObject.Find("MahouPrefabs").GetComponent<CharacterAgent>();
             var initialGame = new Initialization();
             initialGame.Awake();
@@ -29,12 +31,15 @@ namespace Tests
         [TearDown]
         public void TearDown()
         {
+            LogAssert.ignoreFailingMessages = false;
+
             MahouAgent = null;
             Debug.Log("Tear down.");
         }
 
 
         [UnityTest]
+        [Description("测试血瓶和血包能不能加人物血量")]
         public IEnumerator HealthItemTest()
         {
             LogAssert.ignoreFailingMessages = true;
@@ -97,6 +102,7 @@ namespace Tests
         }
 
         [UnityTest]
+        [Description("测试力量药水能不能加人物攻击")]
         public IEnumerator StrengthItemTest()
         {
             LogAssert.ignoreFailingMessages = true;
@@ -114,5 +120,19 @@ namespace Tests
             yield return null;
             LogAssert.ignoreFailingMessages = false;
         }
+        
+
+        [UnityTest]
+        [Description("测试物品生成函数生成的物品的位置和数量是否正确")]
+        public IEnumerator ItemGenerateTest()
+        {
+            ItemAgent.GenerateItem(new Vector3(5, 5), new HealthPotion { Amount = 10 });
+
+            var item = GameObject.Find("HealthPotion(Clone)");
+            Assert.AreEqual(new Vector3(5, 5, 0), item.transform.position);
+            Assert.AreEqual(10, item.GetComponent<ItemAgent>().Item.Amount);
+            yield return null;
+        }
+
     }
 }

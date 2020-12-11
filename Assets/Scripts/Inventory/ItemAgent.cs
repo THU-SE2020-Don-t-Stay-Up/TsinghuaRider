@@ -38,6 +38,8 @@ public class ItemAgent : MonoBehaviour, IInteract
     /// <param name="item"></param>
     public void SetItem(Item item)
     {
+        // 为了Edit Mode测试，加入Awake()，之后需要删除
+        Awake();
         this.Item = item;
 
         if (item.Amount > 1)

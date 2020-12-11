@@ -29,8 +29,11 @@ public class Bullet : MonoBehaviour, IInteract
         Damage = attackAmount;
         ExtraEffect = extraEffect;
     }
+
     private void HandleAiming(Vector3 shootDir)
     {
+        // 这个Awake()也是为了测试加上去的
+        Awake();
         float angle = Mathf.Atan2(shootDir.y, shootDir.x) * Mathf.Rad2Deg;
         aimTransform.eulerAngles = new Vector3(0, 0, angle);
     }
