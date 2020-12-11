@@ -43,7 +43,7 @@ public class UIInventory : MonoBehaviour
 
         int x = 0;
         int y = 0;
-        float itemSlotCellSize = 50.0f;
+        float itemSlotCellSize = 57.0f;
 
         // 在UI上摆放物品，并显示其图片
         foreach (Item item in inventory.ItemList)
