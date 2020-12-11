@@ -39,3 +39,6 @@ ProjectSettings/EditorBuildSettings.asset
 
 # Scenes
 
+
+# Credential
+.git-credentials
