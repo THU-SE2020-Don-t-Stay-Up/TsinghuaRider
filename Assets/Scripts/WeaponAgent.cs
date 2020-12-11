@@ -101,6 +101,12 @@ public class WeaponAgent : ItemAgent
         return true;
     }
 
+    public virtual bool SwordLightAttack()//刀光攻击
+    {
+        Weapon.SwordLightAttack(user, aimDir);
+        return true;
+    }
+
 
     public override void InteractWith(GameObject gameObject)
     {

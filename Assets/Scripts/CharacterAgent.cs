@@ -351,7 +351,7 @@ public class CharacterAgent : LivingBaseAgent
             attackingFlag = !WeaponPrefab.GetComponent<WeaponAgent>().Attack();
             SetState(0);
         }
-
+        //鼠标左键
         if (Input.GetMouseButtonDown(0))
         {
             //attackingFlag = true;
@@ -377,6 +377,28 @@ public class CharacterAgent : LivingBaseAgent
                     deltaTime = 0;
                     SetState(0);
                 }
+            }
+        }
+        //鼠标右键，使用刀光攻击
+        else if (Input.GetMouseButtonDown(1))
+        {
+            //attackingFlag = true;
+            //Debug.Log(WeaponPrefab);
+            if (WeaponPrefab != null)
+            {
+                WeaponAgent weaponAgent = WeaponPrefab.GetComponent<WeaponAgent>();
+                if (ActualCharacter.AttackSpeed * weaponAgent.Weapon.AttackSpeed - deltaTime < 0.01)
+                // if (true)
+                {
+                    SetState(1);
+                    attackingFlag = !weaponAgent.SwordLightAttack();
+                    deltaTime = 0;
+                    SetState(0);
+                }
+            }
+            else
+            {//没有武器时不响应
+                
             }
         }
     }
