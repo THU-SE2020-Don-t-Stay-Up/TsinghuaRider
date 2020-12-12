@@ -137,6 +137,7 @@ GameObject:
   - component: {fileID: 4420874502087426351}
   - component: {fileID: 5541491574197067267}
   - component: {fileID: 4164349898540262203}
+  - component: {fileID: 1076842371381462152}
   m_Layer: 13
   m_Name: "\u5BD2\u9F20"
   m_TagString: Monster
@@ -291,6 +292,29 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1076842371381462152
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8012292933381937717}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57c008f954fe54a8bb972de1018a2cb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RootBone: {fileID: 4462152130529953286}
+  m_BoneTransforms:
+  - {fileID: 4462152130529953286}
+  - {fileID: 5115714284222859366}
+  - {fileID: 6306042199280926870}
+  - {fileID: 9045438511665181360}
+  m_Bounds:
+    m_Center: {x: 0, y: 2.182175, z: 0}
+    m_Extent: {x: 2.4800003, y: 2.480375, z: 0}
+  m_UseBatching: 1
+  m_AlwaysUpdate: 1
 --- !u!1001 &7902480998998007208
 PrefabInstance:
   m_ObjectHideFlags: 0

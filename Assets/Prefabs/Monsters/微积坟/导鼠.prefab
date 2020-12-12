@@ -231,6 +231,7 @@ GameObject:
   - component: {fileID: 902533353708823891}
   - component: {fileID: -199498033403561345}
   - component: {fileID: 7152982450636620674}
+  - component: {fileID: 3974247800859878833}
   m_Layer: 13
   m_Name: "\u5BFC\u9F20"
   m_TagString: Monster
@@ -385,6 +386,33 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &3974247800859878833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6840133694130961993}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57c008f954fe54a8bb972de1018a2cb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RootBone: {fileID: 3181850231857220985}
+  m_BoneTransforms:
+  - {fileID: 3181850231857220985}
+  - {fileID: 6217989976274456709}
+  - {fileID: 6868600071085296456}
+  - {fileID: 8952561813605690893}
+  - {fileID: 3331454958491838126}
+  - {fileID: 4721499888248084073}
+  - {fileID: 6471861250926677833}
+  - {fileID: 5887747534694897032}
+  m_Bounds:
+    m_Center: {x: 0.2625593, y: 0.7311504, z: 0}
+    m_Extent: {x: 1.0015235, y: 0.93565303, z: 0}
+  m_UseBatching: 1
+  m_AlwaysUpdate: 1
 --- !u!1 &7308343711366951196
 GameObject:
   m_ObjectHideFlags: 0
