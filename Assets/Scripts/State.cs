@@ -109,6 +109,17 @@ public class BleedState: StateBase
     }
 }
 
+public class VertigoState : StateBase
+{
+    public override void Effect(LivingBaseAgent agent)
+    {
+    }
+
+    public override void Resume(LivingBaseAgent agent)
+    {
+    }
+}
+
 /// <summary>
 /// 状态类，存储并操作object的状态
 /// </summary>

@@ -63,13 +63,13 @@ public class MonsterAgent : LivingBaseAgent
         ActualMonster.SkillOrder.ForEach(skill => skill.Init(this));
         ActualMonster.Skills.ForEach(skill => skill.Init(this));
 
-        //Animator = GetComponent<Animator>();
+        Animator = GetComponent<Animator>();
         rigidbody2d = GetComponent<Rigidbody2D>();
         collider2d = GetComponent<Collider2D>();
 
 
         //测试
-        //Animator.SetTrigger("walk");
+        Animator.SetTrigger("walk");
         monsterHealthBar = transform.Find("MonsterHealth").Find("MonsterHealthBar").GetComponent<UIMonsterHealthBar>();
 
     }
@@ -80,34 +80,26 @@ public class MonsterAgent : LivingBaseAgent
         switch (actionState)
         {
             case ActionState.Roaming:
-                //Animator.SetTrigger("walk");
+                Animator.SetTrigger("walk");
                 Roaming();
                 break;
             case ActionState.Chasing:
                 SkillFinishedFlag = ActualMonster.SkillOrder[SkillIndex].Perform();
-                if (target != null && (target.transform.position - transform.position).magnitude <= Monster.ViewRadius)
+                if ((target == null || (target.transform.position - transform.position).magnitude > Monster.ViewRadius) && SkillFinishedFlag)
                 {
-                    SetMovingDirection(target.transform.position);
-                    rigidbody2d.velocity = movingDirection * ActualMonster.MoveSpeed;
-                }
-                else
-                {
-                    if (SkillFinishedFlag)
-                    {
-                        actionState = ActionState.Restarting;
-                        //ActualMonster.SkillOrder[SkillIndex].EndSkill();
-                        SkillIndex = 0;
-                    }
+                    actionState = ActionState.Restarting;
+                    ActualMonster.SkillOrder[SkillIndex].EndSkill();
+                    SkillIndex = 0;
                 }
                 if (SkillFinishedFlag)
                 {
-                    //Animator.SetTrigger("walk");
                     SkillFinishedFlag = false;
                     SkillIndex = (SkillIndex + 1) % ActualMonster.SkillOrder.Count;
                 }
 
                 break;
             case ActionState.Restarting:
+                Animator.SetTrigger("walk");
                 Restart();
                 break;
             default:
@@ -137,7 +129,7 @@ public class MonsterAgent : LivingBaseAgent
         }
     }
 
-    protected void SetMovingDirection(Vector3 position)
+    public Vector3 GetMovingDirection(Vector3 position)
     {
         if (roamingTime < roamingTimer)
         {
@@ -145,6 +137,7 @@ public class MonsterAgent : LivingBaseAgent
             Vector3 moveDirection = (position - transform.position - direction * actualLiving.AttackRadius * 2 / 3).normalized;
             movingDirection = (moveDirection + roamingDirection).normalized;
         }
+        return movingDirection;
     }
 
     public override Vector3 GetAttackDirection()
@@ -155,11 +148,7 @@ public class MonsterAgent : LivingBaseAgent
         }
         return Vector3.zero;
     }
-    public void MoveTo(Vector3 position)
-    {
-        SetMovingDirection(position);
-        rigidbody2d.velocity = movingDirection * actualLiving.MoveSpeed;
-    }
+
     public void MoveTowards(Vector3 direction)
     {
         rigidbody2d.velocity = direction * actualLiving.MoveSpeed;
@@ -175,7 +164,7 @@ public class MonsterAgent : LivingBaseAgent
     }
     protected void Restart()
     {
-        SetMovingDirection(startPosition);
+        GetMovingDirection(startPosition);
         rigidbody2d.velocity = movingDirection * actualLiving.MoveSpeed;
         if (HasArrived(startPosition))
         {

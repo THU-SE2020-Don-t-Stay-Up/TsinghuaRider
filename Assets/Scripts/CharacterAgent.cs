@@ -107,42 +107,44 @@ public class CharacterAgent : LivingBaseAgent
     // 为了测试改成public，之后要改回private
     public void Update()
     {
-
-        switch (actionState)
+        if (!actualLiving.State.HasStatus(new VertigoState()))
         {
-            // when in Normal state, player can move, perform skills, get hurt ,attack and interact
-            case ActionState.Normal:
-                // move
-                HandleMovement();
 
-                // do special action such as dash and skills
-                Perform();
+            switch (actionState)
+            {
+                // when in Normal state, player can move, perform skills, get hurt ,attack and interact
+                case ActionState.Normal:
+                    // move
+                    HandleMovement();
 
-                // interact with NPC or gears
-                HandleInteraction();
+                    // do special action such as dash and skills
+                    Perform();
 
-                // do normal melee and missle attack
-                HandleAttacking();
-                break;
+                    // interact with NPC or gears
+                    HandleInteraction();
 
-            // when in Attacking state, player should be unable to move or interact, but can perform skills, be hurt or do another attack
-            case ActionState.Attacking:
-                Perform();
+                    // do normal melee and missle attack
+                    HandleAttacking();
+                    break;
 
-                if (Animator.GetCurrentAnimatorStateInfo(0).IsName("MeleeAttack"))
-                {
-                    SetState(0);
-                    Debug.Log("melee attack finish!");
-                }
+                // when in Attacking state, player should be unable to move or interact, but can perform skills, be hurt or do another attack
+                case ActionState.Attacking:
+                    Perform();
 
-                break;
+                    if (Animator.GetCurrentAnimatorStateInfo(0).IsName("MeleeAttack"))
+                    {
+                        SetState(0);
+                        Debug.Log("melee attack finish!");
+                    }
 
-            // when in Skilling state, player could only wait until skill is over
-            case ActionState.Skilling:
-                break;
+                    break;
+
+                // when in Skilling state, player could only wait until skill is over
+                case ActionState.Skilling:
+                    break;
+            }
+            HandleDirection();
         }
-
-        HandleDirection();
         CheckState();
         deltaTime += Time.deltaTime;
         UpdateWeaponPrefab();
