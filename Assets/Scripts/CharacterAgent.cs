@@ -150,7 +150,7 @@ public class CharacterAgent : LivingBaseAgent
         UIDashBar.instance.SetValue((float)dashBar / 901f);
         if (dashBar % 300 == 0)
         {
-            Debug.Log("老子dash回复了一次");
+            //Debug.Log("老子dash回复了一次");
         }
 
     }
@@ -340,6 +340,11 @@ public class CharacterAgent : LivingBaseAgent
                 }
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            ThrowNowWeapon();
+        }
     }
 
     private void HandleAttacking()
@@ -504,6 +509,18 @@ public class CharacterAgent : LivingBaseAgent
         }
     }
 
+    public void ThrowNowWeapon()
+    {
+        if (WeaponPrefab != null && !weaponColumn.IsEmpty())
+        {
+            Weapon weapon = WeaponPrefab.GetComponent<WeaponAgent>().Weapon.Clone() as Weapon;
+            ItemAgent.GenerateItem(transform.position + 2 * Vector3.up, weapon);
+            GameObject.Destroy(WeaponPrefab);
+            WeaponPrefab = null;
+            if (!weaponColumn.IsEmpty())
+                weaponColumn.UseItem(0, this);
+        }
+    }
     /// <summary>
     /// 用于测试Character使用Item的函数，最终要删除
     /// </summary>

@@ -441,7 +441,7 @@ public class Gun : Weapon
 
     public override void Attack(CharacterAgent user, Vector3 direction)
     {
-        Debug.Log(user.WeaponPrefab.transform.position);
+        //Debug.Log(user.WeaponPrefab.transform.position);
         GameObject projectileObject = GameObject.Instantiate(bulletPrefab, user.WeaponPrefab.transform.position + direction * 0.5f, Quaternion.identity);
         Bullet bullet = projectileObject.GetComponent<Bullet>();
         bullet.SetBullet(user, user.ActualCharacter.AttackAmount * AttackAmount, ExtraEffect);

@@ -57,6 +57,18 @@ public class Inventory
         }
         OnItemListChanged?.Invoke(this, EventArgs.Empty);
     }
+    
+    public void RemoveItem(int itemIndex)
+    {
+        if (itemIndex >= ItemList.Count)
+            return;
+        ItemList[itemIndex].Amount -= 1;
+        if (ItemList[itemIndex].Amount <= 0)
+        {
+            ItemList.RemoveAt(itemIndex);
+        }
+        OnItemListChanged?.Invoke(this, EventArgs.Empty);
+    }
 
     public bool HasItem(Item item)
     {
@@ -111,6 +123,16 @@ public class Inventory
         else
         {
             Debug.Log("无了啊！");
+        }
+    } 
+    public void UseItem(int itemIndex, CharacterAgent character)
+    {
+        if (itemIndex >= ItemList.Count)
+            return;
+        bool usedFlag = ItemList[itemIndex].Use(character);
+        if (usedFlag)
+        {
+            RemoveItem(itemIndex);
         }
     }
 
