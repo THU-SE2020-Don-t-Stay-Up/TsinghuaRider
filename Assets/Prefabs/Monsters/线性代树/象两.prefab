@@ -195,7 +195,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddae7640c4889a34f893c40092456f0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monsterHealthBar: {fileID: 0}
   monsterIndex: 9
   bulletPrefab: {fileID: 2269785940787976222, guid: bd13f8eff7394964092a5fc1492e5078, type: 3}
 --- !u!50 &3764907804977736586
@@ -255,7 +254,7 @@ Animator:
   m_GameObject: {fileID: 7373759989494689936}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 765fa1a5471254f408f24d05f4f1cef1, type: 2}
+  m_Controller: {fileID: 22100000, guid: 69eb0b17e120056438aa24752ddb68f9, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
