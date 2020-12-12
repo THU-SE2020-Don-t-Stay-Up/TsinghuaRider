@@ -14,6 +14,7 @@ abstract public class Skill : ICloneable
     protected bool skillStartFlag;
 
     protected float beforePerformTime;
+    protected float actionPerformTime;
     protected float afterPerformTime;
 
     protected Vector3 performDirection;
@@ -28,6 +29,7 @@ abstract public class Skill : ICloneable
         skillStartFlag = false;
 
         beforePerformTime = CD / agent.ActualMonster.Agility;
+        actionPerformTime = CD / agent.ActualMonster.Agility;
         afterPerformTime = CD / agent.ActualMonster.Agility;
 
         nowPerformStage = 0;
@@ -53,6 +55,7 @@ abstract public class Skill : ICloneable
                 {
                     agent.rigidbody2d.velocity = agent.GetMovingDirection(agent.target.GetCentralPosition()) * agent.ActualMonster.MoveSpeed;
                     agent.Animator.SetTrigger("walk");
+                    agent.Animator.speed = 1;
                     return false;
                 }
             }
@@ -104,6 +107,7 @@ abstract public class Skill : ICloneable
     protected virtual bool BeforePerform()
     {
         agent.Animator.SetTrigger("before_attack");
+        agent.Animator.speed = 1 / beforePerformTime;
         performTimer += Time.deltaTime;
         agent.rigidbody2d.velocity = Vector3.zero;
         if (performTimer > beforePerformTime)
@@ -120,6 +124,7 @@ abstract public class Skill : ICloneable
     protected virtual bool AfterPerform()
     {
         agent.Animator.SetTrigger("after_attack");
+        agent.Animator.speed = 1 / afterPerformTime;
         performTimer += Time.deltaTime;
         agent.rigidbody2d.velocity = Vector3.zero;
         if (performTimer > afterPerformTime)
@@ -138,6 +143,8 @@ abstract public class Skill : ICloneable
         nowPerformStage = 0;
         CDTimer = 0;
         performTimer = 0;
+        agent.Animator.SetTrigger("walk");
+        agent.Animator.speed = 1.0f;
     }
 
     public object Clone()
@@ -156,16 +163,17 @@ abstract public class RangeSkill : Skill
         {
             agent.rigidbody2d.velocity = agent.GetMovingDirection(agent.target.GetCentralPosition()) * agent.ActualMonster.MoveSpeed;
             agent.Animator.SetTrigger("walk");
+            agent.Animator.speed = 1.0f;
             return false;
         }
         else
         {
-            performDirection = (agent.target.GetCentralPosition() - agent.GetCentralPosition()).normalized;
+            performDirection = agent.GetAttackDirection();
             return true;
         }
     }
 }
-abstract public class UltraSkill: Skill
+abstract public class UltraSkill : Skill
 {
     protected override bool InitPerform()
     {
@@ -175,13 +183,28 @@ abstract public class UltraSkill: Skill
 }
 abstract public class AttackSkill : RangeSkill
 {
+    protected bool AttackFlag = false;
     protected override bool DuringPerform() => DuringPerform(null);
     protected bool DuringPerform(Action<LivingBaseAgent> extraEffect)
     {
         agent.Animator.SetTrigger("attack");
-        AttackAt(performDirection, extraEffect);
-        performTimer = 0;
-        return true;
+        agent.Animator.speed = 1 / actionPerformTime;
+        performTimer += Time.deltaTime;
+        if (!AttackFlag)
+        {
+            AttackAt(performDirection, extraEffect);
+            AttackFlag = true;
+        }
+        if (performTimer > actionPerformTime)
+        {
+            AttackFlag = false;
+            performTimer = 0;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
     /// <summary>
     /// 向指定方向攻击
@@ -237,7 +260,6 @@ public class MeleeAttackSkill : AttackSkill
 /// </summary>
 public class MeleeSlowAttackSkill : MeleeAttackSkill
 {
-
     protected override bool DuringPerform() => DuringPerform(target => target.actualLiving.State.AddStatus(new SlowState(), 2));
 }
 
@@ -354,6 +376,7 @@ public class ObstacleSkill : RangeSkill
         {
             agent.rigidbody2d.velocity = agent.GetMovingDirection(agent.target.GetCentralPosition()) * agent.ActualMonster.MoveSpeed;
             agent.Animator.SetTrigger("walk");
+            agent.Animator.speed = 1;
             return false;
         }
         else
@@ -365,9 +388,18 @@ public class ObstacleSkill : RangeSkill
     protected override bool DuringPerform()
     {
         agent.Animator.SetTrigger("attack");
+        agent.Animator.speed = 1 / actionPerformTime;
+        performTimer += Time.deltaTime;
         GameObject.Instantiate(agent.bulletPrefab, obstaclePosition, Quaternion.identity);
-        performTimer = 0;
-        return true;
+        if (performTimer > actionPerformTime)
+        {
+            performTimer = 0;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }
 
@@ -393,6 +425,7 @@ public class MeleeChargeAttackSkill : MeleeAttackSkill
     protected override bool BeforePerform()
     {
         agent.Animator.SetTrigger("before_attack");
+        agent.Animator.speed = 1 / beforePerformTime;
         agent.actualLiving.MoveSpeed = agent.living.MoveSpeed * speedTimes;
         agent.actualLiving.AttackRadius = 1.5f;
         return base.BeforePerform();
@@ -401,11 +434,12 @@ public class MeleeChargeAttackSkill : MeleeAttackSkill
     protected override bool DuringPerform()
     {
         agent.Animator.SetTrigger("attack");
+        agent.Animator.speed = 1 / chargeTime;
         performTimer += Time.deltaTime;
         agent.MoveTowards(performDirection);
         if (!attackFlag)
         {
-            if (AttackAt(performDirection, BeatBack))
+            if (AttackAt(performDirection, Repel))
             {
                 attackFlag = true;
             }
@@ -429,7 +463,7 @@ public class MeleeChargeAttackSkill : MeleeAttackSkill
         agent.actualLiving.AttackRadius = agent.living.AttackRadius;
     }
 
-    public void BeatBack(LivingBaseAgent target)
+    public void Repel(LivingBaseAgent target)
     {
         Vector3 beatPosition = target.GetCentralPosition() + performDirection * beatDistance;
         RaycastHit2D dashHit = Physics2D.Raycast(target.rigidbody2d.position, performDirection, beatDistance, LayerMask.GetMask("Obstacle"));
@@ -437,7 +471,7 @@ public class MeleeChargeAttackSkill : MeleeAttackSkill
         {
             beatPosition = dashHit.point;
         }
-        target.actualLiving.State.AddStatus(new VertigoState(), 2);
+        target.actualLiving.State.AddStatus(new VertigoState(), 1);
         target.rigidbody2d.velocity = new Vector2(beatPosition.x, beatPosition.y).normalized * 5.0f;
     }
 }

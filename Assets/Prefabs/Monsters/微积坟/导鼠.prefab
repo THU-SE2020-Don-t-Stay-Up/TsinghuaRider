@@ -248,7 +248,7 @@ Transform:
   m_GameObject: {fileID: 6840133694130961993}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.6, y: 0.6, z: 1}
+  m_LocalScale: {x: -0.6, y: 0.6, z: 1}
   m_Children:
   - {fileID: 503690941698937625}
   - {fileID: 3181850231857220985}
@@ -320,6 +320,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   monsterIndex: 0
   bulletPrefab: {fileID: 2269785940787976222, guid: bd13f8eff7394964092a5fc1492e5078, type: 3}
+  FlipFlag: 0
 --- !u!50 &902533353708823891
 Rigidbody2D:
   serializedVersion: 4
@@ -409,8 +410,8 @@ MonoBehaviour:
   - {fileID: 6471861250926677833}
   - {fileID: 5887747534694897032}
   m_Bounds:
-    m_Center: {x: 0.2625593, y: 0.7311504, z: 0}
-    m_Extent: {x: 1.0015235, y: 0.93565303, z: 0}
+    m_Center: {x: 0.07165998, y: 0.7084489, z: 0}
+    m_Extent: {x: 0.79834014, y: 0.91295147, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
 --- !u!1 &7308343711366951196
@@ -537,6 +538,10 @@ PrefabInstance:
     - target: {fileID: 5235018170838527134, guid: 1683f5c07b8e3374590d1fe1ca928aeb, type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5235018170838527134, guid: 1683f5c07b8e3374590d1fe1ca928aeb, type: 3}
+      propertyPath: m_LocalScale.x
+      value: -0.3333333
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1683f5c07b8e3374590d1fe1ca928aeb, type: 3}

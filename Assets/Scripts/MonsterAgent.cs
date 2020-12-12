@@ -14,6 +14,7 @@ public class MonsterAgent : LivingBaseAgent
     /// </summary>
     public int monsterIndex;
     public GameObject bulletPrefab;
+    public bool FlipFlag = false;
     /// <summary>
     /// 状态机
     /// </summary>
@@ -35,6 +36,8 @@ public class MonsterAgent : LivingBaseAgent
     protected Vector3 startPosition;
     protected Vector3 roamingDirection;
     protected Vector3 movingDirection;
+    protected float initMonsterDirection;
+    protected float initHealBarDirection;
     protected int SkillIndex { get; set; }
     protected bool SkillFinishedFlag { get; set; }
 
@@ -66,12 +69,14 @@ public class MonsterAgent : LivingBaseAgent
         Animator = GetComponent<Animator>();
         rigidbody2d = GetComponent<Rigidbody2D>();
         collider2d = GetComponent<Collider2D>();
-
+        SpriteRenderer = GetComponent<SpriteRenderer>();
 
         //测试
         Animator.SetTrigger("walk");
         monsterHealthBar = transform.Find("MonsterHealth").Find("MonsterHealthBar").GetComponent<UIMonsterHealthBar>();
 
+        initMonsterDirection = transform.localScale.x;
+        initHealBarDirection = monsterHealthBar.transform.localScale.x;
     }
 
     // Update is called once per frame
@@ -96,7 +101,7 @@ public class MonsterAgent : LivingBaseAgent
                     SkillFinishedFlag = false;
                     SkillIndex = (SkillIndex + 1) % ActualMonster.SkillOrder.Count;
                 }
-
+                FindTarget();
                 break;
             case ActionState.Restarting:
                 Animator.SetTrigger("walk");
@@ -107,7 +112,16 @@ public class MonsterAgent : LivingBaseAgent
         }
 
         monsterHealthBar.SetValue(actualLiving.CurrentHealth / (float)actualLiving.MaxHealth);
-
+        if (FlipFlag)
+        {
+            transform.localScale = SetX(transform.localScale, -initMonsterDirection);
+            monsterHealthBar.transform.localScale = SetX(monsterHealthBar.transform.localScale, -initHealBarDirection);
+        }
+        else
+        {
+            transform.localScale = SetX(transform.localScale, initMonsterDirection);
+            monsterHealthBar.transform.localScale = SetX(monsterHealthBar.transform.localScale, initHealBarDirection);
+        }
         CheckState();
         SetRandomDirection();
         roamingTimer += Time.deltaTime;
@@ -118,7 +132,10 @@ public class MonsterAgent : LivingBaseAgent
 
     }
 
-
+    protected Vector3 SetX(Vector3 v, float x)
+    {
+        return new Vector3(x, v.y, v.z);
+    }
     protected void SetRandomDirection()
     {
         if (roamingTime < roamingTimer)
@@ -136,15 +153,33 @@ public class MonsterAgent : LivingBaseAgent
             Vector3 direction = (position - transform.position).normalized;
             Vector3 moveDirection = (position - transform.position - direction * actualLiving.AttackRadius * 2 / 3).normalized;
             movingDirection = (moveDirection + roamingDirection).normalized;
+            if (movingDirection.x < 0)
+            {
+                FlipFlag = true;
+            }
+            else
+            {
+                FlipFlag = false;
+            }
         }
+
         return movingDirection;
     }
 
     public override Vector3 GetAttackDirection()
     {
+        Vector3 attackDirection = (target.GetCentralPosition() - GetCentralPosition()).normalized;
+        if (attackDirection.x < 0)
+        {
+            FlipFlag = true;
+        }
+        else
+        {
+            FlipFlag = false;
+        }
         if (target != null)
         {
-            return (target.transform.position - transform.position).normalized;
+            return attackDirection;
         }
         return Vector3.zero;
     }
