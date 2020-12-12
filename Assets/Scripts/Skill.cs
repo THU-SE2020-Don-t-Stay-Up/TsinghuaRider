@@ -291,8 +291,14 @@ public class SplitSkill : UltraSkill
         GameObject prefab = Global.GetPrefab($"微{agent.living.Name}");
         for (int i = 0; i < splitNum; i++)
         {
-            Vector3 randomOffset = new Vector3(Random.Range(0, 1.0f), Random.Range(0, 1.0f));
-            GameObject.Instantiate(prefab, agent.GetCentralPosition() + randomOffset, Quaternion.identity);
+            Vector3 randomOffset = new Vector3(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f));
+            Vector3 generatePoint = agent.GetCentralPosition() + randomOffset;
+            Debug.Log(Physics2D.OverlapCircle(generatePoint, 0.52f, LayerMask.GetMask("Obstacle")));
+            while (Physics2D.OverlapCircle(generatePoint, 0.52f, LayerMask.GetMask("Obstacle")) != null){
+                randomOffset = new Vector3(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f));
+                generatePoint = agent.GetCentralPosition() + randomOffset;
+            }
+            GameObject.Instantiate(prefab, generatePoint, Quaternion.identity);
         }
         return true;
     }
