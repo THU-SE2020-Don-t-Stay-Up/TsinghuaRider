@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -21,12 +22,19 @@ public class Initialization : MonoBehaviour
         GameObject ui = GameObject.Find("UI");
         GameObject minimapCamera = GameObject.Find("Minimap Camera");
         GameObject acrossSceneController = GameObject.Find("Across Scene Controller");
-        
-        DontDestroyOnLoad(mainCamera);
-        DontDestroyOnLoad(vCamera);
-        DontDestroyOnLoad(ui);
-        DontDestroyOnLoad(minimapCamera);
-        DontDestroyOnLoad(acrossSceneController);
+
+        try
+        {
+            DontDestroyOnLoad(mainCamera);
+            DontDestroyOnLoad(vCamera);
+            DontDestroyOnLoad(ui);
+            DontDestroyOnLoad(minimapCamera);
+            DontDestroyOnLoad(acrossSceneController);
+
+        }
+        catch (NullReferenceException)
+        {
+        }
         
 
         Destroy(gameObject);
