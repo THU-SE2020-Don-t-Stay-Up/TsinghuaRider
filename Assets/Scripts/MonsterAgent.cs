@@ -69,7 +69,6 @@ public class MonsterAgent : LivingBaseAgent
         Animator = GetComponent<Animator>();
         rigidbody2d = GetComponent<Rigidbody2D>();
         collider2d = GetComponent<Collider2D>();
-        SpriteRenderer = GetComponent<SpriteRenderer>();
 
         //测试
         Animator.SetTrigger("walk");
