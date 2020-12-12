@@ -283,29 +283,28 @@ public class CharacterAgent : LivingBaseAgent
         }
 
         // skills
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             SetState(3);
-            inventory.UseItem(new HealthPotion { Amount = 1 }, this);
+            inventory.UseItem(0, this);
             SetState(0);
         }
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             SetState(3);
-            inventory.UseItem(new StrengthPotion { Amount = 1 }, this);
+            inventory.UseItem(1, this);
             SetState(0);
         }
-        if (Input.GetKeyDown(KeyCode.C))
+        if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             SetState(3);
-            inventory.UseItem(new Medkit { Amount = 1 }, this);
+            inventory.UseItem(2, this);
             SetState(0);
         }
-        if (Input.GetKeyDown(KeyCode.G))
+        if (Input.GetKeyDown(KeyCode.Alpha4))
         {
             SetState(3);
-            attackingFlag = !attackingFlag;
-            Debug.Log("God Mode!");
+            inventory.UseItem(3, this);
             SetState(0);
         }
 
