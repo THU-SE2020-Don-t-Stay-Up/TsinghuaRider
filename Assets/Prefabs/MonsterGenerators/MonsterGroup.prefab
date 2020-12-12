@@ -45,4 +45,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   monsterObjects: []
   probability: []
-  difficulty: 100
+  delay: 1.5
+  visualEffect: {fileID: 237305585211872931, guid: 1e42b368ff62bb248b3e125549fc5eab, type: 3}

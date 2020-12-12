@@ -21,6 +21,10 @@ public class MonsterGenerator : MonoBehaviour
     /// </summary>
     public float interval;
     /// <summary>
+    /// 生成第一波的延迟
+    /// </summary>
+    public float delay;
+    /// <summary>
     /// 总参考难度
     /// </summary>
     public float difficulty;
@@ -28,7 +32,7 @@ public class MonsterGenerator : MonoBehaviour
     float timer;
     bool generating = false;
 
-    public void Generate(float delay = 1.0f)
+    public void Generate()
     {
         timer = delay;
         generating = true;
@@ -56,9 +60,9 @@ public class MonsterGenerator : MonoBehaviour
             }
             else
             {
-                if (null == GameObject.FindGameObjectWithTag("Monster"))
+                // 所有怪已生成完毕且没有怪了
+                if (null == GameObject.FindGameObjectWithTag("Monster") && null == GameObject.FindObjectOfType<MonsterGroup>())
                 {
-                    Debug.Log("No monster");
                     Room room = GetComponentInParent<Room>();
                     if (room != null)
                     {
