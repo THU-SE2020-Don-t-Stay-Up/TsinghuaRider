@@ -180,7 +180,7 @@ abstract public class AttackSkill : TargetSkill
     protected override bool DuringPerform() => DuringPerform(null);
     protected bool DuringPerform(Action<LivingBaseAgent> extraEffect)
     {
-        agent.Animator.SetTrigger("attack");
+        //agent.Animator.SetTrigger("attack");
         AttackAt(performDirection, extraEffect);
         performTimer = 0;
         return true;
