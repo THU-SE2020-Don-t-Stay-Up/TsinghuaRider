@@ -85,7 +85,7 @@ public class LivingBaseAgent : MonoBehaviour
             else
             {
                 actualLiving.CurrentHealth = (int)Mathf.Clamp(actualLiving.CurrentHealth + amount, 0, actualLiving.MaxHealth);
-                Debug.Log($"{actualLiving.Name} now health is {actualLiving.CurrentHealth}");
+                //Debug.Log($"{actualLiving.Name} now health is {actualLiving.CurrentHealth}");
                 //animator.SetTrigger("Hit");
                 //audioSource.PlayOneShot(getHitClip);
                 actualLiving.State.AddStatus(new InvincibleState(), actualLiving.TimeInvincible);
