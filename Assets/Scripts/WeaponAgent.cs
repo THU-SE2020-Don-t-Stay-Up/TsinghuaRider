@@ -101,14 +101,20 @@ public class WeaponAgent : ItemAgent
         return true;
     }
 
+    public virtual bool SwordLightAttack()//刀光攻击
+    {
+        Weapon.SwordLightAttack(user, aimDir);
+        return true;
+    }
+
 
     public override void InteractWith(GameObject gameObject)
     {
         CharacterAgent character = gameObject.GetComponent<CharacterAgent>();
         if (character != null)
         {
-            //不捡已有的武器
-           if (character.WeaponPrefab.GetComponent<WeaponAgent>().itemIndex != itemIndex && !character.HasWeapon(Item))
+            //只捡没有的武器
+           if (character.WeaponPrefab == null || (character.WeaponPrefab.GetComponent<WeaponAgent>().itemIndex != itemIndex && !character.HasWeapon(Item)))
             {
                 character.WeaponColumnAddItem(Item);
                 Destroy(this.gameObject);

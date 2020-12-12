@@ -150,7 +150,7 @@ public class CharacterAgent : LivingBaseAgent
         UIDashBar.instance.SetValue((float)dashBar / 901f);
         if (dashBar % 300 == 0)
         {
-            Debug.Log("老子dash回复了一次");
+            //Debug.Log("老子dash回复了一次");
         }
 
     }
@@ -283,29 +283,28 @@ public class CharacterAgent : LivingBaseAgent
         }
 
         // skills
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             SetState(3);
-            inventory.UseItem(new HealthPotion { Amount = 1 }, this);
+            inventory.UseItem(0, this);
             SetState(0);
         }
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             SetState(3);
-            inventory.UseItem(new StrengthPotion { Amount = 1 }, this);
+            inventory.UseItem(1, this);
             SetState(0);
         }
-        if (Input.GetKeyDown(KeyCode.C))
+        if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             SetState(3);
-            inventory.UseItem(new Medkit { Amount = 1 }, this);
+            inventory.UseItem(2, this);
             SetState(0);
         }
-        if (Input.GetKeyDown(KeyCode.G))
+        if (Input.GetKeyDown(KeyCode.Alpha4))
         {
             SetState(3);
-            attackingFlag = !attackingFlag;
-            Debug.Log("God Mode!");
+            inventory.UseItem(3, this);
             SetState(0);
         }
 
@@ -340,6 +339,11 @@ public class CharacterAgent : LivingBaseAgent
                 }
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            ThrowNowWeapon();
+        }
     }
 
     private void HandleAttacking()
@@ -351,7 +355,7 @@ public class CharacterAgent : LivingBaseAgent
             attackingFlag = !WeaponPrefab.GetComponent<WeaponAgent>().Attack();
             SetState(0);
         }
-
+        //鼠标左键
         if (Input.GetMouseButtonDown(0))
         {
             //attackingFlag = true;
@@ -377,6 +381,28 @@ public class CharacterAgent : LivingBaseAgent
                     deltaTime = 0;
                     SetState(0);
                 }
+            }
+        }
+        //鼠标右键，使用刀光攻击
+        else if (Input.GetMouseButtonDown(1))
+        {
+            //attackingFlag = true;
+            //Debug.Log(WeaponPrefab);
+            if (WeaponPrefab != null)
+            {
+                WeaponAgent weaponAgent = WeaponPrefab.GetComponent<WeaponAgent>();
+                if (ActualCharacter.AttackSpeed * weaponAgent.Weapon.AttackSpeed - deltaTime < 0.01)
+                // if (true)
+                {
+                    SetState(1);
+                    attackingFlag = !weaponAgent.SwordLightAttack();
+                    deltaTime = 0;
+                    SetState(0);
+                }
+            }
+            else
+            {//没有武器时不响应
+                
             }
         }
     }
@@ -482,6 +508,18 @@ public class CharacterAgent : LivingBaseAgent
         }
     }
 
+    public void ThrowNowWeapon()
+    {
+        if (WeaponPrefab != null && !weaponColumn.IsEmpty())
+        {
+            Weapon weapon = WeaponPrefab.GetComponent<WeaponAgent>().Weapon.Clone() as Weapon;
+            ItemAgent.GenerateItem(transform.position + 2 * Vector3.up, weapon);
+            GameObject.Destroy(WeaponPrefab);
+            WeaponPrefab = null;
+            if (!weaponColumn.IsEmpty())
+                weaponColumn.UseItem(0, this);
+        }
+    }
     /// <summary>
     /// 用于测试Character使用Item的函数，最终要删除
     /// </summary>

@@ -109,7 +109,7 @@ abstract public class Skill : ICloneable
     }
     protected virtual bool BeforePerform()
     {
-        agent.Animator.SetTrigger("before_attack");
+        //agent.Animator.SetTrigger("before_attack");
         performTimer += Time.deltaTime;
         agent.rigidbody2d.velocity = Vector3.zero;
         if (performTimer > beforePerformTime)
@@ -125,7 +125,7 @@ abstract public class Skill : ICloneable
     protected virtual bool DuringPerform() { return true; }
     protected virtual bool AfterPerform()
     {
-        agent.Animator.SetTrigger("after_attack");
+        //agent.Animator.SetTrigger("after_attack");
         performTimer += Time.deltaTime;
         agent.rigidbody2d.velocity = Vector3.zero;
         if (performTimer > afterPerformTime)
@@ -180,7 +180,7 @@ abstract public class AttackSkill : TargetSkill
     protected override bool DuringPerform() => DuringPerform(null);
     protected bool DuringPerform(Action<LivingBaseAgent> extraEffect)
     {
-        agent.Animator.SetTrigger("attack");
+        //agent.Animator.SetTrigger("attack");
         AttackAt(performDirection, extraEffect);
         performTimer = 0;
         return true;

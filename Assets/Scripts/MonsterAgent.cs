@@ -63,13 +63,13 @@ public class MonsterAgent : LivingBaseAgent
         ActualMonster.SkillOrder.ForEach(skill => skill.Init(this));
         ActualMonster.Skills.ForEach(skill => skill.Init(this));
 
-        Animator = GetComponent<Animator>();
+        //Animator = GetComponent<Animator>();
         rigidbody2d = GetComponent<Rigidbody2D>();
         collider2d = GetComponent<Collider2D>();
 
 
         //测试
-        Animator.SetTrigger("walk");
+        //Animator.SetTrigger("walk");
         monsterHealthBar = transform.Find("MonsterHealth").Find("MonsterHealthBar").GetComponent<UIMonsterHealthBar>();
 
     }
@@ -80,7 +80,7 @@ public class MonsterAgent : LivingBaseAgent
         switch (actionState)
         {
             case ActionState.Roaming:
-                Animator.SetTrigger("walk");
+                //Animator.SetTrigger("walk");
                 Roaming();
                 break;
             case ActionState.Chasing:
@@ -101,7 +101,7 @@ public class MonsterAgent : LivingBaseAgent
                 }
                 if (SkillFinishedFlag)
                 {
-                    Animator.SetTrigger("walk");
+                    //Animator.SetTrigger("walk");
                     SkillFinishedFlag = false;
                     SkillIndex = (SkillIndex + 1) % ActualMonster.SkillOrder.Count;
                 }

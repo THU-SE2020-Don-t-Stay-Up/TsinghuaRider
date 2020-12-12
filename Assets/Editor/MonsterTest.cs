@@ -211,28 +211,18 @@ namespace Tests
             Assert.AreEqual(DuoYuanJiFenAgent.actualLiving.MaxHealth, DuoYuanJiFenAgent.actualLiving.CurrentHealth);
             Assert.IsFalse(DuoYuanJiFenAgent.actualLiving.State.HasStatus(new InvincibleState()));
 
-            // 扣血后怪物也会进入无敌
+            // 扣血后怪物不会进入无敌
             DuoYuanJiFenAgent.ChangeHealth(-20f);
             Assert.AreEqual(20f, DuoYuanJiFenAgent.actualLiving.CurrentHealth);
-            Assert.IsTrue(DuoYuanJiFenAgent.actualLiving.State.HasStatus(new InvincibleState()));
+            Assert.IsFalse(DuoYuanJiFenAgent.actualLiving.State.HasStatus(new InvincibleState()));
 
-            // 无敌状态下可以加血，血量不超过上限
+            // 加血后血量不超过上限
             DuoYuanJiFenAgent.ChangeHealth(200f);
             Assert.AreEqual(DuoYuanJiFenAgent.actualLiving.MaxHealth, DuoYuanJiFenAgent.actualLiving.CurrentHealth);
-
-            // 无敌状态不会扣血
-            Assert.IsTrue(DuoYuanJiFenAgent.actualLiving.State.HasStatus(new InvincibleState()));
-            DuoYuanJiFenAgent.ChangeHealth(-20f);
-            Assert.AreEqual(40f, DuoYuanJiFenAgent.actualLiving.CurrentHealth);
-
-            // 消除无敌状态，进行扣血操作
-            DuoYuanJiFenAgent.actualLiving.State.ClearStatus();
 
             // 扣血后血量不会为负数
             DuoYuanJiFenAgent.ChangeHealth(-2000f);
             Assert.AreEqual(0f, DuoYuanJiFenAgent.actualLiving.CurrentHealth);
-
-
 
             LogAssert.ignoreFailingMessages = false;
             yield return null;
@@ -250,25 +240,18 @@ namespace Tests
             Assert.AreEqual(LagrangeAgent.actualLiving.MaxHealth, LagrangeAgent.actualLiving.CurrentHealth);
             Assert.IsFalse(LagrangeAgent.actualLiving.State.HasStatus(new InvincibleState()));
 
-            // 扣血后怪物也会进入无敌
+            // 扣血后怪物不会进入无敌
             LagrangeAgent.ChangeHealth(-20f);
             Assert.AreEqual(780f, LagrangeAgent.actualLiving.CurrentHealth);
-            Assert.IsTrue(LagrangeAgent.actualLiving.State.HasStatus(new InvincibleState()));
+            Assert.IsFalse(LagrangeAgent.actualLiving.State.HasStatus(new InvincibleState()));
 
-            // 无敌状态下可以加血，血量不超过上限
+            // 加血后，血量不超过上限
             LagrangeAgent.ChangeHealth(2000f);
             Assert.AreEqual(LagrangeAgent.actualLiving.MaxHealth, LagrangeAgent.actualLiving.CurrentHealth);
 
-            // 无敌状态不会扣血
-            Assert.IsTrue(LagrangeAgent.actualLiving.State.HasStatus(new InvincibleState()));
-            LagrangeAgent.ChangeHealth(-20f);
-            Assert.AreEqual(800f, LagrangeAgent.actualLiving.CurrentHealth);
-
-            // 消除无敌状态，进行扣血操作
-            LagrangeAgent.actualLiving.State.ClearStatus();
 
             // 扣血后血量不会为负数
-            LagrangeAgent.ChangeHealth(-800f);
+            LagrangeAgent.ChangeHealth(-8000f);
             Assert.AreEqual(0f, LagrangeAgent.actualLiving.CurrentHealth);
 
             LogAssert.ignoreFailingMessages = false;
