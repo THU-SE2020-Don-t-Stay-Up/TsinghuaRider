@@ -145,13 +145,9 @@ public class CharacterAgent : LivingBaseAgent
         HandleDirection();
         CheckState();
         deltaTime += Time.deltaTime;
-
+        UpdateWeaponPrefab();
         dashBar = Mathf.Clamp(dashBar + 1, 0, 901);
         UIDashBar.instance.SetValue((float)dashBar / 901f);
-        if (dashBar % 300 == 0)
-        {
-            //Debug.Log("老子dash回复了一次");
-        }
 
     }
 
@@ -173,6 +169,10 @@ public class CharacterAgent : LivingBaseAgent
         catch (System.Exception)
         {
             WeaponPrefab = null;
+        }
+        if (WeaponPrefab == null)
+        {
+            weaponColumn.UseItem(0, this);
         }
     }
     /// <summary>
@@ -516,8 +516,6 @@ public class CharacterAgent : LivingBaseAgent
             ItemAgent.GenerateItem(transform.position + 2 * Vector3.up, weapon);
             GameObject.Destroy(WeaponPrefab);
             WeaponPrefab = null;
-            if (!weaponColumn.IsEmpty())
-                weaponColumn.UseItem(0, this);
         }
     }
     /// <summary>
