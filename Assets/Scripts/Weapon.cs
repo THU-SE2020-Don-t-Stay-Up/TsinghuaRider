@@ -38,9 +38,9 @@ public class Sword : Weapon
 {
     public Sword()
     {
-        AttackSpeed = 0.2f;
+        AttackSpeed = 0.05f;
         AttackRadius = 2;
-        AttackAmount = 100;
+        AttackAmount = 2;
         AttackAngle = 120;
         IsStackable = false;
         Amount = 1;
@@ -64,9 +64,9 @@ public class Saber1 : Weapon
 {
     public Saber1()
     {
-        AttackSpeed = 0.2f;
+        AttackSpeed = 0.05f;
         AttackRadius = 2;
-        AttackAmount = 10;
+        AttackAmount = 5;
         AttackAngle = 120;
         IsStackable = false;
         Amount = 1;
@@ -99,9 +99,9 @@ public class Saber2 : Weapon
 {
     public Saber2()
     {
-        AttackSpeed = 0.2f;
+        AttackSpeed = 0.05f;
         AttackRadius = 2;
-        AttackAmount = 10;
+        AttackAmount = 5;
         AttackAngle = 120;
         IsStackable = false;
         Amount = 1;
@@ -132,9 +132,9 @@ public class Saber3 : Weapon
 {
     public Saber3()
     {
-        AttackSpeed = 0.2f;
+        AttackSpeed = 0.05f;
         AttackRadius = 2;
-        AttackAmount = 10;
+        AttackAmount = 5;
         AttackAngle = 120;
         IsStackable = false;
         Amount = 1;
@@ -167,9 +167,9 @@ public class BlackExcalibur : Weapon
 {
     public BlackExcalibur()
     {
-        AttackSpeed = 0.2f;
+        AttackSpeed = 0.1f;
         AttackRadius = 2;
-        AttackAmount = 10;
+        AttackAmount = 12;
         AttackAngle = 120;
         IsStackable = false;
         Amount = 1;
@@ -201,7 +201,7 @@ public class Excalibur : Weapon
 {
     public Excalibur()
     {
-        AttackSpeed = 0.2f;
+        AttackSpeed = 0.05f;
         AttackRadius = 2;
         AttackAmount = 10;
         AttackAngle = 120;
@@ -239,9 +239,9 @@ public class Faith : Weapon
 {
     public Faith()
     {
-        AttackSpeed = 0.2f;
+        AttackSpeed = 0.05f;
         AttackRadius = 2;
-        AttackAmount = 10;
+        AttackAmount = 2;
         AttackAngle = 120;
         IsStackable = false;
         Amount = 1;
@@ -274,9 +274,9 @@ public class GilgameshEa : Weapon
 {
     public GilgameshEa()
     {
-        AttackSpeed = 0.2f;
+        AttackSpeed = 0.1f;
         AttackRadius = 2;
-        AttackAmount = 10;
+        AttackAmount = 14;
         AttackAngle = 120;
         IsStackable = false;
         Amount = 1;
@@ -309,7 +309,7 @@ public class MasterSword : Weapon
 {
     public MasterSword()
     {
-        AttackSpeed = 0.2f;
+        AttackSpeed = 0.05f;
         AttackRadius = 2;
         AttackAmount = 10;
         AttackAngle = 120;
@@ -344,9 +344,9 @@ public class VirtuousTreaty : Weapon
 {
     public VirtuousTreaty()
     {
-        AttackSpeed = 0.2f;
+        AttackSpeed = 0.05f;
         AttackRadius = 2;
-        AttackAmount = 10;
+        AttackAmount = 5;
         AttackAngle = 120;
         IsStackable = false;
         Amount = 1;
@@ -381,7 +381,7 @@ public class xianyu : Weapon
     {
         AttackSpeed = 0.2f;
         AttackRadius = 2;
-        AttackAmount = 20;
+        AttackAmount = 16;
         AttackAngle = 120;
         IsStackable = false;
         Amount = 1;
@@ -407,7 +407,7 @@ public class xianyu_2 : Weapon
     {
         AttackSpeed = 0.2f;
         AttackRadius = 2;
-        AttackAmount = 20;
+        AttackAmount = 12;
         AttackAngle = 120;
         IsStackable = false;
         Amount = 1;
@@ -433,7 +433,7 @@ public class xianyu_3 : Weapon
     {
         AttackSpeed = 0.2f;
         AttackRadius = 2;
-        AttackAmount = 20;
+        AttackAmount = 8;
         AttackAngle = 120;
         IsStackable = false;
         Amount = 1;
@@ -459,7 +459,7 @@ public class xianyu_4 : Weapon
     {
         AttackSpeed = 0.2f;
         AttackRadius = 2;
-        AttackAmount = 20;
+        AttackAmount = 4;
         AttackAngle = 120;
         IsStackable = false;
         Amount = 1;
@@ -485,7 +485,7 @@ public class qingqing : Weapon
     {
         AttackSpeed = 0.2f;
         AttackRadius = 2;
-        AttackAmount = 20;
+        AttackAmount = 16;
         AttackAngle = 120;
         IsStackable = false;
         Amount = 1;
@@ -511,7 +511,7 @@ public class qingqing_2 : Weapon
     {
         AttackSpeed = 0.2f;
         AttackRadius = 2;
-        AttackAmount = 20;
+        AttackAmount = 12;
         AttackAngle = 120;
         IsStackable = false;
         Amount = 1;
@@ -537,7 +537,7 @@ public class qingqing_3 : Weapon
     {
         AttackSpeed = 0.2f;
         AttackRadius = 2;
-        AttackAmount = 20;
+        AttackAmount = 8;
         AttackAngle = 120;
         IsStackable = false;
         Amount = 1;
@@ -563,7 +563,7 @@ public class qingqing_4 : Weapon
     {
         AttackSpeed = 0.2f;
         AttackRadius = 2;
-        AttackAmount = 20;
+        AttackAmount = 4;
         AttackAngle = 120;
         IsStackable = false;
         Amount = 1;
@@ -590,10 +590,9 @@ public class Gun : Weapon
         handleOffset = new Vector3 (0.5f, 0.3f, 0f);
         AttackSpeed = 0.2f;
         AttackRadius = 20;
-        AttackAmount = 10;
+        AttackAmount = 5;
         AttackAngle = 0;
         IsStackable = false;
-        AttackAmount = 8;
         Amount = 1;
     }
 
@@ -603,7 +602,7 @@ public class Gun : Weapon
         GameObject projectileObject = GameObject.Instantiate(bulletPrefab, user.WeaponPrefab.transform.position + direction * 0.5f, Quaternion.identity);
         Bullet bullet = projectileObject.GetComponent<Bullet>();
         bullet.SetBullet(user, user.ActualCharacter.AttackAmount * AttackAmount, ExtraEffect);
-        bullet.Shoot(direction, 10);
+        bullet.Shoot(direction, 20);
     }
 
 }
@@ -612,7 +611,7 @@ public class EnergyGun : Weapon
 {
     public EnergyGun()
     {
-        AttackSpeed = 0.2f;
+        AttackSpeed = 0.4f;
         AttackRadius = 20;
         AttackAmount = 10;
         AttackAngle = 0;
@@ -636,9 +635,9 @@ public class ChargeGun : Weapon
 {
     public ChargeGun()
     {
-        AttackSpeed = 0.2f;
+        AttackSpeed = 0.4f;
         AttackRadius = 20;
-        AttackAmount = 10;
+        AttackAmount = 15;
         AttackAngle = 0;
         IsStackable = false;
         AttackAmount = 8;
@@ -661,9 +660,9 @@ public class Gatling : Weapon
 {
     public Gatling()
     {
-        AttackSpeed = 0.2f;
+        AttackSpeed = 0.05f;
         AttackRadius = 20;
-        AttackAmount = 10;
+        AttackAmount = 5;
         AttackAngle = 0;
         IsStackable = false;
         AttackAmount = 8;
@@ -676,7 +675,7 @@ public class Gatling : Weapon
         GameObject projectileObject = GameObject.Instantiate(bulletPrefab, user.transform.position + offset + direction * 0.5f, Quaternion.identity);
         Bullet bullet = projectileObject.GetComponent<Bullet>();
         bullet.SetBullet(user, user.ActualCharacter.AttackAmount * AttackAmount, ExtraEffect);
-        bullet.Shoot(direction, 10);
+        bullet.Shoot(direction, 30);
     }
 
 }
@@ -688,7 +687,7 @@ public class Puella : Weapon
         handleOffset = new Vector3(0.9f, 0.9f, 0f);
         AttackSpeed = 0.2f;
         AttackRadius = 20;
-        AttackAmount = 10;
+        AttackAmount = 15;
         AttackAngle = 0;
         IsStackable = false;
         AttackAmount = 8;
@@ -701,7 +700,7 @@ public class Puella : Weapon
         GameObject projectileObject = GameObject.Instantiate(bulletPrefab, user.WeaponPrefab.transform.position + direction * 0.5f, Quaternion.identity);
         Bullet bullet = projectileObject.GetComponent<Bullet>();
         bullet.SetBullet(user, user.ActualCharacter.AttackAmount * AttackAmount, ExtraEffect);
-        bullet.Shoot(direction, 10);
+        bullet.Shoot(direction, 20);
     }
 
 }
@@ -713,7 +712,7 @@ public class RathBuster : Weapon
         handleOffset = new Vector3(0.9f, 0.9f, 0f);
         AttackSpeed = 0.2f;
         AttackRadius = 20;
-        AttackAmount = 10;
+        AttackAmount =5;
         AttackAngle = 0;
         IsStackable = false;
         AttackAmount = 8;
@@ -726,7 +725,7 @@ public class RathBuster : Weapon
         GameObject projectileObject = GameObject.Instantiate(bulletPrefab, user.WeaponPrefab.transform.position + direction * 0.5f, Quaternion.identity);
         Bullet bullet = projectileObject.GetComponent<Bullet>();
         bullet.SetBullet(user, user.ActualCharacter.AttackAmount * AttackAmount, ExtraEffect);
-        bullet.Shoot(direction, 10);
+        bullet.Shoot(direction, 20);
     }
 
 }
@@ -736,9 +735,9 @@ public class RathGunlance : Weapon
     public RathGunlance()
     {
         handleOffset = new Vector3(0.9f, 0.9f, 0f);
-        AttackSpeed = 0.2f;
+        AttackSpeed = 0.05f;
         AttackRadius = 20;
-        AttackAmount = 10;
+        AttackAmount = 2;
         AttackAngle = 0;
         IsStackable = false;
         AttackAmount = 8;
