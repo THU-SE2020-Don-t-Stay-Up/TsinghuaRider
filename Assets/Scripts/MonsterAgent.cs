@@ -258,10 +258,10 @@ public class MonsterAgent : LivingBaseAgent
         else
         {
             ItemAgent.GenerateItem(transform.position, new Coin { Amount = ActualMonster.Difficulty });
-            //for(int i = 0; i < ActualMonster.Rewards.Count; i++)
-            //{
-            //    ItemAgent.GenerateItem(transform.position, ActualMonster.Rewards[i], ActualMonster.Posiibility[i]);
-            //}
+            for (int i = 0; i < ActualMonster.Rewards.Count; i++)
+            {
+                ItemAgent.GenerateItem(transform.position, ActualMonster.Rewards[i], ActualMonster.Possibility[i]);
+            }
         }
         base.Destroy();
     }

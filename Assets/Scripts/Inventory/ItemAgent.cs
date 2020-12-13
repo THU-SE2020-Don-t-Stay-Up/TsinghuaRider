@@ -24,7 +24,7 @@ public class ItemAgent : MonoBehaviour, IInteract
             randomOffset = new Vector3(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f));
             generatePoint = position + randomOffset;
         }
-        GameObject realItem = Instantiate(item.GetItemPrefab(), position, Quaternion.identity);
+        GameObject realItem = Instantiate(item.GetItemPrefab(), generatePoint, Quaternion.identity);
         ItemAgent itemAgent = realItem.GetComponent<ItemAgent>();
         itemAgent.SetItem(item);
     }
