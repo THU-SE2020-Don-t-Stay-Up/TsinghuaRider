@@ -420,7 +420,8 @@ public class CharacterAgent : LivingBaseAgent
                 // if (true)
                 {
                     SetState(1);
-                    attackingFlag = !weaponAgent.SwordLightAttack();
+                    attackingFlag = !weaponAgent.Attack();
+                    weaponAgent.SwordLightAttack();
                     deltaTime = 0;
                     SetState(0);
                 }
