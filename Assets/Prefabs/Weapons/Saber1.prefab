@@ -293,4 +293,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemIndex: 9
-  bulletPrefab: {fileID: 0}
+  bulletPrefab: {fileID: 8452725808808505041, guid: 8fe56c9e14e93f044b90c70e0e7d38e4, type: 3}
