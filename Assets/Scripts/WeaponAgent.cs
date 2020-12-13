@@ -81,8 +81,6 @@ public class WeaponAgent : ItemAgent
 
     protected void HandleAiming(float offSet, float angle,  bool leftFlag)
     {
-        //为Robot调整武器指向角度
-        if (user.characterIndex == 1) offSet -= 90f;
         
             if (leftFlag)
         {
@@ -136,7 +134,7 @@ public class WeaponAgent : ItemAgent
                 upFlag = false;
                 float deltaX = transform.position.x - user.GetPosition().x;
                 transform.position = Vector3.MoveTowards(weaponPosition, new Vector3(user.GetPosition().x - deltaX, weaponPosition.y), 10000f);
-
+                Weapon.offset = new Vector3(1, 1, 0);
                 //transform.Translate(new Vector3(user.GetPosition().x, weaponPosition.y));
 
             }
@@ -148,7 +146,7 @@ public class WeaponAgent : ItemAgent
                 float deltaX = transform.position.x - user.GetPosition().x;
 
                 transform.position = Vector3.MoveTowards(weaponPosition, new Vector3(user.GetPosition().x - deltaX, weaponPosition.y), 10000f);
-
+                Weapon.offset = new Vector3(-1, 1, 0);
                 //transform.Translate(new Vector3(user.GetPosition().x, weaponPosition.y));
 
             }
@@ -197,6 +195,7 @@ public class WeaponAgent : ItemAgent
                 leftFlag = true;
                 float deltaX = transform.position.x - user.GetPosition().x;
                 transform.position = Vector3.MoveTowards(weaponPosition, new Vector3(user.GetPosition().x - deltaX, weaponPosition.y), 10000f);
+                Weapon.offset= new Vector3(-1, 1, 0); 
 
             }
             else if (leftFlag && aimDir.x >= 0)
@@ -205,7 +204,7 @@ public class WeaponAgent : ItemAgent
                 float deltaX = transform.position.x - user.GetPosition().x;
 
                 transform.position = Vector3.MoveTowards(weaponPosition, new Vector3(user.GetPosition().x - deltaX, weaponPosition.y), 10000f);
-
+                Weapon.offset =new Vector3(1, 1, 0);
             }
         }
         else

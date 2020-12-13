@@ -570,6 +570,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   monsterIndex: 5
   bulletPrefab: {fileID: 6930816689405685355, guid: 279ab947aa7df724d9c3d88b4d67891f, type: 3}
+  obstaclePrefab: {fileID: 3776812353351211578, guid: bedd3fa468438ae4aa19b6c1b33bbe57, type: 3}
+  FlipFlag: 0
 --- !u!95 &2134981347929915649
 Animator:
   serializedVersion: 3

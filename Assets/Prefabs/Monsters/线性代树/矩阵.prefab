@@ -103,7 +103,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monsterIndex: 7
-  bulletPrefab: {fileID: 5978245576809750528, guid: 00d6fdc0f19871248b2cbbcaad86db31, type: 3}
+  bulletPrefab: {fileID: 0}
+  obstaclePrefab: {fileID: 5978245576809750528, guid: 00d6fdc0f19871248b2cbbcaad86db31, type: 3}
   FlipFlag: 0
 --- !u!50 &5014453483739362891
 Rigidbody2D:

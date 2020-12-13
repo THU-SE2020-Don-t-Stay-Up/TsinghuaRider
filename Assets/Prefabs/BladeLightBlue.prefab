@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3864295518990929005}
   - component: {fileID: 8896454246946175800}
   m_Layer: 14
-  m_Name: BulletPrefab 1
+  m_Name: BladeLightBlue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27,13 +27,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4278845428060735033}
-  m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &8331878871766563836
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -47,18 +47,18 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.08694816, y: 0.036640167}
+  m_Offset: {x: 0.079535246, y: 0.040910006}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 3.48, y: 1.09}
+    oldSize: {x: 1.09, y: 3.48}
     newSize: {x: 20, y: 20}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.2108378, y: 0.26720428}
+  m_Size: {x: 0.44355088, y: 3.1450267}
   m_EdgeRadius: 0
 --- !u!50 &8285733876128059890
 Rigidbody2D:
