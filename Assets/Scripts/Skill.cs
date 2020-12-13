@@ -367,6 +367,7 @@ public class ObstacleSkill : RangeSkill
 {
     private float randomTime;
     private Vector3 obstaclePosition;
+    private bool performFlag = false;
     public override void Init(MonsterAgent agent)
     {
         base.Init(agent);
@@ -396,10 +397,15 @@ public class ObstacleSkill : RangeSkill
         agent.Animator.SetTrigger("attack");
         agent.Animator.speed = 1 / actionPerformTime;
         performTimer += Time.deltaTime;
-        GameObject.Instantiate(agent.bulletPrefab, obstaclePosition, Quaternion.identity);
+        if (!performFlag)
+        {
+            GameObject.Instantiate(agent.obstaclePrefab, obstaclePosition, Quaternion.identity);
+            performFlag = true;
+        }
         if (performTimer > actionPerformTime)
         {
             performTimer = 0;
+            performFlag = false;
             return true;
         }
         else

@@ -35,6 +35,11 @@ abstract public class StateBase
 
 public class SlowState : StateBase
 {
+    private float SlowFactor;
+    public SlowState(float slowFactor = 0.2f)
+    {
+        SlowFactor = slowFactor;
+    }
     public override void Effect(LivingBaseAgent agent)
     {
         agent.actualLiving.MoveSpeed = agent.living.MoveSpeed * 0.2f;
@@ -93,7 +98,11 @@ public class SpeedUpState : StateBase
 public class BleedState: StateBase
 {
     private float Timer = 0;
-    private float DamagePerSecond = 1.0f;
+    private float DamagePerSecond;
+    public BleedState(float damagePerSecond = 1.0f)
+    {
+        DamagePerSecond = damagePerSecond;
+    }
     public override void Effect(LivingBaseAgent agent)
     {
         Timer += Time.deltaTime;

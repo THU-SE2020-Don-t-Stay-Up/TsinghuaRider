@@ -14,6 +14,7 @@ public class MonsterAgent : LivingBaseAgent
     /// </summary>
     public int monsterIndex;
     public GameObject bulletPrefab;
+    public GameObject obstaclePrefab;
     public bool FlipFlag = false;
     /// <summary>
     /// 状态机
@@ -122,6 +123,7 @@ public class MonsterAgent : LivingBaseAgent
             monsterHealthBar.transform.localScale = SetX(monsterHealthBar.transform.localScale, initHealBarDirection);
         }
         CheckState();
+        CheckFierce();
         SetRandomDirection();
         roamingTimer += Time.deltaTime;
     }
@@ -258,6 +260,15 @@ public class MonsterAgent : LivingBaseAgent
             ItemAgent.GenerateItem(transform.position, new Coin { Amount = ActualMonster.Reward });
         }
         base.Destroy();
+    }
+
+    public void CheckFierce()
+    {
+        Skill fierceSkill = ActualMonster.Skills.FirstOrDefault(e => e is FierceSkill);
+        if (fierceSkill != null)
+        {
+            fierceSkill.Perform();
+        }
     }
 
     /// <summary>
