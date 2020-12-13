@@ -12,7 +12,7 @@ public class MeleeWeaponAgent : WeaponAgent, IInteract
     
     private void Rotate()
     {
-        angle += Time.deltaTime * 500f;
+        angle += Time.deltaTime * 1000f;
     }
 
     private void Init()
