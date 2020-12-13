@@ -25,7 +25,9 @@ public class Monster : LivingBase, ICloneable
     /// <summary>
     /// 击杀奖励
     /// </summary>
-    public int Reward { get; set; }
+    [JsonConverter(typeof(TJsonConverter<Item>))]
+    public List<Item> Rewards { get; set; }
+    public int[] Posiibility;
     /// <summary>
     /// 难度
     /// </summary>
@@ -38,9 +40,9 @@ public class Monster : LivingBase, ICloneable
     /// <summary>
     /// 技能列表，存储实体可施放的技能
     /// </summary>
-    [JsonConverter(typeof(SkillsJsonConverter))]
+    [JsonConverter(typeof(TJsonConverter<Skill>))]
     public List<Skill> Skills { get; set; }
-    [JsonConverter(typeof(SkillsJsonConverter))]
+    [JsonConverter(typeof(TJsonConverter<Skill>))]
     public List<Skill> SkillOrder { get; set; }
     public AttackSkill AttackSkill => Skills[0] as AttackSkill;
     public object Clone()
@@ -73,20 +75,20 @@ public class Monster : LivingBase, ICloneable
     }
 }
 
-class SkillsJsonConverter : JsonConverter<List<Skill>>
+class TJsonConverter<T> : JsonConverter<List<T>>
 {
-    public override List<Skill> ReadJson(JsonReader reader, Type objectType, List<Skill> existingValue, bool hasExistingValue, JsonSerializer serializer)
+    public override List<T> ReadJson(JsonReader reader, Type objectType, List<T> existingValue, bool hasExistingValue, JsonSerializer serializer)
     {
-        if (existingValue == null) existingValue = new List<Skill>();
+        if (existingValue == null) existingValue = new List<T>();
         JArray arr = JArray.Load(reader);
         foreach (var s in arr)
         {
-            existingValue.Add((Skill)Activator.CreateInstance(typeof(Skill).Assembly.GetType(s.ToString() + "Skill")));
+            existingValue.Add((T)Activator.CreateInstance(typeof(T).Assembly.GetType(s.ToString())));
         }
         return existingValue;
     }
 
-    public override void WriteJson(JsonWriter writer, List<Skill> value, JsonSerializer serializer)
+    public override void WriteJson(JsonWriter writer, List<T> value, JsonSerializer serializer)
     {
         writer.WriteStartArray();
         if (value != null)
