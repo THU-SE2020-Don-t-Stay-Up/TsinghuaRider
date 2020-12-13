@@ -146,11 +146,17 @@
       "MissleAttack",
       "Fierce",
       "Laser",
-      "Barrage"
+      "Barrage",
+      "Obstacle"
     ],
     "SkillOrder": [
+      "Obstacle",
       "MissleAttack",
+      "Obstacle",
       "Laser",
+      "Obstacle",
+      "MissleAttack",
+      "Obstacle",
       "Barrage"
     ],
     "BloodLine": 0.4
