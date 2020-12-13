@@ -31,6 +31,11 @@ class Global
     public static List<Character> characters;
     public static List<Item> items;
     public static string[] prefabPaths;
+    /// <summary>
+    /// 房间难度信息
+    /// </summary>
+    public static float difficulty;
+    public static float difficultyStep;
 
     public static void LoadPrefabPaths()
     {

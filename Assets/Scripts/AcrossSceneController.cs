@@ -6,26 +6,20 @@ using UnityEngine.SceneManagement;
 public class AcrossSceneController : MonoBehaviour
 {
     RoomGenerator roomGenerator;
-    public float initDifficulty;
-    public float deltaDifficulty;
-
-    float difficulty;
 
     void Start()
     {
-        SceneManager.sceneUnloaded += OnSceneUnloaded;
-
-        difficulty = initDifficulty;
+        SceneManager.sceneUnloaded += OnSceneUnloaded;       
     }
 
     void OnSceneUnloaded(Scene previous)
     {
         Debug.Log("Scene unloaded " + previous.name);
         roomGenerator = FindObjectOfType<RoomGenerator>();
-        //Debug.Log(roomGenerator);
-        roomGenerator.difficulty = difficulty;
-        roomGenerator.Generate();
-        difficulty += deltaDifficulty;
+        if (roomGenerator != null)
+        {
+            roomGenerator.Generate();
+        }
 
         SetupPlayer();
     }

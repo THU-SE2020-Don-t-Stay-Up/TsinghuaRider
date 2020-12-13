@@ -408,7 +408,6 @@ MonoBehaviour:
   doorDown: {fileID: 229952710957528189}
   doorLeft: {fileID: 7323570189201475623}
   doorRight: {fileID: 7820934170451561858}
-  stageClear: 0
 --- !u!61 &4072939706908991984
 BoxCollider2D:
   m_ObjectHideFlags: 0

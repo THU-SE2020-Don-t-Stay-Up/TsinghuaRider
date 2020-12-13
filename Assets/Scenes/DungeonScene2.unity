@@ -176,7 +176,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2840401539398693362, guid: 42d50e69a83e94d45a4ff3fa67301225, type: 3}
       propertyPath: generateNumber
-      value: 7
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2840401539398693362, guid: 42d50e69a83e94d45a4ff3fa67301225, type: 3}
       propertyPath: roomPrefabs.Array.data[0]
