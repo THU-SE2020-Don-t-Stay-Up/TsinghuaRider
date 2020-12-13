@@ -38,9 +38,11 @@ public class CharacterAgent : LivingBaseAgent
     private Inventory inventory;
     private Inventory weaponColumn;
     private Inventory buffColumn;
+    private Inventory coinInventory;
     private UIInventory uiInventory;
     private UIInventory uiWeaponColumn;
     private UIInventory uiBuffColumn;
+    private UIInventory uiCoinInventory;
 
     // movement
     float horizontal;
@@ -64,6 +66,10 @@ public class CharacterAgent : LivingBaseAgent
 
     Vector3 attackDirection = new Vector3(0, 0, 0);
     Vector3 mousePosition = new Vector3(0, 0, 0);
+
+    // 
+    public GameObject MahouPortrait;
+    public GameObject RobotPortrait;
 
     // 为了测试改成public，之后要改回private
     public void Awake()
@@ -89,6 +95,10 @@ public class CharacterAgent : LivingBaseAgent
         inventory.AddItem(new Medkit { Amount = 1 });
         uiInventory.SetInventory(inventory);
 
+        uiCoinInventory = GameObject.Find("UI_Coins").GetComponent<UIInventory>();
+        coinInventory = new Inventory();
+        uiCoinInventory.SetInventory(coinInventory);
+
 
         uiWeaponColumn = GameObject.Find("UI_Weapons").GetComponent<UIInventory>();
         weaponColumn = new Inventory();
@@ -100,6 +110,19 @@ public class CharacterAgent : LivingBaseAgent
         buffColumn = new Inventory();
         uiBuffColumn.SetInventory(buffColumn);
 
+        MahouPortrait = GameObject.Find("MahouPortrait");
+        MahouPortrait.SetActive(false);
+        RobotPortrait = GameObject.Find("RobotPortrait");
+        RobotPortrait.SetActive(false);
+
+        if (characterIndex == 0)
+        {
+            MahouPortrait.SetActive(true);
+        }
+        else
+        {
+            RobotPortrait.SetActive(true);
+        }
 
         UpdateWeaponPrefab();
     }
@@ -451,6 +474,11 @@ public class CharacterAgent : LivingBaseAgent
         buffColumn.AddItem(item);
     }
 
+    public void CoinInventoryAddItem(Item item)
+    {
+        coinInventory.AddItem(item);
+    }
+
     public void MeleeAttack()
     {
         Animator.SetTrigger("Melee");
@@ -520,6 +548,8 @@ public class CharacterAgent : LivingBaseAgent
             WeaponPrefab = null;
         }
     }
+
+
     /// <summary>
     /// 用于测试Character使用Item的函数，最终要删除
     /// </summary>
