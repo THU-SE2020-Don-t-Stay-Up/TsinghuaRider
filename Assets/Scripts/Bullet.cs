@@ -58,10 +58,10 @@ public class Bullet : MonoBehaviour, IInteract
             }
         }
     }
-    public void OnTriggerEnter2D(Collider2D collision)
+    public virtual void OnTriggerEnter2D(Collider2D collision)
     {
         //Debug.Log(collision.gameObject.layer);
-        if (collision.gameObject.layer == 9)
+        if (collision.gameObject.layer == 9 || collision.gameObject.layer == 16)
             Destroy(gameObject);
     }
 
