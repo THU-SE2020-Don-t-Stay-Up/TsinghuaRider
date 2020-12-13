@@ -17,12 +17,26 @@ public class ItemAgent : MonoBehaviour, IInteract
     /// <param name="item">要生成的物品</param>
     public static void GenerateItem(Vector3 position, Item item)
     {
-        GameObject itemPrefab = item.GetItemPrefab();
-        GameObject realItem = Instantiate(itemPrefab, position, Quaternion.identity);
+        Vector3 randomOffset = new Vector3(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f));
+        Vector3 generatePoint = position + randomOffset;
+        while (Physics2D.OverlapCircle(generatePoint, 0.52f, LayerMask.GetMask("Obstacle")) != null)
+        {
+            randomOffset = new Vector3(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f));
+            generatePoint = position + randomOffset;
+        }
+        GameObject realItem = Instantiate(item.GetItemPrefab(), position, Quaternion.identity);
         ItemAgent itemAgent = realItem.GetComponent<ItemAgent>();
         itemAgent.SetItem(item);
     }
 
+    public static void GenerateItem(Vector3 position, Item item, float p)
+    {
+        float r = Random.Range(0.0f, 1.0f);
+        if (r < p)
+        {
+            GenerateItem(position, item);
+        }
+    }
     public Item Item { get; set; }
     protected TextMeshPro textMeshPro;
 
