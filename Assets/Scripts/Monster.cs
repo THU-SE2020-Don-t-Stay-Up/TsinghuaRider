@@ -27,7 +27,7 @@ public class Monster : LivingBase, ICloneable
     /// </summary>
     [JsonConverter(typeof(TJsonConverter<Item>))]
     public List<Item> Rewards { get; set; }
-    public int[] Posiibility;
+    public float[] Possibility { get; set; }
     /// <summary>
     /// 难度
     /// </summary>
