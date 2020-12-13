@@ -167,6 +167,7 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 2384922442436879879}
   m_maskType: 0
+  _SortingLayer: 0
   _SortingLayerID: 0
   _SortingOrder: 0
 --- !u!1 &7578985632591102055
@@ -180,7 +181,7 @@ GameObject:
   - component: {fileID: 7578985632591102051}
   - component: {fileID: 7578985632591102050}
   - component: {fileID: 7578985632591102053}
-  - component: {fileID: 3096342644748402079}
+  - component: {fileID: 3679254756675791153}
   m_Layer: 0
   m_Name: Coin
   m_TagString: Untagged
@@ -271,7 +272,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.64, y: 0.64}
+    oldSize: {x: 3.2, y: 3.2}
     newSize: {x: 0.64, y: 0.64}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -280,7 +281,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.923559, y: 1.3570108}
   m_EdgeRadius: 0
---- !u!114 &3096342644748402079
+--- !u!114 &3679254756675791153
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -289,7 +290,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7578985632591102055}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3622c36b0621df34fa70c61078d17a0d, type: 3}
+  m_Script: {fileID: 11500000, guid: e2d2b32818930974592e00726d35117e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   itemIndex: 2
