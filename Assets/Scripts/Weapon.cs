@@ -401,10 +401,165 @@ public class xianyu : Weapon
     //咸鱼武器特点：没有刀光，但是近战伤害高
 }
 
+public class xianyu_2 : Weapon
+{
+    public xianyu_2()
+    {
+        AttackSpeed = 0.2f;
+        AttackRadius = 2;
+        AttackAmount = 20;
+        AttackAngle = 120;
+        IsStackable = false;
+        Amount = 1;
+    }
+
+    public override void Attack(CharacterAgent user, Vector3 direction)
+    {
+        user.Animator.SetTrigger("Melee");
+        IEnumerable<GameObject> targetObjects = user.GetAttackRangeObjects(user.transform.position, user.ActualCharacter.AttackDirection, user.ActualCharacter.AttackRadius * AttackRadius, AttackAngle, "Monster");
+        foreach (var targetObject in targetObjects)
+        {
+            LivingBaseAgent targetAgent = targetObject.GetComponent<LivingBaseAgent>();
+            targetAgent.ChangeHealth(-user.ActualCharacter.AttackAmount * AttackAmount);
+            ExtraEffect(targetAgent);
+        }
+    }
+    //咸鱼武器特点：没有刀光，但是近战伤害高
+}
+
+public class xianyu_3 : Weapon
+{
+    public xianyu_3()
+    {
+        AttackSpeed = 0.2f;
+        AttackRadius = 2;
+        AttackAmount = 20;
+        AttackAngle = 120;
+        IsStackable = false;
+        Amount = 1;
+    }
+
+    public override void Attack(CharacterAgent user, Vector3 direction)
+    {
+        user.Animator.SetTrigger("Melee");
+        IEnumerable<GameObject> targetObjects = user.GetAttackRangeObjects(user.transform.position, user.ActualCharacter.AttackDirection, user.ActualCharacter.AttackRadius * AttackRadius, AttackAngle, "Monster");
+        foreach (var targetObject in targetObjects)
+        {
+            LivingBaseAgent targetAgent = targetObject.GetComponent<LivingBaseAgent>();
+            targetAgent.ChangeHealth(-user.ActualCharacter.AttackAmount * AttackAmount);
+            ExtraEffect(targetAgent);
+        }
+    }
+    //咸鱼武器特点：没有刀光，但是近战伤害高
+}
+
+public class xianyu_4 : Weapon
+{
+    public xianyu_4()
+    {
+        AttackSpeed = 0.2f;
+        AttackRadius = 2;
+        AttackAmount = 20;
+        AttackAngle = 120;
+        IsStackable = false;
+        Amount = 1;
+    }
+
+    public override void Attack(CharacterAgent user, Vector3 direction)
+    {
+        user.Animator.SetTrigger("Melee");
+        IEnumerable<GameObject> targetObjects = user.GetAttackRangeObjects(user.transform.position, user.ActualCharacter.AttackDirection, user.ActualCharacter.AttackRadius * AttackRadius, AttackAngle, "Monster");
+        foreach (var targetObject in targetObjects)
+        {
+            LivingBaseAgent targetAgent = targetObject.GetComponent<LivingBaseAgent>();
+            targetAgent.ChangeHealth(-user.ActualCharacter.AttackAmount * AttackAmount);
+            ExtraEffect(targetAgent);
+        }
+    }
+    //咸鱼武器特点：没有刀光，但是近战伤害高
+}
 
 public class qingqing : Weapon
 {
     public qingqing()
+    {
+        AttackSpeed = 0.2f;
+        AttackRadius = 2;
+        AttackAmount = 20;
+        AttackAngle = 120;
+        IsStackable = false;
+        Amount = 1;
+    }
+
+    public override void Attack(CharacterAgent user, Vector3 direction)
+    {
+        user.Animator.SetTrigger("Melee");
+        IEnumerable<GameObject> targetObjects = user.GetAttackRangeObjects(user.transform.position, user.ActualCharacter.AttackDirection, user.ActualCharacter.AttackRadius * AttackRadius, AttackAngle, "Monster");
+        foreach (var targetObject in targetObjects)
+        {
+            LivingBaseAgent targetAgent = targetObject.GetComponent<LivingBaseAgent>();
+            targetAgent.ChangeHealth(-user.ActualCharacter.AttackAmount * AttackAmount);
+            ExtraEffect(targetAgent);
+        }
+    }
+    //清青鸡肉卷的特点与咸鱼相同
+}
+
+public class qingqing_2 : Weapon
+{
+    public qingqing_2()
+    {
+        AttackSpeed = 0.2f;
+        AttackRadius = 2;
+        AttackAmount = 20;
+        AttackAngle = 120;
+        IsStackable = false;
+        Amount = 1;
+    }
+
+    public override void Attack(CharacterAgent user, Vector3 direction)
+    {
+        user.Animator.SetTrigger("Melee");
+        IEnumerable<GameObject> targetObjects = user.GetAttackRangeObjects(user.transform.position, user.ActualCharacter.AttackDirection, user.ActualCharacter.AttackRadius * AttackRadius, AttackAngle, "Monster");
+        foreach (var targetObject in targetObjects)
+        {
+            LivingBaseAgent targetAgent = targetObject.GetComponent<LivingBaseAgent>();
+            targetAgent.ChangeHealth(-user.ActualCharacter.AttackAmount * AttackAmount);
+            ExtraEffect(targetAgent);
+        }
+    }
+    //清青鸡肉卷的特点与咸鱼相同
+}
+
+public class qingqing_3 : Weapon
+{
+    public qingqing_3()
+    {
+        AttackSpeed = 0.2f;
+        AttackRadius = 2;
+        AttackAmount = 20;
+        AttackAngle = 120;
+        IsStackable = false;
+        Amount = 1;
+    }
+
+    public override void Attack(CharacterAgent user, Vector3 direction)
+    {
+        user.Animator.SetTrigger("Melee");
+        IEnumerable<GameObject> targetObjects = user.GetAttackRangeObjects(user.transform.position, user.ActualCharacter.AttackDirection, user.ActualCharacter.AttackRadius * AttackRadius, AttackAngle, "Monster");
+        foreach (var targetObject in targetObjects)
+        {
+            LivingBaseAgent targetAgent = targetObject.GetComponent<LivingBaseAgent>();
+            targetAgent.ChangeHealth(-user.ActualCharacter.AttackAmount * AttackAmount);
+            ExtraEffect(targetAgent);
+        }
+    }
+    //清青鸡肉卷的特点与咸鱼相同
+}
+
+public class qingqing_4 : Weapon
+{
+    public qingqing_4()
     {
         AttackSpeed = 0.2f;
         AttackRadius = 2;

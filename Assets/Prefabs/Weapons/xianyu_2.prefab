@@ -292,5 +292,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4148c0864ce2a34589e5b11e9d6711b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemIndex: 21
+  itemIndex: 27
   bulletPrefab: {fileID: 0}
