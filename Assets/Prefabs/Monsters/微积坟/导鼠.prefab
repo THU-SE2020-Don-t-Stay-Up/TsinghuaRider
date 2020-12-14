@@ -248,7 +248,7 @@ Transform:
   m_GameObject: {fileID: 6840133694130961993}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: -0.6, y: 0.6, z: 1}
+  m_LocalScale: {x: -0.7, y: 0.7, z: 1}
   m_Children:
   - {fileID: 503690941698937625}
   - {fileID: 3181850231857220985}
@@ -320,6 +320,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   monsterIndex: 0
   bulletPrefab: {fileID: 2269785940787976222, guid: bd13f8eff7394964092a5fc1492e5078, type: 3}
+  obstaclePrefab: {fileID: 0}
   FlipFlag: 0
 --- !u!50 &902533353708823891
 Rigidbody2D:
@@ -355,7 +356,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.0022865832, y: 0.54369265}
+  m_Offset: {x: -0.0022865832, y: 0.5271287}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.14}
@@ -366,7 +367,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.7131092, y: 1.2445556}
+  m_Size: {x: 0.7131092, y: 1.2419729}
   m_EdgeRadius: 0
 --- !u!95 &7152982450636620674
 Animator:
@@ -410,8 +411,8 @@ MonoBehaviour:
   - {fileID: 6471861250926677833}
   - {fileID: 5887747534694897032}
   m_Bounds:
-    m_Center: {x: 0.07165998, y: 0.7084489, z: 0}
-    m_Extent: {x: 0.79834014, y: 0.91295147, z: 0}
+    m_Center: {x: 0.07165998, y: 0.70844877, z: 0}
+    m_Extent: {x: 0.7983401, y: 0.9129514, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
 --- !u!1 &7308343711366951196

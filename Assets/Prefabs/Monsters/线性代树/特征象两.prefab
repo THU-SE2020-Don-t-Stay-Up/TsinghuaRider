@@ -134,6 +134,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   monsterIndex: 9
   bulletPrefab: {fileID: 2269785940787976222, guid: bd13f8eff7394964092a5fc1492e5078, type: 3}
+  obstaclePrefab: {fileID: 0}
   FlipFlag: 0
 --- !u!50 &4930364483386229146
 Rigidbody2D:
@@ -169,10 +170,10 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 1}
+  m_Offset: {x: 0.07261181, y: 1.1803916}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0}
+    pivot: {x: 0.5, y: 0.3}
     oldSize: {x: 4, y: 2.495}
     newSize: {x: 1.98, y: 1.99}
     adaptiveTilingThreshold: 0.5
@@ -180,7 +181,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3, y: 1.748661}
+  m_Size: {x: 2.8547764, y: 2.1094441}
   m_EdgeRadius: 0
 --- !u!95 &8238087832763559390
 Animator:
@@ -228,8 +229,8 @@ MonoBehaviour:
   - {fileID: 4171706539591242825}
   - {fileID: 7942546499684165287}
   m_Bounds:
-    m_Center: {x: 0.19935012, y: 1.2474997, z: 0}
-    m_Extent: {x: 1.7993499, y: 1.2475, z: 0}
+    m_Center: {x: 0.19935012, y: 1.2474995, z: 0}
+    m_Extent: {x: 1.7993499, y: 1.2474998, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
 --- !u!1 &1593532154561253437
@@ -669,7 +670,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5235018170838527134, guid: 1683f5c07b8e3374590d1fe1ca928aeb, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.3333333
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1683f5c07b8e3374590d1fe1ca928aeb, type: 3}

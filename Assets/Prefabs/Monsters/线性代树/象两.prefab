@@ -197,6 +197,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   monsterIndex: 9
   bulletPrefab: {fileID: 2269785940787976222, guid: bd13f8eff7394964092a5fc1492e5078, type: 3}
+  obstaclePrefab: {fileID: 0}
   FlipFlag: 0
 --- !u!50 &3764907804977736586
 Rigidbody2D:
@@ -235,7 +236,7 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 1}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0}
+    pivot: {x: 0.5, y: 0.3}
     oldSize: {x: 2.56, y: 2.56}
     newSize: {x: 1.98, y: 1.99}
     adaptiveTilingThreshold: 0.5
@@ -284,7 +285,7 @@ MonoBehaviour:
   - {fileID: 2489565741661277705}
   - {fileID: 4802440579851284376}
   m_Bounds:
-    m_Center: {x: -0.020070314, y: 1.2819396, z: 0}
+    m_Center: {x: -0.020070314, y: 1.2819397, z: 0}
     m_Extent: {x: 1.2499301, y: 1.2777402, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
@@ -409,7 +410,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5235018170838527134, guid: 1683f5c07b8e3374590d1fe1ca928aeb, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 1.4
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 5235018170838527134, guid: 1683f5c07b8e3374590d1fe1ca928aeb, type: 3}
       propertyPath: m_SizeDelta.x
@@ -445,7 +446,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5235018170838527134, guid: 1683f5c07b8e3374590d1fe1ca928aeb, type: 3}
       propertyPath: m_LocalScale.x
-      value: -0.3333333
+      value: -0.4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1683f5c07b8e3374590d1fe1ca928aeb, type: 3}
