@@ -2733,7 +2733,7 @@ PrefabInstance:
       objectReference: {fileID: 6799404082520710716}
     - target: {fileID: 1886171756276275987, guid: fa7c88058e40dd74eb8cfa6e73be8f9f, type: 3}
       propertyPath: wave
-      value: 100
+      value: 55
       objectReference: {fileID: 0}
     - target: {fileID: 1886171756276275987, guid: fa7c88058e40dd74eb8cfa6e73be8f9f, type: 3}
       propertyPath: interval
