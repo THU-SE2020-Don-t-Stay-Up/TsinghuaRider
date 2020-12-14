@@ -32,17 +32,18 @@ public class MonsterGenerator : MonoBehaviour
     /// 超时时间，存活到该时间过关
     /// </summary>
     public float endTime;
+
+
     /// <summary>
     /// 经过的总时间
     /// </summary>
-    public float elapsedTime { private set; get; }
-
-        /// <summary>
+    float elapsedTime;
+    /// <summary>
     /// 计时生成怪的间隔
     /// </summary>
     float timer;
     bool generating = false;
-
+    UITime ui;
 
     public void Generate()
     {
@@ -50,6 +51,7 @@ public class MonsterGenerator : MonoBehaviour
         generating = true;
 
         elapsedTime = 0;
+        ui = FindObjectOfType<UITime>();
     }
 
     // Update is called once per frame
@@ -58,6 +60,11 @@ public class MonsterGenerator : MonoBehaviour
         if (generating)
         {
             elapsedTime += Time.deltaTime;
+            if (ui != null)
+            {
+                ui.SetRoomTime(Mathf.Max(endTime - elapsedTime, 0));
+            }
+
             if (elapsedTime > endTime)
             {
                 GameObject[] remainingMonsters = GameObject.FindGameObjectsWithTag("Monster");

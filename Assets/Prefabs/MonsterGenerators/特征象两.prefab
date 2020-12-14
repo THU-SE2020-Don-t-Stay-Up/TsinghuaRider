@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &3523945363261808120
+--- !u!1001 &2624327443466740331
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -9,27 +9,35 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1959152546303063255, guid: 395dc52d0af35114183ddabb090ee6fe, type: 3}
       propertyPath: monsterObjects.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1959152546303063255, guid: 395dc52d0af35114183ddabb090ee6fe, type: 3}
       propertyPath: probability.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1959152546303063255, guid: 395dc52d0af35114183ddabb090ee6fe, type: 3}
       propertyPath: monsterObjects.Array.data[0]
       value: 
-      objectReference: {fileID: 1728699422442499409, guid: 341c96388497645478359904c1f28a4a, type: 3}
+      objectReference: {fileID: 183837167028778493, guid: 3bd8136240e5a0a41a7540f1b8b4d35d, type: 3}
     - target: {fileID: 1959152546303063255, guid: 395dc52d0af35114183ddabb090ee6fe, type: 3}
       propertyPath: monsterObjects.Array.data[1]
       value: 
-      objectReference: {fileID: 1118593486341943542, guid: 3c538a75fe8289446a87004cab39444e, type: 3}
+      objectReference: {fileID: 7373759989494689936, guid: 79daaa74191fe554388d031540e12c8a, type: 3}
     - target: {fileID: 1959152546303063255, guid: 395dc52d0af35114183ddabb090ee6fe, type: 3}
       propertyPath: probability.Array.data[0]
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1959152546303063255, guid: 395dc52d0af35114183ddabb090ee6fe, type: 3}
       propertyPath: probability.Array.data[1]
-      value: 8
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1959152546303063255, guid: 395dc52d0af35114183ddabb090ee6fe, type: 3}
+      propertyPath: monsterObjects.Array.data[2]
+      value: 
+      objectReference: {fileID: 1587330264192440960, guid: 65f2fb3f1a5beb74bb49bb04ff6c156b, type: 3}
+    - target: {fileID: 1959152546303063255, guid: 395dc52d0af35114183ddabb090ee6fe, type: 3}
+      propertyPath: probability.Array.data[2]
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4546046770748004663, guid: 395dc52d0af35114183ddabb090ee6fe, type: 3}
       propertyPath: m_LocalPosition.x
@@ -77,7 +85,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7636024003235983186, guid: 395dc52d0af35114183ddabb090ee6fe, type: 3}
       propertyPath: m_Name
-      value: "\u7B2C\u4E00\u7AE0\u884C\u5217\u5F0F\u4E0E\u77E9\u9635"
+      value: "\u7279\u5F81\u8C61\u4E24"
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 395dc52d0af35114183ddabb090ee6fe, type: 3}

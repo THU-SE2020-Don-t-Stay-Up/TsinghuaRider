@@ -1,5 +1,95 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2502964690395065043
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3278408556832459040}
+  m_Layer: 0
+  m_Name: GeneratePoint2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3278408556832459040
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2502964690395065043}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -4.89, y: -4.9, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 647154424920933921}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3669618706494484281
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3596522562148312483}
+  m_Layer: 0
+  m_Name: GeneratePoint3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3596522562148312483
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3669618706494484281}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 6.55, y: -4.54, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 647154424920933921}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6189684924217967238
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1285836037108834485}
+  m_Layer: 0
+  m_Name: GeneratePoint4
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1285836037108834485
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6189684924217967238}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.55, y: 1.19, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 647154424920933921}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8865783074018998351
 GameObject:
   m_ObjectHideFlags: 0
@@ -24,7 +114,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8865783074018998351}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: -3.74, y: 5.47, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 647154424920933921}
@@ -2071,15 +2161,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1886171756276275987, guid: fa7c88058e40dd74eb8cfa6e73be8f9f, type: 3}
       propertyPath: monsterGroups.Array.size
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1886171756276275987, guid: fa7c88058e40dd74eb8cfa6e73be8f9f, type: 3}
       propertyPath: generatePoints.Array.size
-      value: 1
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1886171756276275987, guid: fa7c88058e40dd74eb8cfa6e73be8f9f, type: 3}
       propertyPath: wave
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1886171756276275987, guid: fa7c88058e40dd74eb8cfa6e73be8f9f, type: 3}
       propertyPath: interval
@@ -2087,12 +2177,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1886171756276275987, guid: fa7c88058e40dd74eb8cfa6e73be8f9f, type: 3}
       propertyPath: difficulty
-      value: 100
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 1886171756276275987, guid: fa7c88058e40dd74eb8cfa6e73be8f9f, type: 3}
       propertyPath: monsterGroups.Array.data[0]
       value: 
-      objectReference: {fileID: 9090317652082455916, guid: 5209a154287290640a027aecad2296e9, type: 3}
+      objectReference: {fileID: 6421863673251656362, guid: ec019db93fab43e44947e97c198fd6f0, type: 3}
     - target: {fileID: 1886171756276275987, guid: fa7c88058e40dd74eb8cfa6e73be8f9f, type: 3}
       propertyPath: generatePoints.Array.data[0]
       value: 
@@ -2100,6 +2190,26 @@ PrefabInstance:
     - target: {fileID: 1886171756276275987, guid: fa7c88058e40dd74eb8cfa6e73be8f9f, type: 3}
       propertyPath: generatePoints.Array.data[1]
       value: 
+      objectReference: {fileID: 3278408556832459040}
+    - target: {fileID: 1886171756276275987, guid: fa7c88058e40dd74eb8cfa6e73be8f9f, type: 3}
+      propertyPath: generatePoints.Array.data[2]
+      value: 
+      objectReference: {fileID: 3596522562148312483}
+    - target: {fileID: 1886171756276275987, guid: fa7c88058e40dd74eb8cfa6e73be8f9f, type: 3}
+      propertyPath: generatePoints.Array.data[3]
+      value: 
+      objectReference: {fileID: 1285836037108834485}
+    - target: {fileID: 1886171756276275987, guid: fa7c88058e40dd74eb8cfa6e73be8f9f, type: 3}
+      propertyPath: monsterGroups.Array.data[1]
+      value: 
+      objectReference: {fileID: 5590058645306494265, guid: 28a2f5bbc1ab54d46ac331b3f4a402eb, type: 3}
+    - target: {fileID: 1886171756276275987, guid: fa7c88058e40dd74eb8cfa6e73be8f9f, type: 3}
+      propertyPath: monsterGroups.Array.data[2]
+      value: 
+      objectReference: {fileID: 9090317652082455916, guid: 5209a154287290640a027aecad2296e9, type: 3}
+    - target: {fileID: 1886171756276275987, guid: fa7c88058e40dd74eb8cfa6e73be8f9f, type: 3}
+      propertyPath: endTime
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 2636625592805306625, guid: fa7c88058e40dd74eb8cfa6e73be8f9f, type: 3}
       propertyPath: m_Color.r
