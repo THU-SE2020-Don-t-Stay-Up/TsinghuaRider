@@ -187,14 +187,14 @@ public class CharacterAgent : LivingBaseAgent
 
     public void UpdateWeaponPrefab()
     {
-        try
-        {
-            WeaponPrefab = transform.GetComponentInChildren<WeaponAgent>().gameObject;
-        }
-        catch (System.Exception)
-        {
-            WeaponPrefab = null;
-        }
+        //try
+        //{
+        //    WeaponPrefab = transform.GetComponentInChildren<WeaponAgent>().gameObject;
+        //}
+        //catch (System.Exception)
+        //{
+        //    WeaponPrefab = null;
+        //}
         if (WeaponPrefab == null)
         {
             weaponColumn.UseItem(0, this);
