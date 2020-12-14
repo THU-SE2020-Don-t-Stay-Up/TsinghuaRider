@@ -48,8 +48,7 @@ public class ObstacleAgent : MonoBehaviour
             {
                 if (deltaTime > LastTime)
                 {
-                    IsFinished = true;
-                    Collider2D.enabled = false;
+                    IsFinished = true;                   
                     deltaTime = 0;
                 }
             }
@@ -77,7 +76,6 @@ public class ObstacleAgent : MonoBehaviour
         catch(Exception e)
         {
         }
-        Debug.Log(agent);
         if (agent != null)
         {
             agent.actualLiving.State.AddStatus(new BleedState(5), 1);

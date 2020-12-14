@@ -115,15 +115,10 @@ public class CharacterAgent : LivingBaseAgent
         RobotPortrait = GameObject.Find("RobotPortrait");
         RobotPortrait.SetActive(false);
 
-        if (characterIndex == 0)
-        {
-            MahouPortrait.SetActive(true);
-        }
-        else
-        {
-            RobotPortrait.SetActive(true);
-        }
 
+        GetPortrait();
+
+        InitialWeapon();
         UpdateWeaponPrefab();
     }
 
@@ -173,7 +168,6 @@ public class CharacterAgent : LivingBaseAgent
         UpdateWeaponPrefab();
         dashBar = Mathf.Clamp(dashBar + 1, 0, 901);
         UIDashBar.instance.SetValue((float)dashBar / 901f);
-
     }
 
     // 为了测试改成public，之后要改回private
@@ -185,7 +179,25 @@ public class CharacterAgent : LivingBaseAgent
         Dash();
     }
 
-    public void UpdateWeaponPrefab()
+    /// <summary>
+    /// 正确显示血条上人物头像
+    /// </summary>
+    public void GetPortrait()
+    {
+        if (characterIndex == 0)
+        {
+            MahouPortrait.SetActive(true);
+        }
+        else
+        {
+            RobotPortrait.SetActive(true);
+        }
+    }
+
+    /// <summary>
+    /// 只在Awake()调用一次，判断手上有没有武器
+    /// </summary>
+    public void InitialWeapon()
     {
         try
         {
@@ -195,6 +207,18 @@ public class CharacterAgent : LivingBaseAgent
         {
             WeaponPrefab = null;
         }
+    }
+
+    public void UpdateWeaponPrefab()
+    {
+        //try
+        //{
+        //    WeaponPrefab = transform.GetComponentInChildren<WeaponAgent>().gameObject;
+        //}
+        //catch (System.Exception)
+        //{
+        //    WeaponPrefab = null;
+        //}
         if (WeaponPrefab == null)
         {
             weaponColumn.UseItem(0, this);
@@ -541,7 +565,7 @@ public class CharacterAgent : LivingBaseAgent
 
     public void ThrowNowWeapon()
     {
-        if (WeaponPrefab != null && !weaponColumn.IsEmpty())
+        if (WeaponPrefab != null && !weaponColumn.IsEmpty() && !attackingFlag)
         {
             Weapon weapon = WeaponPrefab.GetComponent<WeaponAgent>().Weapon.Clone() as Weapon;
             ItemAgent.GenerateItem(transform.position + 2 * Vector3.up, weapon);

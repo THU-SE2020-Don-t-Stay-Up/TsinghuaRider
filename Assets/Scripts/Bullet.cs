@@ -45,7 +45,7 @@ public class Bullet : MonoBehaviour, IInteract
         rigidbody2d.AddForce(shootDir * speed, ForceMode2D.Impulse);
     }
 
-    public void InteractWith(GameObject gameObject)
+    public virtual void InteractWith(GameObject gameObject)
     {
         LivingBaseAgent agent = gameObject.GetComponent<LivingBaseAgent>();
         if (agent != null)

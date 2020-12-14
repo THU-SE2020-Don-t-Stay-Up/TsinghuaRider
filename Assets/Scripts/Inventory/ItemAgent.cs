@@ -19,8 +19,10 @@ public class ItemAgent : MonoBehaviour, IInteract
     {
         Vector3 randomOffset = new Vector3(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f));
         Vector3 generatePoint = position + randomOffset;
-        while (Physics2D.OverlapCircle(generatePoint, 0.52f, LayerMask.GetMask("Obstacle")) != null)
+        int step = 1;
+        while (step < 10 && Physics2D.OverlapCircle(generatePoint, 0.6f, LayerMask.GetMask("Obstacle")) != null)
         {
+            step++;
             randomOffset = new Vector3(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f));
             generatePoint = position + randomOffset;
         }

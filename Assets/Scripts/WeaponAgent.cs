@@ -10,7 +10,7 @@ public class WeaponAgent : ItemAgent
     public GameObject bulletPrefab;
     public Weapon Weapon { get; set; }
 
-    private Vector3 aimDir = new Vector3(1,0,0);
+    protected Vector3 aimDir = new Vector3(1,0,0);
 
     protected bool leftFlag = false;
     protected bool upFlag = false;
@@ -112,7 +112,7 @@ public class WeaponAgent : ItemAgent
         if (character != null)
         {
             //只捡没有的武器
-           if (character.WeaponPrefab == null || (character.WeaponPrefab.GetComponent<WeaponAgent>().itemIndex != itemIndex && !character.HasWeapon(Item)))
+           if ((character.WeaponPrefab == null || character.WeaponPrefab.GetComponent<WeaponAgent>().itemIndex != itemIndex) && !character.HasWeapon(Item))
             {
                 character.WeaponColumnAddItem(Item);
                 Destroy(this.gameObject);
@@ -120,7 +120,10 @@ public class WeaponAgent : ItemAgent
         }
     }
 
-    private void HandlePosition()
+    /// <summary>
+    /// 远程武器人物朝上或朝下时，调整武器的左右位置，使得武器始终在左手上
+    /// </summary>
+    protected virtual void HandlePosition()
     {
         //Debug.Log("角色编号：");
         //Debug.Log(user.characterIndex);
@@ -211,12 +214,6 @@ public class WeaponAgent : ItemAgent
         {
 
         }
-
-
-
-
-
-
     }
 
     /// <summary>
