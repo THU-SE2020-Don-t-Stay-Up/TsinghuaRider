@@ -115,15 +115,10 @@ public class CharacterAgent : LivingBaseAgent
         RobotPortrait = GameObject.Find("RobotPortrait");
         RobotPortrait.SetActive(false);
 
-        if (characterIndex == 0)
-        {
-            MahouPortrait.SetActive(true);
-        }
-        else
-        {
-            RobotPortrait.SetActive(true);
-        }
 
+        GetPortrait();
+
+        InitialWeapon();
         UpdateWeaponPrefab();
     }
 
@@ -173,7 +168,6 @@ public class CharacterAgent : LivingBaseAgent
         UpdateWeaponPrefab();
         dashBar = Mathf.Clamp(dashBar + 1, 0, 901);
         UIDashBar.instance.SetValue((float)dashBar / 901f);
-
     }
 
     // 为了测试改成public，之后要改回private
@@ -183,6 +177,36 @@ public class CharacterAgent : LivingBaseAgent
         //rigidbody2d.AddForce(new Vector2(horizontal, vertical) * ActualCharacter.MoveSpeed);
 
         Dash();
+    }
+
+    /// <summary>
+    /// 正确显示血条上人物头像
+    /// </summary>
+    public void GetPortrait()
+    {
+        if (characterIndex == 0)
+        {
+            MahouPortrait.SetActive(true);
+        }
+        else
+        {
+            RobotPortrait.SetActive(true);
+        }
+    }
+
+    /// <summary>
+    /// 只在Awake()调用一次，判断手上有没有武器
+    /// </summary>
+    public void InitialWeapon()
+    {
+        try
+        {
+            WeaponPrefab = transform.GetComponentInChildren<WeaponAgent>().gameObject;
+        }
+        catch (System.Exception)
+        {
+            WeaponPrefab = null;
+        }
     }
 
     public void UpdateWeaponPrefab()
