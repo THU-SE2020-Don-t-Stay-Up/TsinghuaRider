@@ -293,8 +293,7 @@ public class SplitSkill : UltraSkill
         {
             Vector3 randomOffset = new Vector3(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f));
             Vector3 generatePoint = agent.GetCentralPosition() + randomOffset;
-            Debug.Log(Physics2D.OverlapCircle(generatePoint, 0.52f, LayerMask.GetMask("Obstacle")));
-            while (Physics2D.OverlapCircle(generatePoint, 0.52f, LayerMask.GetMask("Obstacle")) != null){
+            while (Physics2D.OverlapCircle(generatePoint, 0.6f, LayerMask.GetMask("Obstacle")) != null){
                 randomOffset = new Vector3(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f));
                 generatePoint = agent.GetCentralPosition() + randomOffset;
             }
