@@ -27,6 +27,7 @@ public class RoomGenerator : MonoBehaviour
     List<Room> roomList = new List<Room>();
     bool stageClear = false;
     bool teleporterCreated = false;
+    UITime ui;
 
     /// <summary>
     /// 计时器
@@ -36,11 +37,16 @@ public class RoomGenerator : MonoBehaviour
     private void Start()
     {
         elapsedTime = 0;
+        ui = FindObjectOfType<UITime>();
     }
 
     private void Update()
     {
         elapsedTime += Time.deltaTime;
+        if (ui != null)
+        {
+            ui.SetTotalTime(elapsedTime);
+        }
 
         if (roomList.Count != 0)
         {

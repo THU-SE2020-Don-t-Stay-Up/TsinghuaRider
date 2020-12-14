@@ -798,6 +798,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8714307814327833958, guid: 400ba391aa56acc49874c04c24345bfb, type: 3}
+      propertyPath: uITime
+      value: 
+      objectReference: {fileID: 8505823158874985019, guid: 252a9bb49a41b3e4db05bc588d2c9153, type: 3}
     - target: {fileID: 8714307814327833959, guid: 400ba391aa56acc49874c04c24345bfb, type: 3}
       propertyPath: m_Name
       value: MonsterGenerator
