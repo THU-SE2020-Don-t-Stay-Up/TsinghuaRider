@@ -8,6 +8,8 @@ using UnityEngine;
 /// </summary>
 public class Initialization : MonoBehaviour
 {
+    public float initDifficulty;
+    public float difficultyStep;
 
     public void Awake()
     {
@@ -35,7 +37,9 @@ public class Initialization : MonoBehaviour
         catch (NullReferenceException)
         {
         }
-        
+
+        Global.difficulty = initDifficulty;
+        Global.difficultyStep = difficultyStep;
 
         Destroy(gameObject);
 

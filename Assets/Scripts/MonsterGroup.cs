@@ -32,7 +32,8 @@ public class MonsterGroup : MonoBehaviour
 
         // 生成特效
         effect = Instantiate(visualEffect, transform);
-        effect.transform.localScale *= Mathf.Sqrt(difficulty);
+        // effect.transform.localScale *= Mathf.Sqrt(difficulty);
+        effect.transform.localScale *= 10;
         effectAnimator = effect.GetComponent<Animator>();
         effectAnimator.speed = 1.0f / (delay + 1e-4f);
     }
@@ -63,13 +64,16 @@ public class MonsterGroup : MonoBehaviour
                 {
                     float tmp = Random.Range(0, totalProbability);
                     float current = 0.0f;
-                    for (int i = 0; i < monsterObjects.Length; i++)
+                    int i;
+                    for (i = 0; i < monsterObjects.Length; i++)
                     {
                         current += probability[i];
                         if (tmp < current)
                         {
                             Instantiate(monsterObjects[i], transform.position, Quaternion.identity);
                             usedDifficulty += monsterDifficulty[i];
+                            //Debug.Log("生成怪物难度" + monsterDifficulty[i]);
+                            //Debug.Log("已用难度" + usedDifficulty);
                             break;
                         }
                     }

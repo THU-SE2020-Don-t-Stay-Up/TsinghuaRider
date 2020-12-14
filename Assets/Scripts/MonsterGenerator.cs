@@ -25,17 +25,31 @@ public class MonsterGenerator : MonoBehaviour
     /// </summary>
     public float delay;
     /// <summary>
-    /// 总参考难度
+    /// 参考难度
     /// </summary>
     public float difficulty;
+    /// <summary>
+    /// 超时时间，存活到该时间过关
+    /// </summary>
+    public float endTime;
+    /// <summary>
+    /// 经过的总时间
+    /// </summary>
+    public float elapsedTime { private set; get; }
 
+        /// <summary>
+    /// 计时生成怪的间隔
+    /// </summary>
     float timer;
     bool generating = false;
+
 
     public void Generate()
     {
         timer = delay;
         generating = true;
+
+        elapsedTime = 0;
     }
 
     // Update is called once per frame
@@ -43,10 +57,22 @@ public class MonsterGenerator : MonoBehaviour
     {
         if (generating)
         {
+            elapsedTime += Time.deltaTime;
+            if (elapsedTime > endTime)
+            {
+                GameObject[] remainingMonsters = GameObject.FindGameObjectsWithTag("Monster");
+                foreach (var monster in remainingMonsters)
+                {
+                    Destroy(monster);
+                }
+
+                Clear();
+            }
+
             if (wave > 0)
             {
                 timer -= Time.deltaTime;
-                if (timer < 0)
+                if (timer < 0 || NoMonster())
                 {
                     int type = Random.Range(0, monsterGroups.Length);
                     int point = Random.Range(0, generatePoints.Length);
@@ -61,16 +87,30 @@ public class MonsterGenerator : MonoBehaviour
             else
             {
                 // 所有怪已生成完毕且没有怪了
-                if (null == GameObject.FindGameObjectWithTag("Monster") && null == GameObject.FindObjectOfType<MonsterGroup>())
+                if (NoMonster())
                 {
-                    Room room = GetComponentInParent<Room>();
-                    if (room != null)
-                    {
-                        room.Clear();
-                    }
-                    generating = false;
+                    Clear();
                 }
             }
         }
+    }
+
+    /// <summary>
+    /// 判断当前没有存活怪物和正在生成的怪物
+    /// </summary>
+    /// <returns></returns>
+    private bool NoMonster()
+    {
+        return (null == GameObject.FindGameObjectWithTag("Monster") && null == GameObject.FindObjectOfType<MonsterGroup>());
+    }
+
+    private void Clear()
+    {
+        Room room = GetComponentInParent<Room>();
+        if (room != null)
+        {
+            room.Clear();
+        }
+        generating = false;
     }
 }

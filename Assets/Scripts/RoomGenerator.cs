@@ -28,8 +28,20 @@ public class RoomGenerator : MonoBehaviour
     bool stageClear = false;
     bool teleporterCreated = false;
 
+    /// <summary>
+    /// 计时器
+    /// </summary>
+    public float elapsedTime { get; set; }
+
+    private void Start()
+    {
+        elapsedTime = 0;
+    }
+
     private void Update()
     {
+        elapsedTime += Time.deltaTime;
+
         if (roomList.Count != 0)
         {
             if (roomList.Last().stageClear)
@@ -58,19 +70,21 @@ public class RoomGenerator : MonoBehaviour
 
         for (int i = 0; i < generateNumber; i++){
             if (i == 0){
-                roomPrefab = startRoom;
+                newRoom = Instantiate(startRoom, generatorPoint.position, Quaternion.identity).GetComponent<Room>();
             }
             else if (i == generateNumber - 1){
-                roomPrefab = endRoom;
+                newRoom = Instantiate(endRoom, generatorPoint.position, Quaternion.identity).GetComponent<Room>();
+                newRoom.stageClear = false;  // 初始设置为未通关状态
             }
             else{
                 roomPrefab = roomPrefabs[(int)Random.Range(-0.5f,roomPrefabs.Length-0.5f)];
-            }
+                newRoom = Instantiate(roomPrefab, generatorPoint.position, Quaternion.identity).GetComponent<Room>();
+                newRoom.stageClear = false;  // 初始设置为未通关状态
 
-            newRoom = Instantiate(roomPrefab, generatorPoint.position, Quaternion.identity).GetComponent<Room>();
-            newRoom.stageClear = false;  // 初始设置为未通关状态
-            MonsterGenerator monsterGenerator = newRoom.gameObject.GetComponentInChildren<MonsterGenerator>();
-            monsterGenerator.difficulty = difficulty;  // 设置所有房间的难度
+                MonsterGenerator monsterGenerator = newRoom.gameObject.GetComponentInChildren<MonsterGenerator>();
+                monsterGenerator.difficulty = Global.difficulty;
+            }
+   
             roomList.Add(newRoom);
 
             ChangeGeneratePosition();
@@ -156,6 +170,9 @@ public class RoomGenerator : MonoBehaviour
             SceneTeleporter teleporter = teleportRoom.GetComponent<SceneTeleporter>();
             teleporter.targetScene = targetScene;
             teleporterCreated = true;
+
+            // 生成奖励 & 提高难度
+            Global.difficulty += Global.difficultyStep;
         }
         
     }

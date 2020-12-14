@@ -176,7 +176,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2840401539398693362, guid: 42d50e69a83e94d45a4ff3fa67301225, type: 3}
       propertyPath: generateNumber
-      value: 7
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2840401539398693362, guid: 42d50e69a83e94d45a4ff3fa67301225, type: 3}
       propertyPath: roomPrefabs.Array.data[0]
@@ -222,6 +222,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1287743118}
   - component: {fileID: 1287743117}
+  - component: {fileID: 1287743119}
   m_Layer: 0
   m_Name: Background
   m_TagString: Untagged
@@ -273,7 +274,7 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
-  m_DrawMode: 2
+  m_DrawMode: 0
   m_Size: {x: 1250, y: 838}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
@@ -294,3 +295,16 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1287743119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1287743116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a377ea9a6c39ff4b824eacc4abeabb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainCamera: {fileID: 0}

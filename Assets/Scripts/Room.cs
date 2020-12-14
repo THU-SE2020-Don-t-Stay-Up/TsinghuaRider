@@ -19,7 +19,7 @@ public class Room : MonoBehaviour
     public bool flagLeft { set; private get; } /**< 记录上下左右是否有房间，以此判断是否需要生成门*/
     public bool flagRight { set; private get; }
 
-    public bool stageClear = false;
+    public bool stageClear { set; get; }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -37,9 +37,11 @@ public class Room : MonoBehaviour
     public void Clear()
     {
         stageClear = true;
+        // 打开门
         doorLeft.SetActive(flagLeft);
         doorRight.SetActive(flagRight);
         doorUp.SetActive(flagUp);
         doorDown.SetActive(flagDown);
+
     }
 }
