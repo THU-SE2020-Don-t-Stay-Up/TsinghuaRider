@@ -19,8 +19,8 @@
       "StrengthPotion"
     ],
     "Possibility": [
-      1,
-      1
+      0.02,
+      0.02
     ],
     "Difficulty": 20,
     "Skills": [
@@ -50,8 +50,8 @@
       "StrengthPotion"
     ],
     "Possibility": [
-      0.1,
-      0.1
+      0.03,
+      0.03
     ],
     "TimeInvincible": 0,
     "Difficulty": 35,
@@ -115,8 +115,8 @@
       "StrengthPotion"
     ],
     "Possibility": [
-      0.1,
-      0.1
+      0.03,
+      0.03
     ],
     "TimeInvincible": 0,
     "Difficulty": 10,
@@ -145,11 +145,13 @@
     "ViewRadius": 15,
     "Rewards": [
       "HealthPotion",
-      "StrengthPotion"
+      "StrengthPotion",
+      "Medkit"
     ],
     "Possibility": [
-      0.1,
-      0.1
+      0.03,
+      0.03,
+      0.01
     ],
     "Difficulty": 35,
     "Skills": [
@@ -178,11 +180,13 @@
     "Rewards": [
       "HealthPotion",
       "StrengthPotion",
-      "qingqing",
+      "Medkit",
+      "qingqing"
     ],
     "Possibility": [
-      0.1,
-      0.1,
+      0.5,
+      0.5,
+      0.5,
       1
     ],
     "Difficulty": 1000,
@@ -225,8 +229,8 @@
       "StrengthPotion"
     ],
     "Possibility": [
-      0.1,
-      0.1
+      0.03,
+      0.03
     ],
     "Difficulty": 25,
     "Skills": [
@@ -257,8 +261,8 @@
       "StrengthPotion"
     ],
     "Possibility": [
-      0.1,
-      0.1
+      0.01,
+      0.01
     ],
     "Difficulty": 30,
     "Skills": [
@@ -289,8 +293,8 @@
       "StrengthPotion"
     ],
     "Possibility": [
-      0.1,
-      0.1
+      0.02,
+      0.02
     ],
     "Difficulty": 35,
     "Skills": [
@@ -321,8 +325,8 @@
       "StrengthPotion"
     ],
     "Possibility": [
-      0.1,
-      0.1
+      0.01,
+      0.01
     ],
     "Difficulty": 25,
     "Skills": [
@@ -353,8 +357,8 @@
       "StrengthPotion"
     ],
     "Possibility": [
-      0.1,
-      0.1
+      0.01,
+      0.01
     ],
     "Difficulty": 50,
     "Skills": [

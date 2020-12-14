@@ -7,8 +7,8 @@ public class BossAgent : MonsterAgent
     protected float laserScope = 45;
     protected float thetaSpeed = 30;
 
-    protected int barrageNum = 300;
-    protected float barrageInternal = 0.04f;
+    protected int barrageNum = 200;
+    protected float barrageInternal = 0.03f;
 
     public Lasers GetLasers()
     {
