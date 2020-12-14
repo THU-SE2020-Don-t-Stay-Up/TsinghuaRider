@@ -1656,11 +1656,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d1cc3b07b9cd3b548ab3086582f4e7e4, type: 3}
---- !u!1 &350431347 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1550602760931735207, guid: da640df4836b77940bab112d78497220, type: 3}
-  m_PrefabInstance: {fileID: 2047241753}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &872084886
 GameObject:
   m_ObjectHideFlags: 0
@@ -1762,6 +1757,10 @@ PrefabInstance:
     - target: {fileID: 3542966706506695565, guid: 252a9bb49a41b3e4db05bc588d2c9153, type: 3}
       propertyPath: m_Name
       value: UI
+      objectReference: {fileID: 0}
+    - target: {fileID: 6584842451020337591, guid: 252a9bb49a41b3e4db05bc588d2c9153, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8505823159150912224, guid: 252a9bb49a41b3e4db05bc588d2c9153, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -1869,7 +1868,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerTag: Player
-  player: {fileID: 350431347}
+  player: {fileID: 0}
 --- !u!20 &1338687424
 Camera:
   m_ObjectHideFlags: 0
