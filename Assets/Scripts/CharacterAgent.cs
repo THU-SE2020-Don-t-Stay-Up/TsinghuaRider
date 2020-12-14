@@ -565,7 +565,7 @@ public class CharacterAgent : LivingBaseAgent
 
     public void ThrowNowWeapon()
     {
-        if (WeaponPrefab != null && !weaponColumn.IsEmpty())
+        if (WeaponPrefab != null && !weaponColumn.IsEmpty() && !attackingFlag)
         {
             Weapon weapon = WeaponPrefab.GetComponent<WeaponAgent>().Weapon.Clone() as Weapon;
             ItemAgent.GenerateItem(transform.position + 2 * Vector3.up, weapon);
