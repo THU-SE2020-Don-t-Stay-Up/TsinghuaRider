@@ -100,9 +100,6 @@ public class HealthPotion : Item
 
 public class StrengthPotion : Item
 {
-    public string discription = "Improve your attack to 120%.";
-    public string name = "Strength Potion";
-    public int price = 30;
     public float AdditionalStrength { get; set; } = 0.2f;
     public StrengthPotion()
     {
@@ -130,9 +127,6 @@ public class Coin : Item
 
 public class Medkit : Item
 {
-    public string discription = "Recover 70% of maximun health.";
-    public string name = "Medkit";
-    public int price = 70;
     public float Recovery { get; set; } = 0.7f;
 
     public Medkit()

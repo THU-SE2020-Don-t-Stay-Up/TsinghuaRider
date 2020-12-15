@@ -8,9 +8,14 @@ public class TradeSystem : MonoBehaviour
 {
     public static TradeSystem instance;
 
+    GameObject mahou;
+    GameObject robot;
+    CharacterAgent character;
+
     public Image goodsImage;
     public Text goodsNameText;
     public Text goodsPriceText;
+    public Text goodsDescriptionText;
 
     public Button buyButton;
 
@@ -26,7 +31,27 @@ private void Awake()
         goodsSlotTemplate = goodsSlotContainer.Find("goodsSlotTemplate");
 
         goodsImage = transform.Find("goodsImage").GetComponent<Image>();
+        goodsNameText = transform.Find("goodsName").GetComponent<Text>();
+        goodsDescriptionText = transform.Find("goodsDescription").GetComponent<Text>();
+        goodsPriceText = transform.Find("goodsPrice").GetComponent<Text>();
+
         goodsInfo.Add(new HealthPotionGoods { });
+        goodsInfo.Add(new StrengthPotionGoods { });
+        goodsInfo.Add(new MedkitGoods{ });
+
+        robot = GameObject.Find("RobotPrefab");
+        mahou = GameObject.Find("MahouPrefab");
+
+        if (UISelectCharacter.characterIndex == 0)
+        {
+            character = mahou.GetComponent<CharacterAgent>();
+        }
+        else
+        {
+            character = robot.GetComponent<CharacterAgent>();
+        }
+
+
     }
 
     public void OpenTrade()
@@ -40,7 +65,7 @@ private void Awake()
         }
 
         int y = 0;
-        float goodsSlotHeight = 10f;
+        float goodsSlotHeight = 35f;
         foreach (Goods goods in goodsInfo)
         {
             var goodsSlot = Instantiate(goodsSlotTemplate, goodsSlotContainer);
@@ -53,12 +78,30 @@ private void Awake()
             image.sprite = goods.GetSprite();
             y--;
         }
-
+        goodsImage.enabled = false;
+        goodsNameText.text = "";
+        goodsDescriptionText.text = "";
+        goodsPriceText.text = "";
     }
 
     public void UpdateUI()
     {
+        goodsImage.enabled = true;
+        goodsImage.sprite = signalGoods.RealImage;
+        goodsNameText.text = signalGoods.Name;
+        goodsDescriptionText.text = signalGoods.Description;
+        goodsPriceText.text = signalGoods.PriceText;
+
         Debug.Log("♂");
     }
 
+    public void CloseTrade()
+    {
+        transform.DOScale(0, 0.3f);
+    }
+
+    public void Buy()
+    {
+        signalGoods.Buy(character);
+    }
 }
