@@ -221,7 +221,10 @@ public class CharacterAgent : LivingBaseAgent
         //}
         if (WeaponPrefab == null)
         {
-            weaponColumn.UseItem(0, this);
+            if (weaponColumn.ItemList.Count > 0)
+            {
+                weaponColumn.UseItem(0, this);
+            }
         }
     }
     /// <summary>
@@ -279,9 +282,10 @@ public class CharacterAgent : LivingBaseAgent
         Animator.SetFloat("Look Y", attackDirection.y);
     }
 
-    private void Stop()
+    public void Stop()
     {
-        ActualCharacter.MoveSpeed = 0.0f;
+        rigidbody2d.velocity = new Vector2(0, 0);
+        //ActualCharacter.MoveSpeed = 0.0f;
         //lookDirection = Vector2.zero;
     }
 

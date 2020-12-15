@@ -24,6 +24,7 @@ public class Initialization : MonoBehaviour
         GameObject ui = GameObject.Find("UI");
         GameObject minimapCamera = GameObject.Find("Minimap Camera");
         GameObject acrossSceneController = GameObject.Find("Across Scene Controller");
+        GameObject characterLoder = GameObject.Find("CharacterLoader");
 
         try
         {
@@ -32,6 +33,7 @@ public class Initialization : MonoBehaviour
             DontDestroyOnLoad(ui);
             DontDestroyOnLoad(minimapCamera);
             DontDestroyOnLoad(acrossSceneController);
+            DontDestroyOnLoad(characterLoder);
 
         }
         catch (NullReferenceException)
