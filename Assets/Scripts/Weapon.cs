@@ -599,12 +599,21 @@ public class Gun : Weapon
 
     public override void Attack(CharacterAgent user, Vector3 direction)
     {
-        //Debug.Log(user.WeaponPrefab.transform.position);
+        float angleOffset = 30;
+        Gunshot(user, direction, 0);
+        Gunshot(user, direction, angleOffset);
+        Gunshot(user, direction,  -angleOffset);
+    }
+
+    protected void Gunshot(CharacterAgent user, Vector3 direction, float angleOffset)
+    {
         GameObject projectileObject = GameObject.Instantiate(bulletPrefab, user.WeaponPrefab.transform.position + direction * 0.5f, Quaternion.identity);
         Bullet bullet = projectileObject.GetComponent<Bullet>();
         bullet.SetBullet(user, user.ActualCharacter.AttackAmount * AttackAmount, ExtraEffect);
-        bullet.Shoot(direction, 20);
+        var rot = Quaternion.Euler(0, 0, angleOffset);
+        bullet.Shoot(rot * direction, 20);
     }
+
 
 }
 
