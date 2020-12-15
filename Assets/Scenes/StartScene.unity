@@ -123,6 +123,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &115648596 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7975026919156889355, guid: 362d9b44163c17f46ad9774707f9ac8e, type: 3}
+  m_PrefabInstance: {fileID: 7975026918861794143}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &347719116
 GameObject:
   m_ObjectHideFlags: 3
@@ -298,7 +303,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerTag: Player
-  player: {fileID: 0}
+  player: {fileID: 115648596}
 --- !u!1001 &745334200
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -602,7 +607,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 0
-    m_SensorSize: {x: 1.778607, y: 1}
+    m_SensorSize: {x: 1.7799443, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
