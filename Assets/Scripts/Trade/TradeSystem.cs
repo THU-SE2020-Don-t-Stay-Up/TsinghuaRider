@@ -36,6 +36,7 @@ private void Awake()
         goodsNameText = transform.Find("goodsName").GetComponent<Text>();
         goodsDescriptionText = transform.Find("goodsDescription").GetComponent<Text>();
         goodsPriceText = transform.Find("goodsPrice").GetComponent<Text>();
+        GotoTop();
 
         goodsInfo.Add(new HealthPotionGoods { });
         goodsInfo.Add(new StrengthPotionGoods { });
@@ -43,11 +44,11 @@ private void Awake()
         goodsInfo.Add(new BlackExcaliburGoods { });
         goodsInfo.Add(new ExcaliburGoods { });
         goodsInfo.Add(new FaithGoods { });
-        //goodsInfo.Add(new GilgameshEaGoods { });
-        //goodsInfo.Add(new MasterSwordGoods { });
-        //goodsInfo.Add(new VirtuousTreatyGoods { });
-        //goodsInfo.Add(new xianyuGoods { });
-        //goodsInfo.Add(new qingqingGoods { });
+        goodsInfo.Add(new GilgameshEaGoods { });
+        goodsInfo.Add(new MasterSwordGoods { });
+        goodsInfo.Add(new VirtuousTreatyGoods { });
+        goodsInfo.Add(new xianyuGoods { });
+        goodsInfo.Add(new qingqingGoods { });
         //goodsInfo.Add(new EnergyGunGoods { });
         //goodsInfo.Add(new ChargeGunGoods { });
         //goodsInfo.Add(new GatlingGoods { });
@@ -73,6 +74,8 @@ private void Awake()
     {
         transform.DOScale(1, 0.3f);
 
+        GotoTop();
+
         foreach (Transform child in goodsScrollView.Find("Viewport").Find("Content"))
         {
             if (child == goodsTemplate) continue;
@@ -90,6 +93,7 @@ private void Awake()
             Image image = goodsSlotRecTransform.Find("image").GetComponent<Image>();
             image.sprite = goods.GetSprite();
         }
+        GotoTop();
 
         goodsImage.enabled = false;
         goodsNameText.text = "";
@@ -105,7 +109,7 @@ private void Awake()
         goodsDescriptionText.text = signalGoods.Description;
         goodsPriceText.text = signalGoods.PriceText;
 
-        Debug.Log("♂");
+        //Debug.Log("♂");
     }
 
     public void CloseTrade()
@@ -116,5 +120,13 @@ private void Awake()
     public void Buy()
     {
         signalGoods.Buy(character);
+    }
+
+    private void GotoTop()
+    {
+        RectTransform contentRecTransform = goodsScrollView.Find("Viewport").Find("Content").GetComponent<RectTransform>();
+        var localPos = contentRecTransform.localPosition;
+        localPos.y = 0;
+        contentRecTransform.localPosition = localPos;
     }
 }

@@ -185,7 +185,7 @@ public class GilgameshEaGoods : Goods
         this.PriceText = "1500";
         this.price = 1500;
 
-        this.RealImage = new Faith { }.GetSprite();
+        this.RealImage = new GilgameshEa { }.GetSprite();
     }
 
     public override void Buy(CharacterAgent character)
