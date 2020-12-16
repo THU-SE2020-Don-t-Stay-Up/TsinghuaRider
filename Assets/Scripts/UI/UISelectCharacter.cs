@@ -45,6 +45,7 @@ public class UISelectCharacter : MonoBehaviour
         robot.GetComponent<CharacterAgent>().Stop();
         robot.GetComponent<CharacterAgent>().enabled = false;
 
+        mahou.GetComponent<BoxCollider2D>().enabled = true;
         mahou.GetComponent<CharacterAgent>().enabled = true;
         mahou.GetComponent<Animator>().enabled = true;
 

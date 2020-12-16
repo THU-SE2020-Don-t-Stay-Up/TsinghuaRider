@@ -6,32 +6,31 @@ public class CharacterLoader : MonoBehaviour
 {
     GameObject mahou;
     GameObject robot;
+    public GameObject player { get; set; }
 
     private void Awake()
     {
         robot = GameObject.Find("RobotPrefab");
         mahou = GameObject.Find("MahouPrefab");
-        robot.SetActive(false);
-        mahou.SetActive(false);
-        if (UISelectCharacter.characterIndex ==0)
+    }
+
+    public void LoadCharacter()
+    {
+        if (UISelectCharacter.characterIndex == 0)
         {
-            mahou.SetActive(true);
+            player = mahou;
         }
         else
         {
-            robot.SetActive(true);
+            player = robot;
         }
     }
 
     private void Update()
     {
-        if (UISelectCharacter.characterIndex == 0)
+        if (player != null)
         {
-            this.transform.position = mahou.transform.position;
-        }
-        else
-        {
-            this.transform.position = robot.transform.position;
+            transform.position = player.transform.position;
         }
     }
 }

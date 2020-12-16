@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class RoomGenerator : MonoBehaviour
@@ -23,7 +23,6 @@ public class RoomGenerator : MonoBehaviour
 
     [Header("控制逻辑")]
     public KeyCode pauseKey;
-    public KeyCode quitKey;
 
     Transform generatorPoint;
     enum Direction { up, down, left, right };
@@ -79,6 +78,23 @@ public class RoomGenerator : MonoBehaviour
     {
         SetupRoom();
         SetupDoor();
+    }
+
+    /// <summary>
+    /// 退出地牢、返回主世界
+    /// </summary>
+    public void AbortGame()
+    {
+        // 解除暂停状态
+        Time.timeScale = 1;
+        Global.gamePaused = false;
+
+        // 传送回主世界
+        GameObject teleportRoom = Instantiate(teleporterPrefab, Vector3.zero, Quaternion.identity);
+        SceneTeleporter teleporter = teleportRoom.GetComponent<SceneTeleporter>();
+        teleporter.targetScene = "StartScene";
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        teleporter.TeleportNow(player);
     }
 
     void SetupRoom() 

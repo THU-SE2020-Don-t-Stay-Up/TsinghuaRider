@@ -5,12 +5,12 @@ using TMPro;
 
 public class UIPause : MonoBehaviour
 {
-    TextMeshProUGUI pauseText;
+    Transform pauseText;
 
     // Start is called before the first frame update
     void Start()
     {
-        pauseText = transform.Find("PauseText").GetComponent<TextMeshProUGUI>();
+        pauseText = transform.Find("PauseText");
     }
 
     // Update is called once per frame
@@ -18,11 +18,11 @@ public class UIPause : MonoBehaviour
     {
         if (Global.gamePaused)
         {
-            pauseText.enabled = true;
+            pauseText.gameObject.SetActive(true);
         }
         else
         {
-            pauseText.enabled = false;
+            pauseText.gameObject.SetActive(false);
         }
     }
 }
