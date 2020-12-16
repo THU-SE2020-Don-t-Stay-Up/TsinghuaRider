@@ -36,6 +36,7 @@ private void Awake()
         goodsNameText = transform.Find("goodsName").GetComponent<Text>();
         goodsDescriptionText = transform.Find("goodsDescription").GetComponent<Text>();
         goodsPriceText = transform.Find("goodsPrice").GetComponent<Text>();
+
         GotoTop();
 
         goodsInfo.Add(new HealthPotionGoods { });
@@ -109,7 +110,7 @@ private void Awake()
         goodsDescriptionText.text = signalGoods.Description;
         goodsPriceText.text = signalGoods.PriceText;
 
-        //Debug.Log("♂");
+        Debug.Log("♂");
     }
 
     public void CloseTrade()
@@ -129,4 +130,5 @@ private void Awake()
         localPos.y = 0;
         contentRecTransform.localPosition = localPos;
     }
+
 }

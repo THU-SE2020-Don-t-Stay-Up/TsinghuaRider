@@ -169,7 +169,7 @@
     "Defense": 0,
     "Tenacity": 0.0,
     "Agility": 5.0,
-    "AttackSpeed": 0.5,
+    "AttackSpeed": 1.5,
     "AttackRadius": 15,
     "AttackAmount": 10,
     "AttackAngle": 30,
@@ -200,7 +200,6 @@
     "SkillOrder": [
       "ObstacleSkill",
       "MissleAttackSkill",
-      "BarrageSkill",
       "ObstacleSkill",
       "LaserSkill",
       "ObstacleSkill",
