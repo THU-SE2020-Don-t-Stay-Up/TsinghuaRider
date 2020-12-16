@@ -120,7 +120,7 @@ public class Coin : Item
         this.IsStackable = true;
         this.Amount = 1;
     }
-    public override bool Use(CharacterAgent character) { return true; }
+    public override bool Use(CharacterAgent character ) { return true; }
 
 }
 

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 550875894617121999}
   - component: {fileID: 4931589789725251893}
   m_Layer: 0
-  m_Name: StrengthPotionGoods (1)
+  m_Name: StrengthPotionGoods
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -122,4 +122,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3622c36b0621df34fa70c61078d17a0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemIndex: 33
+  itemIndex: 31
