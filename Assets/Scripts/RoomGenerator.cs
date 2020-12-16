@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class RoomGenerator : MonoBehaviour
@@ -21,6 +21,9 @@ public class RoomGenerator : MonoBehaviour
     public string targetScene;
     public float difficulty;
 
+    [Header("控制逻辑")]
+    public KeyCode pauseKey;
+
     Transform generatorPoint;
     enum Direction { up, down, left, right };
     Direction direction;
@@ -29,23 +32,32 @@ public class RoomGenerator : MonoBehaviour
     bool teleporterCreated = false;
     UITime ui;
 
-    /// <summary>
-    /// 计时器
-    /// </summary>
-    public float elapsedTime { get; set; }
-
     private void Start()
     {
-        elapsedTime = 0;
         ui = FindObjectOfType<UITime>();
     }
 
     private void Update()
     {
-        elapsedTime += Time.deltaTime;
+        Global.totalTime += Time.deltaTime;
+        if (Input.GetKeyDown(pauseKey))
+        {
+            // 暂停游戏
+            if (!Global.gamePaused)
+            {
+                Time.timeScale = 0;
+                Global.gamePaused = true;
+            }
+            else
+            {
+                Time.timeScale = 1;
+                Global.gamePaused = false;
+            }
+        }
+        
         if (ui != null)
         {
-            ui.SetTotalTime(elapsedTime);
+            ui.SetTotalTime(Global.totalTime);
         }
 
         if (roomList.Count != 0)
@@ -66,6 +78,23 @@ public class RoomGenerator : MonoBehaviour
     {
         SetupRoom();
         SetupDoor();
+    }
+
+    /// <summary>
+    /// 退出地牢、返回主世界
+    /// </summary>
+    public void AbortGame()
+    {
+        // 解除暂停状态
+        Time.timeScale = 1;
+        Global.gamePaused = false;
+
+        // 传送回主世界
+        GameObject teleportRoom = Instantiate(teleporterPrefab, Vector3.zero, Quaternion.identity);
+        SceneTeleporter teleporter = teleportRoom.GetComponent<SceneTeleporter>();
+        teleporter.targetScene = "StartScene";
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        teleporter.TeleportNow(player);
     }
 
     void SetupRoom() 

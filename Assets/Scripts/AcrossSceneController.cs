@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class AcrossSceneController : MonoBehaviour
 {
-    RoomGenerator roomGenerator;
 
     void Start()
     {
@@ -15,10 +14,16 @@ public class AcrossSceneController : MonoBehaviour
     void OnSceneUnloaded(Scene previous)
     {
         Debug.Log("Scene unloaded " + previous.name);
-        roomGenerator = FindObjectOfType<RoomGenerator>();
+        RoomGenerator roomGenerator = FindObjectOfType<RoomGenerator>();
         if (roomGenerator != null)
         {
             roomGenerator.Generate();
+        }
+        SceneTeleporter[] teleporters = FindObjectsOfType<SceneTeleporter>();
+        foreach (var teleporter in teleporters)
+        {
+            Debug.Log(teleporter);
+            teleporter.FindTarget();
         }
 
         SetupPlayer();
