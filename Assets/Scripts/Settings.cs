@@ -36,6 +36,11 @@ class Global
     /// </summary>
     public static float difficulty;
     public static float difficultyStep;
+    /// <summary>
+    /// 时间信息
+    /// </summary>
+    public static bool gamePaused;
+    public static float totalTime;
 
     public static void LoadPrefabPaths()
     {

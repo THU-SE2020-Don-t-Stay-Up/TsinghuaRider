@@ -43,6 +43,9 @@ public class Initialization : MonoBehaviour
         Global.difficulty = initDifficulty;
         Global.difficultyStep = difficultyStep;
 
+        Global.totalTime = 0;
+        Global.gamePaused = false;
+
         Destroy(gameObject);
 
     }
