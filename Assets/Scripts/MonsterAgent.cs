@@ -77,6 +77,8 @@ public class MonsterAgent : LivingBaseAgent
 
         initMonsterDirection = transform.localScale.x;
         initHealBarDirection = monsterHealthBar.transform.localScale.x;
+
+        ActualMonster.State.AddStatus(new InvincibleState(), 0.5f);
     }
 
     // Update is called once per frame
