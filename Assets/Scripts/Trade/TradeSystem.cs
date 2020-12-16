@@ -49,12 +49,12 @@ private void Awake()
         goodsInfo.Add(new VirtuousTreatyGoods { });
         goodsInfo.Add(new xianyuGoods { });
         goodsInfo.Add(new qingqingGoods { });
-        //goodsInfo.Add(new EnergyGunGoods { });
-        //goodsInfo.Add(new ChargeGunGoods { });
-        //goodsInfo.Add(new GatlingGoods { });
-        //goodsInfo.Add(new PuellaGoods { });
-        //goodsInfo.Add(new RathBusterGoods { });
-        //goodsInfo.Add(new RathGunlanceGoods { });
+        goodsInfo.Add(new EnergyGunGoods { });
+        goodsInfo.Add(new ChargeGunGoods { });
+        goodsInfo.Add(new GatlingGoods { });
+        goodsInfo.Add(new PuellaGoods { });
+        goodsInfo.Add(new RathBusterGoods { });
+        goodsInfo.Add(new RathGunlanceGoods { });
 
         robot = GameObject.Find("RobotPrefab");
         mahou = GameObject.Find("MahouPrefab");
