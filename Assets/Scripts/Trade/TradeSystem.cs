@@ -20,15 +20,17 @@ public class TradeSystem : MonoBehaviour
     public Button buyButton;
 
     public Goods signalGoods;
-    public Transform goodsSlotContainer;
-    public Transform goodsSlotTemplate;
     public List<Goods> goodsInfo = new List<Goods>();
+
+    public Transform goodsScrollView;
+    public Transform goodsTemplate;
 
 private void Awake()
     {
         instance = this;
-        goodsSlotContainer = transform.Find("goodsSlotContainer");
-        goodsSlotTemplate = goodsSlotContainer.Find("goodsSlotTemplate");
+
+        goodsScrollView = transform.Find("goodsScrollView");
+        goodsTemplate =  goodsScrollView.Find("Viewport").Find("Content").Find("goods");
 
         goodsImage = transform.Find("goodsImage").GetComponent<Image>();
         goodsNameText = transform.Find("goodsName").GetComponent<Text>();
@@ -51,33 +53,30 @@ private void Awake()
             character = robot.GetComponent<CharacterAgent>();
         }
 
-
     }
 
     public void OpenTrade()
     {
         transform.DOScale(1, 0.3f);
 
-        foreach(Transform child in goodsSlotContainer)
+        foreach (Transform child in goodsScrollView.Find("Viewport").Find("Content"))
         {
-            if (child == goodsSlotTemplate) continue;
+            if (child == goodsTemplate) continue;
             Destroy(child.gameObject);
         }
 
-        int y = 0;
-        float goodsSlotHeight = 35f;
         foreach (Goods goods in goodsInfo)
         {
-            var goodsSlot = Instantiate(goodsSlotTemplate, goodsSlotContainer);
-            RectTransform goodsSlotRecTransform =goodsSlot.GetComponent<RectTransform>();
+            var goodsSlot = Instantiate(goodsTemplate, goodsScrollView.Find("Viewport").Find("Content"),false);
+            goodsSlot.transform.DOScale(1, 0.3f);
+            RectTransform goodsSlotRecTransform = goodsSlot.GetComponent<RectTransform>();
             Click click = goodsSlot.GetComponent<Click>();
             click.goods = goods;
             goodsSlotRecTransform.gameObject.SetActive(true);
-            goodsSlotRecTransform.anchoredPosition = new Vector2(0, y * goodsSlotHeight - 40f);
             Image image = goodsSlotRecTransform.Find("image").GetComponent<Image>();
             image.sprite = goods.GetSprite();
-            y--;
         }
+
         goodsImage.enabled = false;
         goodsNameText.text = "";
         goodsDescriptionText.text = "";
