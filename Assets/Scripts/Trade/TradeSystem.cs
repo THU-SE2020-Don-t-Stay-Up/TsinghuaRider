@@ -73,7 +73,7 @@ private void Awake()
             Click click = goodsSlot.GetComponent<Click>();
             click.goods = goods;
             goodsSlotRecTransform.gameObject.SetActive(true);
-            goodsSlotRecTransform.anchoredPosition = new Vector2(0, y * goodsSlotHeight);
+            goodsSlotRecTransform.anchoredPosition = new Vector2(0, y * goodsSlotHeight - 40f);
             Image image = goodsSlotRecTransform.Find("image").GetComponent<Image>();
             image.sprite = goods.GetSprite();
             y--;
