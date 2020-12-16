@@ -4,20 +4,25 @@ using UnityEngine;
 
 public class MinimapController : MonoBehaviour
 {
-    public string playerTag = "Player";
-    public GameObject player;
+    GameObject player;
+    CharacterLoader characterLoader;
 
     // Start is called before the first frame update
     void Start()
     {
-        //player = GameObject.FindGameObjectWithTag(tag);
-        Debug.Log("Follow: " + player);
+        characterLoader = FindObjectOfType<CharacterLoader>();
     }
 
     // Update is called once per frame
     void Update()
     {
         if (player != null)
+        {
             transform.position = player.transform.position + Vector3.forward * -10;
+        }
+        else
+        {
+            player = characterLoader.player;
+        }
     }
 }

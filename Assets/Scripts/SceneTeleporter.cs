@@ -12,7 +12,6 @@ public class SceneTeleporter : MonoBehaviour
     public Sprite clearSprite;
 
     [Header("传送逻辑")]
-    public string teleportTag;
     public string targetScene;
 
     float timer;
@@ -20,12 +19,38 @@ public class SceneTeleporter : MonoBehaviour
     bool hasTeleported = false;
     bool cleared = false;
     GameObject player;
+    GameObject target;
+
+    /// <summary>
+    /// 为传送点设置要传送的物体，默认为玩家
+    /// </summary>
+    /// <param name="teleportTarget"></param>
+    public void FindTarget(GameObject teleportTarget = null)
+    {
+        if (teleportTarget == null)
+        {
+            target = GameObject.FindGameObjectWithTag("Player");
+        }
+        else
+        {
+            target = teleportTarget;
+        }
+    }
+
+    /// <summary>
+    /// 立即传送物体，默认为玩家
+    /// </summary>
+    /// <param name="teleportTarget"></param>
+    public void TeleportNow(GameObject teleportTarget = null)
+    {
+        FindTarget(teleportTarget);
+        StartCoroutine(TeleportAsync());
+        hasTeleported = true;
+    }
 
     void Start()
     {
         timer = teleportTime;
-        player = GameObject.FindGameObjectWithTag(teleportTag);
-
     }
 
     void Update()
@@ -40,24 +65,23 @@ public class SceneTeleporter : MonoBehaviour
             timer -= Time.deltaTime;
             if (timer < 0 && !hasTeleported)
             {
-                StartCoroutine(TeleportAsync());
-                hasTeleported = true;
+                TeleportNow(player);
             }
         }
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject == player)
+        if (other.gameObject == target)
         {
-            Debug.Log("Across Scene Teleporting " + player);
+            //Debug.Log("Across Scene Teleporting " + target);
             isTeleporting = true;
         }
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
-        if (other.gameObject == player)
+        if (other.gameObject == target)
         {
             isTeleporting = false;
             // 退出传送后重置计时和动画
@@ -81,8 +105,12 @@ public class SceneTeleporter : MonoBehaviour
             yield return null;
         }
 
-        // Move the GameObject (you attach this in the Inspector) to the newly loaded Scene
-        SceneManager.MoveGameObjectToScene(player, SceneManager.GetSceneByName(targetScene));
+        if (target != null)
+        {
+            // Move the GameObject (you attach this in the Inspector) to the newly loaded Scene
+            SceneManager.MoveGameObjectToScene(target, SceneManager.GetSceneByName(targetScene));
+        }
+
         // Unload the previous Scene
         SceneManager.UnloadSceneAsync(currentScene);
     }
