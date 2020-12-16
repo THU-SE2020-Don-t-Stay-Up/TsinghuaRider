@@ -706,10 +706,7 @@ MonoBehaviour:
     NearClipPlane: 0.1
     FarClipPlane: 5000
     Dutch: 0
-    ModeOverride: 0
     LensShift: {x: 0, y: 0}
-    GateFit: 0
-    m_SensorSize: {x: 1.7777778, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -1076,15 +1073,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8548771863657634188, guid: fd6beff6b5edf5747ae77c704b3a6fa6, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 68.85274
+      value: 47412.426
       objectReference: {fileID: 0}
     - target: {fileID: 8548771863657634188, guid: fd6beff6b5edf5747ae77c704b3a6fa6, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8548771863657634188, guid: fd6beff6b5edf5747ae77c704b3a6fa6, type: 3}
-      propertyPath: m_Pivot.y
-      value: 1.5
+      value: -92559.375
       objectReference: {fileID: 0}
     - target: {fileID: 8548771863689466694, guid: fd6beff6b5edf5747ae77c704b3a6fa6, type: 3}
       propertyPath: m_textInfo.characterCount
