@@ -76,6 +76,7 @@ abstract public class Item:ICloneable
 
 public class HealthPotion : Item
 {
+
     public float Recovery { get; set; } = 0.1f;
 
     public HealthPotion()
@@ -148,8 +149,6 @@ public class Medkit : Item
     }
 }
 //修改了Weapon中的部分内容；试图整合了原来Item与ItemAsset中的内容
-
-
 
 class ItemsJsonConverter : JsonConverter<List<Item>>
 {

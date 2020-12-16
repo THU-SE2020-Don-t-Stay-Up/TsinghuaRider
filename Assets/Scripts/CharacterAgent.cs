@@ -508,6 +508,23 @@ public class CharacterAgent : LivingBaseAgent
         coinInventory.AddItem(item);
     }
 
+    public int Money()
+    {
+        if (coinInventory.ItemList.Count != 0)
+        {
+            return coinInventory.ItemList[0].Amount;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
+    public void UseMoney()
+    {
+        coinInventory.UseItem(0, this);
+    }
+
     public void MeleeAttack()
     {
         Animator.SetTrigger("Melee");
