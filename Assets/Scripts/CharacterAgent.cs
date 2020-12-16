@@ -97,6 +97,7 @@ public class CharacterAgent : LivingBaseAgent
 
         uiCoinInventory = GameObject.Find("UI_Coins").GetComponent<UIInventory>();
         coinInventory = new Inventory();
+        coinInventory.AddItem(new Coin { Amount = 10000});
         uiCoinInventory.SetInventory(coinInventory);
 
 
@@ -490,7 +491,15 @@ public class CharacterAgent : LivingBaseAgent
 
     public void WeaponColumnAddItem(Item item)
     {
-        weaponColumn.AddItem(item);
+        if (CanAddWeapon())
+        {
+            weaponColumn.AddItem(item);
+        }
+    }
+
+    public bool CanAddWeapon()
+    {
+        return weaponColumn.ItemList.Count < 4;
     }
 
     public void InventoryAddItem(Item item)
@@ -520,9 +529,9 @@ public class CharacterAgent : LivingBaseAgent
         }
     }
 
-    public void UseMoney()
+    public void UseMoney(int amount)
     {
-        coinInventory.UseItem(0, this);
+        coinInventory.UseItem(new Coin { Amount = amount }, this);
     }
 
     public void MeleeAttack()
