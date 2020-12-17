@@ -270,7 +270,8 @@ public class MonsterAgent : LivingBaseAgent
             for (int i=0; i<state.number; i++)
             {
                 MonsterGroup group = Instantiate(state.infested, transform.position, Quaternion.identity).GetComponent<MonsterGroup>();
-                group.Generate(10);
+                group.extraState = 0;
+                group.Generate(1);
             }
         }
 

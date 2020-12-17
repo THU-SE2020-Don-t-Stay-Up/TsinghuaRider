@@ -486,6 +486,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5471118827401581315}
     m_Modifications:
+    - target: {fileID: -2535644761419221258, guid: 7c34f71a3e5b17a4584205a557eed6a3, type: 3}
+      propertyPath: teleportTime
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 1867133899898928993, guid: 7c34f71a3e5b17a4584205a557eed6a3, type: 3}
       propertyPath: m_Name
       value: DoorDown
@@ -553,6 +557,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5471118827401581315}
     m_Modifications:
+    - target: {fileID: -6561078201123618918, guid: 513ab982fd3bd2940a83e5b4f3000e61, type: 3}
+      propertyPath: teleportTime
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 6670642313763628898, guid: 513ab982fd3bd2940a83e5b4f3000e61, type: 3}
       propertyPath: m_LocalPosition.x
       value: 9.5
@@ -620,6 +628,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5471118827401581315}
     m_Modifications:
+    - target: {fileID: -6873958930613812264, guid: 8940f828002d20a4baae801fbc0d1a37, type: 3}
+      propertyPath: teleportTime
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 2769837182848855328, guid: 8940f828002d20a4baae801fbc0d1a37, type: 3}
       propertyPath: m_Name
       value: DoorLeft
@@ -690,6 +702,10 @@ PrefabInstance:
     - target: {fileID: 16697442526300969, guid: 3dfbaf97a59bea742bbb053828299502, type: 3}
       propertyPath: m_Name
       value: DoorUp
+      objectReference: {fileID: 0}
+    - target: {fileID: 557621582378375046, guid: 3dfbaf97a59bea742bbb053828299502, type: 3}
+      propertyPath: teleportTime
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 8776650378026983289, guid: 3dfbaf97a59bea742bbb053828299502, type: 3}
       propertyPath: m_LocalPosition.x
