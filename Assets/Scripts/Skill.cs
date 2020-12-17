@@ -242,16 +242,14 @@ public class MeleeAttackSkill : AttackSkill
     public override bool AttackAt(Vector3 attackDirection, Action<LivingBaseAgent> extraEffect)
     {
         agent.AudioSource.PlayOneShot(agent.MeleeAttackClip);
-        bool attackFlag = false;
         IEnumerable<GameObject> targetObjects = agent.GetAttackRangeObjects(agent.GetCentralPosition(), attackDirection, agent.ActualMonster.AttackRadius, agent.ActualMonster.AttackAngle, "Player");
         foreach (var targetObject in targetObjects)
         {
             LivingBaseAgent targetAgent = targetObject.GetComponent<LivingBaseAgent>();
             targetAgent.ChangeHealth(-agent.ActualMonster.AttackAmount);
             extraEffect?.Invoke(targetAgent);
-            attackFlag = true;
         }
-        return attackFlag;
+        return true;
     }
 
     protected override bool DuringPerform() => DuringPerform(null);
