@@ -36,6 +36,9 @@ public class Initialization : MonoBehaviour
             DontDestroyOnLoad(acrossSceneController);
             DontDestroyOnLoad(characterLoder);
             DontDestroyOnLoad(eventSystem);
+
+            acrossSceneController.GetComponent<AcrossSceneController>().ui = ui;
+            ui.SetActive(false);
         }
         catch (NullReferenceException)
         {
