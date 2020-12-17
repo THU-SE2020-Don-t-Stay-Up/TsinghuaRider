@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class AcrossSceneController : MonoBehaviour
 {
-
+    public GameObject ui = null;
     void Start()
     {
         SceneManager.sceneUnloaded += OnSceneUnloaded;       
@@ -25,7 +25,6 @@ public class AcrossSceneController : MonoBehaviour
             Debug.Log(teleporter);
             teleporter.FindTarget();
         }
-
         SetupPlayer();
     }
 
