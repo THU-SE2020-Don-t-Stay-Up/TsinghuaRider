@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -103,17 +103,139 @@ public class FierceState : StateBase
     }
 }
 
-public class SpeedUpState : StateBase
+public class SpeedState : StateBase
 {
+    private float factor;
+    public SpeedState(float Factor)
+    {
+        factor = Factor;
+    }
+
     public override void Effect(LivingBaseAgent agent)
     {
-        agent.actualLiving.MoveSpeed = agent.living.MoveSpeed * 2.0f;
-        agent.actualLiving.AttackRadius = 2.0f;
+        agent.actualLiving.MoveSpeed = agent.living.MoveSpeed * factor;
     }
 
     public override void Resume(LivingBaseAgent agent)
     {
-        agent.actualLiving.MoveSpeed = agent.actualLiving.MoveSpeed;
+        agent.actualLiving.MoveSpeed = agent.living.MoveSpeed;
+    }
+}
+
+public class AttackSpeedState : StateBase
+{
+    float factor;
+    public AttackSpeedState(float Factor)
+    {
+        factor = Factor;
+    }
+
+    public override void Effect(LivingBaseAgent agent)
+    {
+        agent.actualLiving.AttackSpeed = agent.living.AttackSpeed * factor;
+    }
+
+    public override void Resume(LivingBaseAgent agent)
+    {
+        agent.actualLiving.AttackSpeed = agent.living.AttackSpeed;
+    }
+}
+
+public class AgilityState : StateBase
+{
+    private float factor;
+    public AgilityState(float Factor)
+    {
+        factor = Factor;
+    }
+
+    public override void Effect(LivingBaseAgent agent)
+    {
+        MonsterAgent monsterAgent = agent as MonsterAgent;
+        monsterAgent.ActualMonster.Agility = Global.monsters[monsterAgent.monsterIndex].Agility * factor;
+    }
+
+    public override void Resume(LivingBaseAgent agent)
+    {
+        MonsterAgent monsterAgent = agent as MonsterAgent;
+        monsterAgent.ActualMonster.Agility = Global.monsters[monsterAgent.monsterIndex].Agility;
+    }
+}
+
+public class HealthState : StateBase
+{
+    private float factor;
+    public HealthState(float Factor)
+    {
+        factor = Factor;
+    }
+
+    public override void Effect(LivingBaseAgent agent)
+    {
+        agent.actualLiving.MaxHealth = (int)(agent.living.MaxHealth * factor);
+    }
+
+    public override void Resume(LivingBaseAgent agent)
+    {
+        agent.actualLiving.MaxHealth = agent.living.MaxHealth;
+    }
+}
+
+public class InfestedState : StateBase
+{
+    public GameObject infested;
+    public int number;
+    public InfestedState(int Number)
+    {
+        number = Number;
+        infested = Global.GetPrefab("MonsterGenerators/融合卷怪");
+    }
+
+    public override void Effect(LivingBaseAgent agent)
+    {
+        // 检测有无state
+    }
+
+    public override void Resume(LivingBaseAgent agent)
+    {
+        // 检测有无state
+    }
+}
+
+public class AttackAmountState : StateBase
+{
+    private float factor;
+    public AttackAmountState(float Factor)
+    {
+        factor = Factor;
+    }
+
+    public override void Effect(LivingBaseAgent agent)
+    {
+        agent.actualLiving.AttackAmount = agent.living.AttackAmount * factor;
+    }
+
+    public override void Resume(LivingBaseAgent agent)
+    {
+        agent.actualLiving.AttackAmount = agent.living.AttackAmount;
+    }
+}
+
+public class AttackRadiusState : StateBase
+{
+    private float factor;
+    public AttackRadiusState(float Factor)
+    {
+        factor = Factor;
+    }
+
+    public override void Effect(LivingBaseAgent agent)
+    {
+        agent.actualLiving.AttackRadius = agent.living.AttackRadius * factor;
+    }
+
+    public override void Resume(LivingBaseAgent agent)
+    {
         agent.actualLiving.AttackRadius = agent.living.AttackRadius;
     }
 }

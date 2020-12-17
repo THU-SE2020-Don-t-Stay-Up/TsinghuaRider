@@ -264,6 +264,16 @@ public class MonsterAgent : LivingBaseAgent
                 ItemAgent.GenerateItem(transform.position, ActualMonster.Rewards[i], ActualMonster.Possibility[i]);
             }
         }
+        if (actualLiving.State.HasStatus(new InfestedState(0)))
+        {
+            InfestedState state = actualLiving.State.GetState(new InfestedState(0)) as InfestedState;
+            for (int i=0; i<state.number; i++)
+            {
+                MonsterGroup group = Instantiate(state.infested, transform.position, Quaternion.identity).GetComponent<MonsterGroup>();
+                group.Generate(10);
+            }
+        }
+
         base.Destroy();
     }
 

@@ -16,6 +16,10 @@ public class MonsterGroup : MonoBehaviour
     /// 生成延迟
     /// </summary>
     public float delay;
+    /// <summary>
+    /// 额外词条数量
+    /// </summary>
+    public int extraState;
     public GameObject visualEffect;
 
     bool generating = false;
@@ -44,10 +48,46 @@ public class MonsterGroup : MonoBehaviour
         {
             timer -= Time.deltaTime;
 
-            
-            // 随机生成怪物，直到难度用完。生成后摧毁自身。
             if (timer < 0)
             {
+                // 随机生成词条
+                float speedFactor = 1, attackSpeedFactor = 1, agilityFactor = 1;
+                float healthFactor = 1, attackAmountFactor = 1, attackRadiusFactor = 1;
+                int infestedNumber = 0;
+                for (int i=0; i<extraState; i++)
+                {
+                    int state;
+                    state = Random.Range(0, 7);
+                    //Debug.Log("加词条" + state);
+                    switch (state)
+                    {
+                        case 0:
+                            speedFactor *= 2f;
+                            break;
+                        case 1:
+                            attackSpeedFactor *= 2f;
+                            break;
+                        case 2:
+                            agilityFactor *= 2f;
+                            break;
+                        case 3:
+                            healthFactor *= 3f;
+                            break;
+                        case 4:
+                            attackAmountFactor *= 2f;
+                            break;
+                        case 5:
+                            attackRadiusFactor *= 2f;
+                            break;
+                        case 6:
+                            infestedNumber += 1;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
+                // 随机生成怪物，直到难度用完。生成后摧毁自身。
                 float[] monsterDifficulty = new float[monsterObjects.Length];
                 float usedDifficulty = 0.0f;
                 float totalProbability = 0.0f;
@@ -70,13 +110,32 @@ public class MonsterGroup : MonoBehaviour
                         current += probability[i];
                         if (tmp < current)
                         {
-                            Instantiate(monsterObjects[i], transform.position, Quaternion.identity);
+                            MonsterAgent agent = Instantiate(monsterObjects[i], transform.position, Quaternion.identity).GetComponent<MonsterAgent>();
                             usedDifficulty += monsterDifficulty[i];
-                            //Debug.Log("生成怪物难度" + monsterDifficulty[i]);
-                            //Debug.Log("已用难度" + usedDifficulty);
+
+                            // Debug.Log("actualLiving is null: " + (agent.actualLiving == null));
+                            // 为新生成的怪物增加词条
+                            if (speedFactor != 1)
+                                agent.actualLiving.State.AddStatus(new SpeedState(speedFactor), float.NaN);
+                            if (attackSpeedFactor != 1)
+                                agent.actualLiving.State.AddStatus(new AttackSpeedState(attackSpeedFactor), float.NaN);
+                            if (agilityFactor != 1)
+                                agent.actualLiving.State.AddStatus(new AgilityState(agilityFactor), float.NaN);
+                            if (healthFactor != 1)
+                                agent.actualLiving.State.AddStatus(new HealthState(healthFactor), float.NaN);
+                            if (attackAmountFactor != 1)
+                                agent.actualLiving.State.AddStatus(new AttackAmountState(attackAmountFactor), float.NaN);
+                            if (attackRadiusFactor != 1)
+                                agent.actualLiving.State.AddStatus(new AttackRadiusState(attackRadiusFactor), float.NaN);
+                            if (infestedNumber != 0)
+                                agent.actualLiving.State.AddStatus(new InfestedState(infestedNumber), float.NaN);
+
                             break;
                         }
                     }
+
+                    //Debug.Log("used difficulty" + usedDifficulty);
+                    //Debug.Log("total difficulty" + difficulty);
                 }
 
                 Destroy(gameObject);
