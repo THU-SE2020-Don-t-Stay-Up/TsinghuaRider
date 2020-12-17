@@ -18,7 +18,6 @@ public class SceneTeleporter : MonoBehaviour
     bool isTeleporting = false;
     bool hasTeleported = false;
     bool cleared = false;
-    GameObject player;
     GameObject target;
 
     /// <summary>
@@ -65,7 +64,7 @@ public class SceneTeleporter : MonoBehaviour
             timer -= Time.deltaTime;
             if (timer < 0 && !hasTeleported)
             {
-                TeleportNow(player);
+                TeleportNow();
             }
         }
     }

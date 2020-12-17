@@ -21,6 +21,10 @@ public class MonsterGenerator : MonoBehaviour
     /// </summary>
     public float interval;
     /// <summary>
+    /// 从最多多少个生成点刷怪
+    /// </summary>
+    public int splitGeneratePoints;
+    /// <summary>
     /// 生成第一波的延迟
     /// </summary>
     public float delay;
@@ -32,7 +36,6 @@ public class MonsterGenerator : MonoBehaviour
     /// 超时时间，存活到该时间过关
     /// </summary>
     public float endTime;
-
 
     /// <summary>
     /// 经过的总时间
@@ -81,12 +84,14 @@ public class MonsterGenerator : MonoBehaviour
                 timer -= Time.deltaTime;
                 if (timer < 0 || NoMonster())
                 {
-                    int type = Random.Range(0, monsterGroups.Length);
-                    int point = Random.Range(0, generatePoints.Length);
+                    for (int i = 0; i < splitGeneratePoints; i++)
+                    {
+                        int type = Random.Range(0, monsterGroups.Length);
+                        int point = Random.Range(0, generatePoints.Length);
 
-                    MonsterGroup monsterGroup = Instantiate(monsterGroups[type], generatePoints[point].position, Quaternion.identity).GetComponent<MonsterGroup>();
-                    monsterGroup.Generate(difficulty);
-
+                        MonsterGroup monsterGroup = Instantiate(monsterGroups[type], generatePoints[point].position, Quaternion.identity).GetComponent<MonsterGroup>();
+                        monsterGroup.Generate(difficulty);
+                    }
                     wave -= 1;
                     timer = interval;
                 }

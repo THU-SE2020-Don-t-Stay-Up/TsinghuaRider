@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 2087759760649696078}
   - component: {fileID: 574497137036432355}
   - component: {fileID: 7248236925364592011}
+  - component: {fileID: 4132375465013090838}
   m_Layer: 0
   m_Name: "\u5730\u56FE"
   m_TagString: Untagged
@@ -112,7 +113,7 @@ Transform:
   m_GameObject: {fileID: 4132375463806858954}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_Children:
   - {fileID: 483672231793922244}
   - {fileID: 4375096761402362907}
@@ -276,6 +277,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 51.53525, y: 0.92689896}
   m_EdgeRadius: 0
+--- !u!114 &4132375465013090838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4132375463806858954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a39b3e07df77b554ab9cc89173fe21e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6903611623498626058
 GameObject:
   m_ObjectHideFlags: 0
@@ -429,6 +442,10 @@ PrefabInstance:
       propertyPath: vCamera
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 6726826919440057028, guid: 0ec1ab22bb9aff347a536fcb14f051a7, type: 3}
+      propertyPath: targetScene
+      value: DungeonScene
+      objectReference: {fileID: 0}
     - target: {fileID: 6726826919440057029, guid: 0ec1ab22bb9aff347a536fcb14f051a7, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
       value: 1.126
@@ -514,6 +531,10 @@ PrefabInstance:
     - target: {fileID: 6726826919440057028, guid: 0ec1ab22bb9aff347a536fcb14f051a7, type: 3}
       propertyPath: vCamera
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6726826919440057028, guid: 0ec1ab22bb9aff347a536fcb14f051a7, type: 3}
+      propertyPath: targetScene
+      value: DungeonScene2
       objectReference: {fileID: 0}
     - target: {fileID: 6726826919440057029, guid: 0ec1ab22bb9aff347a536fcb14f051a7, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
