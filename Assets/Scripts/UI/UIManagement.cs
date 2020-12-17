@@ -26,7 +26,7 @@ public class UIManagement : MonoBehaviour
     }
 
     public static void ReturnMainPage()
-    {       
+    {
         SceneManager.LoadScene("MainScene");
         SceneManager.UnloadScene(SceneManager.GetActiveScene());
     }

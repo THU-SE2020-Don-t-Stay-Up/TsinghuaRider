@@ -144,11 +144,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1086106283807427313, guid: fd6beff6b5edf5747ae77c704b3a6fa6, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 10441.732
+      value: 79375.79
       objectReference: {fileID: 0}
     - target: {fileID: 1086106283807427313, guid: fd6beff6b5edf5747ae77c704b3a6fa6, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -11044.867
+      value: -84470.125
       objectReference: {fileID: 0}
     - target: {fileID: 1086106284523823205, guid: fd6beff6b5edf5747ae77c704b3a6fa6, type: 3}
       propertyPath: m_LocalPosition.x
@@ -809,6 +809,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 362d9b44163c17f46ad9774707f9ac8e, type: 3}
+--- !u!114 &1442759677 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3201819125635564306, guid: c53df68bed50eaa479bcb50c2d56041c, type: 3}
+  m_PrefabInstance: {fileID: 1696130984}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36185106acaca704fa2308ecb73a80a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1581544319
 GameObject:
   m_ObjectHideFlags: 0
@@ -852,10 +863,7 @@ MonoBehaviour:
     NearClipPlane: 0.1
     FarClipPlane: 5000
     Dutch: 0
-    ModeOverride: 0
     LensShift: {x: 0, y: 0}
-    GateFit: 0
-    m_SensorSize: {x: 1.7788461, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -886,10 +894,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2527478357747585690, guid: f2a0195d5478dcb4587c6a956a07f9a9, type: 3}
-      propertyPath: m_AdditionalShaderChannelsFlag
-      value: 25
-      objectReference: {fileID: 0}
+    - target: {fileID: 2527478357647474311, guid: f2a0195d5478dcb4587c6a956a07f9a9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1442759677}
     - target: {fileID: 2527478357747585691, guid: f2a0195d5478dcb4587c6a956a07f9a9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

@@ -14,11 +14,11 @@ public class UISelectCharacter : MonoBehaviour
         robot = GameObject.Find("RobotPrefab");
         mahou = GameObject.Find("MahouPrefab");
 
-        robot.GetComponent<BoxCollider2D>().enabled = false;
+        robot.GetComponent<Collider2D>().enabled = false;
         robot.GetComponent<CharacterAgent>().enabled = false;
         robot.GetComponent<Animator>().enabled = false;
 
-        mahou.GetComponent<BoxCollider2D>().enabled = false;
+        mahou.GetComponent<Collider2D>().enabled = false;
         mahou.GetComponent<CharacterAgent>().enabled = false;
         mahou.GetComponent<Animator>().enabled = false;
 
@@ -30,9 +30,11 @@ public class UISelectCharacter : MonoBehaviour
         characterIndex = 1;
 
         mahou.GetComponent<CharacterAgent>().Stop();
+        mahou.GetComponent<Collider2D>().enabled = false;
         mahou.GetComponent<CharacterAgent>().enabled = false;
+        mahou.GetComponent<Animator>().enabled = false;
 
-        robot.GetComponent<BoxCollider2D>().enabled = true;
+        robot.GetComponent<Collider2D>().enabled = true;
         robot.GetComponent<CharacterAgent>().enabled = true;
         robot.GetComponent<Animator>().enabled = true;
         
@@ -44,9 +46,11 @@ public class UISelectCharacter : MonoBehaviour
         characterIndex = 0;
 
         robot.GetComponent<CharacterAgent>().Stop();
+        robot.GetComponent<Collider2D>().enabled = false;
         robot.GetComponent<CharacterAgent>().enabled = false;
+        robot.GetComponent<Animator>().enabled = false;
 
-        mahou.GetComponent<BoxCollider2D>().enabled = true;
+        mahou.GetComponent<Collider2D>().enabled = true;
         mahou.GetComponent<CharacterAgent>().enabled = true;
         mahou.GetComponent<Animator>().enabled = true;
 
