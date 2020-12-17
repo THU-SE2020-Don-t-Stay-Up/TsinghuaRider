@@ -120,9 +120,23 @@ public class RoomGenerator : MonoBehaviour
             else if (i == generateNumber - 1){
                 newRoom = Instantiate(endRoom, generatorPoint.position, Quaternion.identity).GetComponent<Room>();
                 newRoom.stageClear = false;  // 初始设置为未通关状态
+
+                MonsterGenerator monsterGenerator = newRoom.gameObject.GetComponentInChildren<MonsterGenerator>();
+                if (monsterGenerator.wave == 1)
+                {
+                    // 是boss房
+
+                }
+                else
+                {
+                    // 是内卷空间
+                    monsterGenerator.wave = (int)(monsterGenerator.wave * Mathf.Pow(1.2f, Global.turns));
+                    monsterGenerator.interval *= Mathf.Pow(0.9f, Global.turns);
+                    monsterGenerator.endTime = 5 + monsterGenerator.wave * monsterGenerator.interval;
+                }
             }
             else{
-                roomPrefab = roomPrefabs[(int)Random.Range(-0.5f,roomPrefabs.Length-0.5f)];
+                roomPrefab = roomPrefabs[Random.Range(0,roomPrefabs.Length-1)];
                 newRoom = Instantiate(roomPrefab, generatorPoint.position, Quaternion.identity).GetComponent<Room>();
                 newRoom.stageClear = false;  // 初始设置为未通关状态
 

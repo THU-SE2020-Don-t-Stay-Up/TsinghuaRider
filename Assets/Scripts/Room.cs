@@ -21,15 +21,20 @@ public class Room : MonoBehaviour
 
     public bool stageClear { set; get; }
 
+    GameObject tradeButton;
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("Player entered room: " + gameObject);
+            //Debug.Log("Player entered room: " + gameObject);
+            tradeButton = GameObject.Find("UI/Canvas/OpenButton");
+            Debug.Log("trade button: " + tradeButton);
             if (!stageClear)
             {
                 MonsterGenerator generator = GetComponentInChildren<MonsterGenerator>();
                 generator.Generate();
+                tradeButton.SetActive(false);
             }
         }
     }
@@ -42,6 +47,6 @@ public class Room : MonoBehaviour
         doorRight.SetActive(flagRight);
         doorUp.SetActive(flagUp);
         doorDown.SetActive(flagDown);
-
+        tradeButton.SetActive(true);
     }
 }

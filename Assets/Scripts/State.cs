@@ -165,19 +165,29 @@ public class AgilityState : StateBase
 public class HealthState : StateBase
 {
     private float factor;
+    private bool used;
     public HealthState(float Factor)
     {
         factor = Factor;
+        used = false;
     }
 
     public override void Effect(LivingBaseAgent agent)
     {
         agent.actualLiving.MaxHealth = (int)(agent.living.MaxHealth * factor);
+        if (!used)
+        {
+            agent.RestoreHealth();
+            used = true;
+            Debug.Log("Max Health: " + agent.actualLiving.MaxHealth);
+            Debug.Log("Current Health: " + agent.actualLiving.CurrentHealth);
+        }
     }
 
     public override void Resume(LivingBaseAgent agent)
     {
         agent.actualLiving.MaxHealth = agent.living.MaxHealth;
+        agent.actualLiving.CurrentHealth = (int)(agent.actualLiving.CurrentHealth / factor);
     }
 }
 

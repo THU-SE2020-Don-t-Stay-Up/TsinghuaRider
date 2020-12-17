@@ -62,7 +62,7 @@ public class MonsterGroup : MonoBehaviour
                     switch (state)
                     {
                         case 0:
-                            speedFactor *= 2f;
+                            speedFactor *= 1.5f;
                             break;
                         case 1:
                             attackSpeedFactor *= 2f;
@@ -71,10 +71,10 @@ public class MonsterGroup : MonoBehaviour
                             agilityFactor *= 2f;
                             break;
                         case 3:
-                            healthFactor *= 3f;
+                            healthFactor *= 2.5f;
                             break;
                         case 4:
-                            attackAmountFactor *= 2f;
+                            attackAmountFactor *= 1.5f;
                             break;
                         case 5:
                             attackRadiusFactor *= 2f;
@@ -115,20 +115,34 @@ public class MonsterGroup : MonoBehaviour
 
                             // Debug.Log("actualLiving is null: " + (agent.actualLiving == null));
                             // 为新生成的怪物增加词条
-                            if (speedFactor != 1)
+                            if (!Mathf.Approximately(speedFactor, 1.0f))
+                            {
                                 agent.actualLiving.State.AddStatus(new SpeedState(speedFactor), float.NaN);
-                            if (attackSpeedFactor != 1)
+                            }
+                            if (!Mathf.Approximately(attackSpeedFactor, 1.0f))
+                            {
                                 agent.actualLiving.State.AddStatus(new AttackSpeedState(attackSpeedFactor), float.NaN);
-                            if (agilityFactor != 1)
+                            }
+                            if (!Mathf.Approximately(agilityFactor, 1.0f))
+                            {
                                 agent.actualLiving.State.AddStatus(new AgilityState(agilityFactor), float.NaN);
-                            if (healthFactor != 1)
+                            }
+                            if (!Mathf.Approximately(healthFactor, 1.0f))
+                            {
                                 agent.actualLiving.State.AddStatus(new HealthState(healthFactor), float.NaN);
-                            if (attackAmountFactor != 1)
+                            }
+                            if (!Mathf.Approximately(attackAmountFactor, 1.0f))
+                            {
                                 agent.actualLiving.State.AddStatus(new AttackAmountState(attackAmountFactor), float.NaN);
-                            if (attackRadiusFactor != 1)
+                            }
+                            if (!Mathf.Approximately(attackRadiusFactor, 1.0f))
+                            {
                                 agent.actualLiving.State.AddStatus(new AttackRadiusState(attackRadiusFactor), float.NaN);
+                            }
                             if (infestedNumber != 0)
+                            {
                                 agent.actualLiving.State.AddStatus(new InfestedState(infestedNumber), float.NaN);
+                            }
 
                             break;
                         }
