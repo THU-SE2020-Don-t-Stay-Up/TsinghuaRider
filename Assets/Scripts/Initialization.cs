@@ -14,7 +14,6 @@ public class Initialization : MonoBehaviour
     public void Awake()
     {
         Debug.Log("init");
-        Global.LoadPrefabPaths();
         Global.monsters = Monster.LoadMonster();
         Global.characters = Character.LoadCharacter();
         Global.items = Item.LoadItem();
