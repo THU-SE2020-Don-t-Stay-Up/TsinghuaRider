@@ -14,6 +14,7 @@ class Settings
     /// </summary>
     public const string CHARACTER_CONFIG_PATH = "./Assets/charactersInfo.json";
     public const string ITEM_CONFIG_PATH = "./Assets/itemsInfo.json";
+    public const string STATE_CONFIG_PATH = "./Assets/statesInfo.json";
 }
 
 /// <summary>
@@ -30,7 +31,7 @@ class Global
     /// </summary>
     public static List<Character> characters;
     public static List<Item> items;
-    public static string[] prefabPaths;
+    public static List<StateBase> states;
     /// <summary>
     /// 房间难度信息
     /// </summary>
@@ -53,7 +54,8 @@ class Global
 
     public static AudioClip GetAudioClip(string name)
     {
-        return Resources.Load($"Music/{name}", typeof(AudioClip)) as AudioClip;
+        Debug.Log($"{name}");
+        return Resources.Load($"{name}", typeof(AudioClip)) as AudioClip;
     }
 }
 

@@ -6,7 +6,7 @@ public class BossAgent : MonsterAgent
     protected float laserInternal = 1f;
     protected float laserScope = 45;
     protected float thetaSpeed = 30;
-
+    public AudioClip fireAudioClip;
     protected int barrageNum = 200;
     protected float barrageInternal = 0.03f;
 

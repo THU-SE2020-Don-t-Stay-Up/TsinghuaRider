@@ -432,6 +432,7 @@ public class CharacterAgent : LivingBaseAgent
             {
                 if (ActualCharacter.AttackSpeed - deltaTime < 0.01)
                 {
+                    AudioSource.PlayOneShot(MeleeAttackClip);
                     SetState(1);
                     MeleeAttack();
                     deltaTime = 0;
@@ -546,7 +547,6 @@ public class CharacterAgent : LivingBaseAgent
     public void MeleeAttack()
     {
         Animator.SetTrigger("Melee");
-       
         IEnumerable<GameObject> targetObjects = GetAttackRangeObjects(transform.position, attackDirection, ActualCharacter.AttackRadius, ActualCharacter.AttackAngle, "Monster");
         foreach (var targetObject in targetObjects)
         {
@@ -576,10 +576,7 @@ public class CharacterAgent : LivingBaseAgent
                 UIHealthBar.instance.SetValue(actualLiving.CurrentHealth / (float)actualLiving.MaxHealth);
 
                 Debug.Log($"{actualLiving.Name} now health is {actualLiving.CurrentHealth}");
-                //animator.SetTrigger("Hit");
-                //audioSource.PlayOneShot(getHitClip);
                 actualLiving.State.AddStatus(new InvincibleState(), actualLiving.TimeInvincible);
-                //print($"{actualLiving.Name}获得无敌{actualLiving.TimeInvincible}");
                 if (IsDead())
                 {
                     if (Interlocked.Exchange(ref actualLiving.isDead, 1) == 0)
@@ -593,9 +590,6 @@ public class CharacterAgent : LivingBaseAgent
         }
         else
         {
-            //animator.SetTrigger("Heal");
-            //audioSource.PlayOneShot(getHealingClip);
-
             actualLiving.CurrentHealth = (int)Mathf.Clamp(actualLiving.CurrentHealth + amount, 0, actualLiving.MaxHealth);
             UIHealthBar.instance.SetValue(actualLiving.CurrentHealth / (float)actualLiving.MaxHealth);
         }
@@ -710,10 +704,7 @@ public class CharacterAgent : LivingBaseAgent
                 UIHealthBar.instance.SetValue(actualLiving.CurrentHealth / (float)actualLiving.MaxHealth);
 
                 Debug.Log($"{actualLiving.Name} now health is {actualLiving.CurrentHealth}");
-                //animator.SetTrigger("Hit");
-                //audioSource.PlayOneShot(getHitClip);
                 actualLiving.State.AddStatus(new InvincibleState(), actualLiving.TimeInvincible);
-                //print($"{actualLiving.Name}获得无敌{actualLiving.TimeInvincible}");
                 if (IsDead())
                 {
                     if (Interlocked.Exchange(ref actualLiving.isDead, 1) == 0)

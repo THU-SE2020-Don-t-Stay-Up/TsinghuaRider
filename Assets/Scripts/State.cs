@@ -1,4 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using UnityEngine;
 /// <summary>
 /// 状态类，存储状态Effect方法
@@ -33,6 +38,24 @@ abstract public class StateBase
     }
 }
 
+public class StateLoader
+{
+    [JsonConverter(typeof(TJsonConverter<StateBase>))]
+    public static List<StateBase> States { get; set; }
+
+    public static List<StateBase> LoadStates()
+    {
+        string path = Settings.STATE_CONFIG_PATH;
+        List<StateBase> states = new List<StateBase>();
+        JsonReader reader = new JsonTextReader(new StreamReader(path));
+        JArray arr = JArray.Load(reader);
+        foreach (var s in arr)
+        {
+            states.Add((StateBase)Activator.CreateInstance(typeof(StateBase).Assembly.GetType(s.ToString())));
+        }
+        return states;
+    }
+}
 public class SlowState : StateBase
 {
     private float SlowFactor;
@@ -194,4 +217,8 @@ public class State
         StateDuration.Clear();
     }
 
+    public StateBase GetState(StateBase status)
+    {
+        return StateDuration.Keys.ToArray().FirstOrDefault(e => e.GetType() == status.GetType());
+    }
 }
