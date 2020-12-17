@@ -147,6 +147,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d6c396fffec8144c8e4b113049b4a1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MeleeAttackClip: {fileID: 8300000, guid: 1efdedc523b3cd14485163ddcbe73618, type: 3}
+  MissleAttackClip: {fileID: 8300000, guid: 1efdedc523b3cd14485163ddcbe73618, type: 3}
+  HealthPotionClip: {fileID: 8300000, guid: f37d048718c8fe24d98152fd22c21ae4, type: 3}
+  MedkitClip: {fileID: 8300000, guid: 1d1622481f3d02143925677bef7b809a, type: 3}
+  StrengthPotionClip: {fileID: 8300000, guid: 334834a4658194746be3e26f8cff23b1, type: 3}
   characterIndex: 1
   dashLayerMask:
     serializedVersion: 2

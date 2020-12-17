@@ -88,6 +88,7 @@ public class HealthPotion : Item
     { 
         if (character.actualLiving.CurrentHealth < character.actualLiving.MaxHealth)
         {
+            character.AudioSource.PlayOneShot(character.HealthPotionClip);
             character.ChangeHealth(Recovery * character.ActualCharacter.MaxHealth);
             return true;
         }
@@ -107,7 +108,8 @@ public class StrengthPotion : Item
         this.Amount = 1;
     }
     public override bool Use(CharacterAgent character) 
-    { 
+    {
+        character.AudioSource.PlayOneShot(character.StrengthPotionClip);
         character.ActualCharacter.AttackAmount += AdditionalStrength;
         return true;
     }
@@ -139,6 +141,7 @@ public class Medkit : Item
     {
         if (character.actualLiving.CurrentHealth < character.actualLiving.MaxHealth)
         {
+            character.AudioSource.PlayOneShot(character.MedkitClip);
             character.ChangeHealth(Recovery * character.ActualCharacter.MaxHealth);
             return true;
         }

@@ -221,6 +221,7 @@ public class MissleAttackSkill : AttackSkill
 {
     public override bool AttackAt(Vector3 attackDirection, Action<LivingBaseAgent> extraEffect)
     {
+        agent.AudioSource.PlayOneShot(agent.MissleAttackClip);
         GameObject projectileObject = GameObject.Instantiate(agent.bulletPrefab, agent.GetCentralPosition(), Quaternion.identity);
         Bullet bullet = projectileObject.GetComponent<Bullet>();
         bullet.SetBullet(agent, agent.actualLiving.AttackAmount, extraEffect);
@@ -240,6 +241,7 @@ public class MeleeAttackSkill : AttackSkill
 {
     public override bool AttackAt(Vector3 attackDirection, Action<LivingBaseAgent> extraEffect)
     {
+        agent.AudioSource.PlayOneShot(agent.MeleeAttackClip);
         bool attackFlag = false;
         IEnumerable<GameObject> targetObjects = agent.GetAttackRangeObjects(agent.GetCentralPosition(), attackDirection, agent.ActualMonster.AttackRadius, agent.ActualMonster.AttackAngle, "Player");
         foreach (var targetObject in targetObjects)
@@ -326,15 +328,23 @@ public class FierceSkill : UltraSkill
 
 public class LaserSkill : UltraSkill
 {
+    BossAgent boss;
     protected Lasers lasers;
     protected bool finished;
     public override void Init(MonsterAgent agent)
     {
         base.Init(agent);
-        BossAgent boss = agent as BossAgent;
+        boss = agent as BossAgent;
         lasers = boss.GetLasers();
     }
-
+    protected override bool InitPerform()
+    {
+        boss.AudioSource.clip = boss.fireAudioClip;
+        boss.AudioSource.loop = true;
+        boss.AudioSource.Play();
+        skillStartFlag = true;
+        return true;
+    }
     protected override bool DuringPerform()
     {
         return lasers.AutoPerform();
@@ -344,6 +354,8 @@ public class LaserSkill : UltraSkill
     {
         base.EndPerform();
         lasers.EndLasers();
+        boss.AudioSource.loop = false;
+        boss.AudioSource.Stop();
     }
 }
 
@@ -370,7 +382,7 @@ public class ObstacleSkill : RangeSkill
     private Vector3 obstaclePosition;
     private bool performFlag = false;
     public override void Init(MonsterAgent agent)
-    {
+    {      
         base.Init(agent);
         randomTime = Random.Range(0, 0.3f);
         beforePerformTime = randomTime;
@@ -378,6 +390,7 @@ public class ObstacleSkill : RangeSkill
 
     protected override bool InitPerform()
     {
+        agent.AudioSource.PlayOneShot(agent.MissleAttackClip);
         skillStartFlag = true;
         float distance = Vector3.Distance(agent.GetCentralPosition(), agent.target.GetCentralPosition());
         if (distance > agent.ActualMonster.AttackRadius)

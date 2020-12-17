@@ -46,13 +46,12 @@ public class MonsterAgent : LivingBaseAgent
 
     //public GameObject Prefab;
     // Start is called before the first frame update
-    private void Start()
+    private void Awake()
     {
         living = Global.monsters[monsterIndex].Clone() as Monster;
         actualLiving = Monster.Clone() as Monster;
         actualLiving.CurrentHealth = actualLiving.MaxHealth;
         print(Monster.Name);
-
         rigidbody2d = GetComponent<Rigidbody2D>();
         //roamingTime = 2;
         roamingTime = Random.Range(0.5f, 0.8f);
@@ -70,7 +69,7 @@ public class MonsterAgent : LivingBaseAgent
         Animator = GetComponent<Animator>();
         rigidbody2d = GetComponent<Rigidbody2D>();
         collider2d = GetComponent<Collider2D>();
-
+        AudioSource = GetComponent<AudioSource>();
         //测试
         Animator.SetTrigger("walk");
         monsterHealthBar = transform.Find("MonsterHealth").Find("MonsterHealthBar").GetComponent<UIMonsterHealthBar>();
@@ -349,7 +348,7 @@ public class MonsterAgent : LivingBaseAgent
 
     public void TestStart()
     {
-        Start();
+        Awake();
     }
 
     public Vector3 TestGetAttackDirection()
