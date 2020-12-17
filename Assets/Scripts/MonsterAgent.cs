@@ -52,7 +52,6 @@ public class MonsterAgent : LivingBaseAgent
         actualLiving = Monster.Clone() as Monster;
         actualLiving.CurrentHealth = actualLiving.MaxHealth;
         print(Monster.Name);
-
         rigidbody2d = GetComponent<Rigidbody2D>();
         //roamingTime = 2;
         roamingTime = Random.Range(0.5f, 0.8f);
@@ -70,7 +69,7 @@ public class MonsterAgent : LivingBaseAgent
         Animator = GetComponent<Animator>();
         rigidbody2d = GetComponent<Rigidbody2D>();
         collider2d = GetComponent<Collider2D>();
-
+        AudioSource = GetComponent<AudioSource>();
         //测试
         Animator.SetTrigger("walk");
         monsterHealthBar = transform.Find("MonsterHealth").Find("MonsterHealthBar").GetComponent<UIMonsterHealthBar>();

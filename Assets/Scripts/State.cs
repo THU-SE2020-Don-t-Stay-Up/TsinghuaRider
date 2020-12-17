@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using UnityEngine;
 /// <summary>
@@ -34,6 +38,24 @@ abstract public class StateBase
     }
 }
 
+public class StateLoader
+{
+    [JsonConverter(typeof(TJsonConverter<StateBase>))]
+    public static List<StateBase> States { get; set; }
+
+    public static List<StateBase> LoadStates()
+    {
+        string path = Settings.STATE_CONFIG_PATH;
+        List<StateBase> states = new List<StateBase>();
+        JsonReader reader = new JsonTextReader(new StreamReader(path));
+        JArray arr = JArray.Load(reader);
+        foreach (var s in arr)
+        {
+            states.Add((StateBase)Activator.CreateInstance(typeof(StateBase).Assembly.GetType(s.ToString())));
+        }
+        return states;
+    }
+}
 public class SlowState : StateBase
 {
     private float SlowFactor;

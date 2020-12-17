@@ -61,12 +61,12 @@ public class LivingBaseAgent : MonoBehaviour
     /// </summary>
     //public float MoveSpeed { get; set; }
     public Animator Animator { get; set; }
-    public AudioSource AudioSource { get; set; } = new AudioSource();
-    public AudioClip NowAudioClip { get; set; }
-    public AudioClip GetHitClip { get; set; }
-    public AudioClip AttackClip { get; set; }
-    public AudioClip GetHealingClip { get; set; }
-
+    public AudioSource AudioSource { get; set; }
+    public AudioClip MeleeAttackClip;
+    public AudioClip MissleAttackClip;
+    public AudioClip HealthPotionClip;
+    public AudioClip MedkitClip;
+    public AudioClip StrengthPotionClip;
     public Rigidbody2D rigidbody2d { get; set; }
 
     public Collider2D collider2d { get; set; }

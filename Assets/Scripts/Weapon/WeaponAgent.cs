@@ -95,6 +95,8 @@ public class WeaponAgent : ItemAgent
 
     public virtual bool Attack()
     {
+        CharacterAgent agent = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterAgent>();
+        agent.AudioSource.PlayOneShot(agent.MissleAttackClip);
         Weapon.Attack(user, aimDir);
         return true;
     }
