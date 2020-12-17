@@ -17,7 +17,7 @@ namespace Tests
         {
             LogAssert.ignoreFailingMessages = true;
 
-            MahouAgent = GameObject.Find("MahouPrefabs").GetComponent<CharacterAgent>();
+            MahouAgent = GameObject.Find("MahouPrefab").GetComponent<CharacterAgent>();
             var initialGame = new Initialization();
             initialGame.TestAwake();
             MahouAgent.TestAwake();
@@ -49,7 +49,7 @@ namespace Tests
 
             Assert.IsNotNull(MahouAgent);
             Assert.AreEqual(0, MahouAgent.characterIndex);
-            Assert.AreEqual(1, MahouAgent.actualLiving.TimeInvincible);
+            Assert.IsTrue(Mathf.Approximately(0.1f, MahouAgent.actualLiving.TimeInvincible));
             Assert.AreEqual(1, MahouAgent.actualLiving.AttackAmount);
             Assert.AreEqual(100f, MahouAgent.actualLiving.CurrentHealth);
             Assert.IsNotNull(MahouAgent.WeaponPrefab);

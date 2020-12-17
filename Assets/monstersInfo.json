@@ -130,14 +130,14 @@
   },
   {
     "Name": "寒鼠",
-    "MoveSpeed": 3.5,
-    "MaxHealth": 50,
+    "MoveSpeed": 4.5,
+    "MaxHealth": 80,
     "Defense": 0,
     "Tenacity": 0.0,
     "Agility": 5.0,
     "AttackSpeed": 1.2,
     "AttackRadius": 2,
-    "AttackAmount": 10,
+    "AttackAmount": 15,
     "AttackAngle": 30,
     "BulletSpeed": 10,
     "TimeInvincible": 0,
@@ -153,7 +153,7 @@
       0.03,
       0.01
     ],
-    "Difficulty": 35,
+    "Difficulty": 40,
     "Skills": [
       "MeleeSlowAttackSkill"
     ],
@@ -165,7 +165,7 @@
   {
     "Name": "拉格朗日",
     "MoveSpeed": 2.0,
-    "MaxHealth": 800,
+    "MaxHealth": 1000,
     "Defense": 0,
     "Tenacity": 0.0,
     "Agility": 5.0,
@@ -213,13 +213,13 @@
   {
     "Name": "特征枝",
     "MoveSpeed": 4.5,
-    "MaxHealth": 25,
+    "MaxHealth": 35,
     "Defense": 0,
     "Tenacity": 0.0,
-    "Agility": 5.0,
+    "Agility": 3.0,
     "AttackSpeed": 1.5,
     "AttackRadius": 10,
-    "AttackAmount": 8,
+    "AttackAmount": 12,
     "AttackAngle": 30,
     "BulletSpeed": 10,
     "TimeInvincible": 0,
@@ -233,7 +233,7 @@
       0.03,
       0.03
     ],
-    "Difficulty": 25,
+    "Difficulty": 30,
     "Skills": [
       "MissleBleedAttackSkill"
     ],
@@ -245,11 +245,11 @@
   {
     "Name": "矩阵",
     "MoveSpeed": 3,
-    "MaxHealth": 40,
+    "MaxHealth": 50,
     "Defense": 0,
     "Tenacity": 0.0,
-    "Agility": 2.0,
-    "AttackSpeed": 3.5,
+    "Agility": 3.5,
+    "AttackSpeed": 3.0,
     "AttackRadius": 8,
     "AttackAmount": 8,
     "AttackAngle": 30,
@@ -265,7 +265,7 @@
       0.01,
       0.01
     ],
-    "Difficulty": 30,
+    "Difficulty": 40,
     "Skills": [
       "ObstacleSkill"
     ],
@@ -277,13 +277,13 @@
   {
     "Name": "行列狮",
     "MoveSpeed": 4.5,
-    "MaxHealth": 50,
+    "MaxHealth": 45,
     "Defense": 0,
     "Tenacity": 0.0,
     "Agility": 5.0,
     "AttackSpeed": 3.0,
     "AttackRadius": 6,
-    "AttackAmount": 12,
+    "AttackAmount": 15,
     "AttackAngle": 90,
     "BulletSpeed": 10,
     "TimeInvincible": 0,
@@ -297,7 +297,7 @@
       0.02,
       0.02
     ],
-    "Difficulty": 35,
+    "Difficulty": 30,
     "Skills": [
       "MeleeChargeAttackSkill"
     ],
@@ -308,8 +308,8 @@
   },
   {
     "Name": "象两",
-    "MoveSpeed": 3.5,
-    "MaxHealth": 60,
+    "MoveSpeed": 4.5,
+    "MaxHealth": 50,
     "Defense": 0,
     "Tenacity": 0.0,
     "Agility": 5.0,
@@ -341,13 +341,13 @@
   {
     "Name": "特征象两",
     "MoveSpeed": 2.5,
-    "MaxHealth": 100,
+    "MaxHealth": 150,
     "Defense": 0,
     "Tenacity": 0.0,
     "Agility": 5.0,
     "AttackSpeed": 2.0,
     "AttackRadius": 2,
-    "AttackAmount": 18,
+    "AttackAmount": 24,
     "AttackAngle": 30,
     "BulletSpeed": 10,
     "TimeInvincible": 2,

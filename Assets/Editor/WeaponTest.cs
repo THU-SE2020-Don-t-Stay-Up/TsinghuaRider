@@ -21,7 +21,7 @@ namespace Tests
             var initialGame = new Initialization();
             initialGame.TestAwake();
 
-            MahouAgent = GameObject.Find("MahouPrefabs").GetComponent<CharacterAgent>();
+            MahouAgent = GameObject.Find("MahouPrefab").GetComponent<CharacterAgent>();
             MahouAgent.TestAwake();
 
             gun = GameObject.Find("Gun").GetComponent<WeaponAgent>();

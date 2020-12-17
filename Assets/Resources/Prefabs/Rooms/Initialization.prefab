@@ -43,3 +43,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8b3ad19789812a4a82a5af01991e411, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initDifficulty: 100
+  difficultyStep: 50
+  initWaves: 2
+  initEndTime: 20
+  generatePoints: 1

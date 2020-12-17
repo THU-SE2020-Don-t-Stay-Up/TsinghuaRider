@@ -34,8 +34,12 @@ class Global
     /// <summary>
     /// 房间难度信息
     /// </summary>
-    public static float difficulty;
+    public static int turns;
+    public static float initDifficulty;
     public static float difficultyStep;
+    public static int initWaves;
+    public static float initEndTime;
+    public static int splitGeneratePoints;
     /// <summary>
     /// 时间信息
     /// </summary>
