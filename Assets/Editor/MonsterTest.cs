@@ -157,13 +157,13 @@ namespace Tests
 
             // Boss死亡后掉落金币
             LagrangeAgent.actualLiving.State.ClearStatus();
-            LagrangeAgent.TestChangeHealth(-800f);
+            LagrangeAgent.TestChangeHealth(-1000f);
             Assert.AreEqual(0f, LagrangeAgent.actualLiving.CurrentHealth);
             Assert.IsTrue(LagrangeAgent.IsDead());
             Assert.IsTrue(GameObject.Find("Coin(Clone)"));
 
             // 恢复血量，为了通过后续测试
-            LagrangeAgent.TestChangeHealth(800f);
+            LagrangeAgent.TestChangeHealth(1000f);
 
             yield return null;
             LogAssert.ignoreFailingMessages = false;
@@ -238,15 +238,15 @@ namespace Tests
         {
             LogAssert.ignoreFailingMessages = true;
 
-            // 拉格朗日的血量为800，初始有无敌状态
-            Assert.AreEqual(800f, LagrangeAgent.actualLiving.MaxHealth);
+            // 拉格朗日的血量为1000，初始有无敌状态
+            Assert.AreEqual(1000f, LagrangeAgent.actualLiving.MaxHealth);
             Assert.AreEqual(LagrangeAgent.actualLiving.MaxHealth, LagrangeAgent.actualLiving.CurrentHealth);
             Assert.IsTrue(LagrangeAgent.actualLiving.State.HasStatus(new InvincibleState()));
             LagrangeAgent.actualLiving.State.ClearStatus();
 
             // 扣血后怪物不会进入无敌
             LagrangeAgent.TestChangeHealth(-20f);
-            Assert.AreEqual(780f, LagrangeAgent.actualLiving.CurrentHealth);
+            Assert.AreEqual(980f, LagrangeAgent.actualLiving.CurrentHealth);
             Assert.IsFalse(LagrangeAgent.actualLiving.State.HasStatus(new InvincibleState()));
 
             // 加血后，血量不超过上限
