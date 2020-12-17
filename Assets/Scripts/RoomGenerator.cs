@@ -125,7 +125,7 @@ public class RoomGenerator : MonoBehaviour
                 if (monsterGenerator.wave == 1)
                 {
                     // 是boss房
-
+                    
                 }
                 else
                 {

@@ -88,18 +88,24 @@ public class InvincibleState : StateBase
 
 public class FierceState : StateBase
 {
+    private bool used = false;
     public override void Effect(LivingBaseAgent agent)
     {
-        agent.actualLiving.MoveSpeed = agent.living.MoveSpeed * 1.5f;
-        agent.actualLiving.AttackAmount = agent.living.AttackAmount * 2;
-        agent.actualLiving.AttackSpeed = agent.living.AttackSpeed * 2f;
+        if (!used)
+        {
+            agent.actualLiving.MoveSpeed = agent.actualLiving.MoveSpeed * 1.5f;
+            agent.actualLiving.AttackAmount = agent.actualLiving.AttackAmount * 1.5f;
+            agent.actualLiving.AttackSpeed = agent.actualLiving.AttackSpeed * 1.5f;
+            used = true;
+        }
     }
 
     public override void Resume(LivingBaseAgent agent)
     {
-        agent.actualLiving.MoveSpeed = agent.living.MoveSpeed;
-        agent.actualLiving.AttackAmount = agent.living.AttackAmount;
-        agent.actualLiving.AttackSpeed = agent.living.AttackSpeed;
+        agent.actualLiving.MoveSpeed /= 1.5f;
+        agent.actualLiving.AttackAmount /= 1.5f;
+        agent.actualLiving.AttackSpeed /= 1.5f;
+        used = false;
     }
 }
 
@@ -270,6 +276,26 @@ public class BleedState: StateBase
 
     public override void Resume(LivingBaseAgent agent)
     {
+    }
+}
+
+public class BossEnhanceState : StateBase
+{
+    private bool used = false;
+    public override void Effect(LivingBaseAgent agent)
+    {
+        agent.actualLiving.AttackAmount = agent.living.AttackAmount * Mathf.Pow(1.2f, Global.turns);
+        agent.actualLiving.AttackSpeed = agent.living.AttackSpeed * Mathf.Pow(1.2f, Global.turns);
+        agent.actualLiving.MaxHealth = (int)(agent.living.MaxHealth * Mathf.Pow(1.5f, Global.turns));
+        if (!used)
+        {
+            agent.RestoreHealth();
+            used = true;
+        }
+    }
+    public override void Resume(LivingBaseAgent agent)
+    {
+        
     }
 }
 

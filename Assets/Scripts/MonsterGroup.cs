@@ -113,7 +113,11 @@ public class MonsterGroup : MonoBehaviour
                             MonsterAgent agent = Instantiate(monsterObjects[i], transform.position, Quaternion.identity).GetComponent<MonsterAgent>();
                             usedDifficulty += monsterDifficulty[i];
 
-                            // Debug.Log("actualLiving is null: " + (agent.actualLiving == null));
+                            if (agent.actualLiving.MaxHealth > 900)
+                            {
+                                Debug.Log("拉格朗日增强了！");
+                                agent.actualLiving.State.AddStatus(new BossEnhanceState(), float.NaN);
+                            }
                             // 为新生成的怪物增加词条
                             if (!Mathf.Approximately(speedFactor, 1.0f))
                             {

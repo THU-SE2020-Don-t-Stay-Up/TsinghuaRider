@@ -97,7 +97,7 @@ public class Laser
             LivingBaseAgent living = hit.transform.GetComponent<LivingBaseAgent>();
             if (living != null && !Agent.CompareTag(living.tag) && LaserTime - LaserDeltaTime < 0.01)
             {
-                living.ChangeHealth(-Agent.actualLiving.AttackAmount * 2);
+                living.ChangeHealth(-Agent.actualLiving.AttackAmount);
                 LaserDeltaTime = 0;
             }
             LineRenderer.SetPosition(0, firePosition);
