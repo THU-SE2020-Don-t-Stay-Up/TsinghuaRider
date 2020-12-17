@@ -108,7 +108,7 @@ public class StrengthPotion : Item
     }
     public override bool Use(CharacterAgent character) 
     { 
-        character.ActualCharacter.AttackAmount *= (1 + AdditionalStrength);
+        character.ActualCharacter.AttackAmount += AdditionalStrength;
         return true;
     }
 }

@@ -46,18 +46,16 @@ class Global
     public static bool gamePaused;
     public static float totalTime;
 
-    public static void LoadPrefabPaths()
-    {
-        //prefabPaths = AssetDatabase.FindAssets("t:prefab").Select(guid => AssetDatabase.GUIDToAssetPath(guid)).ToArray();
-    }
-
     public static GameObject GetPrefab(string name)
     {
-        return  Resources.Load($"Prefabs/{name}", typeof(GameObject)) as GameObject;
+        return Resources.Load($"Prefabs/{name}", typeof(GameObject)) as GameObject;
+    }
+
+    public static AudioClip GetAudioClip(string name)
+    {
+        return Resources.Load($"Music/{name}", typeof(AudioClip)) as AudioClip;
     }
 }
-
-
 
 public static class Utility
 {
