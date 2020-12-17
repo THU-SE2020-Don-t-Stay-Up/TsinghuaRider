@@ -1,4 +1,5 @@
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -86,41 +87,6 @@ public class CharacterAgent : LivingBaseAgent
 
         actionState = ActionState.Normal;
         ActualCharacter.State.AddStatus(new InvincibleState(), ActualCharacter.TimeInvincible);
-
-        // 初始化背包及其UI
-        //uiInventory = GameObject.Find("UI_Inventory").GetComponent<UIInventory>();
-        //inventory = new Inventory();
-        //inventory.AddItem(new HealthPotion { Amount = 3 });
-        //inventory.AddItem(new StrengthPotion { Amount = 4 });
-        //inventory.AddItem(new Medkit { Amount = 1 });
-        //uiInventory.SetInventory(inventory);
-
-        //uiCoinInventory = GameObject.Find("UI_Coins").GetComponent<UIInventory>();
-        //coinInventory = new Inventory();
-        //coinInventory.AddItem(new Coin { Amount = 10000});
-        //uiCoinInventory.SetInventory(coinInventory);
-
-
-        //uiWeaponColumn = GameObject.Find("UI_Weapons").GetComponent<UIInventory>();
-        //weaponColumn = new Inventory();
-        //weaponColumn.AddItem(new Sword { Amount = 1 });
-        //weaponColumn.AddItem(new Gun { Amount = 1 });
-        //uiWeaponColumn.SetInventory(weaponColumn);
-
-        //uiBuffColumn = GameObject.Find("UI_Buffs").GetComponent<UIInventory>();
-        //buffColumn = new Inventory();
-        //uiBuffColumn.SetInventory(buffColumn);
-
-        ////MahouPortrait = GameObject.Find("MahouPortrait");
-        ////MahouPortrait.SetActive(false);
-        ////RobotPortrait = GameObject.Find("RobotPortrait");
-        ////RobotPortrait.SetActive(false);
-
-        ////GetPortrait();
-
-        //InitialWeapon();
-        //UpdateWeaponPrefab();
-        //Initialize();
     }
 
     /// <summary>
@@ -248,6 +214,10 @@ public class CharacterAgent : LivingBaseAgent
         try
         {
             WeaponPrefab = transform.GetComponentInChildren<WeaponAgent>().gameObject;
+        }
+        catch(NullReferenceException)
+        {
+            WeaponPrefab = null;
         }
     }
 
