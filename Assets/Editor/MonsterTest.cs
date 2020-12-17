@@ -20,10 +20,10 @@ namespace Tests
             LagrangeAgent = GameObject.Find("拉格朗日").GetComponent<BossAgent>();
 
             var initialGame = new Initialization();
-            initialGame.Awake();
+            initialGame.TestAwake();
 
-            DuoYuanJiFenAgent.Start();
-            LagrangeAgent.Start();
+            DuoYuanJiFenAgent.TestStart();
+            LagrangeAgent.TestStart();
             Debug.Log("Set up.");
         }
 
@@ -69,8 +69,8 @@ namespace Tests
             var frameCount = 0;
             while ((frameCount++) <= 0)
             {
-                DuoYuanJiFenAgent.Update();
-                LagrangeAgent.Update();
+                DuoYuanJiFenAgent.TestUpdate();
+                LagrangeAgent.TestUpdate();
                 yield return null;
             }
             Assert.IsTrue(DuoYuanJiFenAgent.target != null);
@@ -88,15 +88,16 @@ namespace Tests
             var frameCount = 0;
             while ((frameCount++) <= 0)
             {
-                DuoYuanJiFenAgent.Update();
-                LagrangeAgent.Update();
+                DuoYuanJiFenAgent.TestUpdate();
+                LagrangeAgent.TestUpdate();
                 yield return null;
             }
             var targetPosition = DuoYuanJiFenAgent.target.transform.position;
             var monsterPosition = DuoYuanJiFenAgent.transform.position;
             var lagrangePosition = LagrangeAgent.transform.position;
-            Assert.AreEqual((targetPosition - monsterPosition).normalized, DuoYuanJiFenAgent.GetAttackDirection());
-            Assert.AreEqual((targetPosition - lagrangePosition).normalized, LagrangeAgent.GetAttackDirection());
+            Assert.AreEqual((targetPosition - monsterPosition).normalized, DuoYuanJiFenAgent.TestGetAttackDirection());
+            Assert.AreEqual((targetPosition - lagrangePosition).normalized, LagrangeAgent.TestGetAttackDirection());
+           
         }
 
         [UnityTest]
@@ -107,8 +108,8 @@ namespace Tests
             var frameCount = 0;
             while ((frameCount++) <= 9)
             {
-                DuoYuanJiFenAgent.Update();
-                LagrangeAgent.Update();
+                DuoYuanJiFenAgent.TestUpdate();
+                LagrangeAgent.TestUpdate();
                 yield return null;
             }
             Assert.IsTrue(DuoYuanJiFenAgent.IsChasing());
@@ -155,13 +156,14 @@ namespace Tests
             Assert.IsFalse(GameObject.Find("Coin(Clone)"));
 
             // Boss死亡后掉落金币
-            LagrangeAgent.ChangeHealth(-800f);
+            LagrangeAgent.actualLiving.State.ClearStatus();
+            LagrangeAgent.TestChangeHealth(-800f);
             Assert.AreEqual(0f, LagrangeAgent.actualLiving.CurrentHealth);
             Assert.IsTrue(LagrangeAgent.IsDead());
             Assert.IsTrue(GameObject.Find("Coin(Clone)"));
 
             // 恢复血量，为了通过后续测试
-            LagrangeAgent.ChangeHealth(800f);
+            LagrangeAgent.TestChangeHealth(800f);
 
             yield return null;
             LogAssert.ignoreFailingMessages = false;
@@ -175,8 +177,8 @@ namespace Tests
             LogAssert.ignoreFailingMessages = true;
 
             Assert.IsFalse(GameObject.Find("微多元鸡分(Clone)"));
-
-            DuoYuanJiFenAgent.ChangeHealth(-40f);
+            DuoYuanJiFenAgent.actualLiving.State.ClearStatus();
+            DuoYuanJiFenAgent.TestChangeHealth(-40f);
             Assert.AreEqual(0f, DuoYuanJiFenAgent.actualLiving.CurrentHealth);
             Assert.IsTrue(DuoYuanJiFenAgent.IsDead());
 
@@ -192,7 +194,7 @@ namespace Tests
             Assert.AreEqual(3, objs.Count());
 
             // 恢复血量，为了通过后续测试
-            DuoYuanJiFenAgent.ChangeHealth(40f);
+            DuoYuanJiFenAgent.TestChangeHealth(40f);
 
             yield return null;
             LogAssert.ignoreFailingMessages = false;
@@ -206,22 +208,23 @@ namespace Tests
         {
             LogAssert.ignoreFailingMessages = true;
 
-            // 多元鸡分的血量为40，初始没有无敌状态
+            // 多元鸡分的血量为40，初始有无敌状态
             Assert.AreEqual(40f, DuoYuanJiFenAgent.actualLiving.MaxHealth);
             Assert.AreEqual(DuoYuanJiFenAgent.actualLiving.MaxHealth, DuoYuanJiFenAgent.actualLiving.CurrentHealth);
-            Assert.IsFalse(DuoYuanJiFenAgent.actualLiving.State.HasStatus(new InvincibleState()));
+            Assert.IsTrue(DuoYuanJiFenAgent.actualLiving.State.HasStatus(new InvincibleState()));
+            DuoYuanJiFenAgent.actualLiving.State.ClearStatus();
 
             // 扣血后怪物不会进入无敌
-            DuoYuanJiFenAgent.ChangeHealth(-20f);
+            DuoYuanJiFenAgent.TestChangeHealth(-20f);
             Assert.AreEqual(20f, DuoYuanJiFenAgent.actualLiving.CurrentHealth);
             Assert.IsFalse(DuoYuanJiFenAgent.actualLiving.State.HasStatus(new InvincibleState()));
 
             // 加血后血量不超过上限
-            DuoYuanJiFenAgent.ChangeHealth(200f);
+            DuoYuanJiFenAgent.TestChangeHealth(200f);
             Assert.AreEqual(DuoYuanJiFenAgent.actualLiving.MaxHealth, DuoYuanJiFenAgent.actualLiving.CurrentHealth);
 
             // 扣血后血量不会为负数
-            DuoYuanJiFenAgent.ChangeHealth(-2000f);
+            DuoYuanJiFenAgent.TestChangeHealth(-2000f);
             Assert.AreEqual(0f, DuoYuanJiFenAgent.actualLiving.CurrentHealth);
 
             LogAssert.ignoreFailingMessages = false;
@@ -235,23 +238,24 @@ namespace Tests
         {
             LogAssert.ignoreFailingMessages = true;
 
-            // 拉格朗日的血量为800，初始没有无敌状态
+            // 拉格朗日的血量为800，初始有无敌状态
             Assert.AreEqual(800f, LagrangeAgent.actualLiving.MaxHealth);
             Assert.AreEqual(LagrangeAgent.actualLiving.MaxHealth, LagrangeAgent.actualLiving.CurrentHealth);
-            Assert.IsFalse(LagrangeAgent.actualLiving.State.HasStatus(new InvincibleState()));
+            Assert.IsTrue(LagrangeAgent.actualLiving.State.HasStatus(new InvincibleState()));
+            LagrangeAgent.actualLiving.State.ClearStatus();
 
             // 扣血后怪物不会进入无敌
-            LagrangeAgent.ChangeHealth(-20f);
+            LagrangeAgent.TestChangeHealth(-20f);
             Assert.AreEqual(780f, LagrangeAgent.actualLiving.CurrentHealth);
             Assert.IsFalse(LagrangeAgent.actualLiving.State.HasStatus(new InvincibleState()));
 
             // 加血后，血量不超过上限
-            LagrangeAgent.ChangeHealth(2000f);
+            LagrangeAgent.TestChangeHealth(2000f);
             Assert.AreEqual(LagrangeAgent.actualLiving.MaxHealth, LagrangeAgent.actualLiving.CurrentHealth);
 
 
             // 扣血后血量不会为负数
-            LagrangeAgent.ChangeHealth(-8000f);
+            LagrangeAgent.TestChangeHealth(-8000f);
             Assert.AreEqual(0f, LagrangeAgent.actualLiving.CurrentHealth);
 
             LogAssert.ignoreFailingMessages = false;
