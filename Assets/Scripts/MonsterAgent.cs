@@ -46,7 +46,7 @@ public class MonsterAgent : LivingBaseAgent
 
     //public GameObject Prefab;
     // Start is called before the first frame update
-    public void Start()
+    private void Start()
     {
         living = Global.monsters[monsterIndex].Clone() as Monster;
         actualLiving = Monster.Clone() as Monster;
@@ -82,7 +82,7 @@ public class MonsterAgent : LivingBaseAgent
     }
 
     // Update is called once per frame
-    public void Update()
+    private void Update()
     {
         switch (actionState)
         {
@@ -289,5 +289,72 @@ public class MonsterAgent : LivingBaseAgent
     public bool IsChasing()
     {
         return actionState == ActionState.Chasing;
+    }
+    public void TestUpdate()
+    {
+        Update();
+    }
+
+    public void TestChangeHealth(float amount)
+    {
+
+
+        if (amount < 0)
+        {
+            if (actualLiving.State.HasStatus(new InvincibleState()))
+            {
+                Debug.Log($"{actualLiving.Name} Invincible");
+                return;
+            }
+
+            else
+            {
+                actualLiving.CurrentHealth = (int)Mathf.Clamp(actualLiving.CurrentHealth + amount, 0, actualLiving.MaxHealth);
+                //Debug.Log($"{actualLiving.Name} now health is {actualLiving.CurrentHealth}");
+                //animator.SetTrigger("Hit");
+                //audioSource.PlayOneShot(getHitClip);
+                actualLiving.State.AddStatus(new InvincibleState(), actualLiving.TimeInvincible);
+                //print($"{actualLiving.Name}获得无敌{actualLiving.TimeInvincible}");
+                if (IsDead())
+                {
+                    if (System.Threading.Interlocked.Exchange(ref actualLiving.isDead, 1) == 0)
+                    {
+                        //死亡动画
+                        //Destroy();
+                        Skill splitSkill = ActualMonster.Skills.FirstOrDefault(e => e is SplitSkill);
+                        if (splitSkill != null)
+                        {
+                            splitSkill.Perform();
+                        }
+                        else
+                        {
+                            ItemAgent.GenerateItem(transform.position, new Coin { Amount = ActualMonster.Difficulty });
+                            for (int i = 0; i < ActualMonster.Rewards.Count; i++)
+                            {
+                                ItemAgent.GenerateItem(transform.position, ActualMonster.Rewards[i], ActualMonster.Possibility[i]);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        else
+        {
+            //animator.SetTrigger("Heal");
+            //audioSource.PlayOneShot(getHealingClip);
+
+            actualLiving.CurrentHealth = (int)Mathf.Clamp(actualLiving.CurrentHealth + amount, 0, actualLiving.MaxHealth);
+        }
+    }
+
+    public void TestStart()
+    {
+        Start();
+    }
+
+    public Vector3 TestGetAttackDirection()
+    {
+        Vector3 attackDirection = (target.transform.position - this.transform.position).normalized;
+        return attackDirection;
     }
 }
