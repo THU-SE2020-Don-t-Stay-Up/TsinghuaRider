@@ -226,6 +226,10 @@ PrefabInstance:
       propertyPath: targetScene
       value: DungeonScene
       objectReference: {fileID: 0}
+    - target: {fileID: 4391515801932350768, guid: 863cb53b4ecf8be42ab56d72403a21db, type: 3}
+      propertyPath: m_Volume
+      value: 0.8
+      objectReference: {fileID: 0}
     - target: {fileID: 7206701573937116057, guid: 863cb53b4ecf8be42ab56d72403a21db, type: 3}
       propertyPath: mainCamera
       value: 
