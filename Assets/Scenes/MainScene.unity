@@ -214,7 +214,7 @@ GameObject:
   - component: {fileID: 168310106}
   - component: {fileID: 168310105}
   m_Layer: 0
-  m_Name: EventSystem
+  m_Name: LocalEventSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -657,6 +657,49 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 763394020}
   m_CullTransparentMesh: 0
+--- !u!1 &780928290
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 780928292}
+  - component: {fileID: 780928291}
+  m_Layer: 0
+  m_Name: DestroyAll
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &780928291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 780928290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09f2cf6b8d16e8b4eb84224a959096f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &780928292
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 780928290}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.006692263, y: 0.0032894558, z: -0.25286463}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1448233774
 GameObject:
   m_ObjectHideFlags: 0
@@ -818,8 +861,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1660932387}
-        m_TargetAssemblyTypeName: UIMainPage, Assembly-CSharp
-        m_MethodName: StartGame
+        m_TargetAssemblyTypeName: UIManagement, AllDef
+        m_MethodName: SelectCharacter
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -896,6 +939,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36185106acaca704fa2308ecb73a80a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sceneTeleporter: {fileID: 0}
 --- !u!4 &1660932388
 Transform:
   m_ObjectHideFlags: 0
@@ -922,7 +966,7 @@ GameObject:
   - component: {fileID: 2043366895}
   - component: {fileID: 2043366894}
   m_Layer: 0
-  m_Name: Main Camera
+  m_Name: Local Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

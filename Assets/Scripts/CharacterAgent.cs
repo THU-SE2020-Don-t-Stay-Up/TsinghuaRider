@@ -111,13 +111,12 @@ public class CharacterAgent : LivingBaseAgent
         buffColumn = new Inventory();
         uiBuffColumn.SetInventory(buffColumn);
 
-        MahouPortrait = GameObject.Find("MahouPortrait");
-        MahouPortrait.SetActive(false);
-        RobotPortrait = GameObject.Find("RobotPortrait");
-        RobotPortrait.SetActive(false);
+        //MahouPortrait = GameObject.Find("MahouPortrait");
+        //MahouPortrait.SetActive(false);
+        //RobotPortrait = GameObject.Find("RobotPortrait");
+        //RobotPortrait.SetActive(false);
 
-
-        GetPortrait();
+        //GetPortrait();
 
         InitialWeapon();
         UpdateWeaponPrefab();
@@ -185,7 +184,8 @@ public class CharacterAgent : LivingBaseAgent
     /// </summary>
     public void GetPortrait()
     {
-        if (characterIndex == 0)
+        Debug.Log(UISelectCharacter.characterIndex);
+        if (UISelectCharacter.characterIndex == 0)
         {
             MahouPortrait.SetActive(true);
         }
@@ -193,6 +193,17 @@ public class CharacterAgent : LivingBaseAgent
         {
             RobotPortrait.SetActive(true);
         }
+    }
+
+    public void SetPortrait(AcrossSceneController acrossSceneController)
+    {
+        GameObject ui = acrossSceneController.ui;
+        RobotPortrait = ui.transform.Find("Canvas").Find("HealthBar").Find("RobotPortrait").gameObject;
+        MahouPortrait = ui.transform.Find("Canvas").Find("HealthBar").Find("MahouPortrait").gameObject;
+        RobotPortrait.SetActive(false);
+        MahouPortrait.SetActive(false);
+        
+        GetPortrait();
     }
 
     /// <summary>
@@ -577,6 +588,7 @@ public class CharacterAgent : LivingBaseAgent
                     {
                         //死亡动画
                         Destroy();
+                        UIManagement.ReturnMainPage();
                     }
                 }
             }

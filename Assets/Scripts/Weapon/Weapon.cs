@@ -25,7 +25,7 @@ abstract public class Weapon : Item
             character.WeaponColumnAddItem(character.WeaponPrefab.GetComponent<WeaponAgent>().Weapon.Clone() as Item);
             GameObject.Destroy(character.WeaponPrefab);
         }
-        GameObject weaponsition = GameObject.Find("weaponPosition");
+        GameObject weaponsition = character.gameObject.transform.Find("weaponPosition").gameObject;
         character.WeaponPrefab = GameObject.Instantiate(Global.GetPrefab(GetType().ToString()), weaponsition.transform.position, Quaternion.identity, character.transform);
 
         return true;
