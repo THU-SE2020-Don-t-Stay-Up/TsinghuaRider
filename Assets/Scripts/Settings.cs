@@ -48,13 +48,12 @@ class Global
 
     public static void LoadPrefabPaths()
     {
-        prefabPaths = AssetDatabase.FindAssets("t:prefab").Select(guid => AssetDatabase.GUIDToAssetPath(guid)).ToArray();
+        //prefabPaths = AssetDatabase.FindAssets("t:prefab").Select(guid => AssetDatabase.GUIDToAssetPath(guid)).ToArray();
     }
 
     public static GameObject GetPrefab(string name)
     {
-        string path = prefabPaths.First(p => p.Contains($"/{name}.prefab"));
-        return AssetDatabase.LoadAssetAtPath(path, typeof(GameObject)) as GameObject;
+        return  Resources.Load($"Prefabs/{name}", typeof(GameObject)) as GameObject;
     }
 }
 

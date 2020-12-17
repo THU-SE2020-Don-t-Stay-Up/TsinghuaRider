@@ -38,9 +38,9 @@ abstract public class Item:ICloneable
 
     public abstract bool Use(CharacterAgent character);
 
-    public GameObject GetItemPrefab()
+    public virtual GameObject GetItemPrefab()
     {
-        return Global.GetPrefab(this.ToString());
+        return Global.GetPrefab($"Inventory&Items/{ToString()}");
     }
 
     public Sprite GetSprite()
