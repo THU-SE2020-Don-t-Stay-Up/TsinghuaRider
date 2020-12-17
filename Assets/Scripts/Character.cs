@@ -25,7 +25,8 @@ public class Character : LivingBase, ICloneable
     public static List<Character> LoadCharacter()
     {
         string path = Settings.CHARACTER_CONFIG_PATH;
-        List<Character> characters = JsonSerializer.CreateDefault().Deserialize<List<Character>>(new JsonTextReader(new StreamReader(path)));
+        string json = Resources.Load<TextAsset>(path).text;
+        List<Character> characters = JsonSerializer.CreateDefault().Deserialize<List<Character>>(new JsonTextReader(new StringReader(json)));
         return characters;
     }
 

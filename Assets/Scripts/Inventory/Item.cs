@@ -61,9 +61,10 @@ abstract public class Item:ICloneable
     public static List<Item> LoadItem()
     {
         string path = Settings.ITEM_CONFIG_PATH;
+        string json = Resources.Load<TextAsset>(path).text;
         JsonSerializerSettings settings = new JsonSerializerSettings();
         settings.Converters.Add(new ItemsJsonConverter());
-        List<Item> items = JsonSerializer.Create(settings).Deserialize<List<Item>>(new JsonTextReader(new StreamReader(path)));
+        List<Item> items = JsonSerializer.Create(settings).Deserialize<List<Item>>(new JsonTextReader(new StringReader(json)));
         return items;
     }
 
