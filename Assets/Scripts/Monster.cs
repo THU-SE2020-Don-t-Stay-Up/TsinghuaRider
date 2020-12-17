@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using UnityEngine;
 
 /// <summary>
 /// 怪物属性类，继承自LivingBase，存储角色所有基本属性
@@ -62,7 +63,8 @@ public class Monster : LivingBase, ICloneable
     public static List<Monster> LoadMonster()
     {
         string path = Settings.MONSTER_CONFIG_PATH;
-        List<Monster> monsters = JsonSerializer.CreateDefault().Deserialize<List<Monster>>(new JsonTextReader(new StreamReader(path)));
+        string json = Resources.Load<TextAsset>(path).text;
+        List<Monster> monsters = JsonSerializer.CreateDefault().Deserialize<List<Monster>>(new JsonTextReader(new StringReader(json)));
         return monsters;
     }
 

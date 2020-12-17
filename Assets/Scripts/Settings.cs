@@ -8,13 +8,13 @@ class Settings
     /// <summary>
     /// 怪物属性信息配置文件路径
     /// </summary>
-    public const string MONSTER_CONFIG_PATH = "./Assets/monstersInfo.json";
+    public const string MONSTER_CONFIG_PATH = "Json/monstersInfo";
     /// <summary>
     /// 角色属性信息配置文件路径
     /// </summary>
-    public const string CHARACTER_CONFIG_PATH = "./Assets/charactersInfo.json";
-    public const string ITEM_CONFIG_PATH = "./Assets/itemsInfo.json";
-    public const string STATE_CONFIG_PATH = "./Assets/statesInfo.json";
+    public const string CHARACTER_CONFIG_PATH = "Json/charactersInfo";
+    public const string ITEM_CONFIG_PATH = "Json/itemsInfo";
+    public const string STATE_CONFIG_PATH = ".Json/statesInfo";
 }
 
 /// <summary>
