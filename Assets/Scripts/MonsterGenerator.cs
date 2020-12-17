@@ -25,6 +25,10 @@ public class MonsterGenerator : MonoBehaviour
     /// </summary>
     public int splitGeneratePoints;
     /// <summary>
+    /// 额外词条数量
+    /// </summary>
+    public int extraState;
+    /// <summary>
     /// 生成第一波的延迟
     /// </summary>
     public float delay;
@@ -90,7 +94,8 @@ public class MonsterGenerator : MonoBehaviour
                         int point = Random.Range(0, generatePoints.Length);
 
                         MonsterGroup monsterGroup = Instantiate(monsterGroups[type], generatePoints[point].position, Quaternion.identity).GetComponent<MonsterGroup>();
-                        monsterGroup.Generate(difficulty);
+                        monsterGroup.extraState = extraState;
+                        monsterGroup.Generate(difficulty / splitGeneratePoints);
                     }
                     wave -= 1;
                     timer = interval;

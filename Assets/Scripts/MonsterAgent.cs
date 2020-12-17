@@ -46,7 +46,7 @@ public class MonsterAgent : LivingBaseAgent
 
     //public GameObject Prefab;
     // Start is called before the first frame update
-    private void Start()
+    private void Awake()
     {
         living = Global.monsters[monsterIndex].Clone() as Monster;
         actualLiving = Monster.Clone() as Monster;
@@ -265,6 +265,16 @@ public class MonsterAgent : LivingBaseAgent
                 ItemAgent.GenerateItem(transform.position, ActualMonster.Rewards[i], ActualMonster.Possibility[i]);
             }
         }
+        if (actualLiving.State.HasStatus(new InfestedState(0)))
+        {
+            InfestedState state = actualLiving.State.GetState(new InfestedState(0)) as InfestedState;
+            for (int i=0; i<state.number; i++)
+            {
+                MonsterGroup group = Instantiate(state.infested, transform.position, Quaternion.identity).GetComponent<MonsterGroup>();
+                group.Generate(10);
+            }
+        }
+
         base.Destroy();
     }
 
@@ -349,7 +359,7 @@ public class MonsterAgent : LivingBaseAgent
 
     public void TestStart()
     {
-        Start();
+        Awake();
     }
 
     public Vector3 TestGetAttackDirection()

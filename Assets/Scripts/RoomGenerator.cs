@@ -128,9 +128,10 @@ public class RoomGenerator : MonoBehaviour
 
                 MonsterGenerator monsterGenerator = newRoom.gameObject.GetComponentInChildren<MonsterGenerator>();
                 monsterGenerator.difficulty = Global.initDifficulty + Global.turns * Global.difficultyStep;
-                monsterGenerator.wave = Global.initWaves + Global.turns / 3;
+                monsterGenerator.wave = Global.initWaves + Global.turns / 2;
                 monsterGenerator.endTime = Global.initEndTime + monsterGenerator.wave * monsterGenerator.interval;
                 monsterGenerator.splitGeneratePoints = Global.splitGeneratePoints + Global.turns / 2;
+                monsterGenerator.extraState = Global.turns;
             }
    
             roomList.Add(newRoom);
