@@ -42,3 +42,4 @@ ProjectSettings/EditorBuildSettings.asset
 
 # Credential
 .git-credentials
+/UIElementsSchema
