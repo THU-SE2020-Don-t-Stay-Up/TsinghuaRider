@@ -144,11 +144,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1086106283807427313, guid: fd6beff6b5edf5747ae77c704b3a6fa6, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 80487.8
+      value: 20949.25
       objectReference: {fileID: 0}
     - target: {fileID: 1086106283807427313, guid: fd6beff6b5edf5747ae77c704b3a6fa6, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -85714.625
+      value: -21623.018
       objectReference: {fileID: 0}
     - target: {fileID: 1086106284523823205, guid: fd6beff6b5edf5747ae77c704b3a6fa6, type: 3}
       propertyPath: m_LocalPosition.x
@@ -965,6 +965,8 @@ MonoBehaviour:
     FarClipPlane: 5000
     Dutch: 0
     LensShift: {x: 0, y: 0}
+    GateFit: 0
+    m_SensorSize: {x: 1.7794521, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0

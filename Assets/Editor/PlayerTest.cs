@@ -19,8 +19,8 @@ namespace Tests
 
             MahouAgent = GameObject.Find("MahouPrefabs").GetComponent<CharacterAgent>();
             var initialGame = new Initialization();
-            initialGame.Awake();
-            MahouAgent.Awake();
+            initialGame.TestAwake();
+            MahouAgent.TestAwake();
 
             var uiHealthBar = new UIHealthBar();
             uiHealthBar.Awake();
@@ -61,6 +61,7 @@ namespace Tests
 
         [UnityTest]
         [Order(1)]
+        [Description("测试人物的血量变化")]
         public IEnumerator CharacterHealthTest()
         {
             LogAssert.ignoreFailingMessages = true;
@@ -73,35 +74,35 @@ namespace Tests
 
             // 过1s以上，应该无敌状态消除
             var frameCount = 0;
-            while ((frameCount++) <= 900)
+            while ((frameCount++) <= 90)
             {
-                MahouAgent.Update();
+                MahouAgent.TestUpdate();
                 yield return null;
             }
             frameCount = 0;
             Assert.IsFalse(MahouAgent.actualLiving.State.HasStatus(new InvincibleState()));
 
             // 测试伤害，扣20点血，受伤后应进入无敌
-            MahouAgent.ChangeHealth(-20f);
+            MahouAgent.TestChangeHealth(-20f);
             Assert.AreEqual(80f, MahouAgent.actualLiving.CurrentHealth);
             Assert.IsTrue(MahouAgent.actualLiving.State.HasStatus(new InvincibleState()));
 
             // 无敌状态能够加血，血量上限不超过最大血量
-            MahouAgent.ChangeHealth(700f);
+            MahouAgent.TestChangeHealth(700f);
             Assert.AreEqual(100f, MahouAgent.actualLiving.CurrentHealth);
             Assert.AreEqual(MahouAgent.actualLiving.MaxHealth, MahouAgent.actualLiving.CurrentHealth);
 
             // 等待无敌时间解除
-            while ((frameCount++) <= 900)
+            while ((frameCount++) <= 90)
             {
-                MahouAgent.Update();
+                MahouAgent.TestUpdate();
                 yield return null;
             }
             frameCount = 0;
             Assert.IsFalse(MahouAgent.actualLiving.State.HasStatus(new InvincibleState()));
 
             // 就算伤害值超过当前血量，血量最低也是0，不过人已经没了
-            MahouAgent.ChangeHealth(-700f);
+            MahouAgent.TestChangeHealth(-700f);
             Assert.AreEqual(0f, MahouAgent.actualLiving.CurrentHealth);
             Assert.IsTrue(MahouAgent.IsDead());
 
@@ -203,7 +204,7 @@ namespace Tests
             var frameCount = 0;
             while ((frameCount++) <= 300)
             {
-                MahouAgent.Update();
+                MahouAgent.TestUpdate();
                 yield return null;
             }
             frameCount = 0;
