@@ -6181,6 +6181,10 @@ PrefabInstance:
       propertyPath: endTime
       value: 1000
       objectReference: {fileID: 0}
+    - target: {fileID: 1886171756276275987, guid: fa7c88058e40dd74eb8cfa6e73be8f9f, type: 3}
+      propertyPath: splitGeneratePoints
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2636625592805306625, guid: fa7c88058e40dd74eb8cfa6e73be8f9f, type: 3}
       propertyPath: m_Color.r
       value: 0.9056604

@@ -217,6 +217,7 @@ public class RoomGenerator : MonoBehaviour
             GameObject teleportRoom = Instantiate(teleporterPrefab, roomList.Last().transform.position, Quaternion.identity);
             SceneTeleporter teleporter = teleportRoom.GetComponent<SceneTeleporter>();
             teleporter.targetScene = targetScene;
+            teleporter.FindTarget();
             teleporterCreated = true;
 
             // 生成奖励 & 提高难度
