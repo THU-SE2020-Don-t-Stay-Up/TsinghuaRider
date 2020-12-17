@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class TeleportController : MonoBehaviour
 {
-    public float teleportTime = 1.0f;
+    public float teleportTime = 1.5f;
     public string teleportTag;
     public Transform teleportDestination;
-
+    public AudioSource AudioSource { get; set; }
+    public AudioClip teleportAudioClip;
     float timer;
     bool isTeleporting = false;
     GameObject player;
@@ -15,7 +16,8 @@ public class TeleportController : MonoBehaviour
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag(teleportTag);
-
+        AudioSource = GetComponent<AudioSource>();
+        AudioSource.clip = teleportAudioClip;
         timer = teleportTime;
     }
 
@@ -23,11 +25,17 @@ public class TeleportController : MonoBehaviour
     {
         if (isTeleporting)
         {
+            AudioSource.Play();
             timer -= Time.deltaTime;
             if (timer < 0)
             {
                 player.transform.position = teleportDestination.position;
+                AudioSource.Stop();
             }
+        }
+        else
+        {
+            AudioSource.Stop();
         }
     }
 
@@ -36,6 +44,7 @@ public class TeleportController : MonoBehaviour
         {
             Debug.Log("In Scene Teleporting " + player);
             isTeleporting = true;
+            AudioSource.PlayOneShot(teleportAudioClip);
         }
     }
 

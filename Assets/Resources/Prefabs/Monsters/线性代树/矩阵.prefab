@@ -187,7 +187,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MeleeAttackClip: {fileID: 0}
-  MissleAttackClip: {fileID: 8300000, guid: 9fb031a0d3f203e4a849e1d196ded82d, type: 3}
+  MissleAttackClip: {fileID: 0}
   HealthPotionClip: {fileID: 0}
   MedkitClip: {fileID: 0}
   StrengthPotionClip: {fileID: 0}
