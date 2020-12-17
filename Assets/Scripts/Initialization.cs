@@ -14,7 +14,7 @@ public class Initialization : MonoBehaviour
     public float initEndTime;
     public int generatePoints;
 
-    public void Awake()
+    private void Awake()
     {
         Debug.Log("init");
         Global.LoadPrefabPaths();
@@ -58,5 +58,22 @@ public class Initialization : MonoBehaviour
 
         Destroy(gameObject);
 
+    }
+
+    public void TestAwake()
+    {
+        Debug.Log("init");
+        Global.LoadPrefabPaths();
+        Global.monsters = Monster.LoadMonster();
+        Global.characters = Character.LoadCharacter();
+        Global.items = Item.LoadItem();
+
+        GameObject mainCamera = GameObject.Find("Main Camera");
+        GameObject vCamera = GameObject.Find("CM vcam1");
+        GameObject ui = GameObject.Find("UI");
+        GameObject minimapCamera = GameObject.Find("Minimap Camera");
+        GameObject acrossSceneController = GameObject.Find("Across Scene Controller");
+        GameObject characterLoder = GameObject.Find("CharacterLoader");
+        GameObject eventSystem = GameObject.Find("EventSystem");
     }
 }

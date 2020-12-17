@@ -61,7 +61,8 @@ public class LivingBaseAgent : MonoBehaviour
     /// </summary>
     //public float MoveSpeed { get; set; }
     public Animator Animator { get; set; }
-    public AudioSource AudioSource { get; set; }
+    public AudioSource AudioSource { get; set; } = new AudioSource();
+    public AudioClip NowAudioClip { get; set; }
     public AudioClip GetHitClip { get; set; }
     public AudioClip AttackClip { get; set; }
     public AudioClip GetHealingClip { get; set; }
@@ -72,8 +73,6 @@ public class LivingBaseAgent : MonoBehaviour
 
     public virtual void ChangeHealth(float amount)
     {
-
-
         if (amount < 0)
         {
             if (actualLiving.State.HasStatus(new InvincibleState()))
@@ -85,11 +84,9 @@ public class LivingBaseAgent : MonoBehaviour
             else
             {
                 actualLiving.CurrentHealth = (int)Mathf.Clamp(actualLiving.CurrentHealth + amount, 0, actualLiving.MaxHealth);
-                //Debug.Log($"{actualLiving.Name} now health is {actualLiving.CurrentHealth}");
                 //animator.SetTrigger("Hit");
                 //audioSource.PlayOneShot(getHitClip);
                 actualLiving.State.AddStatus(new InvincibleState(), actualLiving.TimeInvincible);
-                //print($"{actualLiving.Name}获得无敌{actualLiving.TimeInvincible}");
                 if (IsDead())
                 {
                     if (Interlocked.Exchange(ref actualLiving.isDead, 1) == 0)
@@ -111,6 +108,15 @@ public class LivingBaseAgent : MonoBehaviour
     public void RestoreHealth()
     {
         ChangeHealth(actualLiving.MaxHealth);
+    }
+    /// <summary>
+    /// 为生物添加状态
+    /// </summary>
+    /// <param name="status">状态</param>
+    /// <param name="duration">持续时间</param>
+    public void AddStatus(StateBase status, float duration)
+    {
+        actualLiving.State.AddStatus(status, duration);
     }
     /// <summary>
     /// 检查状态，若持续时间为零则移除该状态，每帧调用
