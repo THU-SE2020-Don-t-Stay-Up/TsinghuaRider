@@ -20,11 +20,6 @@ public class UIManagement : MonoBehaviour
         teleporter.TeleportNow(characterLoader.player);
     }
 
-    public void GameSetting() 
-    {
-        SceneManager.LoadScene("GameSetting");
-    }
-
     public static void ReturnMainPage()
     {       
         SceneManager.LoadScene("MainScene");
@@ -35,6 +30,24 @@ public class UIManagement : MonoBehaviour
     {
         SceneManager.LoadScene("SelectCharacters");
         SceneManager.UnloadScene(SceneManager.GetActiveScene());
+    }
+
+    public void AboutGame()
+    {
+        SceneManager.LoadScene("AboutScene");
+        SceneManager.UnloadScene(SceneManager.GetActiveScene());
+    }
+
+    public void GameHelp()
+    {
+        SceneManager.LoadScene("HelpScene");
+        SceneManager.UnloadScene(SceneManager.GetActiveScene());
+    }
+
+    public void Quit()
+    {
+        //UnityEditor.EditorApplication.isPlaying = true;
+        Application.Quit();
     }
 
 }
