@@ -99,13 +99,12 @@ public class CharacterAgent : LivingBaseAgent
         uiInventory = GameObject.Find("UI_Inventory").GetComponent<UIInventory>();
         inventory = new Inventory();
         inventory.AddItem(new HealthPotion { Amount = 3 });
-        inventory.AddItem(new StrengthPotion { Amount = 4 });
+        inventory.AddItem(new StrengthPotion { Amount = 1 });
         inventory.AddItem(new Medkit { Amount = 1 });
         uiInventory.SetInventory(inventory);
 
         uiCoinInventory = GameObject.Find("UI_Coins").GetComponent<UIInventory>();
         coinInventory = new Inventory();
-        coinInventory.AddItem(new Coin { Amount = 10000 });
         uiCoinInventory.SetInventory(coinInventory);
 
 
