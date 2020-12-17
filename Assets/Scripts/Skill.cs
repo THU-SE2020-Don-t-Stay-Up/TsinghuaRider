@@ -288,7 +288,7 @@ public class SplitSkill : UltraSkill
 
     protected override bool DuringPerform()
     {
-        GameObject prefab = Global.GetPrefab($"微{agent.living.Name}");
+        GameObject prefab = Global.GetPrefab($"Monsters/微积坟/微{agent.living.Name}");
         for (int i = 0; i < splitNum; i++)
         {
             int step = 1;

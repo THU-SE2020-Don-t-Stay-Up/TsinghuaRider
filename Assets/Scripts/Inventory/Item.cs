@@ -40,7 +40,7 @@ abstract public class Item:ICloneable
 
     public GameObject GetItemPrefab()
     {
-        return Global.GetPrefab(this.ToString());
+        return Global.GetPrefab("Inventory&Items/" + this.ToString());
     }
 
     public Sprite GetSprite()
