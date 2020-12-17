@@ -72,7 +72,7 @@ public class CharacterAgent : LivingBaseAgent
     public GameObject RobotPortrait;
 
     // 为了测试改成public，之后要改回private
-    public void Awake()
+     void Awake()
     {
 
         living = Global.characters[characterIndex].Clone() as Character;
@@ -88,6 +88,48 @@ public class CharacterAgent : LivingBaseAgent
         ActualCharacter.State.AddStatus(new InvincibleState(), ActualCharacter.TimeInvincible);
 
         // 初始化背包及其UI
+        //uiInventory = GameObject.Find("UI_Inventory").GetComponent<UIInventory>();
+        //inventory = new Inventory();
+        //inventory.AddItem(new HealthPotion { Amount = 3 });
+        //inventory.AddItem(new StrengthPotion { Amount = 4 });
+        //inventory.AddItem(new Medkit { Amount = 1 });
+        //uiInventory.SetInventory(inventory);
+
+        //uiCoinInventory = GameObject.Find("UI_Coins").GetComponent<UIInventory>();
+        //coinInventory = new Inventory();
+        //coinInventory.AddItem(new Coin { Amount = 10000});
+        //uiCoinInventory.SetInventory(coinInventory);
+
+
+        //uiWeaponColumn = GameObject.Find("UI_Weapons").GetComponent<UIInventory>();
+        //weaponColumn = new Inventory();
+        //weaponColumn.AddItem(new Sword { Amount = 1 });
+        //weaponColumn.AddItem(new Gun { Amount = 1 });
+        //uiWeaponColumn.SetInventory(weaponColumn);
+
+        //uiBuffColumn = GameObject.Find("UI_Buffs").GetComponent<UIInventory>();
+        //buffColumn = new Inventory();
+        //uiBuffColumn.SetInventory(buffColumn);
+
+        ////MahouPortrait = GameObject.Find("MahouPortrait");
+        ////MahouPortrait.SetActive(false);
+        ////RobotPortrait = GameObject.Find("RobotPortrait");
+        ////RobotPortrait.SetActive(false);
+
+        ////GetPortrait();
+
+        //InitialWeapon();
+        //UpdateWeaponPrefab();
+        //Initialize();
+    }
+
+    /// <summary>
+    /// 初始化三个物品栏以及武器
+    /// </summary>
+    public void Initialize()
+    {
+        dashBar = 0;
+
         uiInventory = GameObject.Find("UI_Inventory").GetComponent<UIInventory>();
         inventory = new Inventory();
         inventory.AddItem(new HealthPotion { Amount = 3 });
@@ -97,7 +139,7 @@ public class CharacterAgent : LivingBaseAgent
 
         uiCoinInventory = GameObject.Find("UI_Coins").GetComponent<UIInventory>();
         coinInventory = new Inventory();
-        coinInventory.AddItem(new Coin { Amount = 10000});
+        coinInventory.AddItem(new Coin { Amount = 10000 });
         uiCoinInventory.SetInventory(coinInventory);
 
 
@@ -111,19 +153,11 @@ public class CharacterAgent : LivingBaseAgent
         buffColumn = new Inventory();
         uiBuffColumn.SetInventory(buffColumn);
 
-        //MahouPortrait = GameObject.Find("MahouPortrait");
-        //MahouPortrait.SetActive(false);
-        //RobotPortrait = GameObject.Find("RobotPortrait");
-        //RobotPortrait.SetActive(false);
-
-        //GetPortrait();
-
         InitialWeapon();
         UpdateWeaponPrefab();
     }
 
-    // 为了测试改成public，之后要改回private
-    public void Update()
+    private void Update()
     {
         if (!actualLiving.State.HasStatus(new VertigoState()))
         {
@@ -167,11 +201,11 @@ public class CharacterAgent : LivingBaseAgent
         deltaTime += Time.deltaTime;
         UpdateWeaponPrefab();
         dashBar = Mathf.Clamp(dashBar + 1, 0, 901);
-        UIDashBar.instance.SetValue((float)dashBar / 901f);
+        if (UIDashBar.instance != null)
+            UIDashBar.instance.SetValue((float)dashBar / 901f);
     }
 
-    // 为了测试改成public，之后要改回private
-    public void FixedUpdate()
+    private void FixedUpdate()
     {
         rigidbody2d.velocity = new Vector2(horizontal, vertical) * ActualCharacter.MoveSpeed;
         //rigidbody2d.AddForce(new Vector2(horizontal, vertical) * ActualCharacter.MoveSpeed);
@@ -184,7 +218,7 @@ public class CharacterAgent : LivingBaseAgent
     /// </summary>
     public void GetPortrait()
     {
-        Debug.Log(UISelectCharacter.characterIndex);
+        //Debug.Log(UISelectCharacter.characterIndex);
         if (UISelectCharacter.characterIndex == 0)
         {
             MahouPortrait.SetActive(true);
@@ -207,7 +241,7 @@ public class CharacterAgent : LivingBaseAgent
     }
 
     /// <summary>
-    /// 只在Awake()调用一次，判断手上有没有武器
+    /// 只在Initiate()调用一次，判断手上有没有武器
     /// </summary>
     public void InitialWeapon()
     {
@@ -215,23 +249,11 @@ public class CharacterAgent : LivingBaseAgent
         {
             WeaponPrefab = transform.GetComponentInChildren<WeaponAgent>().gameObject;
         }
-        catch (System.Exception)
-        {
-            WeaponPrefab = null;
-        }
     }
 
     public void UpdateWeaponPrefab()
     {
-        //try
-        //{
-        //    WeaponPrefab = transform.GetComponentInChildren<WeaponAgent>().gameObject;
-        //}
-        //catch (System.Exception)
-        //{
-        //    WeaponPrefab = null;
-        //}
-        if (WeaponPrefab == null)
+        if (weaponColumn != null && WeaponPrefab == null)
         {
             if (weaponColumn.ItemList.Count > 0)
             {
@@ -500,17 +522,20 @@ public class CharacterAgent : LivingBaseAgent
         return weaponColumn.HasItem(item);
     }
 
+    /// <summary>
+    /// 武器栏内最多只能有4个武器
+    /// </summary>
+    /// <returns></returns>
+    public bool CanAddWeapon()
+    {
+        return weaponColumn.ItemList.Count < 4;
+    }
     public void WeaponColumnAddItem(Item item)
     {
         if (CanAddWeapon())
         {
             weaponColumn.AddItem(item);
         }
-    }
-
-    public bool CanAddWeapon()
-    {
-        return weaponColumn.ItemList.Count < 4;
     }
 
     public void InventoryAddItem(Item item)
@@ -528,6 +553,10 @@ public class CharacterAgent : LivingBaseAgent
         coinInventory.AddItem(item);
     }
 
+    /// <summary>
+    /// 返回人物当前拥有的金币数
+    /// </summary>
+    /// <returns></returns>
     public int Money()
     {
         if (coinInventory.ItemList.Count != 0)
@@ -600,11 +629,12 @@ public class CharacterAgent : LivingBaseAgent
 
             actualLiving.CurrentHealth = (int)Mathf.Clamp(actualLiving.CurrentHealth + amount, 0, actualLiving.MaxHealth);
             UIHealthBar.instance.SetValue(actualLiving.CurrentHealth / (float)actualLiving.MaxHealth);
-
-
         }
     }
 
+    /// <summary>
+    /// 丢弃当前手上的武器
+    /// </summary>
     public void ThrowNowWeapon()
     {
         if (WeaponPrefab != null && !weaponColumn.IsEmpty() && !attackingFlag)
@@ -683,6 +713,59 @@ public class CharacterAgent : LivingBaseAgent
     {
         dashBar = 0;
     }
+
+    public void TestAwake()
+    {
+        Awake();
+        Initialize();
+    }
+
+    public void TestUpdate()
+    {
+        Update();
+    }
+
+    public void TestChangeHealth(float amount)
+    {
+        if (amount < 0)
+        {
+            if (actualLiving.State.HasStatus(new InvincibleState()))
+            {
+                Debug.Log($"{actualLiving.Name} Invincible");
+                return;
+            }
+
+            else
+            {
+                actualLiving.CurrentHealth = (int)Mathf.Clamp(actualLiving.CurrentHealth + amount, 0, actualLiving.MaxHealth);
+                UIHealthBar.instance.SetValue(actualLiving.CurrentHealth / (float)actualLiving.MaxHealth);
+
+                Debug.Log($"{actualLiving.Name} now health is {actualLiving.CurrentHealth}");
+                //animator.SetTrigger("Hit");
+                //audioSource.PlayOneShot(getHitClip);
+                actualLiving.State.AddStatus(new InvincibleState(), actualLiving.TimeInvincible);
+                //print($"{actualLiving.Name}获得无敌{actualLiving.TimeInvincible}");
+                if (IsDead())
+                {
+                    if (Interlocked.Exchange(ref actualLiving.isDead, 1) == 0)
+                    {
+                        //死亡动画
+
+                    }
+                }
+            }
+        }
+        else
+        {
+            //animator.SetTrigger("Heal");
+            //audioSource.PlayOneShot(getHealingClip);
+
+            actualLiving.CurrentHealth = (int)Mathf.Clamp(actualLiving.CurrentHealth + amount, 0, actualLiving.MaxHealth);
+            UIHealthBar.instance.SetValue(actualLiving.CurrentHealth / (float)actualLiving.MaxHealth);
+        }
+    }
+
+
     // 以上的函数测试使用
 
 }
