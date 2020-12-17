@@ -17,8 +17,8 @@ namespace Tests
 
             MahouAgent = GameObject.Find("MahouPrefabs").GetComponent<CharacterAgent>();
             var initialGame = new Initialization();
-            initialGame.Awake();
-            MahouAgent.Awake();
+            initialGame.TestAwake();
+            MahouAgent.TestAwake();
 
             var uiHealthBar = new UIHealthBar();
             uiHealthBar.Awake();
@@ -129,7 +129,9 @@ namespace Tests
             ItemAgent.GenerateItem(new Vector3(5, 5), new HealthPotion { Amount = 10 });
 
             var item = GameObject.Find("HealthPotion(Clone)");
-            Assert.AreEqual(new Vector3(5, 5, 0), item.transform.position);
+            var offset = item.transform.position - new Vector3(5, 5, 0);
+            Assert.IsTrue(offset.magnitude < 1.5);
+            //Assert.AreEqual(new Vector3(5, 5, 0), item.transform.position);
             Assert.AreEqual(10, item.GetComponent<ItemAgent>().Item.Amount);
             yield return null;
         }

@@ -19,10 +19,10 @@ namespace Tests
         {
             LogAssert.ignoreFailingMessages = true;
             var initialGame = new Initialization();
-            initialGame.Awake();
+            initialGame.TestAwake();
 
             MahouAgent = GameObject.Find("MahouPrefabs").GetComponent<CharacterAgent>();
-            MahouAgent.Awake();
+            MahouAgent.TestAwake();
 
             gun = GameObject.Find("Gun").GetComponent<WeaponAgent>();
             gun.TestAwake(MahouAgent);
