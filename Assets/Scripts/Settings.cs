@@ -49,9 +49,7 @@ class Global
 
     public static GameObject GetPrefab(string name)
     {
-        return (GameObject)Resources.Load($"Prefabs/{name}");
-        //string path = prefabPaths.First(p => p.Contains($"/{name}.prefab"));
-        //return AssetDatabase.LoadAssetAtPath(path, typeof(GameObject)) as GameObject;
+        return  Resources.Load($"Prefabs/{name}", typeof(GameObject)) as GameObject;
     }
 }
 

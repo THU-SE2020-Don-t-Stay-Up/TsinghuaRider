@@ -13,7 +13,10 @@ abstract public class Weapon : Item
     public Vector3 handleOffset;
     public Vector3 attackOffset;
     public Vector3 offset;
-
+    public override GameObject GetItemPrefab()
+    {
+        return Global.GetPrefab($"Weapons/{ToString()}");
+    }
     public virtual void Attack(CharacterAgent user, Vector3 direction) { }
     public virtual void SwordLightAttack(CharacterAgent user, Vector3 direction) { }
 
@@ -26,7 +29,7 @@ abstract public class Weapon : Item
             GameObject.Destroy(character.WeaponPrefab);
         }
         GameObject weaponsition = character.gameObject.transform.Find("weaponPosition").gameObject;
-        character.WeaponPrefab = GameObject.Instantiate(Global.GetPrefab(GetType().ToString()), weaponsition.transform.position, Quaternion.identity, character.transform);
+        character.WeaponPrefab = GameObject.Instantiate(GetItemPrefab(), weaponsition.transform.position, Quaternion.identity, character.transform);
 
         return true;
     }
