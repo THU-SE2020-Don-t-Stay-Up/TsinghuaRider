@@ -11,6 +11,8 @@ public class UIManagement : MonoBehaviour
 
     public void StartGame()
     {
+        if (UISelectCharacter.characterIndex == -1)
+            return;
         characterLoader = FindObjectOfType<CharacterLoader>();
         characterLoader.LoadCharacter();
         teleporter = Instantiate(sceneTeleporter, Vector3.zero, Quaternion.identity).GetComponent<SceneTeleporter>();
@@ -23,9 +25,16 @@ public class UIManagement : MonoBehaviour
         SceneManager.LoadScene("GameSetting");
     }
 
-    public void ReturnMainPage()
-    {
+    public static void ReturnMainPage()
+    {       
         SceneManager.LoadScene("MainScene");
+        SceneManager.UnloadScene(SceneManager.GetActiveScene());
+    }
+
+    public void SelectCharacter()
+    {
+        SceneManager.LoadScene("SelectCharacters");
+        SceneManager.UnloadScene(SceneManager.GetActiveScene());
     }
 
 }

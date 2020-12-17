@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class UISelectCharacter : MonoBehaviour
 {
-    public static int characterIndex = 0;
+    public static int characterIndex;
     GameObject robot;
     GameObject mahou;
 
     private void Awake()
     {
+        characterIndex = -1;
         robot = GameObject.Find("RobotPrefab");
         mahou = GameObject.Find("MahouPrefab");
 
