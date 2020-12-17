@@ -127,7 +127,10 @@ public class RoomGenerator : MonoBehaviour
                 newRoom.stageClear = false;  // 初始设置为未通关状态
 
                 MonsterGenerator monsterGenerator = newRoom.gameObject.GetComponentInChildren<MonsterGenerator>();
-                monsterGenerator.difficulty = Global.difficulty;
+                monsterGenerator.difficulty = Global.initDifficulty + Global.turns * Global.difficultyStep;
+                monsterGenerator.wave = Global.initWaves + Global.turns / 3;
+                monsterGenerator.endTime = Global.initEndTime + monsterGenerator.wave * monsterGenerator.interval;
+                monsterGenerator.splitGeneratePoints = Global.splitGeneratePoints + Global.turns / 2;
             }
    
             roomList.Add(newRoom);
@@ -217,7 +220,7 @@ public class RoomGenerator : MonoBehaviour
             teleporterCreated = true;
 
             // 生成奖励 & 提高难度
-            Global.difficulty += Global.difficultyStep;
+            Global.turns += 1;
         }
         
     }

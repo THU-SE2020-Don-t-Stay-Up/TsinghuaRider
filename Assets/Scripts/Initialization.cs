@@ -10,6 +10,9 @@ public class Initialization : MonoBehaviour
 {
     public float initDifficulty;
     public float difficultyStep;
+    public int initWaves;
+    public float initEndTime;
+    public int generatePoints;
 
     public void Awake()
     {
@@ -43,9 +46,12 @@ public class Initialization : MonoBehaviour
         catch (NullReferenceException)
         {
         }
-
-        Global.difficulty = initDifficulty;
+        Global.turns = 0;
+        Global.initDifficulty = initDifficulty;
         Global.difficultyStep = difficultyStep;
+        Global.initWaves = initWaves;
+        Global.initEndTime = initEndTime;
+        Global.splitGeneratePoints = generatePoints;
 
         Global.totalTime = 0;
         Global.gamePaused = false;
