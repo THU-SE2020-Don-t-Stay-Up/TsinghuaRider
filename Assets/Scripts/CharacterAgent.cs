@@ -313,14 +313,14 @@ public class CharacterAgent : LivingBaseAgent
             RaycastHit2D dashHit = Physics2D.Raycast(rigidbody2d.position + gameObject.GetComponent<BoxCollider2D>().offset + lookDirection* gameObject.GetComponent<BoxCollider2D>().size, lookDirection, dashAmount, dashLayerMask);
             if (dashHit.collider != null)
             {
-                Debug.Log("撞墙了woc！");
+                //Debug.Log("撞墙了woc！");
                 dashPosition = dashHit.point;
             }
 
             rigidbody2d.MovePosition(dashPosition);
             dashBar -= 300;
             UIDashBar.instance.SetValue((float)dashBar / 901f);
-            Debug.Log("我闪！");
+            //Debug.Log("我闪！");
             isDashBottonDown = false;
 
             SetState(0);

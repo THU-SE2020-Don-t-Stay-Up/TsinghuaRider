@@ -97,6 +97,16 @@ public class RoomGenerator : MonoBehaviour
         teleporter.TeleportNow(player);
     }
 
+    public void ReturnMainPage()
+    {
+        // 解除暂停状态
+        Time.timeScale = 1;
+        Global.gamePaused = false;
+
+        SceneManager.LoadScene("MainScene");
+        SceneManager.UnloadScene(SceneManager.GetActiveScene());
+    }
+
     void SetupRoom() 
     { 
         GameObject roomPrefab;

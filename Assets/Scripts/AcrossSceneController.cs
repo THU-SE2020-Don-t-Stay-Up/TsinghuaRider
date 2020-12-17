@@ -22,7 +22,7 @@ public class AcrossSceneController : MonoBehaviour
         SceneTeleporter[] teleporters = FindObjectsOfType<SceneTeleporter>();
         foreach (var teleporter in teleporters)
         {
-            Debug.Log(teleporter);
+            //Debug.Log(teleporter);
             teleporter.FindTarget();
         }
         SetupPlayer();
