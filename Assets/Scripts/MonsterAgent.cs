@@ -51,7 +51,7 @@ public class MonsterAgent : LivingBaseAgent
         living = Global.monsters[monsterIndex].Clone() as Monster;
         actualLiving = Monster.Clone() as Monster;
         actualLiving.CurrentHealth = actualLiving.MaxHealth;
-        print(Monster.Name);
+        //print(Monster.Name);
         rigidbody2d = GetComponent<Rigidbody2D>();
         //roamingTime = 2;
         roamingTime = Random.Range(0.5f, 0.8f);
