@@ -62,7 +62,7 @@ public class MonsterGroup : MonoBehaviour
                     switch (state)
                     {
                         case 0:
-                            speedFactor *= 1.5f;
+                            speedFactor *= 1.6f;
                             break;
                         case 1:
                             attackSpeedFactor *= 2f;
@@ -77,7 +77,7 @@ public class MonsterGroup : MonoBehaviour
                             attackAmountFactor *= 1.5f;
                             break;
                         case 5:
-                            attackRadiusFactor *= 2f;
+                            attackRadiusFactor *= 1.5f;
                             break;
                         case 6:
                             infestedNumber += 1;
@@ -113,9 +113,9 @@ public class MonsterGroup : MonoBehaviour
                             MonsterAgent agent = Instantiate(monsterObjects[i], transform.position, Quaternion.identity).GetComponent<MonsterAgent>();
                             usedDifficulty += monsterDifficulty[i];
 
-                            if (agent.actualLiving.MaxHealth > 900)
+                            if (agent.living.MaxHealth > 900)
                             {
-                                Debug.Log("拉格朗日增强了！");
+                                //Debug.Log("拉格朗日增强了！");
                                 agent.actualLiving.State.AddStatus(new BossEnhanceState(), float.NaN);
                             }
                             // 为新生成的怪物增加词条
