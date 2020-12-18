@@ -133,7 +133,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!114 &5737804994998499875
 MonoBehaviour:
@@ -147,7 +147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d6c396fffec8144c8e4b113049b4a1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MeleeAttackClip: {fileID: 8300000, guid: 1efdedc523b3cd14485163ddcbe73618, type: 3}
+  MeleeAttackClip: {fileID: 8300000, guid: d466e6e322874eb41b47c2b98d358e05, type: 3}
   MissleAttackClip: {fileID: 8300000, guid: 1efdedc523b3cd14485163ddcbe73618, type: 3}
   HealthPotionClip: {fileID: 8300000, guid: f37d048718c8fe24d98152fd22c21ae4, type: 3}
   MedkitClip: {fileID: 8300000, guid: 1d1622481f3d02143925677bef7b809a, type: 3}
@@ -155,7 +155,7 @@ MonoBehaviour:
   characterIndex: 1
   dashLayerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 512
   dashBar: 0
   MahouPortrait: {fileID: 0}
   RobotPortrait: {fileID: 0}

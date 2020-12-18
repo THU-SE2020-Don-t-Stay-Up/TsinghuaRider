@@ -546,7 +546,7 @@ public class CharacterAgent : LivingBaseAgent
 
     public void MeleeAttack()
     {
-        Animator.SetTrigger("Melee");
+        //Animator.SetTrigger("Melee");
         IEnumerable<GameObject> targetObjects = GetAttackRangeObjects(transform.position, attackDirection, ActualCharacter.AttackRadius, ActualCharacter.AttackAngle, "Monster");
         foreach (var targetObject in targetObjects)
         {

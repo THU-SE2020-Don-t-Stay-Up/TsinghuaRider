@@ -22,7 +22,8 @@ public class MeleeWeaponAgent : WeaponAgent, IInteract
             InitAngle = GetCurrentAngle();
             initFlag = true;
             HandleAiming(InitAngle , backAngle, leftFlag);
-            CharacterAgent agent = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterAgent>();
+           
+            CharacterAgent agent = GameObject.Find("CharacterLoader").GetComponent<CharacterLoader>().player.GetComponent<CharacterAgent>();
             agent.AudioSource.PlayOneShot(agent.MeleeAttackClip);
         }
     }
