@@ -30,6 +30,7 @@ public class RoomGenerator : MonoBehaviour
     List<Room> roomList = new List<Room>();
     bool stageClear = false;
     bool teleporterCreated = false;
+    bool hasGenerated = false;
     UITime ui;
 
     private void Start()
@@ -76,8 +77,12 @@ public class RoomGenerator : MonoBehaviour
 
     public void Generate()
     {
-        SetupRoom();
-        SetupDoor();
+        if (!hasGenerated)
+        {
+            SetupRoom();
+            SetupDoor();
+            hasGenerated = true;
+        }
     }
 
     /// <summary>
