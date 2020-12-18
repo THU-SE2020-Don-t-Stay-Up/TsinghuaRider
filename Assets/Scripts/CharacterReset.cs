@@ -9,12 +9,15 @@ public class CharacterReset : MonoBehaviour
 
     private void Awake()
     {
-        characterLoder = GameObject.Find("CharacterLoader").GetComponent<CharacterLoader>();
-        acrossSceneController = GameObject.Find("Across Scene Controller").GetComponent<AcrossSceneController>();
-        acrossSceneController.ui.SetActive(true);
-        characterLoder.player.GetComponent<CharacterAgent>().SetPortrait(acrossSceneController);
-        characterLoder.player.GetComponent<CharacterAgent>().Initialize();
-
+        if (!Global.itemInitialized)
+        {
+            characterLoder = GameObject.Find("CharacterLoader").GetComponent<CharacterLoader>();
+            acrossSceneController = GameObject.Find("Across Scene Controller").GetComponent<AcrossSceneController>();
+            acrossSceneController.ui.SetActive(true);
+            characterLoder.player.GetComponent<CharacterAgent>().SetPortrait(acrossSceneController);
+            characterLoder.player.GetComponent<CharacterAgent>().Initialize();
+            Global.itemInitialized = true;
+        }
 
     }
 

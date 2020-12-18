@@ -52,6 +52,8 @@ public class Initialization : MonoBehaviour
         Global.initEndTime = initEndTime;
         Global.splitGeneratePoints = generatePoints;
 
+        Global.itemInitialized = false;
+
         Global.totalTime = 0;
         Global.gamePaused = false;
 

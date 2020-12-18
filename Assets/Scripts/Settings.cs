@@ -46,6 +46,10 @@ class Global
     /// </summary>
     public static bool gamePaused;
     public static float totalTime;
+    /// <summary>
+    /// 判断物品是否经过初始化
+    /// </summary>
+    public static bool itemInitialized;
 
     public static GameObject GetPrefab(string name)
     {
