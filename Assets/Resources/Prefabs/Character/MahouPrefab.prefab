@@ -186,7 +186,7 @@ MonoBehaviour:
   characterIndex: 0
   dashLayerMask:
     serializedVersion: 2
-    m_Bits: 8704
+    m_Bits: 512
   dashBar: 0
   MahouPortrait: {fileID: 0}
   RobotPortrait: {fileID: 0}

@@ -73,7 +73,7 @@ public class ObstacleAgent : MonoBehaviour
         {
             agent = other.gameObject.GetComponent<CharacterAgent>();
         }
-        catch(Exception e)
+        catch(Exception)
         {
         }
         if (agent != null)

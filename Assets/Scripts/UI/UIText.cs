@@ -18,12 +18,14 @@ public class UIText : MonoBehaviour
 
     IEnumerator Display()
     {
-        string[] text = Regex.Split(Resources.Load<TextAsset>("Subtitles/Welcoming").text, "\r\n", RegexOptions.IgnoreCase);
+        text = Regex.Split(Resources.Load<TextAsset>("Subtitles/Welcoming").text, "\r\n", RegexOptions.IgnoreCase);
         lineCount = text.Length;
 
         for (int i = 0; i < lineCount; i++)
         {
             string tempText = text[i];
+            if (string.IsNullOrEmpty(tempText))
+                continue;
             Titles.text = tempText.Split('$')[0];
 
             float tempTime;

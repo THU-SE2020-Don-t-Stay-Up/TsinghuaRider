@@ -31,7 +31,7 @@ class Global
     /// </summary>
     public static List<Character> characters;
     public static List<Item> items;
-    public static List<StateBase> states;
+    //public static List<StateBase> states;
     /// <summary>
     /// 房间难度信息
     /// </summary>
