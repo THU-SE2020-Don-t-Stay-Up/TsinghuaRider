@@ -583,7 +583,8 @@ public class CharacterAgent : LivingBaseAgent
                     {
                         //死亡动画
                         Destroy();
-                        UIManagement.ReturnMainPage();
+                        UIDealth.instance.DeathInfo();
+                        //UIManagement.ReturnMainPage();
                     }
                 }
             }
