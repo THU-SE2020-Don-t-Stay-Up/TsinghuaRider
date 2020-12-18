@@ -166,6 +166,8 @@ public class CharacterAgent : LivingBaseAgent
         deltaTime += Time.deltaTime;
         UpdateWeaponPrefab();
         dashBar = Mathf.Clamp(dashBar + 1, 0, 901);
+        Dash();
+
         if (UIDashBar.instance != null)
             UIDashBar.instance.SetValue((float)dashBar / 901f);
     }
@@ -175,7 +177,6 @@ public class CharacterAgent : LivingBaseAgent
         rigidbody2d.velocity = new Vector2(horizontal, vertical) * ActualCharacter.MoveSpeed;
         //rigidbody2d.AddForce(new Vector2(horizontal, vertical) * ActualCharacter.MoveSpeed);
 
-        Dash();
     }
 
     /// <summary>
@@ -301,14 +302,15 @@ public class CharacterAgent : LivingBaseAgent
             //Vector2 dashPosition = rigidbody2d.position + new Vector2(attackDirection.x,attackDirection.y) * dashAmount;
             //RaycastHit2D dashHit = Physics2D.Raycast(rigidbody2d.position + gameObject.GetComponent<BoxCollider2D>().offset + attackDirection * gameObject.GetComponent<BoxCollider2D>().size, attackDirection, dashAmount, dashLayerMask);
             Vector2 dashPosition = rigidbody2d.position + lookDirection * dashAmount;
-            RaycastHit2D dashHit = Physics2D.Raycast(rigidbody2d.position + gameObject.GetComponent<BoxCollider2D>().offset + lookDirection* gameObject.GetComponent<BoxCollider2D>().size, lookDirection, dashAmount, dashLayerMask);
+            RaycastHit2D dashHit = Physics2D.Raycast(rigidbody2d.position + gameObject.GetComponent<BoxCollider2D>().offset + lookDirection * gameObject.GetComponent<BoxCollider2D>().size, lookDirection, dashAmount, dashLayerMask);
             if (dashHit.collider != null)
             {
                 //Debug.Log("撞墙了woc！");
                 dashPosition = dashHit.point;
             }
 
-            rigidbody2d.MovePosition(dashPosition);
+            //rigidbody2d.MovePosition(dashPosition);
+            transform.position = dashPosition;
             dashBar -= 300;
             UIDashBar.instance.SetValue((float)dashBar / 901f);
             //Debug.Log("我闪！");
