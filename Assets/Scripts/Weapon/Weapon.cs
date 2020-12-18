@@ -602,7 +602,7 @@ public class Gun : Weapon
 
     public override void Attack(CharacterAgent user, Vector3 direction)
     {
-        float angleOffset = 5;
+        float angleOffset = 12;
         Gunshot(user, direction, 0);
         Gunshot(user, direction, angleOffset);
         Gunshot(user, direction,  -angleOffset);
