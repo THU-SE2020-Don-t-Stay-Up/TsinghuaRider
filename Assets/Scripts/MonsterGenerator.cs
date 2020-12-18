@@ -80,7 +80,6 @@ public class MonsterGenerator : MonoBehaviour
                     Destroy(monster);
                 }
 
-                Clear();
             }
 
             if (wave > 0)
@@ -127,6 +126,11 @@ public class MonsterGenerator : MonoBehaviour
         if (room != null)
         {
             room.Clear();
+        }
+        // 生成奖励
+        if (difficulty > 10)
+        {
+            ItemAgent.GenerateItem(transform.position, new Coin { Amount = (int)difficulty });
         }
         generating = false;
     }

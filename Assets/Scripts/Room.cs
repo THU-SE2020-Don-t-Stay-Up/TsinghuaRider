@@ -47,6 +47,7 @@ public class Room : MonoBehaviour
         doorRight.SetActive(flagRight);
         doorUp.SetActive(flagUp);
         doorDown.SetActive(flagDown);
+        // 打开交易
         tradeButton.SetActive(true);
     }
 }

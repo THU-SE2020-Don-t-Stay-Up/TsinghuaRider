@@ -17,7 +17,6 @@ public class SceneTeleporter : MonoBehaviour
     float timer;
     bool isTeleporting = false;
     bool hasTeleported = false;
-    bool cleared = false;
     GameObject target;
 
     /// <summary>
@@ -114,11 +113,4 @@ public class SceneTeleporter : MonoBehaviour
         SceneManager.UnloadSceneAsync(currentScene);
     }
 
-
-    public void clear()
-    {
-        cleared = true;
-        SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
-        spriteRenderer.sprite = clearSprite;
-    }
 }
