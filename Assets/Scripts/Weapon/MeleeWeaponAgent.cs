@@ -22,7 +22,6 @@ public class MeleeWeaponAgent : WeaponAgent, IInteract
             InitAngle = GetCurrentAngle();
             initFlag = true;
             HandleAiming(InitAngle , backAngle, leftFlag);
-           
             CharacterAgent agent = GameObject.Find("CharacterLoader").GetComponent<CharacterLoader>().player.GetComponent<CharacterAgent>();
             agent.AudioSource.PlayOneShot(agent.MeleeAttackClip);
         }
@@ -142,5 +141,26 @@ public class MeleeWeaponAgent : WeaponAgent, IInteract
     /// <summary>
     /// 以下的函数为了测试使用
     /// </summary>
+    public bool TestAttack()
+    {
+        InitAngle = GetCurrentAngle();
+        initFlag = true;
+        HandleAiming(InitAngle, backAngle, leftFlag);
 
+        if (angle <= Weapon.AttackAngle)
+        {
+            Rotate();
+            HandleAiming(InitAngle, backAngle - angle, leftFlag);
+        }
+        else
+        {
+            state = State.Normal;
+            timer = 0;
+            angle = 0;
+            initFlag = false;
+            return true;
+        }
+        timer += Time.deltaTime;
+        return false;
+    }
 }

@@ -85,12 +85,12 @@ namespace Tests
             LogAssert.ignoreFailingMessages = true;
 
             bool finishFlag = false;
-
+            sword.TestAttack();
             var frameCount = 0;
             while ((frameCount++) <= 200)
             {
                 // 挥刀过程中返回false，完成一次挥刀后sword.Attack()才返回ture
-                if (sword.Attack() == true)
+                if (sword.TestAttack() == true)
                 {
                     finishFlag = true;
                 }
