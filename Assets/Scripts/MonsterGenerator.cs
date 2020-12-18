@@ -128,6 +128,11 @@ public class MonsterGenerator : MonoBehaviour
         {
             room.Clear();
         }
+        // 生成奖励
+        if (difficulty > 10)
+        {
+            ItemAgent.GenerateItem(transform.position, new Coin { Amount = (int)difficulty });
+        }
         generating = false;
     }
 }

@@ -136,7 +136,7 @@ public class RoomGenerator : MonoBehaviour
                 }
             }
             else{
-                roomPrefab = roomPrefabs[Random.Range(0,roomPrefabs.Length-1)];
+                roomPrefab = roomPrefabs[Random.Range(0, roomPrefabs.Length)];
                 newRoom = Instantiate(roomPrefab, generatorPoint.position, Quaternion.identity).GetComponent<Room>();
                 newRoom.stageClear = false;  // 初始设置为未通关状态
 

@@ -1,35 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &8512115551365215891
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1741249151410630605}
-  m_Layer: 0
-  m_Name: GeneratePoint
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1741249151410630605
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8512115551365215891}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 5.33, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 3973248629374012654}
-  m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &8993267367888576493
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7723,7 +7693,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1886171756276275987, guid: fa7c88058e40dd74eb8cfa6e73be8f9f, type: 3}
       propertyPath: difficulty
-      value: 50
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1886171756276275987, guid: fa7c88058e40dd74eb8cfa6e73be8f9f, type: 3}
       propertyPath: monsterGroups.Array.data[0]
@@ -7732,7 +7702,7 @@ PrefabInstance:
     - target: {fileID: 1886171756276275987, guid: fa7c88058e40dd74eb8cfa6e73be8f9f, type: 3}
       propertyPath: generatePoints.Array.data[0]
       value: 
-      objectReference: {fileID: 1741249151410630605}
+      objectReference: {fileID: 0}
     - target: {fileID: 1886171756276275987, guid: fa7c88058e40dd74eb8cfa6e73be8f9f, type: 3}
       propertyPath: endTime
       value: 0
@@ -18283,8 +18253,3 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fa7c88058e40dd74eb8cfa6e73be8f9f, type: 3}
---- !u!4 &3973248629374012654 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5471118827401581315, guid: fa7c88058e40dd74eb8cfa6e73be8f9f, type: 3}
-  m_PrefabInstance: {fileID: 8993267367888576493}
-  m_PrefabAsset: {fileID: 0}

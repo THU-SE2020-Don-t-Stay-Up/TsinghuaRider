@@ -6117,7 +6117,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1886171756276275987, guid: fa7c88058e40dd74eb8cfa6e73be8f9f, type: 3}
       propertyPath: monsterGroups.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1886171756276275987, guid: fa7c88058e40dd74eb8cfa6e73be8f9f, type: 3}
       propertyPath: generatePoints.Array.data[0]
@@ -6159,6 +6159,10 @@ PrefabInstance:
       propertyPath: endTime
       value: 80
       objectReference: {fileID: 0}
+    - target: {fileID: 1886171756276275987, guid: fa7c88058e40dd74eb8cfa6e73be8f9f, type: 3}
+      propertyPath: monsterGroups.Array.data[2]
+      value: 
+      objectReference: {fileID: 4176447088311961015, guid: 9d77b0526004416469195b9fb37e571d, type: 3}
     - target: {fileID: 2636625592805306625, guid: fa7c88058e40dd74eb8cfa6e73be8f9f, type: 3}
       propertyPath: m_Color.r
       value: 0.19441079
