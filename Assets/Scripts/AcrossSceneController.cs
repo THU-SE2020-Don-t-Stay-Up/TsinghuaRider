@@ -34,7 +34,7 @@ public class AcrossSceneController : MonoBehaviour
         if (player != null)
         {
             // 将玩家回到初始位置
-            player.transform.position = transform.position;
+            player.transform.position = GameObject.Find("Across Scene Controller").transform.position;
             // 给玩家补满血
             player.GetComponent<LivingBaseAgent>().RestoreHealth();
         }
