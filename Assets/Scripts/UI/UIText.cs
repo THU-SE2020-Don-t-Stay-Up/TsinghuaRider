@@ -8,6 +8,7 @@ public class UIText : MonoBehaviour
 {
     public Text Titles;
     StreamReader sr;
+    TextAsset t;
     int lineCount = 0;
 
     private void Start()
@@ -17,9 +18,9 @@ public class UIText : MonoBehaviour
 
     IEnumerator Display()
     {
-        sr = new StreamReader(Application.dataPath + "/Welcoming.txt");
+        sr = new StreamReader($"./Assets/Resources/Subtitles/Welcoming.txt");
         
-        StreamReader srLine = new StreamReader(Application.dataPath + "/Welcoming.txt");
+        StreamReader srLine = new StreamReader($"./Assets/Resources/Subtitles/Welcoming.txt");
         
         while(srLine.ReadLine() != null)
         {
