@@ -49,7 +49,7 @@ public class StrengthPotionGoods: Goods
     public StrengthPotionGoods()
     {
         this.Name = "Strength Potion";
-        this.Description = "Improve your attack to 120%.";
+        this.Description = "Add your attack by 20%.";
         this.PriceText = "1500";
         this.price = 1500;
 
