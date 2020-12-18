@@ -68,10 +68,10 @@ public class ObstacleAgent : MonoBehaviour
 
     public void OnTriggerStay2D(Collider2D other) 
     {
-        LivingBaseAgent agent = null;
+        CharacterAgent agent = null;
         try
         {
-            agent = other.gameObject.GetComponent<LivingBaseAgent>();
+            agent = other.gameObject.GetComponent<CharacterAgent>();
         }
         catch(Exception e)
         {
