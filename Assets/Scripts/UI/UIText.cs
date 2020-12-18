@@ -4,6 +4,7 @@ using UnityEngine;
 using System.IO;
 using UnityEngine.UI;
 using System.Text.RegularExpressions;
+using System;
 
 public class UIText : MonoBehaviour
 {
@@ -18,12 +19,14 @@ public class UIText : MonoBehaviour
 
     IEnumerator Display()
     {
-        text = Regex.Split(Resources.Load<TextAsset>("Subtitles/Welcoming").text, "\r\n", RegexOptions.IgnoreCase);
+        text = Regex.Split(Resources.Load<TextAsset>("Subtitles/Welcoming").text, Environment.NewLine, RegexOptions.IgnoreCase);
         lineCount = text.Length;
+        Debug.Log(lineCount);
 
         for (int i = 0; i < lineCount; i++)
         {
             string tempText = text[i];
+            Debug.Log(tempText);
             if (string.IsNullOrEmpty(tempText))
                 continue;
             Titles.text = tempText.Split('$')[0];
