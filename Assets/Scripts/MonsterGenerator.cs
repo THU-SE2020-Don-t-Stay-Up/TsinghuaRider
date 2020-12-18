@@ -80,7 +80,6 @@ public class MonsterGenerator : MonoBehaviour
                     Destroy(monster);
                 }
 
-                Clear();
             }
 
             if (wave > 0)

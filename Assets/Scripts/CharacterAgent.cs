@@ -105,6 +105,7 @@ public class CharacterAgent : LivingBaseAgent
 
         uiCoinInventory = GameObject.Find("UI_Coins").GetComponent<UIInventory>();
         coinInventory = new Inventory();
+        coinInventory.AddItem(new Coin { Amount = 1000 });
         uiCoinInventory.SetInventory(coinInventory);
 
 
