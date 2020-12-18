@@ -18,7 +18,7 @@ public class UIText : MonoBehaviour
 
     IEnumerator Display()
     {
-        string[] text = Regex.Split(Resources.Load<TextAsset>("Welcoming").text, "\r\n", RegexOptions.IgnoreCase);
+        string[] text = Regex.Split(Resources.Load<TextAsset>("Subtitles/Welcoming").text, "\r\n", RegexOptions.IgnoreCase);
         lineCount = text.Length;
 
         for (int i = 0; i < lineCount; i++)
