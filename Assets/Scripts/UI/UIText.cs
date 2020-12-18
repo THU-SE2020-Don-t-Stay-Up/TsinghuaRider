@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using UnityEngine.UI;
+using System.Text.RegularExpressions;
 
 public class UIText : MonoBehaviour
 {
     public Text Titles;
-    StreamReader sr;
-    TextAsset t;
+    private string[] text;
     int lineCount = 0;
 
     private void Start()
@@ -18,20 +18,12 @@ public class UIText : MonoBehaviour
 
     IEnumerator Display()
     {
-        sr = new StreamReader($"./Assets/Resources/Subtitles/Welcoming.txt");
-        
-        StreamReader srLine = new StreamReader($"./Assets/Resources/Subtitles/Welcoming.txt");
-        
-        while(srLine.ReadLine() != null)
-        {
-            lineCount++;
-        }
+        string[] text = Regex.Split(Resources.Load<TextAsset>("Welcoming").text, "\r\n", RegexOptions.IgnoreCase);
+        lineCount = text.Length;
 
-        srLine.Close();
-        srLine.Dispose();
         for (int i = 0; i < lineCount; i++)
         {
-            string tempText = sr.ReadLine();
+            string tempText = text[i];
             Titles.text = tempText.Split('$')[0];
 
             float tempTime;
@@ -40,8 +32,6 @@ public class UIText : MonoBehaviour
                 yield return new WaitForSeconds(tempTime);
             }
         }
-        sr.Close();
-        sr.Dispose();
     }
 
 

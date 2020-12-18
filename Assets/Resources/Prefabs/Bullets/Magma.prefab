@@ -120,7 +120,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LastTime: 20
-  audioClip: {fileID: 8300000, guid: 9fb031a0d3f203e4a849e1d196ded82d, type: 3}
 --- !u!70 &6146733641895710919
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -147,7 +146,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 9fb031a0d3f203e4a849e1d196ded82d, type: 3}
+  m_audioClip: {fileID: 8300000, guid: e7c6840457a45e44297e1b7b30f9e06c, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
