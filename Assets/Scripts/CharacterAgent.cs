@@ -167,7 +167,7 @@ public class CharacterAgent : LivingBaseAgent
         deltaTime += Time.deltaTime;
         UpdateWeaponPrefab();
         dashBar = Mathf.Clamp(dashBar + 1, 0, 901);
-
+        Dash();
         if (UIDashBar.instance != null)
             UIDashBar.instance.SetValue((float)dashBar / 901f);
     }
@@ -176,7 +176,7 @@ public class CharacterAgent : LivingBaseAgent
     {
         rigidbody2d.velocity = new Vector2(horizontal, vertical) * ActualCharacter.MoveSpeed;
         //rigidbody2d.AddForce(new Vector2(horizontal, vertical) * ActualCharacter.MoveSpeed);
-        Dash();
+        
 
 
     }
