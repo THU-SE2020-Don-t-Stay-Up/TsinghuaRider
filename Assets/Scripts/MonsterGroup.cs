@@ -62,22 +62,22 @@ public class MonsterGroup : MonoBehaviour
                     switch (state)
                     {
                         case 0:
-                            speedFactor *= 1.6f;
+                            speedFactor += 0.5f;
                             break;
                         case 1:
-                            attackSpeedFactor *= 2f;
+                            attackSpeedFactor += 1f;
                             break;
                         case 2:
-                            agilityFactor *= 2f;
+                            agilityFactor += 1f;
                             break;
                         case 3:
-                            healthFactor *= 2.5f;
+                            healthFactor += 1.3f;
                             break;
                         case 4:
-                            attackAmountFactor *= 1.5f;
+                            attackAmountFactor += 0.6f;
                             break;
                         case 5:
-                            attackRadiusFactor *= 1.5f;
+                            attackRadiusFactor += 0.5f;
                             break;
                         case 6:
                             infestedNumber += 1;
