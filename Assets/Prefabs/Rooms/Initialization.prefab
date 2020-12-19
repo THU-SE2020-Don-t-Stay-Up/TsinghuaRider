@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initDifficulty: 100
-  difficultyStep: 80
+  difficultyStep: 60
   initWaves: 2
   initEndTime: 20
   generatePoints: 1
