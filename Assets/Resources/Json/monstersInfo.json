@@ -281,7 +281,7 @@
     "Defense": 0,
     "Tenacity": 0.0,
     "Agility": 5.0,
-    "AttackSpeed": 3.0,
+    "AttackSpeed": 2.0,
     "AttackRadius": 6,
     "AttackAmount": 15,
     "AttackAngle": 90,

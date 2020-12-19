@@ -9,7 +9,7 @@ using UnityEngine;
 /// <summary>
 /// 怪物属性类，继承自LivingBase，存储角色所有基本属性
 /// </summary>
-public class Monster : LivingBase, ICloneable
+public class Monster : LivingBase
 {
     /// <summary>
     /// 敏捷性，决定前后摇时间长短
@@ -46,7 +46,7 @@ public class Monster : LivingBase, ICloneable
     [JsonConverter(typeof(TJsonConverter<Skill>))]
     public List<Skill> SkillOrder { get; set; }
     public AttackSkill AttackSkill => Skills[0] as AttackSkill;
-    public object Clone()
+    public override object Clone()
     {
         Monster monster =  MemberwiseClone() as Monster;
         List<Skill> newSkills = new List<Skill>();

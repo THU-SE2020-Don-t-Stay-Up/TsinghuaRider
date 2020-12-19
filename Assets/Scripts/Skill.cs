@@ -184,8 +184,8 @@ abstract public class UltraSkill : Skill
 abstract public class AttackSkill : RangeSkill
 {
     protected bool AttackFlag = false;
-    protected override bool DuringPerform() => DuringPerform(null);
-    protected bool DuringPerform(Action<LivingBaseAgent> extraEffect)
+    protected override bool DuringPerform() => DuringPerform(null, null);
+    protected bool DuringPerform(AudioClip sound, Action<LivingBaseAgent> extraEffect)
     {
         agent.Animator.SetTrigger("attack");
         agent.Animator.speed = 1 / actionPerformTime;
@@ -193,6 +193,7 @@ abstract public class AttackSkill : RangeSkill
         if (!AttackFlag)
         {
             AttackAt(performDirection, extraEffect);
+            agent.AudioSource.PlayOneShot(sound);
             AttackFlag = true;
         }
         if (performTimer > actionPerformTime)
@@ -221,7 +222,6 @@ public class MissleAttackSkill : AttackSkill
 {
     public override bool AttackAt(Vector3 attackDirection, Action<LivingBaseAgent> extraEffect)
     {
-        agent.AudioSource.PlayOneShot(agent.MissleAttackClip);
         GameObject projectileObject = GameObject.Instantiate(agent.bulletPrefab, agent.GetCentralPosition(), Quaternion.identity);
         Bullet bullet = projectileObject.GetComponent<Bullet>();
         bullet.SetBullet(agent, agent.actualLiving.AttackAmount, extraEffect);
@@ -229,7 +229,7 @@ public class MissleAttackSkill : AttackSkill
         return true;
     }
 
-    protected override bool DuringPerform() => DuringPerform(null);
+    protected override bool DuringPerform() => DuringPerform(agent.MissleAttackClip, null);
 }
 
 
@@ -241,18 +241,22 @@ public class MeleeAttackSkill : AttackSkill
 {
     public override bool AttackAt(Vector3 attackDirection, Action<LivingBaseAgent> extraEffect)
     {
-        agent.AudioSource.PlayOneShot(agent.MeleeAttackClip);
+        bool attackFlag = false;
         IEnumerable<GameObject> targetObjects = agent.GetAttackRangeObjects(agent.GetCentralPosition(), attackDirection, agent.ActualMonster.AttackRadius, agent.ActualMonster.AttackAngle, "Player");
         foreach (var targetObject in targetObjects)
         {
             LivingBaseAgent targetAgent = targetObject.GetComponent<LivingBaseAgent>();
             targetAgent.ChangeHealth(-agent.ActualMonster.AttackAmount);
             extraEffect?.Invoke(targetAgent);
+            attackFlag = true;
         }
-        return true;
+        if (attackFlag)
+            return true;
+        else
+            return false;
     }
 
-    protected override bool DuringPerform() => DuringPerform(null);
+    protected override bool DuringPerform() => DuringPerform(agent.MeleeAttackClip, null);
 }
 
 /// <summary>
@@ -260,7 +264,7 @@ public class MeleeAttackSkill : AttackSkill
 /// </summary>
 public class MeleeSlowAttackSkill : MeleeAttackSkill
 {
-    protected override bool DuringPerform() => DuringPerform(target => target.actualLiving.State.AddStatus(new SlowState(), 2));
+    protected override bool DuringPerform() => DuringPerform(agent.MeleeAttackClip, target => target.actualLiving.State.AddStatus(new SlowState(), 2));
 }
 
 
@@ -431,7 +435,7 @@ public class MissleBleedAttackSkill : MissleAttackSkill
 {
     protected override bool DuringPerform()
     {
-        return DuringPerform(target => target.actualLiving.State.AddStatus(new BleedState(), 10));
+        return DuringPerform(agent.MissleAttackClip, target => target.actualLiving.State.AddStatus(new BleedState(agent.actualLiving.AttackAmount / 10), 10));
     }
 }
 public class MeleeChargeAttackSkill : MeleeAttackSkill
@@ -440,18 +444,40 @@ public class MeleeChargeAttackSkill : MeleeAttackSkill
     private int speedTimes = 3;
     private float beatDistance = 3;
     private bool attackFlag;
+    private float initMoveSpeed;
+    private float initAttackRadius;
     public override void Init(MonsterAgent agent)
     {
         base.Init(agent);
         attackFlag = false;
     }
 
+    protected override bool InitPerform()
+    {
+        skillStartFlag = true;
+        float distance = Vector3.Distance(agent.GetCentralPosition(), agent.target.GetCentralPosition());
+        if (distance > agent.ActualMonster.AttackRadius)
+        {
+            agent.rigidbody2d.velocity = agent.GetMovingDirection(agent.target.GetCentralPosition()) * agent.ActualMonster.MoveSpeed;
+            agent.Animator.SetTrigger("walk");
+            agent.Animator.speed = 1.0f;
+            return false;
+        }
+        else
+        {
+            performDirection = agent.GetAttackDirection();
+            initMoveSpeed = agent.living.MoveSpeed;
+            initAttackRadius = agent.living.AttackRadius;
+            agent.living.MoveSpeed = initMoveSpeed * speedTimes;
+            agent.living.AttackRadius = initAttackRadius / 4;
+            return true;
+        }
+    }
+
     protected override bool BeforePerform()
     {
         agent.Animator.SetTrigger("before_attack");
         agent.Animator.speed = 1 / beforePerformTime;
-        agent.actualLiving.MoveSpeed = agent.living.MoveSpeed * speedTimes;
-        agent.actualLiving.AttackRadius = 1.5f;
         return base.BeforePerform();
     }
 
@@ -463,9 +489,10 @@ public class MeleeChargeAttackSkill : MeleeAttackSkill
         agent.MoveTowards(performDirection);
         if (!attackFlag)
         {
-            if (AttackAt(performDirection, Repel))
+            attackFlag = AttackAt(performDirection, Repel);
+            if (attackFlag)
             {
-                attackFlag = true;
+                agent.AudioSource.PlayOneShot(agent.MeleeAttackClip);
             }
         }
 
@@ -483,8 +510,8 @@ public class MeleeChargeAttackSkill : MeleeAttackSkill
     {
         base.EndPerform();
         attackFlag = false;
-        agent.actualLiving.MoveSpeed = agent.living.MoveSpeed;
-        agent.actualLiving.AttackRadius = agent.living.AttackRadius;
+        agent.living.MoveSpeed = initMoveSpeed;
+        agent.living.AttackRadius = initAttackRadius;
     }
 
     public void Repel(LivingBaseAgent target)
