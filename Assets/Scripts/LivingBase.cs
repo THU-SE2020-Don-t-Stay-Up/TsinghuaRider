@@ -9,7 +9,7 @@ using UnityEngine;
 /// <summary>
 /// 游戏实体基类，存储实体基本信息
 /// </summary>
-public class LivingBase
+public class LivingBase:ICloneable
 {
     public string Name { get; set; }
     public float MoveSpeed { get; set; }
@@ -19,7 +19,7 @@ public class LivingBase
     /// <summary>
     /// 韧性，减少控制时长
     /// </summary>
-    public float Tenacity { get; }
+    public float Tenacity { get; set; }
     public float AttackSpeed { get; set; }
     /// <summary>
     /// 攻击力
@@ -42,6 +42,25 @@ public class LivingBase
     /// </summary>
     public float TimeInvincible { get; set; }
 
+    public virtual object Clone()
+    {
+        LivingBase living = MemberwiseClone() as LivingBase;
+        living.State = new State();
+        return living;
+    }
+
+    public void Sync(LivingBase actualLiving)
+    {
+        actualLiving.MoveSpeed = MoveSpeed;
+        actualLiving.MaxHealth = MaxHealth;
+        actualLiving.Defense = Defense;
+        actualLiving.Tenacity = Tenacity;
+        actualLiving.AttackSpeed = AttackSpeed;
+        actualLiving.AttackAmount = AttackAmount;
+        actualLiving.AttackRadius = AttackRadius;
+        //actualLiving.AttackAngle = AttackAngle;
+        //actualLiving.TimeInvincible = TimeInvincible;
+    }
 }
 
 /// <summary>
@@ -123,6 +142,7 @@ public class LivingBaseAgent : MonoBehaviour
     /// </summary>
     public void CheckState()
     {
+        living.Sync(actualLiving);
         foreach (var status in actualLiving.State.StateDuration.Keys.ToArray())
         {
             actualLiving.State.StateDuration[status] -= Time.deltaTime;
