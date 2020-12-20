@@ -142,7 +142,7 @@ public class LivingBaseAgent : MonoBehaviour
     /// </summary>
     public void CheckState()
     {
-        living.Sync(actualLiving);
+        //living.Sync(actualLiving);
         foreach (var status in actualLiving.State.StateDuration.Keys.ToArray())
         {
             actualLiving.State.StateDuration[status] -= Time.deltaTime;
