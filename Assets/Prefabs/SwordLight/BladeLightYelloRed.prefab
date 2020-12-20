@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2700049853939277072}
   - component: {fileID: 3238888604064298970}
   - component: {fileID: -1332381728564327847}
-  m_Layer: 16
+  m_Layer: 14
   m_Name: BladeLightYelloRed
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8873488868741203958}
   - component: {fileID: 8263733766254931260}
   - component: {fileID: 3806263060561839749}
-  m_Layer: 16
+  m_Layer: 14
   m_Name: BladeLightGreen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
