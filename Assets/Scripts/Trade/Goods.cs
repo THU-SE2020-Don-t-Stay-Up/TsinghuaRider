@@ -23,7 +23,7 @@ public class HealthPotionGoods: Goods
     public HealthPotionGoods()
     {
         this.Name = "Health Potion";
-        this.Description = "Recover 10% of maximun health.";
+        this.Description = "Recover 10% of maximal health.";
         this.PriceText = "300";
         this.price = 300;
 
@@ -49,7 +49,7 @@ public class StrengthPotionGoods: Goods
     public StrengthPotionGoods()
     {
         this.Name = "Strength Potion";
-        this.Description = "Add your attack by 20%.";
+        this.Description = "Improve your basic ATK by 0.2.";
         this.PriceText = "1500";
         this.price = 1500;
 
@@ -75,7 +75,7 @@ public class MedkitGoods : Goods
     public MedkitGoods()
     {
         this.Name = "Medkit";
-        this.Description = "Recover 70% of maximun health.";
+        this.Description = "Recover 70% of maximal health.";
         this.PriceText = "1500";
         this.price = 1500;
 
