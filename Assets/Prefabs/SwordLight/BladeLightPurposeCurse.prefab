@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2559860338380756523}
   - component: {fileID: 3029843263474285793}
   - component: {fileID: 9036994248062647427}
-  m_Layer: 16
+  m_Layer: 14
   m_Name: BladeLightPurposeCurse
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -131,7 +131,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!114 &9036994248062647427
 MonoBehaviour:
   m_ObjectHideFlags: 0

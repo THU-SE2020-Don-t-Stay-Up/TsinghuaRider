@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8288711042733188202}
   - component: {fileID: 8830771379106041504}
   - component: {fileID: -4911572033301525567}
-  m_Layer: 16
+  m_Layer: 14
   m_Name: BladeLightWhiteRedCross
   m_TagString: Untagged
   m_Icon: {fileID: 0}

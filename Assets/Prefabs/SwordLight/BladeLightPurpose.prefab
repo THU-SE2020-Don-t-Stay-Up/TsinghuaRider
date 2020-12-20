@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6996616700952352962}
   - component: {fileID: 7535262005819732488}
   - component: {fileID: 706287869611917370}
-  m_Layer: 16
+  m_Layer: 14
   m_Name: BladeLightPurpose
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -46,7 +46,7 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_UsedByComposite: 1
   m_Offset: {x: 0.112307996, y: 0.00035214424}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
