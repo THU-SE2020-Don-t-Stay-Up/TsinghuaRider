@@ -105,7 +105,7 @@ public class CharacterAgent : LivingBaseAgent
 
         uiCoinInventory = GameObject.Find("UI_Coins").GetComponent<UIInventory>();
         coinInventory = new Inventory();
-        coinInventory.AddItem(new Coin { Amount = 1000 });
+        coinInventory.AddItem(new Coin { Amount = 1500 });
         uiCoinInventory.SetInventory(coinInventory);
 
 
@@ -418,13 +418,10 @@ public class CharacterAgent : LivingBaseAgent
         //鼠标左键
         if (Input.GetMouseButtonDown(0))
         {
-            //attackingFlag = true;
-            //Debug.Log(WeaponPrefab);
             if (WeaponPrefab != null)
             {
                 WeaponAgent weaponAgent = WeaponPrefab.GetComponent<WeaponAgent>();
                 if (ActualCharacter.AttackSpeed * weaponAgent.Weapon.AttackSpeed - deltaTime < 0.01)
-               // if (true)
                  {
                     SetState(1);
                     attackingFlag = !weaponAgent.Attack();
@@ -452,8 +449,7 @@ public class CharacterAgent : LivingBaseAgent
             if (WeaponPrefab != null)
             {
                 WeaponAgent weaponAgent = WeaponPrefab.GetComponent<WeaponAgent>();
-                if (ActualCharacter.AttackSpeed * weaponAgent.Weapon.AttackSpeed - deltaTime < 0.01)
-                // if (true)
+                if (ActualCharacter.AttackSpeed * weaponAgent.Weapon.SwordLightAttackSpeed - deltaTime < 0.01)
                 {
                     SetState(1);
                     attackingFlag = !weaponAgent.Attack();
