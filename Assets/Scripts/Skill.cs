@@ -392,7 +392,6 @@ public class ObstacleSkill : RangeSkill
 
     protected override bool InitPerform()
     {
-        agent.AudioSource.PlayOneShot(agent.MissleAttackClip);
         skillStartFlag = true;
         float distance = Vector3.Distance(agent.GetCentralPosition(), agent.target.GetCentralPosition());
         if (distance > agent.ActualMonster.AttackRadius)
@@ -444,8 +443,8 @@ public class MeleeChargeAttackSkill : MeleeAttackSkill
     private int speedTimes = 3;
     private float beatDistance = 3;
     private bool attackFlag;
-    private float initMoveSpeed;
-    private float initAttackRadius;
+    //private float initMoveSpeed;
+    //private float initAttackRadius;
     public override void Init(MonsterAgent agent)
     {
         base.Init(agent);
@@ -457,7 +456,7 @@ public class MeleeChargeAttackSkill : MeleeAttackSkill
         skillStartFlag = true;
         float distance = Vector3.Distance(agent.GetCentralPosition(), agent.target.GetCentralPosition());
         if (distance > agent.ActualMonster.AttackRadius)
-        {
+        { 
             agent.rigidbody2d.velocity = agent.GetMovingDirection(agent.target.GetCentralPosition()) * agent.ActualMonster.MoveSpeed;
             agent.Animator.SetTrigger("walk");
             agent.Animator.speed = 1.0f;
@@ -466,10 +465,8 @@ public class MeleeChargeAttackSkill : MeleeAttackSkill
         else
         {
             performDirection = agent.GetAttackDirection();
-            initMoveSpeed = agent.living.MoveSpeed;
-            initAttackRadius = agent.living.AttackRadius;
-            agent.living.MoveSpeed = initMoveSpeed * speedTimes;
-            agent.living.AttackRadius = initAttackRadius / 4;
+            agent.actualLiving.MoveSpeed *= speedTimes;
+            agent.actualLiving.AttackRadius /= 4;
             return true;
         }
     }
@@ -510,8 +507,8 @@ public class MeleeChargeAttackSkill : MeleeAttackSkill
     {
         base.EndPerform();
         attackFlag = false;
-        agent.living.MoveSpeed = initMoveSpeed;
-        agent.living.AttackRadius = initAttackRadius;
+        agent.actualLiving.MoveSpeed /= speedTimes;
+        agent.actualLiving.AttackRadius *= 4;
     }
 
     public void Repel(LivingBaseAgent target)
