@@ -16,5 +16,9 @@ class SwordLight : Bullet
     }
     public override void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision.gameObject.GetComponent<Bullet>() != null)
+        {
+            Destroy(collision.gameObject);
+        }
     }
 }
