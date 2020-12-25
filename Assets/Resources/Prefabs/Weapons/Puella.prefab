@@ -181,6 +181,7 @@ GameObject:
   - component: {fileID: 8035758216000582077}
   - component: {fileID: 8035758216000582074}
   - component: {fileID: 6744796180049857716}
+  - component: {fileID: 4344278089939217469}
   m_Layer: 0
   m_Name: Puella
   m_TagString: Untagged
@@ -294,3 +295,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemIndex: 12
   bulletPrefab: {fileID: 6855057858924108240, guid: 201f88fe6196d74409dbcfbc2f537a08, type: 3}
+--- !u!50 &4344278089939217469
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8035758216000582072}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0

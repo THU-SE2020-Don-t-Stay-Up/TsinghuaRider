@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4163761638175082096}
   - component: {fileID: 4163761638175082103}
   - component: {fileID: 852953569018493817}
+  - component: {fileID: 8022993588105233090}
   m_Layer: 0
   m_Name: RathGunlance
   m_TagString: Untagged
@@ -125,6 +126,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemIndex: 14
   bulletPrefab: {fileID: 2269785940787976222, guid: bd13f8eff7394964092a5fc1492e5078, type: 3}
+--- !u!50 &8022993588105233090
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4163761638175082101}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &6431551576554956911
 GameObject:
   m_ObjectHideFlags: 0

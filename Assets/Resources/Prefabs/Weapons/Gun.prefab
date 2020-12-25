@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3317394955613179841}
   - component: {fileID: 3317394955613179846}
   - component: {fileID: 2024133581027390152}
+  - component: {fileID: 1375609526698821274}
   m_Layer: 0
   m_Name: Gun
   m_TagString: Untagged
@@ -125,6 +126,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemIndex: 5
   bulletPrefab: {fileID: 2269785940787976222, guid: bd13f8eff7394964092a5fc1492e5078, type: 3}
+--- !u!50 &1375609526698821274
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3317394955613179844}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &5656538800315523550
 GameObject:
   m_ObjectHideFlags: 0

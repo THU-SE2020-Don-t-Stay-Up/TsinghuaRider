@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 322595503379844261}
   - component: {fileID: 322595503379844258}
   - component: {fileID: 3132451197520255795}
+  - component: {fileID: -567049683541690634}
   m_Layer: 0
   m_Name: Faith
   m_TagString: Untagged
@@ -125,6 +126,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemIndex: 17
   bulletPrefab: {fileID: 2919931117370953481, guid: f638c908fb69b7b44be07d652034f51e, type: 3}
+--- !u!50 &-567049683541690634
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 322595503379844256}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &7274377544246387386
 GameObject:
   m_ObjectHideFlags: 0
