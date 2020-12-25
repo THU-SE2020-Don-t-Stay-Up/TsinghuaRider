@@ -6,13 +6,13 @@ public class MeleeWeaponAgent : WeaponAgent, IInteract
 {
     private float timer = 0f;
     private float angle = 0f;
-    private float backAngle = 20f;
+    private float backAngle = 60f;
     private float InitAngle { get; set; }
     private bool initFlag = false;
     
     private void Rotate()
     {
-        angle += Time.deltaTime * 1000f;
+        angle -= Time.deltaTime * 1000f;
     }
 
     private void Init()
@@ -21,7 +21,8 @@ public class MeleeWeaponAgent : WeaponAgent, IInteract
         {
             InitAngle = GetCurrentAngle();
             initFlag = true;
-            HandleAiming(InitAngle , backAngle, leftFlag);
+            angle = Weapon.AttackAngle/2;
+            HandleAiming(InitAngle , angle, leftFlag);
             CharacterAgent agent = GameObject.Find("CharacterLoader").GetComponent<CharacterLoader>().player.GetComponent<CharacterAgent>();
             agent.AudioSource.PlayOneShot(agent.MeleeAttackClip);
         }
@@ -35,10 +36,10 @@ public class MeleeWeaponAgent : WeaponAgent, IInteract
     {
         state = State.MeleeAttack;
         Init();
-        if (angle <= Weapon.AttackAngle)
+        if (angle >= -Weapon.AttackAngle/2)
         {
             Rotate();
-            HandleAiming(InitAngle, backAngle - angle, leftFlag);
+            HandleAiming(InitAngle, angle, leftFlag);
         }
         else
         {
@@ -61,7 +62,7 @@ public class MeleeWeaponAgent : WeaponAgent, IInteract
             LivingBaseAgent agent = gameObject.GetComponent<LivingBaseAgent>();
             if (agent != null)
             {
-                Debug.Log("给爷死！");
+                //Debug.Log("给爷死！");
                 agent.ChangeHealth(-user.actualLiving.AttackAmount * Weapon.AttackAmount);
             }
         }
