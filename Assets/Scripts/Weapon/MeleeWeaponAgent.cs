@@ -59,7 +59,7 @@ public class MeleeWeaponAgent : WeaponAgent, IInteract
         {
 
             LivingBaseAgent agent = gameObject.GetComponent<LivingBaseAgent>();
-            if (agent != null)
+            if (agent != null && agent.name != user.name)
             {
                 Debug.Log("给爷死！");
                 agent.ChangeHealth(-user.actualLiving.AttackAmount * Weapon.AttackAmount);
