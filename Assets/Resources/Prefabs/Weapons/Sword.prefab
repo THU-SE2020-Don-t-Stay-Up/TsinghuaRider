@@ -181,7 +181,7 @@ GameObject:
   - component: {fileID: 7972467719648981586}
   - component: {fileID: 7972467719648981589}
   - component: {fileID: 1819490720845941645}
-  - component: {fileID: 5276346889496830647}
+  - component: {fileID: 8769405738194563124}
   m_Layer: 0
   m_Name: Sword
   m_TagString: Untagged
@@ -295,7 +295,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemIndex: 4
   bulletPrefab: {fileID: 0}
---- !u!50 &5276346889496830647
+--- !u!50 &8769405738194563124
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
