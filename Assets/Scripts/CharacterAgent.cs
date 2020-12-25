@@ -500,13 +500,18 @@ public class CharacterAgent : LivingBaseAgent
     {
         return weaponColumn.ItemList.Count < 4;
     }
-    public void WeaponColumnAddItem(Item item)
+    public void WeaponColumnAddItem(Item item, bool change = false)
     {
-        if (CanAddWeapon())
+        if (CanAddWeapon() && !change)
+        {
+            weaponColumn.AddItem(item);
+        }
+        else
         {
             weaponColumn.AddItem(item);
         }
     }
+
 
     public void InventoryAddItem(Item item)
     {

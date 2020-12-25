@@ -8,6 +8,7 @@ abstract public class Weapon : Item
     public float AttackRadius;
     public float SwordLightRadius=3.0f;
     public float SwordLightAttackSpeed = 0.25f; //攻速值越大，实际攻击速度越慢
+    public float SwordLightSpeed = 10f;
     public float AttackAmount;
     public float AttackAngle;
     public GameObject bulletPrefab;
@@ -26,7 +27,7 @@ abstract public class Weapon : Item
 
         if (character.WeaponPrefab != null)
         {
-            character.WeaponColumnAddItem(character.WeaponPrefab.GetComponent<WeaponAgent>().Weapon.Clone() as Item);
+            character.WeaponColumnAddItem(character.WeaponPrefab.GetComponent<WeaponAgent>().Weapon.Clone() as Item, true);
             GameObject.Destroy(character.WeaponPrefab);
         }
         GameObject weaponsition = character.gameObject.transform.Find("weaponPosition").gameObject;
@@ -95,7 +96,7 @@ public class Saber1 : Weapon
         GameObject projectileObject = GameObject.Instantiate(bulletPrefab, user.transform.position + offset + direction * 1f, Quaternion.identity);
         Bullet bullet = projectileObject.GetComponent<Bullet>();
         bullet.SetBullet(user, user.ActualCharacter.AttackAmount * 1, ExtraEffect, SwordLightRadius);//刀光伤害为1
-        bullet.Shoot(direction, 5);
+        bullet.Shoot(direction, SwordLightSpeed);
     }
 
 }
@@ -129,7 +130,7 @@ public class Saber2 : Weapon
         GameObject projectileObject = GameObject.Instantiate(bulletPrefab, user.transform.position + offset + direction * 1f, Quaternion.identity);
         Bullet bullet = projectileObject.GetComponent<Bullet>();
         bullet.SetBullet(user, user.ActualCharacter.AttackAmount * 1, ExtraEffect, SwordLightRadius);//刀光伤害为1
-        bullet.Shoot(direction, 5);
+        bullet.Shoot(direction, SwordLightSpeed);
     }
 }
 
@@ -163,7 +164,7 @@ public class Saber3 : Weapon
         GameObject projectileObject = GameObject.Instantiate(bulletPrefab, user.transform.position + offset + direction * 1f, Quaternion.identity);
         Bullet bullet = projectileObject.GetComponent<Bullet>();
         bullet.SetBullet(user, user.ActualCharacter.AttackAmount * 1, ExtraEffect, SwordLightRadius);//刀光伤害为1
-        bullet.Shoot(direction, 5);
+        bullet.Shoot(direction, SwordLightSpeed);
     }
 
 }
@@ -198,7 +199,7 @@ public class BlackExcalibur : Weapon
         GameObject projectileObject = GameObject.Instantiate(bulletPrefab, user.transform.position + offset + direction * 1f, Quaternion.identity);
         Bullet bullet = projectileObject.GetComponent<Bullet>();
         bullet.SetBullet(user, user.ActualCharacter.AttackAmount * 2, ExtraEffect, SwordLightRadius);//刀光伤害为2
-        bullet.Shoot(direction, 5);
+        bullet.Shoot(direction, SwordLightSpeed);
     }
 }
 
@@ -235,7 +236,7 @@ public class Excalibur : Weapon
         GameObject projectileObject = GameObject.Instantiate(bulletPrefab, user.transform.position + offset + direction * 1f, Quaternion.identity);
         Bullet bullet = projectileObject.GetComponent<Bullet>();
         bullet.SetBullet(user, user.ActualCharacter.AttackAmount * 2, ExtraEffect, SwordLightRadius);//刀光伤害为2
-        bullet.Shoot(direction, 5);
+        bullet.Shoot(direction, SwordLightSpeed);
     }
 
 }
@@ -270,7 +271,7 @@ public class Faith : Weapon
         GameObject projectileObject = GameObject.Instantiate(bulletPrefab, user.transform.position + offset + direction * 1f, Quaternion.identity);
         Bullet bullet = projectileObject.GetComponent<Bullet>();
         bullet.SetBullet(user, user.ActualCharacter.AttackAmount * 1, ExtraEffect, SwordLightRadius);//刀光伤害为1
-        bullet.Shoot(direction, 5);
+        bullet.Shoot(direction, SwordLightSpeed);
     }
 
 }
@@ -305,7 +306,7 @@ public class GilgameshEa : Weapon
         GameObject projectileObject = GameObject.Instantiate(bulletPrefab, user.transform.position + offset + direction * 1f, Quaternion.identity);
         Bullet bullet = projectileObject.GetComponent<Bullet>();
         bullet.SetBullet(user, user.ActualCharacter.AttackAmount * 2, ExtraEffect, SwordLightRadius);//刀光伤害为2
-        bullet.Shoot(direction, 5);
+        bullet.Shoot(direction, SwordLightSpeed);
     }
 
 }
@@ -340,7 +341,7 @@ public class MasterSword : Weapon
         GameObject projectileObject = GameObject.Instantiate(bulletPrefab, user.transform.position + offset + direction * 1f, Quaternion.identity);
         Bullet bullet = projectileObject.GetComponent<Bullet>();
         bullet.SetBullet(user, user.ActualCharacter.AttackAmount * 2, ExtraEffect, SwordLightRadius);//刀光伤害为2
-        bullet.Shoot(direction, 5);
+        bullet.Shoot(direction, SwordLightSpeed);
     }
 
 }
@@ -375,7 +376,7 @@ public class VirtuousTreaty : Weapon
         GameObject projectileObject = GameObject.Instantiate(bulletPrefab, user.transform.position + offset + direction * 1f, Quaternion.identity);
         Bullet bullet = projectileObject.GetComponent<Bullet>();
         bullet.SetBullet(user, user.ActualCharacter.AttackAmount * 1, ExtraEffect, SwordLightRadius);//刀光伤害为1
-        bullet.Shoot(direction, 5);
+        bullet.Shoot(direction, SwordLightSpeed);
     }
 
 }
