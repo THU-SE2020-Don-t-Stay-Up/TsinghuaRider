@@ -57,6 +57,7 @@ public class WeaponAgent : ItemAgent
                 //Debug.Log("Weapon Attacking");
                 break;
         }
+        transform.position = user.gameObject.transform.Find("weaponPosition").gameObject.transform.position;
     }
 
     public static Vector3 GetMouseWorldPosition()
