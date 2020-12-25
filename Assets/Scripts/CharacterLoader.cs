@@ -1,29 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CharacterLoader : MonoBehaviour
 {
-    GameObject mahou;
-    GameObject robot;
     public GameObject player { get; set; }
-
-    private void Awake()
-    {
-        robot = GameObject.Find("RobotPrefab");
-        mahou = GameObject.Find("MahouPrefab");
-    }
 
     public void LoadCharacter()
     {
-        if (UISelectCharacter.characterIndex == 0)
-        {
-            player = mahou;
-        }
-        else
-        {
-            player = robot;
-        }
+        player = GameObject.Find(Global.characters[UISelectCharacter.characterIndex].Name + "Prefab");
     }
 
     private void Update()

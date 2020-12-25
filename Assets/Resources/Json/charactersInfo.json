@@ -1,12 +1,12 @@
 [
   {
-    "Name": "MahouShoujo",
+    "Name": "Mahou",
     "MoveSpeed": 10.0,
     "MaxHealth": 100,
     "CurrentHealth": 100,
     "MaxMagic": 100,
     "CurrentMagic": 100,
-    "TimeInvincible": 0.1, 
+    "TimeInvincible": 0.1,
     "Defense": 0,
     "Tenacity": 0.0,
     "AttackSpeed": 1,
@@ -15,13 +15,13 @@
     "AttackAngle": 1
   },
   {
-    "Name": "RobotPrefab",
+    "Name": "Robot",
     "MoveSpeed": 10.0,
     "MaxHealth": 100,
     "CurrentHealth": 100,
     "MaxMagic": 100,
     "CurrentMagic": 100,
-    "TimeInvincible": 0.1, 
+    "TimeInvincible": 0.1,
     "Defense": 0,
     "Tenacity": 0.0,
     "AttackSpeed": 1,
